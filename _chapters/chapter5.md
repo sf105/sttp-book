@@ -6,3 +6,7 @@ layout: chapter
 
 Hello World!
 
+{% include example-begin.html %}
+This is an example
+{% include example-end.html %}
+
