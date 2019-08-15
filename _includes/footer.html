@@ -25,6 +25,15 @@
       </div>
 
       <div class="footer-col footer-col-3">
+        <nav>
+          <ul>
+            {% for chapter in site.chapters %}
+              <li>
+                <a href="{{ chapter.url }}">Chapter {{ chapter.chapter-number }} - {{ chapter.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </nav>
       </div>
     </div>
 
