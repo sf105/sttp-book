@@ -131,12 +131,13 @@ It can be hard to find the branches by just looking at the source code.
 This is why we use Control-flow graphs (CFG)
 
 ### Control Flow Graph
-A Control Flow Graph consists of blocks and arrows that connect these blocks.
+A Control Flow Graph consists of blocks, and arrows that connect these blocks.
 A piece of code that has no conditions and always executes the same way is placed in a rectangular block.
-Then a condition is placed in a diamond.
-These diamonds have two arrows indicating a branch that gets executed when the condition is true and a branch that is followed when the condition is false.
-Finally we add arrows form the blocks to the diamonds with conditions that are executed after the normal block of code.
-You can see how to construct a CFG in the example below.
+The conditions are placed in diamonds.
+These diamonds have two outgoing arrows, one for true and one for false, indicating the next step of the program based on the decision.
+Each rectangular block with a normal piece of code has an outgoing arrow showing what happens after the code is executed (with the exception of return statements).
+
+You can see an example of a CFG below.
 
 {% include example-begin.html %}
 We write a program for the following problem: <br>
@@ -146,18 +147,24 @@ A word ends when a non-letter appears.
 The code of the program is:
 ```java
 public int count(String str) {
-  int words = 0; char last = ' ';
-  for(int i = 0;i<str.length(); i++) {
-    if(!Character.isLetter(str.charAt(i)) 
-        && (last == 'r' || last == 's')) {
-      words++;
-    }
-    last = str.charAt(i);
-  }
-  if(last == 'x' || last == 's') 
-    words++;
-  return words;
+1.  int words = 0; 
+2.  char last = ' ';
+3.  for(int i = 0; i < str.length(); i++) {
+4.      if(!Character.isLetter(str.charAt(i)) 
+5.              && (last == 'r' || last == 's')) {
+6.          words++;
+7.      }
+8.      last = str.charAt(i);
+9.  }
+10. if(last == 'r' || last == 's') 
+11.     words++;
+12. return words;
 }
 ```
+And we have the corresponding CFG:
+<center> <img src="/assets/img/example-CFG.svg"/> </center>
+Note that we split the for-loop into two blocks and a decision.
+Every decision has one outgoing arrow for true and one for false, indicating what the program will do based on the condition.
+`return words;` does not have an outgoing arrow as the program stops after that statement.
 {% include example-end.html %}
 
