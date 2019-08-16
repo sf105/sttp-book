@@ -115,9 +115,49 @@ Therefore the statement coverage of `leftPlayerWins` in the second `play` method
 The statement coverage is the same in both `play` methods, while the line coverage differs between the methods.
 {% include example-end.html %}
 
+## Branch coverage
+Complex programs often use a lot of conditions (e.g. if-statements).
+When testing these programs, the line or statement coverage often is not enough to test the program well.
+With branch coverage you can test such complex programs a bit better.
 
-{% include exercise-begin.html %}
-This is an exercise
-{% include answer-begin.html %}
-And this is the answer to the exercise
-{% include exercise-answer-end.html %}
+Branch coverage works the same as line and statement coverage.
+This time, however, we do not count lines or statements, but we are counting branches.
+
+**What are branches?** <br>
+If a program has an if-statement, it acts differently based on the outcome of the condition inside of the if-statement.
+There are, so to speak, different routes that the program can take while execution.
+These routes are the branches that we want to count.
+It can be hard to find the branches by just looking at the source code.
+This is why we use Control-flow graphs (CFG)
+
+### Control Flow Graph
+A Control Flow Graph consists of blocks and arrows that connect these blocks.
+A piece of code that has no conditions and always executes the same way is placed in a rectangular block.
+Then a condition is placed in a diamond.
+These diamonds have two arrows indicating a branch that gets executed when the condition is true and a branch that is followed when the condition is false.
+Finally we add arrows form the blocks to the diamonds with conditions that are executed after the normal block of code.
+You can see how to construct a CFG in the example below.
+
+{% include example-begin.html %}
+We write a program for the following problem: <br>
+Given a sentence, you should count the number of words that end with either an “s” or an “r”. 
+A word ends when a non-letter appears.
+
+The code of the program is:
+```java
+public int count(String str) {
+  int words = 0; char last = ' ';
+  for(int i = 0;i<str.length(); i++) {
+    if(!Character.isLetter(str.charAt(i)) 
+        && (last == 'r' || last == 's')) {
+      words++;
+    }
+    last = str.charAt(i);
+  }
+  if(last == 'x' || last == 's') 
+    words++;
+  return words;
+}
+```
+{% include example-end.html %}
+
