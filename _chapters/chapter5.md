@@ -24,12 +24,14 @@ We cover the following kinds of test coverage:
 
 ## Line coverage
 As the name suggests, when determining the line coverage we look at the amount of lines that are covered by the tests.
-The amount of line coverage is computed as $$\frac{\text{lines_covered}}{\text{lines_total}} \cdot 100\%$$.
+The amount of line coverage is computed as $$\text{line_coverage} = \frac{\text{lines_covered}}{\text{lines_total}} \cdot 100\%$$.
 So if a set of tests executes all the lines in the code, the line coverage will be $$100\%$$.
+We only count the lines inside of a method. 
+We do not count the method declaration at the top.
 
 {% include example-begin.html %}
 We consider a piece of code that returns the points of the person that wins a game of [Black jack]("https://en.wikipedia.org/wiki/Blackjack").
-{% highlight java %}
+```java
 public class BlackJack {
     public int play(int left, int right) {
 1.      int ln = left;
@@ -44,8 +46,8 @@ public class BlackJack {
 10.         return rn;
     }
 }
-{% endhighlight %}
-The `play()` method receives the amount of points of two players and returns the value like specified.
+```
+The `play(int left, int right)` method receives the amount of points of two players and returns the value like specified.
 Now let's make two tests for this method.
 ```java
 public class BlackJackTests {
@@ -69,6 +71,49 @@ Line 8 was the only line that the first test did not cover.
 So when we execute both of our tests, the line coverage is $$100\%$$.
 {% include example-end.html %}
 
+## Statement coverage
+The first way of determining test coverage we showed is with line coverage.
+However, counting the covered lines is not always a good way of calculating the coverage.
+The amount of lines in a piece of code is dependent on the programmer that writes the code.
+In java you can often write a whole method in just one line (for your future colleagues' sake, please don't).
+In that case the line coverage would always be $$100\%$$ if you test the method.
+
+{% include example-begin.html %}
+We are again looking at Black jack.
+The `play` method can also be written like this:
+```java
+public int play(int left, int right) {
+1.  int ln = left;
+2.  int rn = right;
+3.  if (ln > 21) ln = 0;
+4.  if (rn > 21) rn = 0;
+5.  if (ln > rn) return ln;
+6.  else return rn;
+}
+```
+Now the method has only 6 lines.
+The same `leftPlayerWins` test covered $$\frac{6}{10}$$ lines in the first `play` method.
+Now it covers lines 1-5, so $$\frac{5}{6}$$ lines.
+The line coverage went up from $$60\%$$ to $$83\%$$, while testing the same method with the same test.
+{% include example-end.html %}
+
+A slightly better way of calculating the test coverage is with statement coverage.
+It has the same principle as line coverage, but instead of lines we count the statements.
+So: $$\text{statement_coverage} = \frac{\text{statements_covered}}{\text{statements_total}} \cdot 100\%$$.
+
+{% include example-begin.html %}
+Again consider the `leftPlayerWins` test for the `play` method.
+In the first version of the method each line has just one statement.
+The statement coverage will then be the same as the line coverage: $$60\%$$.
+
+[//]: Do we consider else to be a statement?
+Now if we look at the second version of the `play` method, lines 3-6 all contain two statements.
+The test executes all statements in lines 1, 2, 5 and one of the two statements in lines 3 and 4.
+In total 6 out of 10 statements are executed.
+Therefore the statement coverage of `leftPlayerWins` in the second `play` method is $$\frac{6}{10}=60\%$$.
+
+The statement coverage is the same in both `play` methods, while the line coverage differs between the methods.
+{% include example-end.html %}
 
 
 {% include exercise-begin.html %}
