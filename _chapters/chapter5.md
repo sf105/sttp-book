@@ -128,10 +128,10 @@ If a program has an if-statement, it acts differently based on the outcome of th
 There are, so to speak, different routes that the program can take while execution.
 These routes are the branches that we want to count.
 It can be hard to find the branches by just looking at the source code.
-This is why we use Control-flow graphs (CFG)
+This is why we use Control-Flow graphs (CFG)
 
-### Control Flow Graph
-A Control Flow Graph consists of blocks, and arrows that connect these blocks.
+### Control-Flow Graph
+A Control-Flow graph consists of blocks, and arrows that connect these blocks.
 A piece of code that has no conditions and always executes the same way is placed in a rectangular block.
 The conditions are placed in diamonds.
 These diamonds have two outgoing arrows, one for true and one for false, indicating the next step of the program based on the decision.
@@ -146,19 +146,21 @@ A word ends when a non-letter appears.
 
 The code of the program is:
 ```java
-public int count(String str) {
-1.  int words = 0; 
-2.  char last = ' ';
-3.  for(int i = 0; i < str.length(); i++) {
-4.      if(!Character.isLetter(str.charAt(i)) 
-5.              && (last == 'r' || last == 's')) {
-6.          words++;
-7.      }
-8.      last = str.charAt(i);
-9.  }
-10. if(last == 'r' || last == 's') 
-11.     words++;
-12. return words;
+public class CountLetters {
+    public int count(String str) {
+1.      int words = 0; 
+2.      char last = ' ';
+3.      for (int i = 0; i < str.length(); i++) {
+4.          if (!Character.isLetter(str.charAt(i)) 
+5.                  && (last == 'r' || last == 's')) {
+6.              words++;
+7.          }
+8.          last = str.charAt(i);
+9.      }
+10.     if (last == 'r' || last == 's') 
+11.         words++;
+12.     return words;
+    }
 }
 ```
 And we have the corresponding CFG:
@@ -167,4 +169,42 @@ Note that we split the for-loop into two blocks and a decision.
 Every decision has one outgoing arrow for true and one for false, indicating what the program will do based on the condition.
 `return words;` does not have an outgoing arrow as the program stops after that statement.
 {% include example-end.html %}
+
+Branches are easy to find in a CFG.
+Each arrow with true of false (so each arrow going out of a decision) is a branch.
+To get the branch coverage of a test all that is needed is to count the amount of covered branches and devide that by the total amount of branches: $$\text{branch_coverage}=\frac{\text{branches_covered}}{\text{branches_total}} \cdot 100\%$$
+
+{% include example-begin.html %}
+Now we write some tests for the `count` method above. 
+```java
+public class CountLettersTests {
+    @Test
+    public void multipleMatchingWords() {
+
+        int words = new CountLetters()
+            .count("cats|dogs");
+
+        assertThat(words).isEqualTo(2);
+    }
+
+    @Test
+    public void lastWordDoesntMatch() {
+
+        int words = new CountLetters()
+            .count("cats|dog");
+
+        assertThat(words).isEqualTo(1);
+    }
+}
+```
+The first test covers all the branches in the left part of the CFG.
+At the right part it covers the top false branch, because at some point `i` will equal `str.length()`.
+Then dogs ends with an s, so it also covers the true branch on the right.
+This gives the test $$\frac{5}{6} \cdot 100\% = 83\%$$ branch coverage.
+The only branch that is not covered is the false branch at the bottom right of the CFG.
+This branch is executed when the last word does not end with an r or an s.
+The second test executes this branch so the two tests together have a branch coverage of $$100\%$$.
+{% include example-end.html %}
+
+
 
