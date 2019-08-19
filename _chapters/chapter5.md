@@ -20,12 +20,12 @@ We cover the following kinds of test coverage:
 * Branch coverage
 * Condition coverage
 * Path coverage
-* MC/DC coverage
+* MC/DC
 
 ## Line coverage
 As the name suggests, when determining the line coverage we look at the amount of lines that are covered by the tests.
 The amount of line coverage is computed as $$\text{line_coverage} = \frac{\text{lines_covered}}{\text{lines_total}} \cdot 100\%$$.
-So if a set of tests executes all the lines in the code, the line coverage will be $$100\%$$.
+So if a pair of tests executes all the lines in the code, the line coverage will be $$100\%$$.
 We only count the lines inside of a method. 
 We do not count the method declaration at the top.
 
@@ -283,3 +283,71 @@ The amount of tests needed for full path coverage will grow exponentially with t
 
 For the last time, we will look at a better way of measuring test coverage in the next section.
 
+## MC/DC
+Modified condition/decision coverage, MC/DC from now on, looks at the combinations of conditions like path coverage does.
+Instead of wanting to test each of the combinations, we take a certain selection of important combinations.
+This deals with the feasability problem we found with the path coverage.
+
+The idea of MC/DC is to exercise each condition that could independently affect the outcome of the entire decision.
+To get the combinations of conditions needed for this, we first select certain pairs of two combinations for each condition.
+In these pairs, only the condition we are selecting for should change and the outcome of the decision should change.
+The other conditions have to stay the same, because we want the condition to independently affect the outcome.
+
+After the pairs have been determined, we select the tests.
+For each condition at least one of the found pairs should be fully covered and we try to select at least tests as possible.
+The example below will make it clearer.
+
+{% include example-begin.html %}
+We consider the decision of the previous example with the corresponding truth table also given here:
+<!-- HTML table, because markdown doesn't work in the example div -->
+<center>
+<table style="width:50%">
+    <tr><th>Tests</th><th>A</th><th>B</th><th>C</th><th>Outcome</th></tr>
+    <tr><td>1</td><td>T</td><td>T</td><td>T</td><td>T</td></tr>
+    <tr><td>2</td><td>T</td><td>T</td><td>F</td><td>T</td></tr>
+    <tr><td>3</td><td>T</td><td>F</td><td>T</td><td>T</td></tr>
+    <tr><td>4</td><td>T</td><td>F</td><td>F</td><td>F</td></tr>
+    <tr><td>5</td><td>F</td><td>T</td><td>T</td><td>F</td></tr>
+    <tr><td>6</td><td>F</td><td>T</td><td>F</td><td>F</td></tr>
+    <tr><td>7</td><td>F</td><td>F</td><td>T</td><td>F</td></tr>
+    <tr><td>8</td><td>F</td><td>F</td><td>F</td><td>F</td></tr>
+</table>
+</center>
+We start with selecting the pairs of combinations (or tests) for condition A:<br>
+In test 1 A, B and C are all true and the outcome is true as well.
+The test where A is changed and B and C are the same is test 5, as there A is false and B and C are still true.
+The outcome of test 5 is false, which is a different outcome than test 1 so we have found the pair {1, 5}.<br>
+Now we try the next test.
+In test 2 A is again true, B is true and C is false.
+The test where B and C are the same is test 6.
+The outcome from test 6 (false) is not the same as the outcome of test 2 (true) so we also have the pair {2, 6}.<br>
+We continue with the other combinations and find just the pair {3, 7}.
+
+Now we can go to B and we do the same as we did for A.
+This time the possible pairs of combinations will be different:<br>
+In the first one all the conditions are true, so we need to find the test where B is false and A and C are true.
+This is test 3, which has the same outcome so we cannot use this set.
+If you continue with the other combinations you will only find the pair {2, 4}.
+
+The final one is condition C. 
+Here also only one pair of combinations will work, which is {3, 4}.
+We now have all the pairs for each of the conditions:
+* A: {1, 5}, {2, 6}, {3, 7}
+* B: {2, 4}
+* C: {3, 4}
+
+Now we are ready to select the combinations that we want to test.
+For each condition we have to cover at least one of the pairs and we want to minimize the total amount of tests.
+We do not have any choices with conditions B and C, as we only found one pair for each.
+This means that we have to test combinations 2, 3 and 4. 
+Now we need to make sure to cover a pair of A.
+To do so we can either add combination 6 or 7.
+Let's pick 6: The combinations that we need for MC/DC are {2, 3, 4, 6}.
+
+These are only 4 combinations/tests. 
+This is a lot better than the 8 tests we needed for the path coverage.
+{% include example-end.html %}
+
+In the example we saw that we need fewer tests when using MC/DC instead of path coverage.
+In fact for path coverage $$2^n$$ tests are needed, while only $$n + 1$$ tests are needed for MC/DC with $$n$$ being the amount of conditions.
+This is very significant for decisions with a lot of conditions.
