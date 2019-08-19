@@ -152,7 +152,7 @@ public class CountLetters {
 2.      char last = ' ';
 3.      for (int i = 0; i < str.length(); i++) {
 4.          if (!Character.isLetter(str.charAt(i)) 
-5.                  && (last == 'r' || last == 's')) {
+5.                  && (last == 's' || last == 'r')) {
 6.              words++;
 7.          }
 8.          last = str.charAt(i);
@@ -164,7 +164,7 @@ public class CountLetters {
 }
 ```
 And we have the corresponding CFG:
-<center> <img src="/assets/img/example-CFG.svg"/> </center>
+<center> <img src="/assets/img/CFG-branch-example.svg"/> </center>
 Note that we split the for-loop into two blocks and a decision.
 Every decision has one outgoing arrow for true and one for false, indicating what the program will do based on the condition.
 `return words;` does not have an outgoing arrow as the program stops after that statement.
@@ -172,7 +172,7 @@ Every decision has one outgoing arrow for true and one for false, indicating wha
 
 Branches are easy to find in a CFG.
 Each arrow with true of false (so each arrow going out of a decision) is a branch.
-To get the branch coverage of a test all that is needed is to count the amount of covered branches and devide that by the total amount of branches: $$\text{branch_coverage}=\frac{\text{branches_covered}}{\text{branches_total}} \cdot 100\%$$
+To get the branch coverage of a test all that is needed is to count the amount of covered branches and divide that by the total amount of branches: $$\text{branch_coverage}=\frac{\text{branches_covered}}{\text{branches_total}} \cdot 100\%$$
 
 {% include example-begin.html %}
 Now we write some tests for the `count` method above. 
@@ -206,5 +206,32 @@ This branch is executed when the last word does not end with an r or an s.
 The second test executes this branch so the two tests together have a branch coverage of $$100\%$$.
 {% include example-end.html %}
 
+## Condition coverage
+Branch coverage gives two branches for each decision, no matter how complicated this decision is.
+When a decision gets complicated, branch coverage is too simple to get good tests for the decision. 
+
+With condition coverage we split the decisions into single conditions.
+Then it works the same as branch coverage, but with the conditions instead of branches: count the covered conditions and divide by the total amount of conditions: $$\text{conditions_coverage} = \frac{\text{conditions_covered}}{\text{conditions_total}} \cdot 100\%$$
+
+A CFG can again be used to spot the conditions.
+Each decision with multiple conditions should be split into decisions with each just one condition.
+Then, like the CFG for branch coverage, each arrow going out of a decision is a condition.
+
+{% include example-begin.html %}
+Once again we look at the program that counts the words ending with an r or an s.
+Instead of branch coverage, we are interested in the condition coverage that the tests give.
+
+We start by splitting the decisions in the CFG:
+<center> <img src="/assets/img/CFG-condition-example.svg"/> </center>
+There are quite a bit more conditions than branches.
+This can also be seen in the coverages of the tests that we wrote earlier.
+
+The first test now covers 7 conditions and the total amount of conditions is 12.
+So the condition coverage is now: $$\frac{7}{12} \cdot 100\% = 58\%$$.
+This is quite a bit less than the $$83\%$$ branch coverage, so we need some more tests to test the method well.
+{% include example-end.html %}
+
+Condition coverage is an improvement over the branch coverage.
+However, we will try to do even better in the next section.
 
 
