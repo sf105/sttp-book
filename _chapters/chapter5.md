@@ -234,4 +234,52 @@ This is quite a bit less than the $$83\%$$ branch coverage, so we need some more
 Condition coverage is an improvement over the branch coverage.
 However, we will try to do even better in the next section.
 
+## Path coverage
+With condition coverage we looked each condition individually.
+When some test makes this condition true and false at any point, it would be fully covered.
+This does not cover all the possible cases on which the program can execute.
+
+Path coverage does not consider the conditions individually, but considers the combination of the conditions in a decision.
+Each of these combinations is a path.
+The calculation is the same as the other coverages: $$\text{path_coverage} = \frac{\text{paths_covered}}{\text{paths_total}} \cdot 100\%$$
+
+Please see the example below.
+
+{% include example-begin.html %}
+In this example we focus on a small piece of the `count` method:
+```java
+if (!Character.isLetter(str.charAt(i)) 
+        && (last == 's' || last == 'r')) {
+    words++;
+}
+```
+The decision of this if-statement contains three conditions and can be generalized to (A && ( B || C)), with A = `!Character.isLetter(str.charAt(i))`, B = `last == 's'` and C = `last == 'r'`.
+To get $$100\%$$ path coverage, we would have to test all the possible combinations of these three conditions.
+We construct a truth table to find the combinations:
+
+<!-- HTML table, because markdown doesn't work in the example div -->
+<center>
+<table style="width:50%">
+    <tr><th>Tests</th><th>A</th><th>B</th><th>C</th><th>Outcome</th></tr>
+    <tr><td>1</td><td>T</td><td>T</td><td>T</td><td>T</td></tr>
+    <tr><td>2</td><td>T</td><td>T</td><td>F</td><td>T</td></tr>
+    <tr><td>3</td><td>T</td><td>F</td><td>T</td><td>T</td></tr>
+    <tr><td>4</td><td>T</td><td>F</td><td>F</td><td>F</td></tr>
+    <tr><td>5</td><td>F</td><td>T</td><td>T</td><td>F</td></tr>
+    <tr><td>6</td><td>F</td><td>T</td><td>F</td><td>F</td></tr>
+    <tr><td>7</td><td>F</td><td>F</td><td>T</td><td>F</td></tr>
+    <tr><td>8</td><td>F</td><td>F</td><td>F</td><td>F</td></tr>
+</table>
+</center>
+
+This means that for full path coverage we would need 8 tests just to cover this if-statement.
+That is quite a lot!
+{% include example-end.html %}
+
+By thinking about the path coverage of our test suite, we can come up of quite some good tests.
+The main problem with path coverage is however that it is not always feasable to test each path.
+In the example we needed 8 tests for an if-statement that contained 3 conditions.
+The amount of tests needed for full path coverage will grow exponentially with the amount of conditions in a decision.
+
+For the last time, we will look at a better way of measuring test coverage in the next section.
 
