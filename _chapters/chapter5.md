@@ -164,7 +164,7 @@ public class CountLetters {
 }
 ```
 And we have the corresponding CFG:
-<center> <img src="/assets/img/CFG-branch-example.svg"/> </center>
+<center> <img src="/assets/img/chapter5/examples/CFG-branch-example.svg"/> </center>
 Note that we split the for-loop into two blocks and a decision.
 Every decision has one outgoing arrow for true and one for false, indicating what the program will do based on the condition.
 `return words;` does not have an outgoing arrow as the program stops after that statement.
@@ -222,7 +222,7 @@ Once again we look at the program that counts the words ending with an r or an s
 Instead of branch coverage, we are interested in the condition coverage that the tests give.
 
 We start by splitting the decisions in the CFG:
-<center> <img src="/assets/img/CFG-condition-example.svg"/> </center>
+<center> <img src="/assets/img/chapter5/examples/CFG-condition-example.svg"/> </center>
 There are quite a bit more conditions than branches.
 This can also be seen in the coverages of the tests that we wrote earlier.
 
@@ -351,3 +351,81 @@ This is a lot better than the 8 tests we needed for the path coverage.
 In the example we saw that we need fewer tests when using MC/DC instead of path coverage.
 In fact for path coverage $$2^n$$ tests are needed, while only $$n + 1$$ tests are needed for MC/DC with $$n$$ being the amount of conditions.
 This is very significant for decisions with a lot of conditions.
+
+
+## Exercises
+Below you will find exercises with which you can practise the material you just learned. 
+You can view the answer to the question by clicking the button.
+
+For the first couple of exercises we use the following code:
+```java
+public boolean remove(Object o) {
+01.  if (o == null) {
+02.    for (Node<E> x = first; x != null; x = x.next) {
+03.      if (x.item == null) {
+04.        unlink(x);
+05.        return true;
+         }
+       }
+06.  } else {
+07.    for (Node<E> x = first; x != null; x = x.next) {
+08.      if (o.equals(x.item)) {
+09.        unlink(x);
+10.        return true;
+         }
+       }
+     }
+11.  return false;
+}
+```
+This is the implementation of JDK8's LinkedList remove method. Source: [OpenJDK](http://hg.openjdk.java.net/jdk8/jdk8/jdk/file/687fd7c7986d/src/share/classes/java/util/LinkedList.java).
+
+{% include exercise-begin.html %}
+Give a test suite (i.e. a set of tests) that achieves $$100\%$$ line coverage on the `remove` method.
+Use as few tests as possible.
+{% include answer-begin.html %}
+Example of a test suite that achieves $$100\%$$ line coverage:
+```java
+@Test
+public void removeNullInListTest() {
+    LinkedList<Integer> list = new LinkedList<>();
+
+    list.add(null);
+
+    assertThat(list.remove(null)).isTrue();
+}
+
+@Test
+public void removeElementInListTest() {
+    LinkedList<Integer> list = new LinkedList<>();
+
+    list.add(7);
+
+    assertThat(list.remove(7)).isTrue();
+}
+
+@Test
+public void removeElementNotPresentInListTest() {
+    LinkedList<Integer> list = new LinkedList<>();
+
+    assertThat(list.remove(5)).isFalse();
+}
+```
+Note that there exists a lot of test suites that achieve $$100\%$$ line coverage, this is just an example.
+
+You should not have more or less than 3 tests.
+At least one test is needed to cover lines 4 and 5 (`removeNullInListTest` in this case).
+This test will also cover lines 1-3.
+
+Then a test for lines 9 and 10 is needed (`removeElementInListTest`).
+This test also covers lines 6-8.
+
+Finally a third test is needed to cover line 11 (`removeElementNotPresentInListTest`).
+{%include exercise-answer-end.html %}
+
+{% include exercise-begin.html %}
+Create the Control Flow Graph (CFG) for the `remove` method.
+{% include answer-begin.html %}
+![](/assets/img/chapter5/exercises/CFG-LinkedList.svg)
+L\<number\> in the diagram represents the line number of the code that is in the block or decision.
+{%include exercise-answer-end.html %}
