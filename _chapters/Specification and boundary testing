@@ -1,0 +1,123 @@
+\section{Specification-based testing}
+Specification testing is an input/output-driven testing technique, also known as \textbf{black-box testing}. It requires no knowledge of how the software inside the "box" is structured. Specification testing covers both functional and non-functional testing. 
+
+\textbf{Functional testing} is concerned with the features and/or functions of the system.
+
+\textbf{Non-functional testing} includes performance, usability and maintainability. 
+
+\section{Partition testing}
+Programs often can't be tested with just one test. Breaking up the program into classes and what should be tested into partitions can help solve this problem.
+
+These partitions should all exercise the program in a different way. The program should behave correctly in all test cases. It can be assumed that if one element executes correctly, the others will execute correctly as well and vice versa.
+
+This is why there is no point in testing all inputs; one element should be used per partition, because all equivalent inputs result in executing the program in similar manner. This is called \textbf{equivalence partitioning}. 
+It is good practice to name your test method after your partition.
+
+\subsection*{Correct}
+
+\subsection*{Random vs partition}
+
+% \section{summary vid - partition}
+% requirements--> what are we going to test
+% programs often can't be tested with one test
+% break problem up into smaller partitions/program into classes
+% each partition is different, meaningful test case 
+% The program should behave correctly in all test cases
+% assumption: one element of a partition executes correctly, the others will execute correctly as well and vice versa.
+% Therefore no point in testing all; use one element per partition, i.e. equivalence partitioning.
+% name test method after partition
+
+\section{Category/partition method: the method, examples}
+
+\section*{summary vid - category partition}
+1 identify the inputs, also called parameters
+2 what are the characteristics of these parameters (look beyond requirements)
+3 combine characteristics and parameters to get all possible combinations
+4 minimize number of combinations by adding constraints to the parameters (ex remove invalid combinations) (ex test exceptional behaviour once)
+\section{Boundary testing}
+The boundary area between partitions is often buggy. When the boundary is exercised, the system should behave as expected. This is called boundary testing.
+
+\subsection*{On and off points}
+An \textbf{in point} makes the condition true.\\
+An \textbf{out point} makes the condition false.\\
+An \textbf{on point} is exactly on the boundary.\\
+An \textbf{off point} is as close to the boundary as possible. If the on point is an in point, the off point is an out point and vice versa.
+\noindent \textbf{example}
+score $\geq$ 100\\
+An in point is for example 200.
+An out point is for example 50.
+The on point is 100.
+The off point is 99, if score is an integer.
+\\
+
+\subsection*{Open or closed boundaries} 
+A boundary can be open or closed. An open boundary means that one side is not defined. This can be more difficult to test because one can't be entirely sure what point to pick on the open side.\newline
+
+ \noindent \textbf{example}\\
+x $>$ 0 is an open boundary.\\
+y $\leq$ 10 is a closed boundary.\\
+% example open boundary and closed boundary
+\\
+
+\noindent To deal with an open boundary a simplified domain testing strategy could be used:
+\begin{enumerate}
+    \item If there are multiple boundaries, they should be handled independently.
+    \item Pick an off and on point for each boundary.
+    \item Use varying in points for the other boundaries that are not currently being tested.
+\end{enumerate}
+A domain matrix can be a helpful tool.\newline
+\\
+
+\noindent \textbf{example} Domain matrix
+\begin{table}[h]
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|}
+\hline
+\multicolumn{9}{|l|}{Boundary conditions for "x \textgreater 0 \&\& x \textless{}= 10 \&\& y \textgreater{}= 10"} \\ \hline
+\multicolumn{3}{|l|}{} & \multicolumn{6}{l|}{test cases(x,y)} \\ \hline
+Variable & Condition & Type & t1 & t2 & t3 & t4 & t5 & t6 \\ \hline
+x & \textgreater 0 & on & 0 &  &  &  &  &  \\ \cline{3-9} 
+ &  & off &  & 1 &  &  &  &  \\ \cline{2-9} 
+ & \textless{}= 0 & on &  &  & 10 &  &  &  \\ \cline{3-9} 
+ &  & off &  &  &  & 11 &  &  \\ \cline{2-9} 
+ & typical & in &  &  &  &  & 4 & 6 \\ \hline
+y & \textgreater{}= 1.0 & on &  &  &  &  & 1.0 &  \\ \cline{3-9} 
+ &  & off &  &  &  &  &  & 9.0 \\ \cline{2-9} 
+ & typical & in & 10.0 & 16.0 & 109.3 & 2390.2 &  &  \\ \hline
+\end{tabular}
+\end{table}
+
+\subsection*{Parameterised tests}
+
+% \section{summary vid - boundary}
+% There is a boundary that separates the input
+% boundary area often buggy
+% exercise boundary \rightarrow system should behave as expected (boundary testing)
+% on off points
+% open and closed boundaries
+% open boundary: 
+% simplified domain testing strategy:
+% 1 handle boundaries independently
+% 2 for each boundary pick an off and on point
+% 3 while testing one boundary use varying in points for the remaining boundaries
+% 4 use a domain matrix
+% if more than one test for same partition; hard to maintain many tests.
+% only input and expected output change \rightarrow parameterised test
+
+
+| Boundary conditions for "x > 0 && x <= 10 && y >= 10                   |
+|------------------------------------------------------------------------|
+|-----------------------------| test cases(x,y)                          |
+| Variable | Condition | Type | t1   | t2   | t3    | t4     | t5  | t6  |
+|-----------------------------|------|------|-------|--------|-----|-----|
+| x        | > 0       | on   | 0    |      |       |        |     |     |
+|          |           | off  |      | 1    |       |        |     |     |
+|          |-----------|------|------|------|-------|--------|-----|-----|
+|          | <= 0      | on   |      |      | 10    |        |     |     |
+|          |           | off  |      |      |       | 11     |     |     |
+|          |-----------|------|------|------|-------|--------|-----|-----|
+|          | typical   | in   |      |      |       |        | 4   | 6   |
+|-----------------------------|------|------|-------|--------|-----|-----|
+| y        | >= 1.0    | on   |      |      |       |        | 1.0 |     |
+|          |           | off  |      |      |       |        |     | 9.0 |
+|          |-----------|------|------|------|-------|--------|-----|-----|
+|          | typical   | in   | 10.0 | 16.0 | 109.3 | 2390.2 |     |     |
