@@ -381,8 +381,10 @@ public boolean remove(Object o) {
 This is the implementation of JDK8's LinkedList remove method. Source: [OpenJDK](http://hg.openjdk.java.net/jdk8/jdk8/jdk/file/687fd7c7986d/src/share/classes/java/util/LinkedList.java).
 
 {% include exercise-begin.html %}
-Give a test suite (i.e. a set of tests) that achieves $$100\%$$ line coverage on the `remove` method.
+Give a test suite (i.e. a set of tests) that achieves $$100\%$$ **line** coverage on the `remove` method.
 Use as few tests as possible.
+
+The documentation on Java 8's LinkedList methods, that may be needed in the tests, can be found in its [Javadoc](https://devdocs.io/openjdk~8/java/util/linkedlist).
 {% include answer-begin.html %}
 Example of a test suite that achieves $$100\%$$ line coverage:
 ```java
@@ -413,7 +415,7 @@ public void removeElementNotPresentInListTest() {
 ```
 Note that there exists a lot of test suites that achieve $$100\%$$ line coverage, this is just an example.
 
-You should not have more or less than 3 tests.
+You should have 3 tests.
 At least one test is needed to cover lines 4 and 5 (`removeNullInListTest` in this case).
 This test will also cover lines 1-3.
 
@@ -429,3 +431,68 @@ Create the Control Flow Graph (CFG) for the `remove` method.
 ![](/assets/img/chapter5/exercises/CFG-LinkedList.svg)
 L\<number\> in the diagram represents the line number of the code that is in the block or decision.
 {%include exercise-answer-end.html %}
+
+{% include exercise-begin.html %}
+Give a test suite (i.e. a set of tests) that achieves $$100\%$$ **branch** coverage on the `remove` method.
+Use as few tests as possible.
+
+The documentation on Java 8's LinkedList methods, that may be needed in the tests, can be found in its [Javadoc](https://devdocs.io/openjdk~8/java/util/linkedlist).
+{% include answer-begin.html %}
+Example of a test suite that achieves $$100\%$$ branch coverage:
+```java
+@Test
+public void removeNullAsSecondElementInListTest() {
+    LinkedList<Integer> list = new LinkedList<>();
+
+    list.add(5);
+    list.add(null);
+
+    assertThat(list.remove(null)).isTrue();
+}
+
+@Test
+public void removeNullNotPresentInListTest() {
+    LinkedList<Integer> list = new LinkedList<>();
+
+    assertThat(list.remove(null)).isFalse();
+}
+
+@Test
+public void removeElementSecondInListTest() {
+    LinkedList<Integer> list = new LinkedList<>();
+
+    list.add(5);
+    list.add(7);
+
+    assertThat(list.remove(7)).isTrue();
+}
+
+@Test
+public void removeElementNotPresentInListTest() {
+    LinkedList<Integer> list = new LinkedList<>();
+
+    assertThat(list.remove(3)).isFalse();
+}
+```
+This is just one example of a possible test suite.
+Other tests can work just as well.
+You should have a test suite of 4 tests.
+
+With the CFG you can see that there are decisions in lines 1, 2, 3, 7 and 8.
+To achieve $$100\%$$ branch coverage each of these decisions must evaluate to true and to false at least once in the test suite.
+
+For the decision in line 1, we need to remove `null` and something else than `null`. This is done with the `removeElement` and `removeNull` tests.
+
+Then for the decision in line 2 the node that `remove` is looking at should not be null and null at least once in the tests.
+The node is `null` when the end of the list had been reached.
+That only happens when the element that shouls be removed is not in the list.
+Note that the decision in line 2 only gets executed when the element to remove is `null`.
+In the tests, this means that the element should be found and not found at least once. 
+
+The decision in line 3 checks if the node thet the method is at now has the element that should be deleted.
+The tests should cover a case where the element is not the item that has to be removed and a case where the element is the item that should be removed.
+
+The decisions in lines 7 and 8 are the same as in lines 2 and 3 respectively.
+The only difference is that lines 7 and 8 will only be executed when the item to remove is not `null`.
+{% include exercise-answer-end.html %}
+
