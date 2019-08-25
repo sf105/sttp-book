@@ -428,7 +428,7 @@ Finally a third test is needed to cover line 11 (`removeElementNotPresentInListT
 {% include exercise-begin.html %}
 Create the Control Flow Graph (CFG) for the `remove` method.
 {% include answer-begin.html %}
-![](/assets/img/chapter5/exercises/CFG-LinkedList.svg)
+<img src="/assets/img/chapter5/exercises/CFG-LinkedList.svg" style="border:none"/>
 L\<number\> in the diagram represents the line number of the code that is in the block or decision.
 {%include exercise-answer-end.html %}
 
