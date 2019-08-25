@@ -496,3 +496,31 @@ The decisions in lines 7 and 8 are the same as in lines 2 and 3 respectively.
 The only difference is that lines 7 and 8 will only be executed when the item to remove is not `null`.
 {% include exercise-answer-end.html %}
 
+{% include exercise-begin.html %}
+Consider the decision (A | C) & B with the corresponding decision table:
+<!-- HTML table, because markdown doesn't work in the example div -->
+<center>
+<table style="width:50%">
+    <tr><th>Decision</th><th>A</th><th>B</th><th>C</th><th>(A | C) & B</th></tr>
+    <tr><td>1</td><td>T</td><td>T</td><td>T</td><td>T</td></tr>
+    <tr><td>2</td><td>T</td><td>T</td><td>F</td><td>T</td></tr>
+    <tr><td>3</td><td>T</td><td>F</td><td>T</td><td>F</td></tr>
+    <tr><td>4</td><td>T</td><td>F</td><td>F</td><td>F</td></tr>
+    <tr><td>5</td><td>F</td><td>T</td><td>T</td><td>T</td></tr>
+    <tr><td>6</td><td>F</td><td>T</td><td>F</td><td>F</td></tr>
+    <tr><td>7</td><td>F</td><td>F</td><td>T</td><td>F</td></tr>
+    <tr><td>8</td><td>F</td><td>F</td><td>F</td><td>F</td></tr>
+</table>
+</center>
+What is the set with the minimum amount of tests needed for $$100\%$$ MC/DC (Modified Condition / Decision Coverage)?
+{% include answer-begin.html %}
+First, we find the pairs of tests that can be used for each of the conditions:
+* A: {2, 6}
+* B: {1, 3}, {2, 4}, {5, 7}
+* C: {5, 6}
+
+For A and C we need the decisions 2, 5 and 6.
+Then you can choose to add either 4 or 7 to cover condition B.
+
+The possible answers are: {2, 4, 5, 6} or {2, 5, 6, 7}.
+{% include exercise-answer-end.html %}
