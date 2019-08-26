@@ -1,134 +1,83 @@
-\documentclass{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{inconsolata}
-\usepackage{float}
-\usepackage{color}
+## Specification-based testing
+Specification testing is an input/output-driven testing technique, also known as **black-box testing**. It requires no knowledge of how the software inside the "box" is structured. Specification testing covers both functional and non-functional testing. 
 
-\definecolor{pblue}{rgb}{0.13,0.13,1}
-\definecolor{pgreen}{rgb}{0,0.5,0}
-\definecolor{pred}{rgb}{0.9,0,0}
-\definecolor{pgrey}{rgb}{0.46,0.45,0.48}
+**Functional testing** is concerned with the features and/or functions of the system.
 
-\usepackage{listings}
-\lstset{language=Java,
-  showspaces=false,
-  showtabs=false,
-  breaklines=true,
-  showstringspaces=false,
-  breakatwhitespace=true,
-  commentstyle=\color{pgreen},
-  keywordstyle=\color{pblue},
-  stringstyle=\color{pred},
-  basicstyle=\ttfamily,
-  moredelim=[il][\textcolor{pgrey}]{$$},
-  moredelim=[is][\textcolor{pgrey}]{\%\%}{\%\%}
-}
+**Non-functional testing** includes performance, usability and maintainability. 
 
-\begin{document}
-
-\section{Specification-based testing}
-Specification testing is an input/output-driven testing technique, also known as \textbf{black-box testing}. It requires no knowledge of how the software inside the "box" is structured. Specification testing covers both functional and non-functional testing. 
-
-\textbf{Functional testing} is concerned with the features and/or functions of the system.
-
-\textbf{Non-functional testing} includes performance, usability and maintainability. 
-
-\section{Partition testing}
+## Partition testing
 Programs often can't be tested with just one test. Breaking up the program into classes and what should be tested into partitions can help solve this problem.
 
 These partitions should all exercise the program in a different way. The program should behave correctly in all test cases. It can be assumed that if one element executes correctly, the others will execute correctly as well and vice versa.
 
-This is why there is no point in testing all inputs; one element should be used per partition, because all equivalent inputs result in executing the program in similar manner. This is called \textbf{equivalence partitioning}. 
-It is good practice to name your test method after your partition.
-\\
-
-\noindent \textbf{example} leap year partitioning\\
+This is why there is no point in testing all inputs; one element should be used per partition, because all equivalent inputs result in executing the program in similar manner. This is called **equivalence partitioning** 
+It is good practice to name your test method after your partition. 
+<br/>
+**example** leap year partitioning
 A team develops a program that takes an integer as input and returns true or false depending on whether the input is a leap year.
 
 The specifications are as follows:
-\begin{itemize}
-    \item A leap year can be divided by four exactly.
-    \item If the year can also be divided by 100 exactly it is not a leap year...
-    \item ...except if the year can also be divided by 400 exactly.
-\end{itemize}
-\  \\
+
+ - A leap year can be divided by four exactly.
+ - If the year can also be divided by 100 exactly it is not a leap year...
+ - ...except if the year can also be divided by 400 exactly.
 
 The program can be broken up into four parts, which all should get different test cases.
-\begin{itemize}
-    \item A case for which the input is not divisible by four. This should return false.
-    \item A case for which the input is divisible by four, but not by 100. This should return true.
-    \item A case for which the input is divisible by 100, but not by 400. This should return false.
-    \item A case for which the input is divisible by 400. This should return true.
-\end{itemize}
+
+ - A case for which the input is not divisible by four. This should return false.
+ - A case for which the input is divisible by four, but not by 100. This should return true.
+ - A case for which the input is divisible by 100, but not by 400. This should return false.
+ - A case for which the input is divisible by 400. This should return true.
+
 All of these test cases should be tested. If the code is buggy, it should be reworked until the tests pass accordingly.
-\\
 
-\subsection*{Random vs. partition testing}
-Random testing is a black-box technique where programs are tested by generating random inputs. It is not an effective way to find bugs in a large input space. \\
-Human testers use their experience and knowledge of the program to test trouble-prone areas more effectively. However, where humans can generate few tests in a short time period such as a day, computers can generate millions.\\
-A combination of random testing and partition testing is therefore the most beneficial.\\
 
-\section{Category-partition method}
+### Random vs. partition testing
+Random testing is a black-box technique where programs are tested by generating random inputs. It is not an effective way to find bugs in a large input space. 
+Human testers use their experience and knowledge of the program to test trouble-prone areas more effectively. However, where humans can generate few tests in a short time period such as a day, computers can generate millions.
+A combination of random testing and partition testing is therefore the most beneficial.
+
+## Category-partition method
 The category-partition method is meant to reduce the number of possible test cases to a feasible amount of tests. The method works as follows:
-\\
-\begin{enumerate}
-    \item Identify the inputs, also called parameters.
-    \item Specify the characteristics of the parameters. For example:
-    \begin{itemize}
-        \item The input has to be positive.
-        \item The input cannot be null. This characteristic does not necessarily come from requirements. Think about what inputs are logical.
-    \end{itemize}
-    \item Combine the specified characteristics and parameters to get all combinations.
-    \item Minimize the number of combinations by adding constraints to the parameter. For example:
-    \begin{itemize}
-        \item Remove invalid combinations.
-        \item Test exceptional behaviour only once.
-    \end{itemize}
-\end{enumerate}
-\   \\
 
-\noindent \textbf{example} Christmas discount category-partition \\
+ 1. Identify the inputs, also called parameters.
+ 2. Specify the characteristics of the parameters. For example:
+       *  The input has to be positive.
+        * The input cannot be null. This characteristic does not necessarily come from requirements. Think about what inputs are logical.
+ 3. Combine the specified characteristics and parameters to get all combinations.
+ 4. Minimize the number of combinations by adding constraints to the parameter. For example:
+		* Remove invalid combinations.
+        * Test exceptional behaviour only once.
+</br>  </br>  
+
+**example** Christmas discount category-partition
 A system should give a discount of 25\% when it is Christmas.
 
-\begin{enumerate}
-    \item Identify the parameters:
-        \begin{itemize}
-            \item The date (is it Christmas?)
-            \item The price
-        \end{itemize}
-    \item Specify the characteristics:
-        \begin{itemize}
-            \item For the date: it can either be Christmas or not.
-            \item For the price: it can be a positive number, a zero or a negative number. The last case is exceptional.
-        \end{itemize}
-    \item Combine all characteristics and parameters:
-        \begin{table}[h]
-        \begin{tabular}{|l|l|}
-        \hline
-        \textbf{Date} & \textbf{Price} \\ \hline
-        Christmas & Positive \\ \hline
-         & Zero \\ \hline
-         & Negative \\ \hline
-        Not Christmas & Positive \\ \hline
-         & Zero \\ \hline
-         & Negative \\ \hline
-        \end{tabular}
-        \end{table}
-    \item Minimize the number of combinations:
-        \begin{itemize}
-            \item The negative number is an exceptional case. This means it would only have to be tested once, with either the date being Christmas or not Christmas.
-        \end{itemize}
-\end{enumerate}
-\  \\
-\newpage
-\noindent \textbf{exercise}\\
-\label{f:category-partition}
-\noindent{}See a slightly modified version of HashMap's \texttt{put()} method Javadoc in Figure~\ref{f:hashmap-put}. Apply the category/partition method. What is \textbf{the minimal and most suitable partitions} for the \texttt{key} input parameter?
+ 1. Identify the parameters:
+       * The date (is it Christmas?)
+       * The price
+ 2. Specify the characteristics:
+       * For the date: it can either be Christmas or not.
+       * For the price: it can be a positive number, a zero or a negative number. The last case is exceptional.
+ 3. Combine all characteristics and parameters:
 
-\begin{figure}[H]
-\begin{lstlisting}[basicstyle=\ttfamily,language={Java}]
-/**
+| Date          | Price    |
+|---------------|----------|
+| Christmas     | Positive |
+|               | Zero     |
+|               | Negative |
+| Not Christmas | Positive |
+|               | Zero     |
+|               | Negative |
+ 4. Minimize the number of combinations:
+	  * The negative number is an exceptional case. This means it would only have to be tested once, with either the date being Christmas or not Christmas.
+</br>
+</br>
+
+**exercise**
+See a slightly modified version of HashMap's *put()* method Javadoc in Figure 1. Apply the category/partition method. What is **the minimal and most suitable partitions** for the *key* input parameter?
+
+<pre><code>/**
  * Puts the supplied value into the Map, 
  * mapped by the supplied key.
  * If the key is already on the map, its
@@ -144,158 +93,136 @@ A system should give a discount of 25\% when it is Christmas.
 public V put(K key, V value) {
   // implementation here
 }
-\end{lstlisting}
-\caption{Modified javadoc of HashMap's \texttt{put()} method. Original Javadoc: http://developer.classpath.org/doc/java/util/HashMap-source.html. (Question \ref{f:category-partition})}
-\label{f:hashmap-put}
-\end{figure}
-
-\noindent \textbf{answer}\\
+</code></pre>
+Modified javadoc of HashMap's *put()* method. Original Javadoc: http://developer.classpath.org/doc/java/util/HashMap-source.html. (**Question** category-partition)
+</br>
+</br>
+**answer**
 At least 3 partitions are clear from the requirement: 
-\begin{itemize}
-    \item New key (causes the method to return null).
-    \item Existing key (replaces old value, causes the method to return the previous value).
-    \item Null key (causes the method to throw an exception).
-\end{itemize}
-It would not make sense to use "new value" as a partition for the \textit{key} value.
+* New key (causes the method to return null).
+* Existing key (replaces old value, causes the method to return the previous value).
+* Null key (causes the method to throw an exception).
+
+It would not make sense to use "new value" as a partition for the *key* value.
 
 
-\section{Boundary testing}
-The boundary area between partitions is often buggy. When the boundary is exercised, the system should behave as expected. This is called boundary testing.
-\\
+## Boundary testing
+The boundary area between partitions is often buggy. When the boundary is exercised, the system should behave as expected. This is called **boundary testing**.
 
-\subsection*{CORRECT - Boundary conditions}
-The CORRECT acronym is a mnemonic for conditions under which the code's behaviour might differ from expected. These are also called \textbf{boundary conditions}. 
-\begin{itemize}
-    \item \textbf{C}onformance: Does the value conform to an expected format?
-    \item \textbf{O}rdering: Is the set of data ordered or unordered as appropriate?
-    \item \textbf{R}ange: Is the value within reasonable minimum and maximum values?
-    \item \textbf{R}eference: Does the code reference anything external that isn't under the direct control of the code itself?
-        \begin{itemize}
-            \item What does the code reference outside its scope?
-            \item What external dependencies has the code?
-            \item Does the code depend on an object being in a certain state?
-            \item Are there any conditions that must be met?
-        \end{itemize}
-    \item \textbf{E}xistence: Does the value exist?
-    \item \textbf{C}ardinality: Are there exactly enough values?
-        \begin{itemize}
-            \item A lot of mistakes are made when creating loops. The loop for example executes one time too many or one time too little. This is called an off-by-one error.
-            \item This is why there should be tests that execute the loop zero, one and many times.
-        \end{itemize}
-    \item \textbf{T}ime: Is everything happening in order? 
-        \begin{itemize}
-            \item What happens if methods are invoked out of order?
-            \item What happens if there is a timeout?
-            \item Does the date or time influence the program?
-        \end{itemize}
-\end{itemize}
-It might happen that the opposite of the applicable conditions is true. For example, what happens if an input does not \textit{conform} to the expected format? These situations should be tested.
-% Chapter 5 Langr, J., Hunt, A., & Thomas, D. (2015). Pragmatic unit testing in Java 8 with JUnit. Pragmatic Bookshelf.
-\\
 
-\noindent \textbf{exercise}
+### CORRECT - Boundary conditions
+The CORRECT acronym is a mnemonic for conditions under which the code's behaviour might differ from expected. These are also called **boundary conditions**.
+* **C**onformance: Does the value conform to an expected format?
+ * **O**rdering: Is the set of data ordered or unordered as appropriate?
+ * **R**ange: Is the value within reasonable minimum and maximum values?
+* **R**eference: Does the code reference anything external that isn't under the direct control of the code itself?
+     * What does the code reference outside its scope?
+	 *  What external dependencies has the code?
+     * Does the code depend on an object being in a certain state?
+     * Are there any conditions that must be met?
+ * **E**xistence: Does the value exist?
+ * **C**ardinality: Are there exactly enough values?
+	 * A lot of mistakes are made when creating loops. The loop for example executes one time too many or one time too little. This is called an off-by-one error.
+     * This is why there should be tests that execute the loop zero, one and many times.
+ * **T**ime: Is everything happening in order? 
+     * What happens if methods are invoked out of order?
+     * What happens if there is a timeout?
+     *  Does the date or time influence the program?
+
+It might happen that the opposite of the applicable conditions is true. For example, what happens if an input does not *conform* to the expected format? These situations should be tested.
+
+[comment]: <> (Chapter 5 Langr, J., Hunt, A., & Thomas, D. (2015). Pragmatic unit testing in Java 8 with JUnit. Pragmatic Bookshelf.)
+</br> 
+</br>
+**exercise**
 Zip codes in country X are always composed of 4 numbers + 2 letters, e.g., 2628CD. Numbers are in the range [1000, 4000].
 Letters are in the range [C, M]. 
-\\
 
 Consider a program that receives two inputs: an integer (for the 4 numbers) and a string (for the 2 letters), and returns true (valid zip code) or false (invalid zip code). A tester comes up with the following partitions:
 
-\begin{enumerate}
-	\item $[0,999]$
-	\item $[1000,4000]$
-	\item $[2001, 3500]$
-	\item $[3500, 3999]$
-	\item $[4001, 9999]$
-	\item $[A-C]$
-	\item $[C-M]$
-	\item $[N-Z]$
-\end{enumerate}
+ * $[0,999]$
+ * $[1000,4000]$
+ * $[2001, 3500]$
+ * $[3500, 3999]$
+ * $[4001, 9999]$
+ * $[A-C]$
+ * $[C-M]$
+ * $[N-Z]$
 
-Which of the partitions above are \textbf{valid}?
-\\\\
-\noindent (Note that "$[$" and "$]$" indicate that numbers in the boundaries are included in the domain. $[a,b]$ $\rightarrow$ all numbers between a and b, including a and b.)\\
+Which of the partitions above are **valid**?
 
-\noindent \textbf{answer}
+(Note that "$[$" and "$]$" indicate that numbers in the boundaries are included in the domain. $[a,b]$ $\rightarrow$ all numbers between a and b, including a and b.)
+
+**answer**
 1, 2, 5, 7, 8
 
-\subsection*{On and off points}
-An \textbf{in point} makes the condition true.\\
-An \textbf{out point} makes the condition false.\\
-An \textbf{on point} is exactly on the boundary.\\
-An \textbf{off point} is as close to the boundary as possible. If the on point is an in point, the off point is an out point and vice versa.
-\\
+### On and off points
+An **in point** makes the condition true.
+An **out point** makes the condition false.
+An **on point** is exactly on the boundary.
+An **off point** is as close to the boundary as possible. If the on point is an in point, the off point is an out point and vice versa.
 
-\noindent \textbf{example}
-score $\geq$ 100\\
-An in point is for example 200.\\
-An out point is for example 50.\\
-The on point is 100.\\
+**example**
+score $\geq$ 100
+An in point is for example 200.
+An out point is for example 50.
+The on point is 100.
 The off point is 99, if score is an integer.
-\\
 
-\noindent \textbf{exercise}
-A game has the following condition: \texttt{numberOfPoints $\leq$ 570}. What are the correct in, and out and on, and off points for numberOfPoints?
-\\
 
-\noindent \textbf{answer}
+**exercise**
+A game has the following condition: *numberOfPoints $\leq$ 570*. What are the correct in, and out and on, and off points for numberOfPoints?
+
+**answer**
 on point = 570, off point = 571, in point = 50, out point = 1000
 
-\subsection*{Open or closed boundaries} 
+### Open or closed boundaries}
 A boundary can be open or closed. An open boundary means that one side is not defined. This can be more difficult to test because one can't be entirely sure what point to pick for the off point.\newline
 
- \noindent \textbf{example}\\
-x $>$ 0 is an open boundary.\\
-y $\leq$ 10 is a closed boundary.\\
-\\
+**example**
+x $>$ 0 is an open boundary.
+y $\leq$ 10 is a closed boundary.
+</br>
+</br>
+To deal with an open boundary a **simplified domain testing strategy** could be used:
+ 1.  If there are multiple boundaries, they should be handled independently.
+ 2. Pick an off and on point for each boundary.
+ 3. Use varying in points for the other boundaries that are not currently being tested.
 
-\noindent To deal with an open boundary a \textbf{simplified domain testing strategy} could be used:
-\begin{enumerate}
-    \item If there are multiple boundaries, they should be handled independently.
-    \item Pick an off and on point for each boundary.
-    \item Use varying in points for the other boundaries that are not currently being tested.
-\end{enumerate}
 A domain matrix can be a helpful tool.
-\\
 
-\noindent \textbf{example} domain matrix
-\begin{table}[h]
-\begin{tabular}{|l|l|l|l|l|l|l|l|l|}
-\hline
-\multicolumn{9}{|l|}{Boundary conditions for "x \textgreater{} 0 \&\& x \textless{}= 10 \&\& y \textgreater{}= 10"} \\ \hline
-\multicolumn{3}{|l|}{} & \multicolumn{6}{l|}{test cases (x,y)} \\ \hline
-Variable & Condition & Type & t1 & t2 & t3 & t4 & t5 & t6 \\ \hline
-x & \textgreater{} 0 & on & 0 &  &  &  &  &  \\ \cline{3-9} 
- &  & off &  & 1 &  &  &  &  \\ \cline{2-9} 
- & \textless{}= 0 & on &  &  & 10 &  &  &  \\ \cline{3-9} 
- &  & off &  &  &  & 11 &  &  \\ \cline{2-9} 
- & typical & in &  &  &  &  & 4 & 6 \\ \hline
-y & \textgreater{}= 1.0 & on &  &  &  &  & 1.0 &  \\ \cline{3-9} 
- &  & off &  &  &  &  &  & 9.0 \\ \cline{2-9} 
- & typical & in & 10.0 & 16.0 & 109.3 & 2390.2 &  &  \\ \hline
-\end{tabular}
-\end{table}
-\\   \
 
-\noindent \textbf{example}\\
-A game has the following condition:\\
-\texttt{(numberOfPoints $\leq$ 570 and numberOfLives > 10) or energyLevel == 5}. \\
+**example** domain matrix
+Boundary conditions for "x $>$ 0 \&\& x $\leq$ 10 \&\& y $\geq$ 10"
+
+| Variable | Condition | Type | t1   | t2   | t3    | t4     | t5  | t6  |
+|----------|-----------|------|------|------|-------|--------|-----|-----|
+| x        |  $>$0     | on   | 0    |      |       |        |     |     |
+|          |           | off  |      | 1    |       |        |     |     |
+|          | $\leq$    | on   |      |      | 10    |        |     |     |
+|          |           | off  |      |      |       | 11     |     |     |
+|          | typical   | in   |      |      |       |        | 4   | 6   |
+| y        | $\geq$ 10 | on   |      |      |       |        | 1.0 |     |
+|          |           | off  |      |      |       |        |     | 9.0 |
+|          | typical   | in   | 10.0 | 16.0 | 109.3 | 2390.2 |     |     |
+
+**exercise**
+A game has the following condition:
+*(numberOfPoints $\leq$ 570 and numberOfLives > 10) or energyLevel == 5*.
 Perform boundary analysis (by building a domain matrix). How many test cases are derived after the analysis? 
-\\
 
-\noindent \textbf{answer}
+**answer**
 Seven. NumberOfPoints and NumberOfLives have one off point and one on point each, which adds to four tests. Energy level has two off points and one on point, since it's an equality. This adds three more tests, making the total seven.
-\\
 
-\subsection*{Parameterised tests}
-\textbf{Parameterised tests} allow a developer to run the same tests using different inputs and expected outputs. This makes tests more easily maintainable. Parameterised tests make use of an ArgumentSource @CsvSourse, which stands for \textbf{c}omma-\textbf{s}eperated \textbf{v}alues.\\
+### Parameterised tests
+**Parameterised tests** allow a developer to run the same tests using different inputs and expected outputs. This makes tests more easily maintainable. Parameterised tests make use of an ArgumentSource @CsvSourse, which stands for **c**omma-**s**eperated **v**alues.
 
-\noindent \textbf{example} parameterised test
-\begin{lstlisting}
-$$@ParameterizedTest
-$$@CsvSource({"Input, seperated", "by, comma"}
+
+**example** parameterised test
+<pre><code>@ParameterizedTest
+@CsvSource({"Input, seperated", "by, comma"}
 public void methodTo(int be, int tested) {
 //  code goes here.
 }
-\end{lstlisting}
+</code></pre>
 
-\end{document}
