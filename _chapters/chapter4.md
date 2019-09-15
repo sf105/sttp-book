@@ -49,6 +49,13 @@ In general a decision table looks like the following:
   <tr><td><i>Action</i></td><td>&lt;Action&gt;</td><td>value1<br></td><td>value2</td><td>value3</td><td>value4</td></tr>
 </table>
 
+The chosen conditions should always be indepent from one another.
+The order of the conditions should never matter.
+So we can make <Condition2> true and <Condition1> false or we can make <Condition1> false and afer that <Condition2> true.
+This should not influence the action depicted in the decision table.
+If the other does matter in some way, a state machine might be a better model.
+We cover state machines later in this chapter.
+
 {% include example-begin.html %}
 When choosing a phone subscription there are a couple of options you could choose.
 Depending on these options a price per month is given.
