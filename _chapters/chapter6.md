@@ -118,3 +118,53 @@ This is extra work that is always needed for integration tests.
 
 Integration testing is a very useful testing method.
 However, due to its trade offs (extra setup that is needed) it is important to decide how much integration testing has to be done.
+
+## The Testing Pyramid
+We have seen three levels of tests: unit, system and integration.
+It is time to see how to use these test levels together and when to switch from one to the other.
+
+We do this by using the so-called testing pyramid.
+
+[//]: TODO: center image
+![](/assets/img/chapter6/testing_pyramid.svg)
+
+Here the size of the pyramid slice represent the amount of test we would want of each test level.
+A new test level is manual, which is having users try the program and record how they are using the system.
+Unit test is at the bottom of the pyramid, which means that we want most test to be unit tests.
+Reasons for this have been discussed in the unit testing section.
+Then we get integration tests, of which we want to make less than unit tests, mostly because of the extra effort integration tests take to make and execute.
+Lastly we move on to system and manual tests in a similar way.
+
+Additionally to the amount of tests of a level we can see that the further up the pyramid the closer to reality the tests become.
+However, also the more complex the creation and execution of the tests becomes.
+These are very large factors in determining what kind of tests to create for testing a system.
+
+We will now go over a couple of guidelines you can use to determine what level of tests to write when testing a system.
+We start at the unit level.
+When you have implemented a clear algorithm that you want to test, unit tests are the way to go.
+With an algorithm the parameters are easily controllable so with unit test you can test the different cases your algorithm might encouter.
+
+Then, whenever the system is interacting with an external componenet, e.g. a database or web service, you can start using integration testing.
+For each of the external components that the system uses, integration tests should be created to test the interaction between the system and the external component.
+
+System tests are very costly, so these are generally not used to test the entire system at once.
+However, for parts of the system that are absolutely critical and can never stop working system tests are useful.
+If it is so important to know if this part of the system will keep running, the reality of the system tests is important.
+
+As the testing pyramid shows, the manual tests are not done a lot compared to the other testing levels.
+The main reason is that manual testing, as the name suggets, cannot be automated.
+It is mainly used to do exploratory testing, which is a user testing the system to find issues that could not be found any other way.
+
+[//]: TODO: Add reference to blog post on Martin Fowler's Wiki
+
+### Ice cream cone
+What we see in practise is that instead of the testing pyramid people use the so-called ice cream cone.
+This is the testing pyramid, but put upside down.
+
+[//]: TODO: center image
+![](/assets/img/chapter6/ice_cream_cone.svg)
+
+Here we see that just a few unit tests and a lot of system tests are made.
+Moreover a lot of manual testing is used to test the system.
+By now, we have seen a lot of advantages of automated testing, so this is not the best way to test a system.
+Instead of the ice cream cone, try to focus on the testing pyramid.
