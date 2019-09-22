@@ -63,7 +63,7 @@ Some of these bugs are in the different components of the system working togethe
 These bugs cannot be caught with unit testing, as unit tests only exercise the components separately in isolation.
 
 ## System testing
-Unit test do not exercise the system in a realistic way.
+Unit tests do not exercise the system in a realistic way.
 To get a more realistic way of testing we use system testing.
 This is also called black-box testing.
 
@@ -89,3 +89,32 @@ This takes additional code that is needed just for automating the tests.
 Lastly, system tests tend to become flaky.
 Flaky tests mean that the tests might pass one time, but fail the other time.
 Flakiness of a test can be caused by various factors, which we will discuss in a later chapter.
+
+## Integration testing
+Unit and system testing are two extremes of test levels.
+Unit tests focus on the smallest parts of the system, while system tests focus on the whole system at once.
+To get a bit of both we want to have a level in between.
+Integration testing offers such a level between unit and system testing.
+
+When a system has an external component, e.g. a database, a class will be created to interact with this component.
+Now instead of all the system's components we just test this class and its interaction with the component it is made for.
+This is called intergration testing.
+
+In integration testing we test multiple components of a system, but not the whole system altogether.
+The tests focus on the interaction between two components of the system.
+With this focus, the integration testing has some aspects of unit testing.
+
+In essence integration testing is testing where you test one components interacting with another component.
+This other component usually is an external one, for example the database or a web service.
+The advantage of this approach is that the interactions between the components.
+This was actually one of the main disadvantages of unit testing: It did not find errors in the interactions between components.
+
+The disadvantage of integration testing compared to unit testing is that it is harder to write the tests.
+First the external component needs to be running.
+Then this component has to be in a state, which is useful for the tests.
+This often includes creating data for the test in this external component.
+After the test, the component is no longer needed so it has to be cleaned up.
+This is extra work that is always needed for integration tests.
+
+Integration testing is a very useful testing method.
+However, due to its trade offs (extra setup that is needed) it is important to decide how much integration testing has to be done.
