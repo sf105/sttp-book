@@ -190,9 +190,71 @@ These external systems include for example databases or webservices that are use
 Mocks ar also used to simulate exception that are hard to trigger in the actual system.
 When using third party libraries that are hard to control we use mocks to simulate their behavior in certain ways that are useful to the tests.
 
+Besides using mocks to simulate the behavior of components needed to run the system, mocks can be used to test the interaction of the system with a component easily.
+This way we use mocks to increase the observability, i.e. we can observe the system's behavior easier.
+Simulating behavior of components like we discussed earlier is using mocks to increase the controllability.
+
 To use mocks in our tests we create a mock object.
 Then, once it has been created, we give it to the class that normally uses an actual implementation of the mocked object.
 This class is now using the mocked object while the tests are executed.
 At first, the mock does not know how to do anything.
 So, before running the tests, we have to tell it exactly what to do when a certain method is called.
-In the next section we will look at how this is done in java.
+In the next section we will look at how this is done in Java.
+
+## Mockito
+In Java the most used framework for mocking is Mockito ([mockito.org](https://site.mockito.org)).
+To perform the steps we mentioned above we use a couple of methods provided by mockito:
+* `mock(<class>)`: creates a mock object of the given runtime class. The runtime class can be retrieved from any class by `<ClassName>.class`.
+* `when(<mock>.<method>).thenReturn(<value>)`: defines the behavior when the given method is called on the mock. In this case `<value>` will be returned.
+* `verify(<mock>).<method>`: is a test that passes when the method is called on the mock and fails otherwise.
+Much more functionalities are described in [mockito's documentation](https://javadoc.io/page/org.mockito/mockito-core/latest/org/mockito/Mockito.html).
+
+{% include example-begin.html %}
+Suppose we have a function that filters invoices.
+These invoices are saved in a database and retrieved from the database by this function.
+The invoices are filtered on their price.
+All those above 100 are filtered.
+Without mocks, to test the method we need to insert some testing invoices first:
+```java
+@Test
+public void filterInvoicesTest() {
+    InvoiceDao dao = new InvoiceDao();
+    Invoice i1 = new Invoice("M", 20.0);
+    Invoice i2 = new Invoice("A", 300.0);
+    dao.save(i1); 
+    dao.save(i2);
+
+    InvoiceFilter f = new InvoiceFilter(dao);
+    List<Invoice> result = f.filter();
+
+    assertThat(result.size()).isEqualTo(1);
+    assertThat(results.get(0)).isEqualTo(i1);
+    dao.close();
+}
+```
+
+Now instead of using the database, we want to replace it with a mock object.
+This way our test will be faster and we can more easily control what the Database-Access-Object returns.
+
+```java
+@Test
+public void filterInvoicesTest() {
+    InvoiceDao dao = mock(InvoiceDao.class);
+    Invoice i1 = new Invoice("M", 20.0);
+    Invoice i2 = new Invoice("A", 300.0);
+    
+    List<Invoice> list = Arrays.asList(i1, i2);
+    when(dao.all()).thenReturn(list);
+
+    InvoiceFilter f = new InvoiceFilter(dao);
+    List<Invoice> result = f.filter();
+
+    assertThat(result.size()).isEqualTo(1);
+    assertThat(results.get(0)).isEqualTo(i1);
+}
+```
+
+The InvoiceFilter uses the `all` method in the `InvoiceDao` to get the invoices.
+With the mock we can easily give the two invoices that we want to test on.
+Using this mock also makes sure we do not have to keep a database running while executing the tests.
+{% include example-end.html %}
