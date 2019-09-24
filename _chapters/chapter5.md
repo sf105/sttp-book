@@ -524,3 +524,171 @@ Then you can choose to add either 4 or 7 to cover condition B.
 
 The possible answers are: {2, 4, 5, 6} or {2, 5, 6, 7}.
 {% include exercise-answer-end.html %}
+
+For the next three exercises use the code below.
+This method returns the longest substring that appears at both the beginning and end of the string without overlapping.
+For example, `sameEnds("abXab")` returns `"ab"`.
+```java
+public String sameEnds(String string) {
+01. int length = string.length();
+02. int half = length / 2;
+
+03. String left = "";
+04. String right = "";
+
+05. int size = 0;
+06. for (int i = 0; i < half; i++) {
+07.     left = left + string.charAt(i);
+08.     right = string.charAt(length - 1 - i) + right;
+
+09.     if (left.equals(right)) {
+10.         size = left.length();
+        }
+    }
+
+11. return string.substring(0, size);
+}
+```
+This code is based on the [same ends problem](https://codingbat.com/prob/p131516).
+
+
+{% include exercise-begin.html %}
+Draw the Control Flow Graph of the source code above.
+{% include answer-begin.html %}
+![](/assets/img/chapter5/exercises/CFG-sameEnds.svg)
+
+L\<number\> represents the line numbers that the code blocks cover.
+{% include exercise-answer-end.html %}
+
+
+{% include exercise-begin.html %}
+Give a test case (by the input string and expected output) that achieves 100% line coverage.
+{% include answer-begin.html %}
+A lot of input strings give 100% line coverage.
+A very simple one is `"aa"`.
+As long as the string is longer than one character and makes the condition in line 9 true, it will give 100% line coverage.
+For `"aa"` the expected output is `"a"`.
+{% include exercise-answer-end.html %}
+
+{% include exercise-begin.html %}
+Given the source code of the `sameEnds` method. Which of the following statements is **not correct**?
+1.  It is possible to devise a single test case that achieves 100% line coverage and 100% decision coverage.
+2. It is possible to devise a single test case that achieves 100% line coverage and 100% (basic) condition coverage.
+3. It is possible to devise a single test case that achieves 100% line coverage and 100% decision + condition coverage.
+4. It is possible to devise a single test case that achieves 100% line coverage and 100% path coverage.
+{% include answer-begin.html %}
+Answer 4. is correct.
+The loop in the method makes it impossible to achieve 100% path coverage.
+This would require us to test all possible number of iterations.
+For the other answers we can come up with a test case: `"aXYa"`
+{% include exercise-answer-end.html %}
+
+Now consider this piece of code for the FizzBuzz problem.
+Given an `int n`, it returns the string form of the number followed by "!".
+So the int 6 would yield "6!".
+Except if the number is divisable by 3 it returns "Fizz!" and if it is divisable by 5 it returns "Buzz!".
+If the number is divisable by both 3 and 5 it returns "FuzzBuzz!"
+Based on a [CodingBat problem](https://codingbat.com/prob/p115243)
+```java
+public String fizzString(int n) {
+1.  if (n % 3 == 0 && n % 5 == 0)
+2.       return "FizzBuzz!";
+3.  if (n % 3 == 0)
+4.      return "Fizz!";
+5.  if (n % 5 == 0)
+6.      return "Buzz!";
+    
+7.  return n + "!";
+}
+```
+
+{% include exercise-begin.html %}
+Assume we have two test cases with an input integer: T1 = 15 and T2 = 8.
+
+What is the condition coverage these test cases give combined?
+
+What is the decision coverage?
+{% include answer-begin.html %}
+First the condition coverage.
+We have 8 conditions:
+1. Line 1: `n % 3 == 0`, true and false
+2. Line 1: `n % 5 == 0`, true and false
+3. Line 3: `n % 3 == 0`, true and false
+4. Line 5: `n % 5 == 0`, true and false
+ 
+T1 makes conditions 1 and 2 true and then does not cover the other conditions.
+T2 makes all the conditions false.
+In total these test cases then cover $$2 + 4 = 6$$ conditions so the condition coverage is $$\frac{6}{8} \cdot 100\% = 75\%$$
+
+Now the decision coverage.
+We have 6 decision:
+1. Line 1: `n % 3 == 0 && n % 5 == 0`, true and false
+2. Line 3: `n % 3 == 0`, true and false
+3. Line 5: `n % 5 == 0`, true and false
+
+Now T1 makes decision 1 true and does not cover the other decisions.
+T2 makes all the decision false.
+Therefore the coverage is $$\frac{4}{6} \cdot 100\% = 66\%$$.
+{% include exercise-answer-end.html %}
+
+The next couple of exercises use Java's implementation of the LinkedList's computeIfPresent method.
+```java
+public V computeIfPresent(K key, BiFunction<? super K, ? super V, ? extends V> rf) {
+01. if (rf == null) {
+02.     throw new NullPointerException();
+    }
+  
+03. Node<K,V> e;
+04. V oldValue;
+05. int hash = hash(key);
+06. e = getNode(hash, key);
+07. oldValue = e.value;
+  
+08. if (e != null && oldValue != null) {
+  
+09.     V v = rf.apply(key, oldValue);
+  
+10.     if (v != null) {
+11.         e.value = v;
+12.         afterNodeAccess(e);
+13.         return v;
+        }
+        else {
+14.         removeNode(hash, key, null, false, true);
+        }
+    }
+15. return null;
+}
+```
+
+{% include exercise-begin.html %}
+Draw the Control Flow Graph (CFG) of the method above.
+{% include answer-begin.html %}
+
+![](/assets/img/chapter5/exercises/CFG-computeIfPresent.svg)
+
+The L\<number\> in the blocks represent the line number corresponding to the blocks.
+{% include exercise-answer-end.html %}
+
+{% include exercise-begin.html %}
+How many tests do we need **at least** to achieve $$100\%$$ line coverage?
+{% include answer-begin.html %}
+3.
+
+One test to cover lines 1 and 2.
+Another test to cover lines 1, 3-7 and 8-13.
+Finally another test to cover lines 14 and 15. This test will also automatically cover lines 1, 3-10.
+{% include exercise-answer-end.html %}
+
+{% include exercise-begin.html %}
+How many tests do we need **at least** to achieve $$100\%$$ branch coverage?
+{% include answer-begin.html %}
+4.
+
+From the CFG we can see that there are 6 branches.
+We need at least one test to cover the true branch from teh decision in line 1.
+Then with another test we can cover false from L1 and false from L8.
+We add another test to cover false from the decision in line 10.
+Finally an additional test is needed to cover the true branch out of the decision in line 10.
+This gives us a minimum of 4 tests.
+{% include exercise-answer-end.html %}
