@@ -171,9 +171,8 @@ The third point is realized by making two test cases for each condition.
 In these two test cases, the condition under test should have a different value, the outcome should be different, and the other conditions should have the same value in both test cases.
 This way the condition that is under test individually influences the outcome, as the other conditions stay the same and therefore do not influence the outcome.
 
-While it might seem that the amount of tests needed for MC/DC is $$2N$$ for $$N$$ conditions, we can in fact reuse some test cases from a conditions when testing another conditions.
-By efficiently choosing the test cases, we need $$N+1$$ test cases for MC/DC.
-This is way better than $$2^N$$ test cases, while still testing the important logic from the decision table.
+By choosing the test cases efficiently MC/DC needs less tests than all variants, while still exercising the important parts of the system.
+Less tests of course means less time taken to write the tests and a faster execution of the test suite.
 
 {% include example-begin.html %}
 To derive the tests we expand and rearrange the decision table of the previous example:
@@ -187,11 +186,23 @@ To derive the tests we expand and rearrange the decision table of the previous e
 </table>
 First we look at the first condition and we try to find pairs of combinations that would cover this condition according to MC/DC.
 We look voor combinations where only International and the  price/month changes.
+
 The possible pairs are: {v1, v5}, {v2, v6}, {v3, v7} and {v4, v8}.
-Testing both combinations of any of these pairs would give MC/DC for the first condition. \\
-Moving to Auto-renewal we find the pairs: {v2, v4}, {v6, v8}. For this condition {v1, v3} and {v5, v7} are not viable pairs, because the action is the same among the two combinations. \\
-The last condition, Loyal, gives the following pairs: {v3, v4}, {v7, v8}. \\
-By choosing the test cases efficiently we should be able to achieve full MC/DC by choosing four of the combinations. If we take v2 and v4 we cover Auto-renewal. Then to cover loyal we acn add v3 and finally to cover International we add v8. Now we have the following combinations: v2, v3, v4, v8. For each conditions at least one pair of combinations is tested so we have full MC/DC if we test these combinations.
+Testing both combinations of any of these pairs would give MC/DC for the first condition.
+
+Moving to Auto-renewal we find the pairs: {v2, v4}, {v6, v8}. For this condition {v1, v3} and {v5, v7} are not viable pairs, because the action is the same among the two combinations.
+
+The last condition, Loyal, gives the following pairs: {v3, v4}, {v7, v8}.
+
+By choosing the test cases efficiently we should be able to achieve full MC/DC by choosing four of the combinations. 
+We want to cover all the actions in the test suite.
+Therefore we need at least v4 and v8.
+With these decision we have covered the International condition as well.
+Now we need one of v1, v2, v3 and one of v5, v6, v7.
+To cover Loyal we add v7 and to cover Auto-renewal we add v2.
+Now we also cover all the possible actions.
+
+Now, for full MC/DC, we test the decisions: v2, v4, v7, v8.
 {% include example-end.html %}
 
 ### Implementation
@@ -243,10 +254,10 @@ In general this will look like the following:
 ```java
 @ParameterizedTest
 @CsvSource({
-    "true, 5, 8.0, ...", // test 1
+    "true, 5, 8.0, ...",  // test 1
     "false, 2, 0.6, ...", // test 2
-    "true, 1, 5.3, ...", // test 3
-    "true, 3, 4.7, ..."  // test 4
+    "true, 1, 5.3, ...",  // test 3
+    "true, 3, 4.7, ..."   // test 4
 })
 public void someTest(boolean param1, int param2, double param3, ...) {
   // Arrange
@@ -266,9 +277,9 @@ With the parameterized test we can easily create all tests we need for MC/DC of 
 ```java
 @ParameterizedTest
 @CsvSource({
-    "true, true, false, 30", // v2
-    "true, false, true, 30", // v3
-    "true, false, false, 32", // v4
+    "true, true, false, 30",   // v2
+    "true, false, true, 30",   // v3
+    "true, false, false, 32",  // v4
     "false, false, false, 15"  // v8
 })
 public void pricePerMonthTest(boolean international, boolean autoRenewal, 
@@ -686,3 +697,130 @@ You can see that we assumed the battery to start in the normal level state.
 Therefore, when the system transitions to the `ON` state it will be in the `LOCKED` and `NORMAL BATTERY` states.
 {% include example-end.html %}
 
+## Exercises
+Here you find some exercises to practise the material of this chapter with.
+For each of the exercises the answers are provided directly beneath the question.
+
+{% include exercise-begin.html %}
+Draw the transition tree of the following state machine:
+
+![](/assets/img/chapter4/exercises/order_state_machine.svg)
+
+Use sensible naming for the states in your transition tree.
+{% include answer-begin.html %}
+![](/assets/img/chapter4/exercises/order_transition_tree.svg)
+{% include exercise-answer-end.html %}
+
+{% include exercise-begin.html %}
+With the transition tree you devised in the previous exercise and the state machine in that exercise.
+What is the transition coverage of a test that the following events: [order placed, order received, order fullfiled, order delivered]?
+{% include answer-begin.html %}
+We have a total of 6 transitions.
+Of these transitions the four given in the test are covered and order cancelled and order resumed are not.
+This coves a transition coverage of $$\frac{4}{6} \cdot 100\% = 66.7\%$$
+{% include exercise-answer-end.html %}
+
+{% include exercise-begin.html %}
+Devise the decision table of the state machine that was given in the exercise above.
+Ignore the initial transition `Order placed`.
+{% include answer-begin.html %}
+<table>
+  <tr>
+    <td>STATES</td>
+    <td colspan="5">Events</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Order received</td>
+    <td>Order cancelled</td>
+    <td>Order resumed</td>
+    <td>Order fulfilled</td>
+    <td>Order delivered</td>
+  </tr>
+  <tr>
+    <td>Submitted</td>
+    <td>Processing</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Processing</td>
+    <td></td>
+    <td>Cancelled</td>
+    <td></td>
+    <td>Shipped</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Cancelled</td>
+    <td></td>
+    <td></td>
+    <td>Processing</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Shipped</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>Completed</td>
+  </tr>
+  <tr>
+    <td>Completed</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+{% include exercise-answer-end.html %}
+
+
+{% include exercise-begin.html %}
+How many sneak paths are there in the state machine we used in the previous exercises?
+Again ignoring the initial `Order placed` transition.
+{% include answer-begin.html %}
+20.
+
+There are 20 empty cells in the decision table.
+
+Also we have 5 states.
+This means $$5 \cdot 5 = 25$$ possible transitions.
+The state machine gives 5 explicit transitions so we have $$25 - 5 = 20$$ sneak paths.
+{% include exercise-answer-end.html %}
+
+{% include exercise-begin.html %}
+Consider the following decision table:
+<table>
+  <tr><th>Criteria</th><th colspan="6">Options</th></tr>
+  <tr><td>C1: Employed for 1 year</td><td>T</td><td>F</td><td>F</td><td>T</td><td>T</td><td>T</td></tr>
+  <tr><td>C2: Achieved last year's goal</td><td>T</td><td>dc</td><td>dc</td><td>F</td><td>T</td><td>F</td></tr>
+  <tr><td>C3: Positive evaluation from peers</td><td>T</td><td>F</td><td>T</td><td>F</td><td>F</td><td>T</td></tr>
+  <tr><td></td><td>10%</td><td>0%</td><td>5%</td><td>2%</td><td>6%</td><td>3%</td></tr>
+</table>
+
+Which decision do we have to test for full MC/DC?
+
+Use as few decisions as possible.
+{% include answer-begin.html %}
+
+First we find pairs of decisions that are suitable for MC/DC: (We indicate a decision as a sequence of T and F. TTT would mean all conditions true and TFF means C1 true and C2, C3 false)
+* C1: {TTT, FTT}, {FTF, TTF}, {FFF, TFF}, {FFT, TFT}
+* C2: {TTT, TFT}, {TFF, TTF}
+* C3: {TTT, TTF}, {FFF, FFT}, {FTF, FTT}, {TFF, TFT},
+
+All condition can use the TTT decision, so we will use that.
+Then we can add FTT, TFT and TTF. 
+Now we test each condition individually with it changing the outcome.
+
+It might look line we are done, but MC/DC requires each action to be covered at least once.
+To achieve this we add the FFF and TFF decision as test cases.
+
+In this case we need to test each explicit decision in the decision table.
+
+{% include exercise-answer-end.html %}
