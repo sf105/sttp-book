@@ -2,6 +2,7 @@
 chapter-number: 5
 title: Structural-Based Testing
 layout: chapter
+toc: true
 ---
 
 [//]: Called functional testing
