@@ -702,6 +702,83 @@ Here you find some exercises to practise the material of this chapter with.
 For each of the exercises the answers are provided directly beneath the question.
 
 {% include exercise-begin.html %}
+The *ColdHot* air conditioning system has the following requirements:
+* When the user turns it on, the machine is in an *idle* state.
+* If it's *too hot*, then, the *cooling* process starts. It goes back to *idle* when the defined *temperature is reached*.
+* If it's *too cold*, then, the *heating* process starts. It goes back to *idle* when the defined *temperature is reached*.
+* If the user *turns it off*, the machine is *off*. If the user *turns it on* again, the machine is back to *idle*.
+
+Draw a minimal state machine to represent these requirements.
+{% include answer-begin.html %}
+
+![](/assets/img/chapter4/exercises/coldhot_state_machine.svg)
+
+You should not need more than 4 states.
+{% include exercise-answer-end.html %}
+
+
+{% include exercise-begin.html %}
+Derive the transition tree from the state machine of the assignment above.
+{% include answer-begin.html %}
+
+![](/assets/img/chapter4/exercises/coldhot_transition_tree.svg)
+
+{% include exercise-answer-end.html %}
+
+
+{% include exercise-begin.html %}
+Now derive the transition table of the *ColdHot* state machine.
+
+How many sneaky paths can we test based on the transition table?
+{% include answer-begin.html %}
+<table>
+  <tr>
+    <td></td>
+    <td>temperature reached</td>
+    <td>too hot</td>
+    <td>too cold</td>
+    <td>turn on</td>
+    <td>turn off</td>
+  </tr>
+  <tr>
+    <td>Idle</td>
+    <td></td>
+    <td>Cooling</td>
+    <td>Heating</td>
+    <td></td>
+    <td>Off</td>
+  </tr>
+  <tr>
+    <td>Cooling</td>
+    <td>Idle</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Heating</td>
+    <td>Idle</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Off</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>Idle</td>
+    <td></td>
+  </tr>
+</table>
+
+There are 14 empty cells in the table, so there are 14 sneaky paths that we can test.
+{% include exercise-answer-end.html %}
+
+
+{% include exercise-begin.html %}
 Draw the transition tree of the following state machine:
 
 ![](/assets/img/chapter4/exercises/order_state_machine.svg)
@@ -822,5 +899,18 @@ It might look line we are done, but MC/DC requires each action to be covered at 
 To achieve this we add the FFF and TFF decision as test cases.
 
 In this case we need to test each explicit decision in the decision table.
+
+{% include exercise-answer-end.html %}
+
+
+{% include exercise-begin.html %}
+See the following generic state machine.
+
+![](/assets/img/chapter4/exercises/generic_state_machine.svg)
+
+Draw the transition tree of this state machine.
+{% include answer-begin.html %}
+
+![](/assets/img/chapter4/exercises/generic_transition_tree.svg)
 
 {% include exercise-answer-end.html %}
