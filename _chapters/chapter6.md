@@ -673,3 +673,52 @@ What words/sentences should be at the numbers?
 
 See the diagram in the Testing Pyramid section.
 {% include exercise-answer-end.html %}
+
+
+{% include exercise-begin.html %}
+Sarah just joined a mobile app team that has been trying to write automated tests for a while.
+The team wants to write unit tests for some part of their code, but "that's really hard", according to the developers. 
+
+After some code review, the developers themselves listed the following
+problems in their codebase: 
+1. May classes mix infrastructure and business rules
+2. The database has large tables and no indexes
+3. Use of static methods
+4. Some classes have too many attributes/fields
+
+To increase the testability, the team has budget to work on two out of the four issues above.
+Which items shouls Sarah recommend them to tackle first?
+
+Note: All of the four issues should obviously be fixed.
+However, try to prioritize the two most important onces: Which influence the testability the most?
+{% include answer-begin.html %}
+The correct answer is 1 and 3.
+
+As we discussed it is very important to keep the domain and infrastructure separated for the testability.
+This can be done, for example, by using Ports and Adapters.
+
+Static methods cannot be mocked and are therefore very bad for the controllability of the code.
+Code that has low controllability also has a low testability, so replacing the static methods by non-static ones will be very beneficial to the testability.
+
+The large tables and lack of indices do not really influence the testability, especially not when talking about unit tests.
+There we end up mocking the classes interacting with the database anyway.
+
+Too many attributes/fields can hurt testability as we might need to create a lot of mocks for just one class under test.
+However, the static methods and mixed domain and infrastructure are worse for the testability than a large amount of attributes/fields.
+{% include exercise-answer-end.html %}
+
+
+{% include exercise-begin.html %}
+Observability and controllability are two important concepts when it comes to software testing. 
+The three developers below could benefit from improving either the observability or the controllability of the system/class under test.
+
+1. "I can't really assert that the method under test worked well."
+2. "I need to make sure this class starts with that boolean set to false, but I simply can't do it."
+3. "I just instantiated the mock object, but there's simply no way to inject it in the class."
+
+For each developer's problem, is it related to observability or controllablity?
+{% include answer-begin.html %}
+1. Observability: The developer needs to be able to better observe the result.
+2. Controllability: The developer has to be able to change (control) a certain variable or field.
+3. Controllability: The developer should be able to control what instance of a class the class under test uses.
+{% include exercise-answer-end.html %}
