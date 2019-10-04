@@ -258,3 +258,108 @@ Now if `A` and `B` are true postcondition 1 should hold.
 If `A` is true and `B` is false, postcondition 2 should hold.
 Finally, if `A` is false, postcondition 3 should hold.
 {% include example-end.html %}
+
+## Invariants
+We have seen preconditions that need to hold before a method's execution and postconditions that need to hold after a method's execution.
+Now we move to conditions that always have to hold, so before and after a method's execution.
+These conditions are called invariants.
+An invariant is thus a condition that holds throughout the entire lifetime of a system, an object or a datastructure.
+
+A simple way of using invariants is by creating a checker method.
+This method will go through the datastructure/object/system and asserts whether the invariants hold.
+If an invariant does not hold it will then throw an `AssertionError`.
+For simpler invariant we can also use a boolean method that checks it he datastructure/object/system is still okay.
+This looks like the same method, but an important difference is that the boolean method only returns true or false and in the checker method an `AssertionError` is thrown at a certain place where it went wrong.
+We can also add messages to these errors so in general it is easier to find out what the problem is with the checker method.
+
+{% include example-begin.html %}
+Let's say we have a binary tree datastructure.
+An invariant for this datastructure would be that each when a parent points to a child, then the child should point to this parent.
+
+We can make a method that checks if this representation is correct in the given binary tree.
+```java
+public void checkRep(BinaryTree tree) {
+    BinaryTree left = tree.getLeft();
+    BinaryTree right = tree.getRight();
+    
+    assert (left == null || left.getParent() == tree) && 
+        (right == null || right.getParent() == tree)
+    
+    if (left != null) {
+        checkRep(left);
+    }
+    if (right != null) {
+        checkRep(right);
+    }
+}
+```
+
+First we check if the children nodes of the current node are pointing to this node as parent.
+Then we continue by checking the child nodes the same way we checked the current node.
+{% include example-end.html %}
+
+### Class invariant
+In Object-Oriented-Programming these checks on representations can also be applied at the class levels.
+This gives us class invariants.
+A class variant ensures that its condition will be true throughout the entire lifetime of each object of that class.
+The first time it should be true is after the constructor is done.
+Then after each public method is done the class invariant should still hold.
+This means that a private method invoked by a public method can leave the object with the class invariant being false.
+However, the public method that invoked the private method should then fix this and end with the class invariant again being true.
+Finally, the methods can assume that, when they start, the class invariant holds.
+
+This is all formalized by Bertrand Meyer as: The class variant indicates that a proposition P can be a class invariant if it holds after construction, and before and after any call to a public method assuming that the public methods are called with their preconditions being true.
+
+Of course, we want to know how to implement these class invariants.
+To implement simple class invariant in Java we can use the boolean method that checks if the representation is okay.
+We usually call this method `invariant`.
+Then we assert the return value of this method after the constructor, and before and after each public method.
+In these public methods the only preconditions and postconditions that have to hold additionally are the onces that are not in the invariant.
+
+{% include example-begin.html %}
+We return to the `FavoriteBooks` with the `merge` method.
+We had a precondition saying that `favorites != null`.
+Actually this should always be true, so we can turn it into a class variant.
+Additionally we can add the condition that `pushNotification != null`.
+```java
+public class FavoriteBooks {
+    List<Book> favorites;
+    Listener pushNotification;
+
+    public FavoriteBooks(...) {
+        favorites = ...;
+        pushNotification = ...;
+
+        // ...
+
+        assert invariant();
+    }
+
+    public void merge(List<Book> books) {
+        assert invariant();
+
+        // Remaining preconditions
+        assert books != null;
+
+        List<Book> newBooks = books.removeAll(favorites);
+
+        if (!newBooks.isEmpty()) {
+            favorites.addAll(newBooks);
+            pushNotification.booksAdded(newBooks);
+        }
+
+        // Remaining postconditions
+        assert favorites.containsAll(books);
+
+        assert invariant();
+    }
+
+    protected boolean invariant() {
+        return favorites != null && pushNotification != null;
+    }
+}
+```
+You can see that the `invariant` method checks the two conditions.
+Then we call `invariant` before and after `merge` and we only assert the pre- and postconditions that are not covered in the `invariant` method.
+At the end of the constructor we also asser the `invariant` method.
+{% include example-end.html %}
