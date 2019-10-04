@@ -73,3 +73,117 @@ To run the system normally with assertions enabled you always have to change som
 
 The assertions are mostly an extra safety measure.
 If it is crucial that a system runs correctly, we can use the asserts to add some additional testing during the system's execution.
+
+## Pre- and Postconditions
+We briefly mentioned pre- and postcondition in an example.
+Now it is time to formalize the idea and see how to create good pre- and postconditions and their influence on the code that we are writing.
+
+Tony Hoare pioneered reasoning about programs with assertions.
+He proposed the now so-called Hoare Triples.
+A Hoare Triple consist of a set of preconditions $$\{ P \}$$, a program $$A$$ and a set of postconditions $$\{ Q \}$$
+Now we can express the Hoare Triple as follows: $$\{ P \}\ A\ \{ Q \}$$.
+This can be read as: If we know that $$P$$ holds, and we execute $$A$$ then we end up in a state where $$Q$$ holds.
+If there are no preconditions, i.e. no assumptions needed for the execution of $$A$$, we can simply set $$P$$ to true.
+
+In a Hoare Triple the $$A$$ can be a single statement or span a whole program.
+We look at $$A$$ as a method.
+Then $$P$$ and $$Q$$ are the pre- and postcondition of the method $$A$$ respectively.
+Now we can write the Hoare Triple as: { preconditions } method { postconditions}.
+
+### Preconditions
+When writing a method, each condition that need to hold for the method to successfully execute can be a preconditions.
+In the code we turn each precondition to an assertion.
+
+{% include example-begin.html %}
+We have implemented a class to keep track of our favorite books.
+We want to define some preconditions for the merge method.
+This method adds the given books to the list of favorite books and then sends some notification to, for example, a phone.
+```java
+public class FavoriteBooks {
+    List<Book> favorites;
+
+    // ...
+
+    public void merge(List<Book> books) {
+        favorites.addAll(books);
+        pushNotification.booksAdded(books);
+    }
+}
+```
+When creating pre-conditions we have to think about what needs to hold to let the method execute.
+We can focus on the parameter `books` first.
+This cannot be `null`, because then the `addAll` method will throw a `NullPointerException`.
+It should also not be empty, because then we cannot add any books.
+Finally, adding books that we already have does not make sense, so the `books` should not all be present in the `favorites` already.
+
+Now we can take a look at the `favorites`.
+This also cannot be `null` because then we cannot call `addAll` on favorites.
+
+This gives us 4 preconditions and then also 4 asserts in the method:
+```java
+public class FavoriteBooks {
+    // ...
+
+    public void merge(List<Book> books) {
+        assert books != null;
+        assert favorites != null;
+        assert !books.isEmpty();
+        assert !favorites.containsAll(books);
+
+        favorites.addAll(books);
+        pushNotification.booksAdded(books);
+    }
+}
+```
+{% include example-end.html %}
+
+#### Weakening preconditions
+The amount of assumption made before a method can be executed (and with that the amount of preconditions) is a design choice.
+We can generalize a method, such that it is able to be executed in more situations.
+Then we can remove a precondition as the method itself can handle the situation where the precondition would be false.
+This makes the method more generally applicable, but is also increases its complexity.
+The method always have to check some extra things to handle the cases that would have been preconditions.
+Finding the balance between the amount of preconditions and complexity of the method is part of designing the system.
+
+{% include example-begin.html %}
+We can remove some of the preconditions of the `merge` method by adding some if-statements to the method.
+First, we can try to remove the `!books.isEmpty()` assertions.
+This means that the method `merge` has to handle empty `books` lists itself.
+```java
+public class FavoriteBooks {
+    // ...
+
+    public void merge(List<Book> books) {
+        assert books != null;
+        assert favorites != null;
+        assert !favorites.containsAll(books);
+
+        if (!books.isEmpty()) {
+            favorites.addAll(books);
+            pushNotification.booksAdded(books);
+        }
+    }
+}
+```
+Now, by generalizing the `merge` method, we have removed one of the preconditions.
+We can even remove the `!favorites.containsAll(books)` assertion by adding some more functionality to the method.
+```java
+public class FavoriteBooks {
+    // ...
+
+    public void merge(List<Book> books) {
+        assert books != null;
+        assert favorites != null;
+
+        List<Book> newBooks = books.removeAll(favorites);
+
+        if (!newBooks.isEmpty()) {
+            favorites.addAll(newBooks);
+            pushNotification.booksAdded(newBooks);
+        }
+    }
+}
+```
+Now by making the method complexer and removing some of its preconditions, the method is easier to call.
+This does come at the cost that the method always has to filter the `books` list and check if this filtered list is empty or not.
+{% include example-end.html %}
