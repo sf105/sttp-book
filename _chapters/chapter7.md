@@ -187,3 +187,74 @@ public class FavoriteBooks {
 Now by making the method complexer and removing some of its preconditions, the method is easier to call.
 This does come at the cost that the method always has to filter the `books` list and check if this filtered list is empty or not.
 {% include example-end.html %}
+
+### Postconditions
+If the preconditions of a method hold and the method is called, then at the end of the method its postconditions should hold.
+It is important to realise that these postconditions only have to hold if the preconditions held when the method was called.
+Postconditions formalize the effects that a method guarantees to have when it is done with its execution.
+Postconditions can be hard to formalize to a boolean expression.
+The effects of a method are just too hard to observe in the class itself sometimes.
+This is why postconditions do not always cover all the effects of a method.
+Similarly preconditions may not always have all the assumptions needed for a method.
+
+{% include example-begin.html %}
+The `merge` method of the previous examples does two things.
+It adds the new books to the `favorites` list.
+We can turn this into a boolean expression so we can formulate this as a postcondition.
+The other effect of the method is the notification that is sent.
+Unfortunately we cannot easily see if that has actually happened in the method.
+In a test suite we would probably mock the `pushNotification` and then use `Mockito.verify` to verify that `booksAdded` was called.
+We cannot do this in postconditions or assertions so we can add just one post condition.
+```java
+public class FavoriteBooks {
+    // ...
+
+    public void merge(List<Book> books) {
+        assert books != null;
+        assert favorites != null;
+
+        List<Book> newBooks = books.removeAll(favorites);
+
+        if (!newBooks.isEmpty()) {
+            favorites.addAll(newBooks);
+            pushNotification.booksAdded(newBooks);
+        }
+
+        assert favorites.containsAll(books);
+    }
+}
+```
+{% include example-end.html %}
+
+#### Composite postconditions
+For complex methods, the postconditions also become more complex.
+If a method has multiple return statements, it is good to think if these are actually needed.
+Maybe it is possible to combine them to one return statement with a general postcondition.
+Otherwise, the postcondition essentially becomes a disjunction of propositions.
+Each return statement forms a possible postcondition (proposition) and the method guarantees that one of these postconditions is met.
+
+{% include example-begin.html %}
+We have a method body that has three conditions and three different return statements.
+This also gives us three postconditions.
+The placing of these post conditions now becomes quite important, so the whole method is becoming rather complex with the postconditions.
+```java
+if (A) {
+    // ...
+    if (B) {
+        // ...
+        assert PC1;
+        return ...;
+    } else {
+        // ...
+        assert PC2;
+        return ...;
+    }
+}
+// ...
+assert PC3;
+return ...;
+```
+Now if `A` and `B` are true postcondition 1 should hold.
+If `A` is true and `B` is false, postcondition 2 should hold.
+Finally, if `A` is false, postcondition 3 should hold.
+{% include example-end.html %}
