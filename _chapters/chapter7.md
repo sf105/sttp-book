@@ -68,8 +68,8 @@ This makes it very important to have assertions that are absolutely redundant.
 They should not be needed for the system's execution.
 To enable the asserts we have to run Java with a special argument in one of these two ways: `java -enableassertions` or `java -ea`.
 When using Maven or IntelliJ the assertions are enabled automatically when running tests.
-With Eclipse or Gradle we have to change some settings.
-To run the system normally with assertions enabled you always have to change some settings.
+With Eclipse or Gradle we have to enable it ourselves.
+To run the system normally with assertions enabled you always have to enable it manually.
 
 The assertions are mostly an extra safety measure.
 If it is crucial that a system runs correctly, we can use the asserts to add some additional testing during the system's execution.
@@ -142,7 +142,7 @@ The amount of assumption made before a method can be executed (and with that the
 We can generalize a method, such that it is able to be executed in more situations.
 Then we can remove a precondition as the method itself can handle the situation where the precondition would be false.
 This makes the method more generally applicable, but is also increases its complexity.
-The method always have to check some extra things to handle the cases that would have been preconditions.
+The method always has to check some extra things to handle the cases that would have been preconditions.
 Finding the balance between the amount of preconditions and complexity of the method is part of designing the system.
 
 {% include example-begin.html %}
@@ -299,9 +299,9 @@ Then we continue by checking the child nodes the same way we checked the current
 {% include example-end.html %}
 
 ### Class invariant
-In Object-Oriented-Programming these checks on representations can also be applied at the class levels.
+In Object-Oriented-Programming these checks on representations can also be applied at the class level.
 This gives us class invariants.
-A class variant ensures that its condition will be true throughout the entire lifetime of each object of that class.
+A class invariant ensures that its condition will be true throughout the entire lifetime of each object of that class.
 The first time it should be true is after the constructor is done.
 Then after each public method is done the class invariant should still hold.
 This means that a private method invoked by a public method can leave the object with the class invariant being false.
@@ -315,6 +315,8 @@ To implement simple class invariant in Java we can use the boolean method that c
 We usually call this method `invariant`.
 Then we assert the return value of this method after the constructor, and before and after each public method.
 In these public methods the only preconditions and postconditions that have to hold additionally are the onces that are not in the invariant.
+When handling more complicated invariants, we can split the invariant into more methods.
+Then we use these methods in the `invariant` method.
 
 {% include example-begin.html %}
 We return to the `FavoriteBooks` with the `merge` method.
@@ -363,3 +365,156 @@ You can see that the `invariant` method checks the two conditions.
 Then we call `invariant` before and after `merge` and we only assert the pre- and postconditions that are not covered in the `invariant` method.
 At the end of the constructor we also asser the `invariant` method.
 {% include example-end.html %}
+
+## Design by Contracts
+When creating a software system you often use external dependencies, such as a webservice.
+In the remainder of this section we call the system that makes use of the external dependency the client.
+The external system itself is called the server.
+
+The client and server are bound by a contract.
+The server does its job, as long as its methods are used properly by the client.
+This relates strongly to the pre- and postconditions discussed earlier.
+The client has to use the server's methods in a way that its preconditions hold.
+Then the server guarantees that its postconditions hold after it is done with the method, i.e. it makes sure its method has the promised effect.
+Now we can describe the system's behavior by the pre- and postconditions and use this way to form the contract.
+
+Designing a system following such contracts is called Design by Contracts.
+In such a design the contracts are represented by interfaces.
+These interfaces are used by the client and implemented by the server.
+The UML diagram illustrates this design.
+
+![](/assets/img/chapter7/dbc_uml.svg)
+
+### Subcontracting
+In the UML diagram above we find that the implementation can have different pre-, postconditions, and invariant than its interface.
+We specify the relative strength of these implementated conditions/invariants and the ones in the interface.
+This is was subcontracting does.
+
+The implementation must be able to work with the preconditions specified in the interface.
+After all, the interface is the only thing the client sees of the system.
+So, the implementation cannot add any preconditions to the server's preconditions.
+In terms of strength, we now know that $$P'$$ has to be **weaker** than (or as weak as) $$P$$.
+
+The postcondition work the other way around.
+The implementation must do at least the same work as the interface, but it is allowed to do a bit more.
+Therefore, $$Q'$$ should be **stronger** than (or as strong as) $$Q$$.
+
+Finally, the interface guarantees that the invariant always holds.
+Then, the implementation should also guarentee that at least the interface's invariant holds.
+So, $$I'$$ should be **stronger** than (or as strong as) $$I$$.
+
+In short, using the notation of the UML diagram:
+* $$P'$$ **weaker** than $$P$$
+* $$Q'$$ **stronger** than $$Q$$
+* $$I'$$ **stronger** than $$I$$
+
+The subcontract (the implementation) requires no more and ensures no less than the actual contract (the interface).
+
+## Liskov Substitution Principle
+The subcontracting follows the general notion of behavioral subtyping, proposed by Barbara Liskov.
+The behavioral subtyping states that if we have a class `T` and this class has some subclasses.
+Then the clients or users of this class `T` should be able to choose any of `T`'s subclasses.
+All the public methods of class `T` have to do the same thing in all the subclasses.
+
+This notion of behavioral subtyping is now known as the Liskov Substitution Principle (LSP).
+The LSP states that if you use a class, you should be able to replace this class by one of its subclasses.
+The sub-contracting we discussed earlier is just a formalization of this principle.
+Proper class hiercies follow the Liskov Substitution Principle.
+It is good to keep LSP in mind when designing and implementating a software system.
+
+### Testing
+We want to make sure that our class hierchies follow the Liskov Substitution Principle.
+To do so we can create tests.
+To test the LSP we have to make some test cases for the public methods of the super class and execute these tests with all its subclasses.
+We could just create add the same tests to each of the subclasses' test suites.
+This, however, leads to a lot of code duplication in the test code, which we would like to avoid.
+
+{% include example-begin.html %}
+In Java, the List interface is implemented by various subclasses.
+Two examples are the ArrayList and LinkedList.
+Creating the tests for each of the subclasses separately will result in the following structure.
+
+![](/assets/img/chapter7/examples/subclass_test.svg)
+
+The ArrayList and LinkedList will behave the same for the methods defined in List.
+Therefore there will be duplicate tests for these methods.
+{% include example-end.html %}
+
+To avoid this code duplication we can create a test suite just for the superclass.
+This test suite tests just the public methods of the super class.
+The tests in this test suite should then be executed by for each of the subclasses of the superclass.
+
+We want the test classes corresponding to the subclasses to execute the test cases of the super class.
+This can be done by making the test classes extend the "super test class".
+Then the "sub test class" will have all the common tests defined in the "super test class" and its own specific tests.
+Moving the common implementation over multiple classes to the interface level (the super class) can be callled "Extract Superclass" refactoring.
+We extract the common test cases and place it in a super class.
+
+{% include example-begin.html %}
+By using the inheritance in the test classes we get a new architecture.
+
+![](/assets/img/chapter7/examples/parallel_architecture.svg)
+
+Here the ArrayListTest and LinkedListTest extend the ListTest.
+List is an interface, so the ListTest should be abstract.
+We cannot make a List itself, so we should not be able to execute the ListTest without a test class corresponding to one of List's subclasses.
+ListTest contains all the common tests of ArrayListTest and LinkedListTest.
+ArrayListTest and LinkedListTest each can contain tests specific to the subclass.
+{% include example-end.html %}
+
+In the example you can see that the hierarchy of the test classes is similar to the hierarchy of the classes they test.
+Therefore we say that we use a parallel class hierarchy in our test classes.
+
+Now we have one problem.
+How do we make sure that the "super test class" execute its tests with the correct subclass?
+This depends on the test class that is executed and the subclass it is testing.
+If we have class `T`, with subclasses `A` and `B`, then when executing tests for `A` we need the testclass for `T` to use an instance of `A` and when executing tests for `B` we need the testclass for `T` to use an instance of `B`.
+
+One way to achieve this behavior is by using the Factory Method design pattern.
+The factory method design pattern works as follows:
+In the testclass for the interface level (the "super test class") we define an abstract method that returns an instance with the interface type.
+By making the method abstract we force the testclasses for the concrete implementations to override this method.
+In the overriden methods an instance of the specific subclass is returned.
+This instance is then used to execute the tests in the interface level test class.
+
+{% include example-begin.html %}
+We want to use the Factory Method design pattern in our tests for the List.
+We start by the interface level test class.
+Here we define the abstract method that gives us a List.
+
+```java
+public abstract class ListTest {
+
+    private List list;
+
+    protected abstract List createList();
+
+    @BeforeEach
+    public void setUp() {
+        list = createList();
+    }
+
+    // Common List tests using list
+}
+```
+
+Then for this example we create a class to test the ArrayList.
+We have to override the createList method and we can define any tests specific for the ArrayList.
+
+```java
+public class ArrayListTest extends ListTest {
+    
+    @Override
+    protected List createList() {
+        return new ArrayList();
+    }
+
+    // Tests specific for the ArrayList
+}
+```
+
+Now the ArrayListTest inherits all the ListTest's tests, so these will be executed when we execute the ArrayListTest test suite.
+Because the createList method returns an ArrayList the common test classes will use an ArrayList.
+{% include example-end.html %}
+
+
