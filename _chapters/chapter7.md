@@ -20,11 +20,12 @@ It does not add any behavior to the system.
 With self-testing we move a bit of the test suite into the system itself.
 We add some redundant code to the system.
 This code, being redundant, does not change the functionalities of the code.
-However, it does allow the system to check if it is running correclty by itself.
+However, it does allow the system to check if it is running correctly by itself.
 We do not have to run the test suite, but instead the system can check (part of) its behavior during the normal execution of the system.
 Like with the test suite, if anything is not acting as expected, and error will be thrown because one of the self-tests is failing.
 In software testing the self-tests are used as an additional check in the system additional to the test suite.
 
+### Assertions
 The simplest form of this self-testing is the assertion.
 An assertion basically says that a certain condition has to be true at the time the assertion is executed.
 In Java, to make an assertion we use the `assert` keyword:
@@ -71,8 +72,38 @@ When using Maven or IntelliJ the assertions are enabled automatically when runni
 With Eclipse or Gradle we have to enable it ourselves.
 To run the system normally with assertions enabled you always have to enable it manually.
 
+When running the system with assertions enabled, we increase the fault sensitivity of the system.
+This might seem undesirable, but when executing tests we want the tests to fail.
+After all, if a test fail we find another fault in the system that we can then fix.
+
+The assertions are a test oracle; software that informs us whether a test passes.
+Oracles can be made with different approaches:
+* Value comparison is most common. We know what the outcome is and verify that it is returned by, for example, a method. This is used in most unit testing.
+* Version comparisons. In this case we do not know the direct value (in assertions we do not have a specific case as we have in tests), but we might have an older version that we know is correct. We can then use this older version to check the newer version.
+* Property checks. Instead of focussing on a certain case like value comparison, property checks are more general rules (properties) that we assert on our code. For example, if we take square a number and then take the root, it should return the same number.
+
 The assertions are mostly an extra safety measure.
 If it is crucial that a system runs correctly, we can use the asserts to add some additional testing during the system's execution.
+Assertions provide test oracles during the execution.
+This means that we still need unit tests to actually exercise the system.
+Assertions cannot replace these test cases.
+Moreover, the assertions are often of a more general nature.
+We still need the specific cases in the unit tests.
+
+#### Tests from assertions
+By considering the assertions in the code we can derive new test cases.
+There are two cases that can be considered.
+The assertion can be a disjunction of two conditions.
+Then the test cases should trigger both of the possibilities in this assertion.
+The assertions can also have boundaries.
+For example when the assertions is checking if a value is in a certain range.
+Now our test cases should give inputs that exercise these boundaries.
+
+It might be tempting to make tests that make the assertions fail.
+This, however, can never happen.
+The assertions are meant to always be true.
+If they fail, there is a bug in the system.
+Therefore creating tests, that give inputs under which the assertions fail, makes no sense.
 
 ## Pre- and Postconditions
 We briefly mentioned pre- and postcondition in an example.
