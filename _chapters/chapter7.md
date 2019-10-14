@@ -623,4 +623,158 @@ The conditions we made always have to be true, so we can use them in all the ran
 
 In the future, automatically generating test inputs will become more and more common.
 To be able to use these generated inputs we need the oracles.
-Therefore it is becoming more and more important to explicitly and well define the contracts and properties for the code that you are making.
+Therefore it is becoming more and more important to explicitly define the contracts and properties for the code that you are making.
+
+## Exercises
+Below you will find some exercises to practise with the material covered in this chapter.
+After each exercise you can directly view the answer.
+
+{% include exercise-begin.html %}
+For this exercise consider the following piece of code.
+```java
+public Square squareAt(int x, int y) {
+    assert x >= 0;
+    assert x < board.getWidth();
+    assert y >= 0;
+    assert y < board[x].length;
+    assert board != null;
+
+    Square result = board[x][y];
+
+    assert result != null;
+    return result;
+}
+```
+What assertion(s), if any, can be turned into a class invariant?
+{% include answer-begin.html %}
+`board != null`
+
+For a class invariant the assertions has to assert a class variable.
+`board` is such a class variable, unlike the other variables that are checked by the assertions.
+The other assertions are about the parameters (preconditions) or the result (postcondition).
+{% include exercise-answer-end.html %}
+
+
+{% include exercise-begin.html %}
+Consider the piece of code in the previous example.
+Suppose we remove the last assertion (line 10), which states that the result can never be null.
+
+Are the existing preconditions of the `squareAt` method enough to ensure the property in the original line 10?
+What can we add to the class (other than the just removed postcondition) to guarentee this property?
+{% include answer-begin.html %}
+The existing preconditions are **not** enough to ensure the property in line 10.
+
+`board` itself cannot be `null` and `x` and `y` will be in its range, but the content of board can still be `null`.
+To guarantee the property again the method would have to implicitly assume an invariant, that ensures that no place in `board` is `null`.
+
+In order to do this, we would have to make the constructor ensure that no place in `board` is `null`.
+So we have to add an assertion to the constructor that asserts that every value in `board` is not `null`.
+{% include exercise-answer-end.html %}
+
+
+{% include exercise-begin.html %}
+Your colleague works on a drawing application. 
+He has created a Rectangle class. 
+For rectangles, the width and height can be different from each other, but can't be negative numbers. 
+
+Your colleague also defines the Square class.
+Squares are a special type of rectangle: the width and height should be equal and also can't be negative. 
+Your colleague decides to implement this by making Square inherit from Rectangle.
+
+The code for the two classes is the following.
+```java
+class Rectangle {
+  protected int width;
+  protected int height;
+
+  protected boolean invariant() { return width > 0 && height > 0; }
+
+  public Rectangle(int width, int height) {
+    assert width > 0;
+    assert height > 0;
+    this.width = width;
+    this.height = height;
+    assert invariant()
+  }
+
+  public int area() {
+    assert invariant();
+    int a = width * height;
+    assert a > 0;
+    return a;
+  }
+
+  public void resetSize(int width, int height) {
+    assert width > 0;
+    assert height > 0;
+    this.width = width;
+    this.height = height;
+    assert invariant();
+  }
+}
+
+class Square extends Rectangle {
+  public Square(int x) {
+    assert x > 0;
+    super(x, x);
+  }
+
+  @Override
+  public void resetSize(int width, int height) {
+    assert width == height;
+    assert width > 0;
+    super.resetSize(width, height);
+  }
+}
+```
+
+Inspired by Bertrand Meyer's design by contracts, he also use asserts to make sure contracts are followed. He explicitly defines preconditions and postconditions in various methods of the base Rectangle class and the derived Square class.
+
+A second colleague comes in and expresses concerns about the design.
+How can you use the assertions provided to discuss the correctness of this design?
+
+Is the second colleagues concern justified?
+What principle is violated, if any?
+Explain with the assertions shown in the code.
+{% include answer-begin.html %}
+The second colleague is correct.
+
+There is a problem in the `Square`'s preconditions.
+For the `resetSize` method these are stronger than the `Rectangle`'s preconditions.
+We do not just assert that the `width` and `height` should be larger than 0, but they should also be equal.
+This violates the Liskov's Substitution Principle.
+We cannot substitute a `Square` for a `Rectangle`, because we would not be able to have unequal width and height anymore.
+{% include exercise-answer-end.html %}
+
+
+{% include exercise-begin.html %}
+You run your application with assertion checking enabled. 
+Unfortunately, it reports an assertion failure signaling a class invariant violation in one of the libraries your application makes use of.
+
+Assume that the contract of the library in question is correct, and that all relevant preconditions are encoded in assertions as well.
+
+Can you fix this problem? \\
+If so, how? \\
+If not, why?
+{% include answer-begin.html %}
+Making correct use of a class should never trigger a class invariant violation.
+We are making correct use of the class, as otherwise it would have been a precondition violation.
+This means that there is a bug in the implementation of the library, which would have to be fixed.
+As this is outside your project, you typically cannot fix this problem.
+{% include exercise-answer-end.html %}
+
+
+{% include exercise-begin.html %}
+HTTP requests return a status code which can have several values. As explained on [Wikipedia](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes):
+* A 4xx status code "is intended for situations in which the error seems to have been caused by the client". \\
+A well known example is the 404 (Page not found) status code.
+* A 5xx status code "indicates cases in which the server is aware that it has encountered an error or is otherwise incapable of performing the request."\\
+A well known example is the 500 (Internal Server Error) status code.
+
+What is the best correspondence between these status codes and pre- and postconditions?
+{% include answer-begin.html %}
+Just like the contracts we have a client and a server. \\
+A 4xx code means that the client invoked the server in a wrong way, which corresponds to failing to adhere to a precondition. \\
+A 5xx code means that the server was not able to handle the request of the client, which was correct.
+This corresponds to failing to meet a postcondition.
+{% include exercise-answer-end.html %}
