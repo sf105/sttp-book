@@ -4,7 +4,22 @@ title: Design by Contracts and Property-Based Testing
 layout: chapter
 ---
 
-[//]: TODO: add introduction to the chapter
+So far we have seen how to test our software in various ways.
+We discussed how to model a system in different ways and how to derive tests from these models.
+Finally we looked at how to test a system on different levels and how to create a system that is testable.
+
+In this chapter we continue to look at ways to test our software systems.
+Instead of having the normal test class beside the production code we now look at the production code testint itself.
+This gives a new approach to the testing and new possibilities.
+
+From there we move to pre- and postconditions and then to a design by contracts.
+We will look at what a contract is and its important characteristics.
+
+Finally, we discuss property-based testing.
+This testing approach includes not only automated test execution, but also automated test values.
+Instead of writing cases ourselves we will let a generator create them for us.
+This brings some challenges, which we (partly) handle in this chapter.
+
 
 ## Self Testing
 A self testing system is in principal a system that tests itself.
