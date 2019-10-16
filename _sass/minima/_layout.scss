@@ -181,7 +181,9 @@
 .page-content {
   padding: $spacing-unit 0;
   flex: 1;
-  margin-top: $spacing-unit * 1.865
+  margin-top: $spacing-unit * 1.865;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .page-heading {
@@ -257,12 +259,28 @@
     }
   }
 
+  h3::before {
+    content: '';
+    display: block;
+    height:      $spacing-unit * 1.865 + 5;
+    margin-top: -$spacing-unit * 1.865 + 5;
+    visibility: hidden;
+  }
+
   h4 {
     @include relative-font-size(1.25);
 
     @include media-query($on-laptop) {
       @include relative-font-size(1.125);
     }
+  }
+
+  h4::before {
+    content: '';
+    display: block;
+    height:      $spacing-unit * 1.865 + 5;
+    margin-top: -$spacing-unit * 1.865 + 5;
+    visibility: hidden;
   }
 }
 
