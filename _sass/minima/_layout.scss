@@ -4,7 +4,7 @@
 .site-header {
   border-top: 5px solid $grey-color-dark;
   border-bottom: 1px solid $grey-color-light;
-  min-height: $spacing-unit * 1.865;
+  height: $spacing-unit * 1.865;
   width: 100%;
   background: white;
   z-index: 99;
@@ -239,6 +239,14 @@
     @include media-query($on-laptop) {
       @include relative-font-size(1.75);
     }
+  }
+
+  h2::before {
+    content: '';
+    display: block;
+    height:      $spacing-unit * 1.865 + 5;
+    margin-top: -$spacing-unit * 1.865 + 5;
+    visibility: hidden;
   }
 
   h3 {
