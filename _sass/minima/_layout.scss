@@ -274,5 +274,34 @@
   margin-top: 10px;
 }
 
+/**
+ * Table of Contents
+ */
+.toc {
+  display: none;
+}
 
+.toc ul {
+  list-style-type: none;
+}
+
+.section-nav {
+  padding: 0px;
+  margin: 0px;
+}
+
+.pointer {
+  display: inline-block;
+  margin-right: 6px;
+  user-select: none;
+  cursor: pointer;
+}
+
+.pointer_down {
+  transform: rotate(90deg);
+}
+
+.pointer_dot {
+  user-select: none;
+}
 
