@@ -305,6 +305,9 @@
  */
 .toc {
   display: none;
+  position: fixed;
+  margin-left: -webkit-calc(#{$content-width} - #{$spacing-unit});
+  margin-left: calc(#{$content-width} - #{$spacing-unit});
 }
 
 .toc ul {
