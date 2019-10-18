@@ -7,7 +7,6 @@ function showAnswer(e) {
   e.target.style.display = "none"
 }
 
-
 function addToggle(toc) {
   var lis = toc.getElementsByTagName("li")
   var i;
