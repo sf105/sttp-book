@@ -57,8 +57,23 @@ main {
 img {
   max-width: 100%;
   vertical-align: middle;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+// Image at home page
+#home-img {
+  max-width: 100%;
+  vertical-align: middle;
   border: 10px solid #efefef;
   margin-bottom: 15px;
+}
+
+// Center images in examples and assignments
+.example img, .exercise img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 
@@ -244,6 +259,7 @@ table {
   }
   th, td {
     padding: ($spacing-unit / 3) ($spacing-unit / 2);
+    text-align: center;
   }
   th {
     background-color: lighten($grey-color-light, 3%);

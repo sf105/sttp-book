@@ -1,6 +1,6 @@
 ---
 chapter-number: 2
-title: Specification-based Testing
+title: Specification-Based Testing
 layout: chapter
 ---
 
