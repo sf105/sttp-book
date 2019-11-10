@@ -234,3 +234,34 @@ class RomanNumeralTest {
 ```
 
 {% include example-end.html %}
+
+## Testing Principles
+
+Now that we have some basic tools to design and automate our tests, we can think more about some testing concepts.
+We start with some precise definitions for certain terms.
+In later chapters, we start looking at the various testing strategies that can be used to test software.
+
+### Failure, Fault and Error
+
+We can use a lot of different words for a system that is not behaving correctly.
+Just to name a few we have error, mistake, defect, bug, fault and failure.
+As we like to be able to describe the problem in software precisely, we need to agree on a certain vocabulairy.
+For now this comes down to three terms: failure, fault and error.
+
+A failure is a component of the (software) system that is not behaving as expected.
+An example of a failure is the well-known blue screen of death.
+We generally expect our pc to keep running, but it just crashes.
+
+Failures are generally caused by faults.
+Faults are also called defects or bugs.
+A fault is a flaw, or mistake, in a component of the system that can cause the system to behave incorrectly.
+We have a fault when we have, for example, a `>` instead of `>=` in a condition.
+
+A fault in the code does not have to cause a failure.
+If the code containing the fault is not being run, it can also not cause a failure.
+Failures only occur when the end user is using the system, when it does not behave correctly.
+
+Finally we have the error, also called a mistake.
+An error is a human action that cause the system to run not as expected.
+For example someone can forget to think about a certain corner case that the code might run into.
+This then creates a fault in the code, which can result in a failure.
