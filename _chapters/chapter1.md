@@ -265,3 +265,24 @@ Finally we have the error, also called a mistake.
 An error is a human action that cause the system to run not as expected.
 For example someone can forget to think about a certain corner case that the code might run into.
 This then creates a fault in the code, which can result in a failure.
+
+### Verification and Validation
+
+We keep extending our vocabulairy a bit with two more concepts.
+Here we introduce verification and validation.
+Both concepts are about assessing the quality of a system and can be described by a single question.
+
+Validation: Are we building the right software?
+Validation concerns the features that our system offers and the costumer, for who the system is made.
+Is the system that we are building actually the system that the users want?
+Is the system actually useful?
+
+Verification on the other hand is about the system behaving as it is supposed to according to the specification.
+This mostly means that the systems behaves without any bugs, like it is said it should behave.
+This does not guarantee that the system is useful.
+That is a matter of validation.
+We can summarize verification with the question: Are we building the system right?
+
+In this reader, the focus is on verification.
+We try to test if the system behaves according to its specification.
+However, validation is also very important when it comes to building succesfull software systems.
