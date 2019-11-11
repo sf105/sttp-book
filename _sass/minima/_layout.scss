@@ -306,8 +306,8 @@
 .toc {
   display: none;
   position: fixed;
-  padding-left: -webkit-calc(#{$content-width} - #{$spacing-unit});
-  padding-left: calc(#{$content-width} - #{$spacing-unit});
+  margin-left: -webkit-calc(#{$content-width} - #{$spacing-unit});
+  margin-left: calc(#{$content-width} - #{$spacing-unit});
 }
 
 .toc ul {
