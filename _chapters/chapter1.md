@@ -259,7 +259,7 @@ We have a fault when we have, for example, a `>` instead of `>=` in a condition.
 
 A fault in the code does not have to cause a failure.
 If the code containing the fault is not being run, it can also not cause a failure.
-Failures only occur when the end user is using the system, when it does not behave correctly.
+Failures only occur when the end user is using the system, when they notice it not behaving as expected.
 
 Finally we have the error, also called a mistake.
 An error is a human action that cause the system to run not as expected.
@@ -328,3 +328,39 @@ Finally, while we are mostly focusing on verification when we create tests, we s
 If we have a program that works like it is specified, but is of no use for its users, we still do not have good software.
 This is called the absence-of-errors fallacy.
 We cannot forget about the validation part, where we check if the software meets the users' needs.
+
+## Exercises
+
+Below you will find some exercises to practise the material with.
+After each question you can click the button to show the answer to the question.
+
+{% include exercise-begin.html %}
+Having a certain terminology helps testers to explain the problems they have with a program or in their software.
+
+Below is a small conversation.
+Fill each of the caps with: failure, fault, or error.
+
+**Mark**: Hey, Jane, I just observed a (1) _ _ _ _ _ _ in our software: if the user has multiple surnames, our software doesn't allow them to sign in. \\
+**Jane**: Oh, that's awful. Let me debug the code so that I can find the (2) _ _ _ _ _ _.\\
+*(a few minutes later)*\\
+**Jane**: Mark, I found it! It was my (3) _ _ _ _ _ _. I programmed that part, but never thought of this case.\\
+**Mark**: No worries, Jane! Thanks for fixing it!
+{% include answer-begin.html %}
+
+1. Failure, the user notices the system/program behaving incorrectly.
+2. Fault, this is a problem in the code, that is causing a failure in this case.
+3. Error, the human mistake that created the fault.
+
+{% include exercise-answer-end.html %}
+
+{% include exercise-begin.html %}
+Kelly, a very experienced software tester, visits Books!, a social network focused on matching people based on books they read.
+Users do not report bugs so often; Books! developers have strong testing practices in place.
+However, users do say that the software is not really delivering what it promises.
+
+What testing principle applies to this problem?
+{% include answer-begin.html %}
+The absence-or-error fallacy.
+While the software does not have a lot of bugs, it is not giving the user what they want.
+In this case the verification was good, but they need work on the validation.
+{% include exercise-answer-end.html %}

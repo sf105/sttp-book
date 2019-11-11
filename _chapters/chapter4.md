@@ -1,6 +1,6 @@
 ---
 chapter-number: 4
-title: Model- and State-based testing
+title: Model- and State-based Testing
 layout: chapter
 ---
 
