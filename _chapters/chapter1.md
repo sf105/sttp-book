@@ -2,6 +2,7 @@
 chapter-number: 1
 title: Introduction to Testing
 layout: chapter
+toc: true
 ---
 
 Software testing and the quality of software is essential in the development process of software system.

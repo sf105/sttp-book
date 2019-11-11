@@ -2,6 +2,7 @@
 chapter-number: 2
 title: Specification-Based Testing
 layout: chapter
+toc: true
 ---
 
 To get a systematic approach to testing we start with specification-based testing.

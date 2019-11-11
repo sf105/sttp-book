@@ -2,6 +2,7 @@
 chapter-number: 6
 title: Testability, Mocks, and TDD
 layout: chapter
+toc: true
 ---
 
 So far we have seen a lot of different ways of deriving tests.

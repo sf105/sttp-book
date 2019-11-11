@@ -2,6 +2,7 @@
 chapter-number: 4
 title: Model- and State-based Testing
 layout: chapter
+toc: true
 ---
 
 In model based testing a model is used to derive tests for a piece of software.

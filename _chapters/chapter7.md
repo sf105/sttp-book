@@ -2,6 +2,7 @@
 chapter-number: 7
 title: Design by Contracts and Property-Based Testing
 layout: chapter
+toc: true
 ---
 
 So far we have seen how to test our software in various ways.

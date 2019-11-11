@@ -2,6 +2,7 @@
 chapter-number: 3
 title: Boundary Testing
 layout: chapter
+toc: true
 ---
 
 In chapter 2 we started specification based testing by deriving and implementing partition tests.
