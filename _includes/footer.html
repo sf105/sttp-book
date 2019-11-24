@@ -27,7 +27,8 @@
       <div class="footer-col footer-col-3">
         <nav>
           <ul>
-            {% for chapter in site.chapters %}
+            {% assign sorted_chapters = site.chapters | sort: "chapter-number" %}
+            {% for chapter in sorted_chapters %}
               <li>
                 <a href="{{ chapter.url }}">Chapter {{ chapter.chapter-number }} - {{ chapter.title }}</a>
               </li>

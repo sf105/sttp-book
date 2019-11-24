@@ -1,6 +1,6 @@
 ---
-chapter-number: 4
-title: Model- and State-based Testing
+chapter-number: 5
+title: Model-Based Testing
 layout: chapter
 toc: true
 ---

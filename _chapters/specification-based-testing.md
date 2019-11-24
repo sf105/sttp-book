@@ -1,5 +1,5 @@
 ---
-chapter-number: 2
+chapter-number: 3
 title: Specification-Based Testing
 layout: chapter
 toc: true

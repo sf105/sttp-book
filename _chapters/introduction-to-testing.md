@@ -1,5 +1,5 @@
 ---
-chapter-number: 1
+chapter-number: 2
 title: Introduction to Testing
 layout: chapter
 toc: true

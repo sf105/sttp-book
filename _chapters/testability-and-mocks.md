@@ -1,5 +1,5 @@
 ---
-chapter-number: 6
+chapter-number: 7
 title: Testability, Mocks, and TDD
 layout: chapter
 toc: true
