@@ -1,5 +1,5 @@
 ---
-chapter-number: 4
+chapter-number: 5
 title: Boundary Testing
 layout: chapter
 toc: true

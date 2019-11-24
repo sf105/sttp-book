@@ -1,5 +1,5 @@
 ---
-chapter-number: 5
+chapter-number: 6
 title: Model-Based Testing
 layout: chapter
 toc: true
