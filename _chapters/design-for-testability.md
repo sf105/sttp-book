@@ -1,6 +1,6 @@
 ---
 chapter-number: 8
-title: Testability, Mocks, and TDD
+title: Design for Testability
 layout: chapter
 toc: true
 ---
