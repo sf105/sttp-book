@@ -10,15 +10,16 @@ This course covers the most important testing techniques needed to build high qu
 
 Our learning goals are:
 
-* Participants are able to create unit, integration, and system tests using current existing tools (i.e., JUnit, Mockito, and JaCoCo) that successfully test complex software systems.
+* Create unit, integration, and system tests using current existing tools (i.e., JUnit, Mockito, and JaCoCo) that successfully test complex software systems.
 
-* Participants are able to derive test cases that deal with exceptional, corner, and bad weather cases by performing several different techniques (i.e., boundary analysis, state-based testing, decision tables).
+* Derive test cases that deal with exceptional, corner, and bad weather cases by performing several different techniques (i.e., boundary analysis, state-based testing, decision tables)
+as well as able to reflect about their limitations, when and when not to apply them in a given context.
 
-* Participants are able to measure and reflect about the efficiency of the developed test suites by means of different test adequacy metrics (i.e., line, branch, condition, MC/DC coverage).
+* Measure and reflect about the efficiency of the developed test suites by means of different test adequacy metrics (i.e., line, branch, condition, MC/DC coverage).
 
-* Participants are able to reflect about limitations of current testing techniques, when and when not to apply them in a given context, and to design testable software systems.
+* Design and implement testable software systems by means of architectural patterns such as dependency injection, and ports and adapters.
 
-* Participants are able to write maintainable test code by avoiding well-known test code smells (e.g., Assertion Roulette, Slow or Obscure Tests).
+* Write maintainable test code by avoiding well-known test code smells (e.g., Assertion Roulette, Slow or Obscure Tests).
 
 ## Authors
 
