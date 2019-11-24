@@ -100,8 +100,4 @@ can and do happen all the time. As developers, we usually deal with very complex
 
 And that is what we are going to focus throughout this course. Hopefully, with everything we are going to teach you, you will have enough knowledge to rigorously test your software, and make sure that bugs like thise one do not happen.
 
-## Video lecture
-
-Watch this lecture in video: [https://youtu.be/xtLgp8LXWp8](https://youtu.be/xtLgp8LXWp8)
-
 <iframe width="560" height="315" src="https://www.youtube.com/embed/xtLgp8LXWp8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
