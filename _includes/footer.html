@@ -7,17 +7,12 @@
 
     <div class="footer-col-wrapper">
       <div class="footer-col footer-col-1">
-        <ul class="contact-list">
-          <li class="p-name">
-            {%- if site.author -%}
-              {{ site.author | escape }}
-            {%- endif -%}
-            </li>
-            {%- if site.email -%}
-            <li><a class="u-email" href="mailto:{{ site.email }}">{{ site.email }}</a></li>
-            {%- endif -%}
-        </ul>
         <p>{{- site.description | escape -}}</p>
+
+        By <a href="https://www.mauricioaniche.com">Maurício Aniche</a> and 
+        <a href="https://www.avandeursen.com">Arie van Deursen</a>.<br>
+        License: CC-BY-NC-SA 2.0. Contact the authors when in doubt.<br>
+        Delft University of Technology.
       </div>
 
       <div class="footer-col footer-col-2">
