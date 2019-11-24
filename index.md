@@ -35,3 +35,5 @@ as well as able to reflect about their limitations, when and when not to apply t
 
 These lecture notes are licensed under [CC-BY-NC-SA 2.0](https://creativecommons.org/licenses/by-nc-sa/2.0/): (1) you must give appropriate credit, (2) you may not use the material for commercial purposes, (3) if you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
 
+Main cover picture by [Agence Olloweb](https://unsplash.com/photos/d9ILr-dbEdg).
+
