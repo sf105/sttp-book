@@ -5,7 +5,7 @@ layout: chapter
 toc: true
 ---
 
-To get a systematic approach to testing we start with specification-based testing.
+To get a systematic approach for testing we start with specification-based testing.
 More specifically, we look at partition testing.
 
 With specification-based testing we look at the requirements of the program.
@@ -23,16 +23,16 @@ For example a functional test can execute a method with a certain input and then
 Here we would test the functioning of (a part of) the system.
 Non-functional testing includes testing for performance, usability and maintainability.
 We could measure the execution time of the system or perform tests with users to see if the system is easy to work with.
-Here we will focus on functional testing.
+This chapter focuses on functional testing.
 
 ## Partitions
 
 Usually programs are too complex to test with just one test.
-There are different cases in which we execute the program and its execution often depends on various factors.
+There are different cases in which the program is executed and its execution often depends on various factors.
 To find a good set of tests, often referred to as a test suite, we break up the testing of a program in some classes or partitions.
 
 Such a partition represents a case that should be tested.
-A case is a certain input of a method.
+A case is composed of a certain input of a method.
 Separate partitions should exercise the program in a different way.
 If two cases exercise the system in the same way they belong to the same partition.
 
@@ -47,17 +47,17 @@ A year is a leap year if:
 
 As we are using specification-based testing we will not need the source code to come up with some tests.
 
-Combining these properties gives us some partitions.
-Most obvious is a partition where the year is a leap year and where a year is not a leap year.
+Combining the properties gives us some partitions.
+Most obvious are the partitions where the year is a leap year and where a year is not a leap year.
 Looking at the specification for when a year is a leap year, these two partitions are a bit too simple.
-We can split both partitions in two new partitions.
+We can split both partitions in two new ones.
 
-For the leap years, we make on partition where the year is divisible by 4 and not by 100, for example 2016 or 2020.
-These years are in the same partition as they will exercise the system in the same way (they follow te same specification).
-Then another partition is where the year is divisible by 4 and 100 and also by 400.
+For the leap years, we make one partition where the year is divisible by 4 and not by 100, for example 2016 or 2020.
+These years are in the same partition as they will exercise the system in the same way (they follow the same specification).
+Then another partition is where the year is divisible by 4, 100, and by 400.
 Again this makes the year a leap year, while exercising the system differently than the previous partition.
 
-Similarly we can split the partition for non-leap years into years that are not divisable by 4 and years that are divisble by 4 and 100, but not by 400.
+Similarly we can split the partition for non-leap years into years that are not divisible by 4 and years that are divisible by 4 and 100, but not by 400.
 Both these partitions test non-leap years, but again in different ways.
 {% include example-end.html %}
 
@@ -65,7 +65,7 @@ Both these partitions test non-leap years, but again in different ways.
 
 Now that we derived the test cases using partitions we can begin testing the program.
 We like to create tests in an automated fashion.
-This way it is easy to execute the tests and we verify that the program works each time something changes.
+This way it is easy to execute the tests and we can verify that the program works each time something changes.
 In Java we use the JUnit framework to write automated tests.
 
 The partitions are not test cases we can directly implement.
@@ -86,27 +86,27 @@ The method we described in the previous example has been implemented in the foll
 ```java
 public class LeapYear {
 
-      public boolean isLeapYear(int year) {
-            if (year % 400 == 0)
-                  return true;
-            if (year % 100 == 0)
-                  return false;
+  public boolean isLeapYear(int year) {
+    if (year % 400 == 0)
+      return true;
+    if (year % 100 == 0)
+      return false;
 
-            return year % 4 == 0;
-      }
+    return year % 4 == 0;
+  }
 }
 ```
 
 Since we are doing specification-based testing we do not use this source code to derive our test cases.
 Instead we use the partitions we derived from the specifications in the previous example.
 
-Following equivalence partitioning we only have to make one test case per partitions, so 4 in total.
+Following equivalence partitioning we only have to make one test case per partition, so 4 in total.
 We can choose any test case in a certain partition.
 For this example we use the following test cases:
 
-- 2016, divisible by 4, not divisible by 100
-- 2000, divisible by 4, also divisble by 100 and by 400. So the method should return true.
-- 39, not divisible by 4
+- 2016, divisible by 4, not divisible by 100.
+- 2000, divisible by 4, also divisible by 100 and by 400. So the method should return true.
+- 39, not divisible by 4.
 - 1900, divisible by 4 and 100, not by 400.
 
 Implementing this using JUnit gives the following code for the tests.
@@ -114,46 +114,46 @@ Implementing this using JUnit gives the following code for the tests.
 ```java
 public class LeapYearTests {
 
-      private LeapYear leapYear;
+  private LeapYear leapYear;
 
-      @BeforeEach
-      public void setup() {
-            leapYear = new LeapYear();
-      }
+  @BeforeEach
+  public void setup() {
+    leapYear = new LeapYear();
+  }
 
-      @Test
-      public void leapYearsNotCenturialTest() {
-            boolean leap = leapYear.isLeapYear(2016);
+  @Test
+  public void leapYearsNotCenturialTest() {
+    boolean leap = leapYear.isLeapYear(2016);
 
-            assertThat(leap).isTrue();
-      }
+    assertTrue(leap);
+  }
 
-      @Test
-      public void leapYearsCenturialTest() {
-            boolean leap = leapYear.isLeapYear(2000);
+  @Test
+  public void leapYearsCenturialTest() {
+    boolean leap = leapYear.isLeapYear(2000);
 
-            assertThat(leap).isTrue();
-      }
+    assertTrue(leap);
+  }
 
-      @Test
-      public void nonLeapYearsTest() {
-            boolean leap = leapYear.isLeapYear(39);
+  @Test
+  public void nonLeapYearsTest() {
+    boolean leap = leapYear.isLeapYear(39);
 
-            assertThat(leap).isFalse();
-      }
+    assertFalse(leap);
+  }
 
-      @Test
-      public void nonLeapYearsCenturialTest() {
-            boolean leap = leapYear.isLeapYear(1900);
+  @Test
+  public void nonLeapYearsCenturialTest() {
+    boolean leap = leapYear.isLeapYear(1900);
 
-            assertThat(leap).isFalse();
-      }
+    assertFalse(leap);
+  }
 }
 ```
 
-Note that each test method covers one of the partitions and the naming of the method refers to the partition it covers
+Note that each test method covers one of the partitions and the naming of the method refers to the partition it covers.
 
-The `setup` method is executed before each tests, thanks to the `BeforeEach` annotation.
+The `setup` method is executed before each test, thanks to the `BeforeEach` annotation.
 It creates the `LeapYear`.
 This is then used by the tests to execute the method under test.
 
@@ -170,7 +170,7 @@ A combination of random testing and partition testing is therefore the most bene
 ## Category-Partition Method
 
 So far we derived partitions by just looking at the specification of the program.
-Now we will go over a more systematic way of getting these partitions: With the Category-Partition method.
+Now we will go over a more systematic way of getting these partitions: The Category-Partition method.
 
 Other than just having a certain way of deriving test cases, the category-partition method helps us reduce the number of possible tests to a feasible amount.
 Complex methods that have a lot of parameters can easily give too many test cases when not using the category-partition method.
@@ -189,8 +189,8 @@ We first go over the steps of this method and then we illustrate the process wit
 4. Generate combinations of the input values. These are the test cases.
 
 {% include example-begin.html %}
-In this example we are testing program for a webshop.
-The system should give 25% discount on the raw amount of the cart when it is Christmas.
+In this example we are testing a program for a webshop.
+The system should give $$25%$$ discount on the raw amount of the cart when it is Christmas.
 The method has two parameters: the total price of the products in the cart and the date.
 When it is not Christmas it just returns the original price, otherwise it applies the discount.
 
@@ -202,7 +202,7 @@ Now following the category partition method:
 
 2. Now for each parameter we define the characteristics:
       - Based on the requirements, the only important characteristic is that the date can be either Christmas or not.
-      - The price can be a positive number, or maybe 0 for some reason. Technically the price can also be a negative number. This is an exceptional case, as you cannot really pay an negative amount.
+      - The price can be a positive number, or maybe 0 for some reason. Technically the price can also be a negative number. This is an exceptional case, as you cannot really pay a negative amount.
 
 3. The amount of characteristics and parameters is not too high in this case.
 Still we know that the negative price is an exceptional case.

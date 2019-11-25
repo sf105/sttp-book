@@ -6,16 +6,16 @@ toc: true
 ---
 
 In chapter 2 we started specification based testing by deriving and implementing partition tests.
-As with many techniques, these tests provide a good testing suite, but cannot cover everything.
+As with most testing strategies, these tests provide a good testing suite, but cannot cover everything.
 
 One specific area, where we might find a lot of bugs, are boundaries.
 In this chapter we are going to derive tests for these boundaries.
 The boundaries can reside between partitions, but we will also analyse the boundaries in a condition.
-A lot of off-by-one errors occur here, so it is important to also test the boundaries, beside the partitions.
-Off-by-one errors are errors that occur often in conditions.
+A lot of off-by-one errors occur here, so it is important to also test these boundaries, beside the partitions.
+Off-by-one errors are errors that usually occur often in conditions.
 For example, when something should happen when value is at least 100 and it only happens when the value is at least 101, or it already happens when the value is 99.
 
-First we have a look at where the boundaries are between partitions.
+First we have a look at where the boundaries between partitions exist.
 Whenever we have a partition, this partition contains a certain set of tests.
 These tests are test cases, represented by a combination of input values.
 Now we can find the boundaries by finding the values of the input that change the partition the test case is in.
@@ -51,9 +51,9 @@ We can visualize these partitions with their boundaries in a diagram.
 
 We briefly discussed the off-by-one errors earlier.
 Errors where the system behaves incorrectly for values on and close to the boundary are very easily made.
-Often the error is just one character in the condition.
+Often the error is just one character in the condition, for example `>=` instead of `>`.
 
-To find tests that cover these off-by-one errors well we look at the boundaries and derive test cases in a systematic way.
+To find tests that cover these off-by-one errors we look at the boundaries and derive test cases in a systematic way.
 This way of testing is calles Boundary Analysis.
 
 First we need to go over some terminology:
@@ -142,7 +142,7 @@ Also, the code in these test methods will be largely the same.
 After all, we do the same thing with just different input and output values.
 
 Luckily, JUnit offers a solution where we can implement the tests with just one method: Parameterized Tests.
-With a parameterized test we can make a test method with parameters.
+As the naming suggests, with a parameterized test we can make a test method with parameters.
 So we can create a test method and make it act based on the arguments we give the method.
 To define a parameterized test you can use the `@ParameterizedTest` annotation instead of the usual `@Test` annotation.
 
@@ -151,7 +151,7 @@ In general these values are provided by a `Source`.
 Here we focus and a certain kind of `Source`, namely the `CsvSource`.
 With the `CsvSource`, each test case is given as a comma separated list of input values.
 We give this list in a string.
-To execute multiple test with the same test method, the `CsvSource` expects list of strings, where each string represents the values for a test case.
+To execute multiple test with the same test method, the `CsvSource` expects list of strings, where each string represents the values for one test case.
 The `CsvSource` is an annotation itself, so in an implementation it would like like the following: `@CsvSource({"value11, value12", "value21, value22", "value31, value32", ...})`
 
 {% include example-begin.html %}
@@ -164,21 +164,21 @@ The `expectedResult` is a boolean, as the result of the method is also a boolean
 ```java
 @ParameterizedTest
 @CsvSource({
-    "5, 24, true",
-    "4, 13, false",
-    "20, -75, false",
-    "19, 48, true",
-    "15, 89, true",
-    "8, 90, false"
+  "5, 24, true",
+  "4, 13, false",
+  "20, -75, false",
+  "19, 48, true",
+  "15, 89, true",
+  "8, 90, false"
 })
 public void exampleTest(int x, int y, boolean expectedResult) {
-    Example example = new Example();
+  Example example = new Example();
 
-    assertThat(example.run(x, y)).isEqualTo(expectedResult);
+  assertEquals(expectedResult, example.run(x, y))
 }
 ```
 
-The assertion in the test checks if the result of the method, with the `x` and `y` values, it the expected result.
+The assertion in the test checks if the result of the method, with the `x` and `y` values, is the expected result.
 
 From the values you can see that each of the six test cases corresponds to one of the test cases in the domain matrix.
 {% include example-end.html %}
@@ -193,22 +193,22 @@ We have the following method.
 
 ```java
 public String sameEnds(String string) {
-    int length = string.length();
-    int half = length / 2;
+  int length = string.length();
+  int half = length / 2;
 
-    String left = "";
-    String right = "";
+  String left = "";
+  String right = "";
 
-    int size = 0;
-    for(int i = 0; i < half; i++) {
-        left += string.charAt(i);
-        right = string.charAt(length - 1 - i) + right;
+  int size = 0;
+  for(int i = 0; i < half; i++) {
+    left += string.charAt(i);
+    right = string.charAt(length - 1 - i) + right;
 
-        if (left.equals(right))
-            size = left.length();
-    }
+    if (left.equals(right))
+      size = left.length();
+  }
 
-    return string.substring(0, size);
+  return string.substring(0, size);
 }
 ```
 

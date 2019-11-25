@@ -21,8 +21,8 @@ This testing approach includes not only automated test execution, but also autom
 Instead of writing cases ourselves we will let a generator create them for us.
 This brings some challenges, which we (partly) handle in this chapter.
 
-
 ## Self Testing
+
 A self testing system is in principal a system that tests itself.
 This may sound a bit weird so let's take a step back first.
 
@@ -42,12 +42,15 @@ Like with the test suite, if anything is not acting as expected, and error will 
 In software testing the self-tests are used as an additional check in the system additional to the test suite.
 
 ### Assertions
+
 The simplest form of this self-testing is the assertion.
 An assertion basically says that a certain condition has to be true at the time the assertion is executed.
 In Java, to make an assertion we use the `assert` keyword:
+
 ```java
 assert <condition> : "<message>";
 ```
+
 Now the `assert` keywords checks if the `<condition>` is true.
 If it is, nothing happens.
 The program just continues its execution as everything is according to plan.
@@ -58,17 +61,19 @@ So try to always include a message that describes what is going wrong if the ass
 
 {% include example-begin.html %}
 We have implemented a class representing a stack, we just show the `pop` method:
+
 ```java
 public class MyStack {
-    public Element pop() {
-        assert count() > 0 : " The stack does not have any elements to pop."
+  public Element pop() {
+    assert count() > 0 : " The stack does not have any elements to pop."
 
-        // ... actual method body ...
+    // ... actual method body ...
 
-        assert count() == oldCount - 1;
-    }
+    assert count() == oldCount - 1;
+  }
 }
 ```
+
 We did not include a message in the second assert for illustrative purposes.
 
 In this method we check if a condition holds at the start: The stack should have at least one element.
@@ -94,9 +99,10 @@ After all, if a test fail we find another fault in the system that we can then f
 
 The assertions are a test oracle; software that informs us whether a test passes.
 Oracles can be made with different approaches:
-* Value comparison is most common. We know what the outcome is and verify that it is returned by, for example, a method. This is used in most unit testing.
-* Version comparisons. In this case we do not know the direct value (in assertions we do not have a specific case as we have in tests), but we might have an older version that we know is correct. We can then use this older version to check the newer version.
-* Property checks. Instead of focussing on a certain case like value comparison, property checks are more general rules (properties) that we assert on our code. For example, if we take square a number and then take the root, it should return the same number.
+
+- Value comparison is most common. We know what the outcome is and verify that it is returned by, for example, a method. This is used in most unit testing.
+- Version comparisons. In this case we do not know the direct value (in assertions we do not have a specific case as we have in tests), but we might have an older version that we know is correct. We can then use this older version to check the newer version.
+- Property checks. Instead of focussing on a certain case like value comparison, property checks are more general rules (properties) that we assert on our code. For example, if we take square a number and then take the root, it should return the same number.
 
 The assertions are mostly an extra safety measure.
 If it is crucial that a system runs correctly, we can use the asserts to add some additional testing during the system's execution.
@@ -107,6 +113,7 @@ Moreover, the assertions are often of a more general nature.
 We still need the specific cases in the unit tests.
 
 #### Tests from assertions
+
 By considering the assertions in the code we can derive new test cases.
 There are two cases that can be considered.
 The assertion can be a disjunction of two conditions.
@@ -122,6 +129,7 @@ If they fail, there is a bug in the system.
 Therefore creating tests, that give inputs under which the assertions fail, makes no sense.
 
 ## Pre- and Postconditions
+
 We briefly mentioned pre- and postcondition in an example.
 Now it is time to formalize the idea and see how to create good pre- and postconditions and their influence on the code that we are writing.
 
@@ -138,6 +146,7 @@ Then $$P$$ and $$Q$$ are the pre- and postcondition of the method $$A$$ respecti
 Now we can write the Hoare Triple as: { preconditions } method { postconditions}.
 
 ### Preconditions
+
 When writing a method, each condition that need to hold for the method to successfully execute can be a preconditions.
 In the code we turn each precondition to an assertion.
 
@@ -145,18 +154,20 @@ In the code we turn each precondition to an assertion.
 We have implemented a class to keep track of our favorite books.
 We want to define some preconditions for the merge method.
 This method adds the given books to the list of favorite books and then sends some notification to, for example, a phone.
+
 ```java
 public class FavoriteBooks {
-    List<Book> favorites;
+  List<Book> favorites;
 
-    // ...
+  // ...
 
-    public void merge(List<Book> books) {
-        favorites.addAll(books);
-        pushNotification.booksAdded(books);
-    }
+  public void merge(List<Book> books) {
+    favorites.addAll(books);
+    pushNotification.booksAdded(books);
+  }
 }
 ```
+
 When creating pre-conditions we have to think about what needs to hold to let the method execute.
 We can focus on the parameter `books` first.
 This cannot be `null`, because then the `addAll` method will throw a `NullPointerException`.
@@ -167,24 +178,27 @@ Now we can take a look at the `favorites`.
 This also cannot be `null` because then we cannot call `addAll` on favorites.
 
 This gives us 4 preconditions and then also 4 asserts in the method:
+
 ```java
 public class FavoriteBooks {
-    // ...
+  // ...
 
-    public void merge(List<Book> books) {
-        assert books != null;
-        assert favorites != null;
-        assert !books.isEmpty();
-        assert !favorites.containsAll(books);
+  public void merge(List<Book> books) {
+    assert books != null;
+    assert favorites != null;
+    assert !books.isEmpty();
+    assert !favorites.containsAll(books);
 
-        favorites.addAll(books);
-        pushNotification.booksAdded(books);
-    }
+    favorites.addAll(books);
+    pushNotification.booksAdded(books);
+  }
 }
 ```
+
 {% include example-end.html %}
 
 #### Weakening preconditions
+
 The amount of assumption made before a method can be executed (and with that the amount of preconditions) is a design choice.
 We can generalize a method, such that it is able to be executed in more situations.
 Then we can remove a precondition as the method itself can handle the situation where the precondition would be false.
@@ -196,46 +210,51 @@ Finding the balance between the amount of preconditions and complexity of the me
 We can remove some of the preconditions of the `merge` method by adding some if-statements to the method.
 First, we can try to remove the `!books.isEmpty()` assertions.
 This means that the method `merge` has to handle empty `books` lists itself.
+
 ```java
 public class FavoriteBooks {
-    // ...
+  // ...
 
-    public void merge(List<Book> books) {
-        assert books != null;
-        assert favorites != null;
-        assert !favorites.containsAll(books);
+  public void merge(List<Book> books) {
+    assert books != null;
+    assert favorites != null;
+    assert !favorites.containsAll(books);
 
-        if (!books.isEmpty()) {
-            favorites.addAll(books);
-            pushNotification.booksAdded(books);
-        }
+    if (!books.isEmpty()) {
+      favorites.addAll(books);
+      pushNotification.booksAdded(books);
     }
+  }
 }
 ```
+
 Now, by generalizing the `merge` method, we have removed one of the preconditions.
 We can even remove the `!favorites.containsAll(books)` assertion by adding some more functionality to the method.
+
 ```java
 public class FavoriteBooks {
-    // ...
+  // ...
 
-    public void merge(List<Book> books) {
-        assert books != null;
-        assert favorites != null;
+  public void merge(List<Book> books) {
+    assert books != null;
+    assert favorites != null;
 
-        List<Book> newBooks = books.removeAll(favorites);
+    List<Book> newBooks = books.removeAll(favorites);
 
-        if (!newBooks.isEmpty()) {
-            favorites.addAll(newBooks);
-            pushNotification.booksAdded(newBooks);
-        }
+    if (!newBooks.isEmpty()) {
+      favorites.addAll(newBooks);
+      pushNotification.booksAdded(newBooks);
     }
+  }
 }
 ```
+
 Now by making the method complexer and removing some of its preconditions, the method is easier to call.
 This does come at the cost that the method always has to filter the `books` list and check if this filtered list is empty or not.
 {% include example-end.html %}
 
 ### Postconditions
+
 If the preconditions of a method hold and the method is called, then at the end of the method its postconditions should hold.
 It is important to realise that these postconditions only have to hold if the preconditions held when the method was called.
 Postconditions formalize the effects that a method guarantees to have when it is done with its execution.
@@ -252,28 +271,31 @@ The other effect of the method is the notification that is sent.
 Unfortunately we cannot easily see if that has actually happened in the method.
 In a test suite we would probably mock the `pushNotification` and then use `Mockito.verify` to verify that `booksAdded` was called.
 We cannot do this in postconditions or assertions so we can add just one post condition.
+
 ```java
 public class FavoriteBooks {
-    // ...
+  // ...
 
-    public void merge(List<Book> books) {
-        assert books != null;
-        assert favorites != null;
+  public void merge(List<Book> books) {
+    assert books != null;
+    assert favorites != null;
 
-        List<Book> newBooks = books.removeAll(favorites);
+    List<Book> newBooks = books.removeAll(favorites);
 
-        if (!newBooks.isEmpty()) {
-            favorites.addAll(newBooks);
-            pushNotification.booksAdded(newBooks);
-        }
-
-        assert favorites.containsAll(books);
+    if (!newBooks.isEmpty()) {
+      favorites.addAll(newBooks);
+      pushNotification.booksAdded(newBooks);
     }
+
+    assert favorites.containsAll(books);
+  }
 }
 ```
+
 {% include example-end.html %}
 
 #### Composite postconditions
+
 For complex methods, the postconditions also become more complex.
 If a method has multiple return statements, it is good to think if these are actually needed.
 Maybe it is possible to combine them to one return statement with a general postcondition.
@@ -284,29 +306,32 @@ Each return statement forms a possible postcondition (proposition) and the metho
 We have a method body that has three conditions and three different return statements.
 This also gives us three postconditions.
 The placing of these post conditions now becomes quite important, so the whole method is becoming rather complex with the postconditions.
+
 ```java
 if (A) {
+  // ...
+  if (B) {
     // ...
-    if (B) {
-        // ...
-        assert PC1;
-        return ...;
-    } else {
-        // ...
-        assert PC2;
-        return ...;
-    }
+    assert PC1;
+    return ...;
+  } else {
+    // ...
+    assert PC2;
+    return ...;
+  }
 }
 // ...
 assert PC3;
 return ...;
 ```
+
 Now if `A` and `B` are true postcondition 1 should hold.
 If `A` is true and `B` is false, postcondition 2 should hold.
 Finally, if `A` is false, postcondition 3 should hold.
 {% include example-end.html %}
 
 ## Invariants
+
 We have seen preconditions that need to hold before a method's execution and postconditions that need to hold after a method's execution.
 Now we move to conditions that always have to hold, so before and after a method's execution.
 These conditions are called invariants.
@@ -324,20 +349,21 @@ Let's say we have a binary tree datastructure.
 An invariant for this datastructure would be that each when a parent points to a child, then the child should point to this parent.
 
 We can make a method that checks if this representation is correct in the given binary tree.
+
 ```java
 public void checkRep(BinaryTree tree) {
-    BinaryTree left = tree.getLeft();
-    BinaryTree right = tree.getRight();
-    
-    assert (left == null || left.getParent() == tree) && 
-        (right == null || right.getParent() == tree)
-    
-    if (left != null) {
-        checkRep(left);
-    }
-    if (right != null) {
-        checkRep(right);
-    }
+  BinaryTree left = tree.getLeft();
+  BinaryTree right = tree.getRight();
+
+  assert (left == null || left.getParent() == tree) &&
+      (right == null || right.getParent() == tree)
+
+  if (left != null) {
+    checkRep(left);
+  }
+  if (right != null) {
+    checkRep(right);
+  }
 }
 ```
 
@@ -346,6 +372,7 @@ Then we continue by checking the child nodes the same way we checked the current
 {% include example-end.html %}
 
 ### Class invariant
+
 In Object-Oriented-Programming these checks on representations can also be applied at the class level.
 This gives us class invariants.
 A class invariant ensures that its condition will be true throughout the entire lifetime of each object of that class.
@@ -370,50 +397,53 @@ We return to the `FavoriteBooks` with the `merge` method.
 We had a precondition saying that `favorites != null`.
 Actually this should always be true, so we can turn it into a class variant.
 Additionally we can add the condition that `pushNotification != null`.
+
 ```java
 public class FavoriteBooks {
-    List<Book> favorites;
-    Listener pushNotification;
+  List<Book> favorites;
+  Listener pushNotification;
 
-    public FavoriteBooks(...) {
-        favorites = ...;
-        pushNotification = ...;
+  public FavoriteBooks(...) {
+    favorites = ...;
+    pushNotification = ...;
 
-        // ...
+    // ...
 
-        assert invariant();
+    assert invariant();
+  }
+
+  public void merge(List<Book> books) {
+    assert invariant();
+
+    // Remaining preconditions
+    assert books != null;
+
+    List<Book> newBooks = books.removeAll(favorites);
+
+    if (!newBooks.isEmpty()) {
+      favorites.addAll(newBooks);
+      pushNotification.booksAdded(newBooks);
     }
 
-    public void merge(List<Book> books) {
-        assert invariant();
+    // Remaining postconditions
+    assert favorites.containsAll(books);
 
-        // Remaining preconditions
-        assert books != null;
+    assert invariant();
+  }
 
-        List<Book> newBooks = books.removeAll(favorites);
-
-        if (!newBooks.isEmpty()) {
-            favorites.addAll(newBooks);
-            pushNotification.booksAdded(newBooks);
-        }
-
-        // Remaining postconditions
-        assert favorites.containsAll(books);
-
-        assert invariant();
-    }
-
-    protected boolean invariant() {
-        return favorites != null && pushNotification != null;
-    }
+  protected boolean invariant() {
+    return favorites != null && pushNotification != null;
+  }
 }
 ```
+
 You can see that the `invariant` method checks the two conditions.
 Then we call `invariant` before and after `merge` and we only assert the pre- and postconditions that are not covered in the `invariant` method.
 At the end of the constructor we also asser the `invariant` method.
 {% include example-end.html %}
 
 ## Design by Contracts
+
 When creating a software system you often use external dependencies, such as a webservice.
 In the remainder of this section we call the system that makes use of the external dependency the client.
 The external system itself is called the server.
@@ -430,9 +460,10 @@ In such a design the contracts are represented by interfaces.
 These interfaces are used by the client and implemented by the server.
 The UML diagram illustrates this design.
 
-![](/assets/img/chapter7/dbc_uml.svg)
+![Design by Contracts UML diagram](/assets/img/chapter7/dbc_uml.svg)
 
 ### Subcontracting
+
 In the UML diagram above we find that the implementation can have different pre-, postconditions, and invariant than its interface.
 We specify the relative strength of these implementated conditions/invariants and the ones in the interface.
 This is was subcontracting does.
@@ -451,13 +482,15 @@ Then, the implementation should also guarentee that at least the interface's inv
 So, $$I'$$ should be **stronger** than (or as strong as) $$I$$.
 
 In short, using the notation of the UML diagram:
-* $$P'$$ **weaker** than $$P$$
-* $$Q'$$ **stronger** than $$Q$$
-* $$I'$$ **stronger** than $$I$$
+
+- $$P'$$ **weaker** than $$P$$
+- $$Q'$$ **stronger** than $$Q$$
+- $$I'$$ **stronger** than $$I$$
 
 The subcontract (the implementation) requires no more and ensures no less than the actual contract (the interface).
 
 ## Liskov Substitution Principle
+
 The subcontracting follows the general notion of behavioral subtyping, proposed by Barbara Liskov.
 The behavioral subtyping states that if we have a class `T` and this class has some subclasses.
 Then the clients or users of this class `T` should be able to choose any of `T`'s subclasses.
@@ -470,6 +503,7 @@ Proper class hiercies follow the Liskov Substitution Principle.
 It is good to keep LSP in mind when designing and implementating a software system.
 
 ### Testing
+
 We want to make sure that our class hierchies follow the Liskov Substitution Principle.
 To do so we can create tests.
 To test the LSP we have to make some test cases for the public methods of the super class and execute these tests with all its subclasses.
@@ -481,7 +515,7 @@ In Java, the List interface is implemented by various subclasses.
 Two examples are the ArrayList and LinkedList.
 Creating the tests for each of the subclasses separately will result in the following structure.
 
-![](/assets/img/chapter7/examples/subclass_test.svg)
+![Test classes architecture](/assets/img/chapter7/examples/subclass_test.svg)
 
 The ArrayList and LinkedList will behave the same for the methods defined in List.
 Therefore there will be duplicate tests for these methods.
@@ -500,7 +534,7 @@ We extract the common test cases and place it in a super class.
 {% include example-begin.html %}
 By using the inheritance in the test classes we get a new architecture.
 
-![](/assets/img/chapter7/examples/parallel_architecture.svg)
+![Parallel Class Hierarchy](/assets/img/chapter7/examples/parallel_architecture.svg)
 
 Here the ArrayListTest and LinkedListTest extend the ListTest.
 List is an interface, so the ListTest should be abstract.
@@ -532,16 +566,16 @@ Here we define the abstract method that gives us a List.
 ```java
 public abstract class ListTest {
 
-    private List list;
+  private List list;
 
-    protected abstract List createList();
+  protected abstract List createList();
 
-    @BeforeEach
-    public void setUp() {
-        list = createList();
-    }
+  @BeforeEach
+  public void setUp() {
+    list = createList();
+  }
 
-    // Common List tests using list
+  // Common List tests using list
 }
 ```
 
@@ -550,13 +584,13 @@ We have to override the createList method and we can define any tests specific f
 
 ```java
 public class ArrayListTest extends ListTest {
-    
-    @Override
-    protected List createList() {
-        return new ArrayList();
-    }
 
-    // Tests specific for the ArrayList
+  @Override
+  protected List createList() {
+    return new ArrayList();
+  }
+
+  // Tests specific for the ArrayList
 }
 ```
 
@@ -565,6 +599,7 @@ Because the createList method returns an ArrayList the common test classes will 
 {% include example-end.html %}
 
 ## Property-Based Testing
+
 In the assertions section we briefl mentioned property checks.
 There we used the properties in assertions.
 We can also use the properties for test cases instead of just assertions.
@@ -581,7 +616,7 @@ The Java implementation is made by Paul Holser and is available on his [github](
 All implementations of QuickCheck follow the same idea, but we will focus on the Java implementation.
 First, we need to be able to define properties.
 Similar to defining test methods we use an annotation on a method with an assertion to define a property: `@Property`.
-Second, QuickCheck includes a number of generators for various types. 
+Second, QuickCheck includes a number of generators for various types.
 For example: Strings, Integers, Lists, Dates etc.
 To generate values we can simply add some parameters to the annotated method.
 The arguments for these parameters will then be automatically generated by QuickCheck.
@@ -606,12 +641,13 @@ We can use property-based testing and the QuickCheck's implementation to make te
 @Runwith(JUnitQuickcheck.class)
 public class PropertyTest {
 
-    @Property
-    public void concatenationLength(String s1, String s2) {
-        assertEquals(s1.length() + s2.length(), (s1 + s2).length())
-    }
+  @Property
+  public void concatenationLength(String s1, String s2) {
+    assertEquals(s1.length() + s2.length(), (s1 + s2).length())
+  }
 }
 ```
+
 `concatenationLength` had the `Property` anotation, so QuickCheck will generate random values for `s1` and `s2` and execute the test with those values.
 {% include example-end.html %}
 
@@ -642,25 +678,28 @@ To be able to use these generated inputs we need the oracles.
 Therefore it is becoming more and more important to explicitly define the contracts and properties for the code that you are making.
 
 ## Exercises
+
 Below you will find some exercises to practise with the material covered in this chapter.
 After each exercise you can directly view the answer.
 
 {% include exercise-begin.html %}
 For this exercise consider the following piece of code.
+
 ```java
 public Square squareAt(int x, int y) {
-    assert x >= 0;
-    assert x < board.getWidth();
-    assert y >= 0;
-    assert y < board[x].length;
-    assert board != null;
+  assert x >= 0;
+  assert x < board.getWidth();
+  assert y >= 0;
+  assert y < board[x].length;
+  assert board != null;
 
-    Square result = board[x][y];
+  Square result = board[x][y];
 
-    assert result != null;
-    return result;
+  assert result != null;
+  return result;
 }
 ```
+
 What assertion(s), if any, can be turned into a class invariant?
 {% include answer-begin.html %}
 `board != null`
@@ -689,15 +728,16 @@ So we have to add an assertion to the constructor that asserts that every value 
 
 
 {% include exercise-begin.html %}
-Your colleague works on a drawing application. 
-He has created a Rectangle class. 
-For rectangles, the width and height can be different from each other, but can't be negative numbers. 
+Your colleague works on a drawing application.
+He has created a Rectangle class.
+For rectangles, the width and height can be different from each other, but can't be negative numbers.
 
 Your colleague also defines the Square class.
-Squares are a special type of rectangle: the width and height should be equal and also can't be negative. 
+Squares are a special type of rectangle: the width and height should be equal and also can't be negative.
 Your colleague decides to implement this by making Square inherit from Rectangle.
 
 The code for the two classes is the following.
+
 ```java
 class Rectangle {
   protected int width;
@@ -762,7 +802,6 @@ This violates the Liskov's Substitution Principle.
 We cannot substitute a `Square` for a `Rectangle`, because we would not be able to have unequal width and height anymore.
 {% include exercise-answer-end.html %}
 
-
 {% include exercise-begin.html %}
 You run your application with assertion checking enabled. 
 Unfortunately, it reports an assertion failure signaling a class invariant violation in one of the libraries your application makes use of.
@@ -779,12 +818,12 @@ This means that there is a bug in the implementation of the library, which would
 As this is outside your project, you typically cannot fix this problem.
 {% include exercise-answer-end.html %}
 
-
 {% include exercise-begin.html %}
 HTTP requests return a status code which can have several values. As explained on [Wikipedia](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes):
-* A 4xx status code "is intended for situations in which the error seems to have been caused by the client". \\
+
+- A 4xx status code "is intended for situations in which the error seems to have been caused by the client". \\
 A well known example is the 404 (Page not found) status code.
-* A 5xx status code "indicates cases in which the server is aware that it has encountered an error or is otherwise incapable of performing the request."\\
+- A 5xx status code "indicates cases in which the server is aware that it has encountered an error or is otherwise incapable of performing the request."\\
 A well known example is the 500 (Internal Server Error) status code.
 
 What is the best correspondence between these status codes and pre- and postconditions?
