@@ -28,7 +28,7 @@ We will cover the following coverage criteria:
 
 TODO: explain how we use these criteria to guide our testing in general terms
 
-## Line coverage
+## Line (and statement) coverage
 
 As the name suggests, when determining the line coverage, we look at the amount of lines of code that are covered by the tests (more specifically,
 by at least one test).
