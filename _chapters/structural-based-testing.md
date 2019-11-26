@@ -19,12 +19,12 @@ By test coverage, we mean the amount (or percentage) of production code that is 
 
 We will cover the following coverage criteria:
 
-- Line coverage
+- Line coverage (and statement coverage)
 - Block coverage
-- Branch coverage
-- Condition coverage
+- Branch/Decision coverage
+- Condition (Basic and Condition+Branch) coverage
 - Path coverage
-- MC/DC
+- MC/DC coverage
 
 TODO: explain how we use these criteria to guide our testing in general terms
 
