@@ -125,6 +125,13 @@ This is definitely not ideal.
 We need a better representation for source code. One that is independent of the developers' personal
 code styles.
 
+Note: Some coverage tools measure coverage as statement level. Statements are the unique instructions that your
+JVM, for example, executes. This is a bit better, as splitting one line code in two would not make a difference, 
+but still not good enough.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/iQECMbKLez0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
 ## Blocks and Control-Flow Graph
 
 A Control-Flow Graph (or CFG) is an agnostic representation of a piece of code. 
@@ -242,6 +249,8 @@ This branch is executed when the last word does not end with an `r` or an `s`.
 The second test executes this branch (by giving the word `cats|dog`) so the two tests together have a branch/decision coverage of $$100\%$$.
 {% include example-end.html %}
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/XiWtG8PKH-A" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## (Basic) condition coverage
 
 Branch coverage gives two branches for each decision, no matter how complicated this decision is.
@@ -280,6 +289,9 @@ However, we will try to do even better in the next section.
 ## Condition + Branch coverage
 
 TODO: explain the difference
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/oWPprB9GBdE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 
 ## Path coverage
 
@@ -329,6 +341,8 @@ By thinking about the path coverage of our test suite, we can come up of quite s
 The main issue is that achiving 100% path coverage might not always be feasible. The number of combinations
 might be too big!
 The amount of tests needed for full path coverage will grow exponentially with the amount of conditions in a decision.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/hpE-aZYulmk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## MC/DC (Modified Condition/Decision Coverage)
 
@@ -423,7 +437,10 @@ This is a lot better than the 8 tests we needed for the path coverage.
 
 Indeed, in the example above, we saw that we need fewer tests when using MC/DC instead of path coverage.
 
-## Coverage subsumption
+<iframe width="560" height="315" src="https://www.youtube.com/embed/HzmnCVaICQ4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+## Criteria subsumption
 
 TODO: write about it
 
@@ -436,6 +453,9 @@ TODO: when to stop testing?
 
 TODO: more examples
 
+## Full review of the concepts
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/busfqNkpgKI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
 ## Exercises
