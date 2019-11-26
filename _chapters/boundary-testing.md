@@ -5,61 +5,70 @@ layout: chapter
 toc: true
 ---
 
-In chapter 2 we started specification based testing by deriving and implementing partition tests.
-As with most testing strategies, these tests provide a good testing suite, but cannot cover everything.
+## Introduction
 
-One specific area, where we might find a lot of bugs, are boundaries.
+A high number of bugs happen in the **boundaries** of your program.
 In this chapter we are going to derive tests for these boundaries.
-The boundaries can reside between partitions, but we will also analyse the boundaries in a condition.
-A lot of off-by-one errors occur here, so it is important to also test these boundaries, beside the partitions.
-Off-by-one errors are errors that usually occur often in conditions.
-For example, when something should happen when value is at least 100 and it only happens when the value is at least 101, or it already happens when the value is 99.
 
-First we have a look at where the boundaries between partitions exist.
-Whenever we have a partition, this partition contains a certain set of tests.
-These tests are test cases, represented by a combination of input values.
-Now we can find the boundaries by finding the values of the input that change the partition the test case is in.
-The boundary itself is between the input values closest to each other, that change the partition the test is in.
+The boundaries can reside between partitions or specific conditions.
+Off-by-one errors, i.e., when your program outcome is "off by one", 
+often occur because of the lack of boundary testing. 
+
+## Boundaries in between classes/partitions
+
+Whenever we devised partitions/classes, these classes have "close boundaries"
+with the other classes.
+
+We can find such boundaries by finding a pair of consecutive input values $$[p_1,p_2]$$, where $$p_1$$ belongs to partition A, and $$p_2$$ belongs to partition B.
+In other words,
+the boundary itself is where our program changes from our class to the other. 
+As testers, we should make sure that everything works smoothly (i.e., the program
+still behaves correctly) near these values.
 
 {% include example-begin.html %}
-We have a small program for a game.
-It has two inputs: the score of the player and the remaining life of the player.
+**Requirement: Calculating the amount of points of the player**
+
+Our program has two inputs: the score of the player and the remaining life of the player.
 If the player's score is below 50, then it always adds 50 points.
-If the remaining life is above or equal to 3 lives and the score is above, or equal to 50 the player's score is doubled.
+If the remaining life is above or equal to 3 lives and the score is greater than or equals to 50, the player's score is doubled.
 
-When thinking about the partitions for testing this method we come up with the following partitions:
+When devising the partitions to test this method, we come up with the following partitions:
 
-1. Score below 50
-2. Score above 50 and remaining life below 3
-3. Score above 50 and remaining life above 3
+1. Score < 50
+2. Score >= 50 and remaining life < 3
+3. Score >= 50 and remaining life >= 3
 
 When the score is strictly smaller than 50 it is part of the first partition.
-From a score of 50 the test case will be part of partition 2 or 3.
+From a score of 50 the test case will be part of partitions 2 or 3.
 Now we have found a boundary between partitions 1 and 2, 3.
 This boundary is between the score of 49 and 50.
 
-We also find a boundary between partition 2 and 3.
-This boundary is between the remaining life of 2 and 3.
-When the remaining life is smaller or equal to 2, it is in partition 2, otherwise it is in partition 3.
+We also find a boundary between partitions 2 and 3.
+This boundary is between the remaining life.
+When the remaining life is smaller than 3, it belongs to partition 2; otherwise it belongs to partition 3.
 
 We can visualize these partitions with their boundaries in a diagram.
 ![Partitions with their boundaries](/assets/img/chapter3/examples/partition_boundaries.svg)
 
 {% include example-end.html %}
 
-## Boundary Analysis
+To sum up: you should devise tests for the inputs at the 
+boundaries of your classes.
+
+TODO: bring the chocolate example here and discuss its partitions
+
+## Analysing conditions
 
 We briefly discussed the off-by-one errors earlier.
 Errors where the system behaves incorrectly for values on and close to the boundary are very easily made.
-Often the error is just one character in the condition, for example `>=` instead of `>`.
+In practice, think of how many times the bug was in the boolean condition of your `if` or `for` condition, and the fix was basically
+replacing a `>=` by a `>`.
 
-To find tests that cover these off-by-one errors we look at the boundaries and derive test cases in a systematic way.
-This way of testing is calles Boundary Analysis.
-
-First we need to go over some terminology:
+When we have a properly specific condition, e.g., `x > 100`, we can analyse the boundaries of this condition.
+First, we need to go over some terminology:
 
 - On-point: the value that is on the boundary. This is the value we see in the condition.
-- Off-point: the value closest to the boundary that flips the conditions. So if the on-point makes the condition true, the off point makes it false and vice versa. Note: when dealing with equalities (e.g. x == 6), there are two off-points; one in each direction.
+- Off-point: the value closest to the boundary that flips the conditions. So if the on-point makes the condition true, the off point makes it false and vice versa. Note: when dealing with equalities or non equalities (e.g. $$x == 6$$ or $$x != 6$$), there are two off-points; one in each direction.
 - In-points are all the values that make the condition true.
 - Out-points are all the values that make the condition false.
 
@@ -70,42 +79,44 @@ Suppose we have a program that adds shipping costs when the total price is below
 
 The condition used in the program is $$x < 100$$.
 
-The on-point is $$100$$, as that is the value in the condition.
-
-The on-point makes the condition false, so the off-point should be the closest number that makes the condition true.
+* The on-point is $$100$$, as that is the value in the condition.
+* The on-point makes the condition false, so the off-point should be the closest number that makes the condition true.
 This will be $$99$$,  $$99 < 100$$ is true.
-
-The in-points are all the values smaller than or equal to $$99$$.
-The out-points are all values larger than or equal to $$100$$.
+* The in-points are all the values smaller than or equal to $$99$$.
+* The out-points are all values larger than or equal to $$100$$.
 
 We show all these points in the diagram below.
 
 ![On- and off-points, in- and out-points](/assets/img/chapter3/examples/on_off_points.svg)
 {% include example-end.html %}
 
-Now that we know the meaning of these different points we can start the boundary analysis in more complicated cases.
-In the example we looked at one condition and its boundary.
-However, in most programs you will find statements that consist of multiple conditions.
-Also with not just one variable, but multiple.
+As a tester, you devise test cases for these different points.
 
-To test the boundaries in these more complicated decisions, we use the simplified domain testing strategy.
+Now that we know the meaning of these different points we can start the boundary analysis in more complicated cases.
+In the previous example, we looked at one condition and its boundary.
+However, in most programs you will find statements that consist of multiple conditions.
+
+To test the boundaries in these more complicated decisions, we use the **simplified domain testing strategy**.
 The idea of this strategy is to test each boundary separately, i.e. independent of the other conditions.
-To do so, for each boundary we pick the on- and off-point and we create one test case each.
-If we use multiple variables, we need values for those as well.
-<!-- [//]: Should these be out point when we have or instead of and? -->
-As we want to test each boundary independently, we choose in-points for the other variables.
-It is important to vary these in-points and to not choose the on- or off-point.
+To do so, for each boundary:
+
+* We pick the on- and off-point and we create one test case each.
+* If we use multiple variables, we need values for those as well.
+As we want to test each boundary independently, we choose in-points for the other variables. Note: We always choose in points, regardless
+of the two boolean expressions being connected by ANDs or ORs. In practice, we want all the other conditions to return true, so that
+we can evaluate the outcome of the condition under test independently.
+* It is important to vary these in-points and to not choose the on- or off-point.
 This gives us the ability to partially check that the program gives the correct results for some in-points.
 If we would set the in-point to the on- or off-point, we would be testing two boundaries at once.
 
-To find these values and display the test cases in a structured manner we use a domain matrix.
+To find these values and display the test cases in a structured manner, we use a **domain matrix**.
 In general the table looks like the following:
 
 ![Template for domain matrix](/assets/img/chapter3/boundary_template.png)
 
-In this template we have two conditions with two parameters.
+In this template, we have two conditions with two parameters (see the $$x > a \land y > b$$ condition).
 We list the variables, with all their conditions.
-Then each condition has two rows: One for the on-point and one for the off-point.
+Then each condition has two rows: one for the on-point and one for the off-point.
 Each variable has an additional row for the typical (or in-) values.
 These are used when testing the other boundary.
 
@@ -130,12 +141,12 @@ We get the on- and off-points like in the previous example.
 Now we have derived the six test cases that we can use to test the boundaries.
 {% include example-end.html %}
 
-## Boundary Testing
+## Automating boundary testing with JUnit (via Parameterized Tests)
 
 We just analysed the boundaries and derived test cases using a domain matrix.
-To automate these tests we will implement them with JUnit.
+It is time to automated these tests using JUnit.
 
-You might have noticed that in the domain matrix we always have a certain amount of input values and, implicitly, an output value.
+You might have noticed that in the domain matrix we always have a certain amount of input values and, implicitly, an expected output value.
 We could just implement the boundary tests by making a separate method for each test.
 However, the amount of tests can quickly become large and then this approach is not maintainable.
 Also, the code in these test methods will be largely the same.
@@ -182,6 +193,8 @@ The assertion in the test checks if the result of the method, with the `x` and `
 
 From the values you can see that each of the six test cases corresponds to one of the test cases in the domain matrix.
 {% include example-end.html %}
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/rPcMJg62wM4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Exercises
 
