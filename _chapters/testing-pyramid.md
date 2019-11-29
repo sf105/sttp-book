@@ -150,6 +150,9 @@ We will discuss design for testability in future chapters.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/YpKxAicxasU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+## An academic remark on the testing pyramid
+
+TODO: write about it
 
 ## Exercises
 
