@@ -1,5 +1,5 @@
 ---
-chapter-number: 14
+chapter-number: 15
 title: Mutation testing
 layout: chapter
 toc: true

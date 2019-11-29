@@ -1,5 +1,5 @@
 ---
-chapter-number: 11
+chapter-number: 12
 title: Design by Contracts and Property-Based Testing
 layout: chapter
 toc: true
