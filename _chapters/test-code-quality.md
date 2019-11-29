@@ -1,5 +1,5 @@
 ---
-chapter-number: 11
+chapter-number: 12
 title: Test code quality
 layout: chapter
 toc: true
