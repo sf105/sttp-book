@@ -20,6 +20,7 @@
   letter-spacing: -1px;
   margin-bottom: 0;
   float: left;
+  white-space: nowrap;
 
   &,
   &:visited {
@@ -336,9 +337,7 @@
 
 #content {
   flex: 1;
-  min-width: -webkit-calc(#{$content-width} - (#{$spacing-unit} * 2));
-  min-width:         calc(#{$content-width} - (#{$spacing-unit} * 2));
-  
+  max-width: 100%;
 }
 
 #toc-content-wrapper {
