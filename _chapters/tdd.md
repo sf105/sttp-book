@@ -86,7 +86,7 @@ That being said, it is important to know about TDD and its advantages.
 It is very good to try TDD and see where it is beneficial to software development.
 
 
-## Exercise
+## Exercises
 
 
 {% include exercise-begin.html %}
