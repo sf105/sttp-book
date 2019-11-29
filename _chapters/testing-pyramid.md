@@ -152,8 +152,10 @@ We will discuss design for testability in future chapters.
 
 ## An academic remark on the testing pyramid
 
-TODO: write about it
+{% assign todo = "to be written" %}
+{% include todo.html %}
 
 ## Exercises
 
-TODO: exercises
+{% assign todo = "we need exercises here" %}
+{% include todo.html %}
