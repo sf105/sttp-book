@@ -182,8 +182,6 @@
   padding: $spacing-unit 0;
   flex: 1;
   margin-top: $spacing-unit * 1.865;
-  margin-right: auto;
-  margin-left: auto;
 }
 
 .page-heading {
@@ -246,8 +244,8 @@
   h2::before {
     content: '';
     display: block;
-    height:      $spacing-unit * 1.865 + 5;
-    margin-top: -$spacing-unit * 1.865 + 5;
+    height:      $spacing-unit * 1.865 + 10;
+    margin-top: -$spacing-unit * 1.865 + 10;
     visibility: hidden;
   }
 
@@ -262,8 +260,8 @@
   h3::before {
     content: '';
     display: block;
-    height:      $spacing-unit * 1.865 + 5;
-    margin-top: -$spacing-unit * 1.865 + 5;
+    height:      $spacing-unit * 1.865 + 10;
+    margin-top: -$spacing-unit * 1.865 + 10;
     visibility: hidden;
   }
 
@@ -278,8 +276,8 @@
   h4::before {
     content: '';
     display: block;
-    height:      $spacing-unit * 1.865 + 5;
-    margin-top: -$spacing-unit * 1.865 + 5;
+    height:      $spacing-unit * 1.865 + 10;
+    margin-top: -$spacing-unit * 1.865 + 10;
     visibility: hidden;
   }
 }
@@ -305,9 +303,9 @@
  */
 .toc {
   display: none;
-  position: fixed;
-  margin-left: -webkit-calc(#{$content-width} - #{$spacing-unit});
-  margin-left: calc(#{$content-width} - #{$spacing-unit});
+  flex: 1;
+  min-width: 200px;
+  margin-left: $spacing-unit;
 }
 
 .toc ul {
@@ -315,8 +313,10 @@
 }
 
 .section-nav {
-  padding: 0px;
-  margin: 0px;
+  position: sticky;
+  top: $spacing-unit * 1.865 + 15;
+  margin-left: 0;
+  min-width: 100%;
 }
 
 .pointer {
@@ -334,3 +334,13 @@
   user-select: none;
 }
 
+#content {
+  flex: 1;
+  min-width: -webkit-calc(#{$content-width} - (#{$spacing-unit} * 2));
+  min-width:         calc(#{$content-width} - (#{$spacing-unit} * 2));
+  
+}
+
+#toc-content-wrapper {
+  display: flex;
+}
