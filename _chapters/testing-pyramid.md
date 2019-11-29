@@ -157,5 +157,44 @@ We will discuss design for testability in future chapters.
 
 ## Exercises
 
-{% assign todo = "we need exercises here" %}
-{% include todo.html %}
+
+{% include exercise-begin.html %}
+Now we have a skeleton for the testing pyramid.
+What words/sentences should be at the numbers?
+
+![Testing Pyramid exercise skeleton](/assets/img/chapter6/exercises/pyramid_skeleton.svg)
+
+(Try to answer the question without scrolling up!)
+{% include answer-begin.html %}
+
+1. Manual
+2. System
+3. Integration
+4. Unit
+5. More reality (interchangeable with 6)
+6. More complexity (interchangeable ith 5)
+
+See the diagram in the Testing Pyramid section.
+{% include exercise-answer-end.html %}
+
+
+
+
+{% include exercise-begin.html %}
+As a tester, you have to decide which test level (i.e., unit, integration, or system test) you will apply.
+Which of the following statements is true?
+
+1. Integration tests, although more complicated (in terms of automation) than unit tests, would better help in finding bugs in the communication with the webservice and/or the communication with the database.
+2. Given that unit tests could be easily written (by using mocks) and they would cover as much as integration tests would, it is the best choice in this problem.
+3. The most effective way to find bugs in this code is through system tests. In this case, the tester should run the entire system and exercise the batch process. Given that this code can be easily mocked, system tests would also be cheap.
+4. While all the test levels can be used for this problem, testers would likely find more bugs if they choose one level and explore all the possibilities and corner cases there.
+
+{% include answer-begin.html %}
+The correct answer is 1.
+
+1. This is correct. The primary use of integration tests is to find mistakes in the communication between a system and its external dependencies
+2. Unit tests do not cover as much as integration tests. They cannot cover the communication between different components of the system.
+3. When using system tests the bugs will not be easy to identify and find, because it can be anywhere in the system if the test fails. Additionally, system tests want to execute the whole system as if it is run normally, so we cannot just mock the code in a system test.
+4. The different test levels do not find the same kind of bugs, so settling down on one of the levels is not a good idea.
+
+{% include exercise-answer-end.html %}

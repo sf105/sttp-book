@@ -85,3 +85,28 @@ Doing testing at all is more important than following TDD.
 That being said, it is important to know about TDD and its advantages.
 It is very good to try TDD and see where it is beneficial to software development.
 
+
+## Exercise
+
+
+{% include exercise-begin.html %}
+We have the following skeleton for a diagram illustrating the Test Driven Development cycle.
+What words/sentences should be at the numbers?
+
+![Test Driven Development exercise skeleton](/assets/img/chapter6/exercises/tdd_skeleton.svg)
+
+(Try to answer the question without scrolling up!)
+{% include answer-begin.html %}
+
+1. Write failing test
+2. Failing test
+3. Make test pass
+4. Passing test
+5. Refactor
+
+From the explanation above:
+
+![Test Driven Development Cycle](/assets/img/chapter6/tdd_cycle.svg)
+
+{% include exercise-answer-end.html %}
+
