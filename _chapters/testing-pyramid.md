@@ -119,11 +119,10 @@ Unit test is at the bottom of the pyramid, which means that we want most tests t
 The reasons for this have been discussed in the unit testing section (they are fast and require less effort to be written).
 Then, we go for integration tests, of which we do a bit less than unit tests. Given the extra effort that integration tests require,
 we make sure to write tests for the integrations we indeed need.
-Lastly, we perform system and manual tests.
+Lastly, we perform a bit less system tests, and even less manual tests.
 
 Again, note that the further up the pyramid, the closer to reality (and more complex) the tests become.
 These are important factors in determining what kind of tests to create for a given software system.
-
 We will now go over a couple of guidelines you can use to determine what level of tests to write when testing a system (which you should take with a grain of salt; after all, software systems are different from each other, and might require specific guidelines):
 
 * We start at the unit level.
