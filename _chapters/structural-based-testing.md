@@ -87,7 +87,7 @@ So when we execute both of our tests, the line coverage is $$100\%$$.
 More formally, we can compute line coverage 
 as: 
 
-$$\text{line_coverage} = \frac{\text{lines_covered}}{\text{lines_total}} \cdot 100\%$$.
+$$\text{line_coverage} = \frac{\text{lines_covered}}{\text{lines_total}} \cdot 100\%$$
 
 Note: Defining what constitutes a line is up to the tester. One might count, for example, the method declaration as a code line. 
 We prefer not to count the method declaration line.
@@ -191,7 +191,7 @@ We can use blocks as a coverage criteria, in the same way we did with lines: ins
 
 The formula to measure block coverage is similar:
 
-$$\text{block_coverage} = \frac{\text{blocks_covered}}{\text{blocks_total}} \cdot 100\%$$.
+$$\text{block_coverage} = \frac{\text{blocks_covered}}{\text{blocks_total}} \cdot 100\%$$
 
 TODO: show a test here that achieves 100% block coverage
 
@@ -209,7 +209,7 @@ This time, however, we do not count lines or blocks, but the number of possible 
 Whenever you have a decision block, that decision block has two outcomes. We consider our test suite to achieve
 100% branch coverage (or decision coverage, as both terms mean the same) whenever we have tests exercising all the possible outcomes.
 
-$$\text{branch_coverage} = \frac{\text{decision_outcomes_covered}}{\text{decision_outcomes_total}} \cdot 100\%$$.
+$$\text{branch_coverage} = \frac{\text{decision_outcomes_covered}}{\text{decision_outcomes_total}} \cdot 100\%$$
 
 In practice, these decisions (or branches) are easy to find in a CFG.
 Each arrow with true of false (so each arrow going out of a decision) is a branch.
