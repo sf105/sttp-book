@@ -5,4 +5,5 @@ layout: chapter
 toc: true
 ---
 
-TODO
+{% assign todo = "We need to develop this entire chapter. Help us!" %}
+{% include todo.html %}
