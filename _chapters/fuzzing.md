@@ -5,5 +5,5 @@ layout: chapter
 toc: true
 ---
 
-{% assign todo = "We need to develop this entire chapter. Help us!" %}
-{% include todo.html %}
+There is no need for us to develop material about it. Just read the
+[https://www.fuzzingbook.org](https://www.fuzzingbook.org)!
