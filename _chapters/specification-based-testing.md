@@ -68,7 +68,8 @@ following classes/partitions:
 
 Note how each class above exercise the program in different ways.
 
-TODO: example picture here showing the input domain and its classes.
+{% assign todo = "example picture here showing the input domain and its classes." %}
+{% include todo.html %}
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/kSLbxmXcPPI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -247,9 +248,12 @@ Each of the test cases corresponds to one of the partitions that we want to test
 
 ## More examples of specification-based testing
 
-TODO: one more complicated example here, the chocolate one, where the characteristics are not really direct in the specification.
 
-TODO: one more example, the one from Xavier
+{% assign todo = "one more complicated example here, the chocolate one, where the characteristics are not really direct in the specification." %}
+{% include todo.html %}
+
+{% assign todo = "one more example, the one from Xavier's lecture" %}
+{% include todo.html %}
 
 
 ## Random testing vs specification-based testing

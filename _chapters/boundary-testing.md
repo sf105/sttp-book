@@ -55,7 +55,8 @@ We can visualize these partitions with their boundaries in a diagram.
 To sum up: you should devise tests for the inputs at the 
 boundaries of your classes.
 
-TODO: bring the chocolate example here and discuss its partitions
+{% assign todo = "Bring the chocolate example, from the video here, and discuss its partitions." %}
+{% include todo.html %}
 
 ## Analysing conditions
 

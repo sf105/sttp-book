@@ -26,7 +26,8 @@ We will cover the following coverage criteria:
 - Path coverage
 - MC/DC coverage
 
-TODO: explain how we use these criteria to guide our testing in general terms
+{% assign todo = "explain how we use these criteria to guide our testing in general terms" %}
+{% include todo.html %}
 
 ## Line (and statement) coverage
 
@@ -193,7 +194,8 @@ The formula to measure block coverage is similar:
 
 $$\text{block_coverage} = \frac{\text{blocks_covered}}{\text{blocks_total}} \cdot 100\%$$
 
-TODO: show a test here that achieves 100% block coverage
+{% assign todo = "show a test here that achieves 100% block coverage" %}
+{% include todo.html %}
 
 
 
@@ -288,7 +290,8 @@ However, we will try to do even better in the next section.
 
 ## Condition + Branch coverage
 
-TODO: explain the difference
+{% assign todo = "explain the difference with basic condition coverage" %}
+{% include todo.html %}
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/oWPprB9GBdE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -442,16 +445,19 @@ Indeed, in the example above, we saw that we need fewer tests when using MC/DC i
 
 ## Criteria subsumption
 
-TODO: write about it
+{% assign todo = "write about the criteria subsumption" %}
+{% include todo.html %}
+
 
 ## How to use structural testing in practice
 
-TODO: write about it
-TODO: when to stop testing?
+{% assign todo = "write this section + when to stop testing?" %}
+{% include todo.html %}
 
-## More exercises of Control-Flow Graphs
+## More examples of Control-Flow Graphs
 
-TODO: more examples
+{% assign todo = "one more example of a CFG" %}
+{% include todo.html %}
 
 ## Full review of the concepts
 
