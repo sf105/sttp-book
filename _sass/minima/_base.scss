@@ -167,19 +167,17 @@ pre {
  */
 .wrapper {
   max-width: -webkit-calc(#{$content-width} - (#{$spacing-unit} * 2));
-  max-width:         calc(#{$content-width} - (#{$spacing-unit} * 3) - 38px);
+  max-width:         calc(#{$content-width} - (#{$spacing-unit} * 2));
   margin-right: auto;
   margin-left: auto;
-  padding-right: calc(2 * #{$spacing-unit} + 38px);
-  padding-right: -webkit-calc(2 * #{$spacing-unit} + 38px);
+  padding-right: $spacing-unit;
   padding-left: $spacing-unit;
   @extend %clearfix;
 
   @include media-query($on-laptop) {
     max-width: -webkit-calc(#{$content-width} - (#{$spacing-unit}));
-    max-width:         calc(#{$content-width} - (#{$spacing-unit} * 2) - 38px);
-    padding-right: calc(#{$spacing-unit} + 38px);
-    padding-right: -webkit-calc(#{$spacing-unit} + 38px);
+    max-width:         calc(#{$content-width} - (#{$spacing-unit}));
+    padding-right: $spacing-unit / 2;
     padding-left: $spacing-unit / 2;
   }
 }

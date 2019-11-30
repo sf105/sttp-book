@@ -1,6 +1,5 @@
 $toc-width: 200px;
 $toc-collapse: calc(#{$content-width} + (2 * #{$toc-width}) + #{$spacing-unit});
-$toc-collapse: -webkit-calc(#{$content-width} + (2 * #{$toc-width}) + #{$spacing-unit});
 
 /**
  * Site header
@@ -15,6 +14,19 @@ $toc-collapse: -webkit-calc(#{$content-width} + (2 * #{$toc-width}) + #{$spacing
 
   // Positioning context for the mobile navigation icon
   position: fixed;
+
+  .wrapper {
+    max-width: -webkit-calc(#{$content-width} - (#{$spacing-unit} * 3) - 38px);
+    max-width:         calc(#{$content-width} - (#{$spacing-unit} * 3) - 38px);
+
+    padding-right: calc(2 * #{$spacing-unit} + 38px);
+    padding-right: -webkit-calc(2 * #{$spacing-unit} + 38px);
+
+    @include media-query($on-laptop) {
+      max-width: -webkit-calc(#{$content-width} - (#{$spacing-unit} * 2) - 38px);
+      max-width:         calc(#{$content-width} - (#{$spacing-unit} * 2) - 38px);
+    }
+  }
 }
 
 .site-title {
@@ -34,6 +46,7 @@ $toc-collapse: -webkit-calc(#{$content-width} + (2 * #{$toc-width}) + #{$spacing
 
 .site-nav {
   float: right;
+  // line-height: $base-line-height * $base-font-size * 2.25;
 
   .nav-trigger {
     display: none;
@@ -299,17 +312,17 @@ $toc-collapse: -webkit-calc(#{$content-width} + (2 * #{$toc-width}) + #{$spacing
   }
 }
 
-table {
-  width: 80%;
-  max-width: 100%;
-  margin: auto;
-  table-layout: fixed;
-  overflow: auto;
-}
+// table {
+//   width: 80%;
+//   // max-width: 100%;
+//   margin: auto;
+//   table-layout: fixed;
+//   overflow: auto;
+// }
 
-th,td {
-  word-wrap: break-word;
-}
+// th,td {
+//   word-wrap: break-word;
+// }
 
 /**
  * Examples and Exercises/Answers
@@ -352,7 +365,6 @@ th,td {
   margin-left: 0;
   min-width: 100%;
   max-height: calc(100vh - (#{$spacing-unit} * 1.865 + 15px));
-  max-height: -webkit-calc(100vh - (#{$spacing-unit} * 1.865 + 15px));
   overflow: auto;
 }
 
