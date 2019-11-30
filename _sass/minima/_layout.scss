@@ -1,5 +1,6 @@
 $toc-width: 200px;
 $toc-collapse: calc(#{$content-width} + (2 * #{$toc-width}) + #{$spacing-unit});
+$toc-collapse: -webkit-calc(#{$content-width} + (2 * #{$toc-width}) + #{$spacing-unit});
 
 /**
  * Site header
@@ -33,7 +34,6 @@ $toc-collapse: calc(#{$content-width} + (2 * #{$toc-width}) + #{$spacing-unit});
 
 .site-nav {
   float: right;
-  // line-height: $base-line-height * $base-font-size * 2.25;
 
   .nav-trigger {
     display: none;
@@ -352,6 +352,7 @@ th,td {
   margin-left: 0;
   min-width: 100%;
   max-height: calc(100vh - (#{$spacing-unit} * 1.865 + 15px));
+  max-height: -webkit-calc(100vh - (#{$spacing-unit} * 1.865 + 15px));
   overflow: auto;
 }
 
