@@ -1,6 +1,6 @@
 ---
 chapter-number: 9
-title: Mocking
+title: Mock Objects
 layout: chapter
 toc: true
 ---
