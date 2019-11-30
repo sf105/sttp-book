@@ -321,7 +321,7 @@ The decision of this if-statement contains three conditions and can be generaliz
 To get $$100\%$$ path coverage, we would have to test all the possible combinations of these three conditions.
 We construct a truth table to find the combinations:
 
-<table style="width:50%">
+<table>
     <tr><th>Tests</th><th>A</th><th>B</th><th>C</th><th>Outcome</th></tr>
     <tr><td>1</td><td>T</td><td>T</td><td>T</td><td>T</td></tr>
     <tr><td>2</td><td>T</td><td>T</td><td>F</td><td>T</td></tr>
@@ -366,7 +366,7 @@ Let's do it in a mechanical way. See the example below.
 Let's test the decision block we have in the previous example, with its corresponding truth table. Note how each row
 represents a test $$T_n$$. In this case, tests go from 1 to 8, as we have 3 decisions, and $$2^3$$ is 8:
 
-<table style="width:50%">
+<table>
     <tr><th>Tests</th><th>A</th><th>B</th><th>C</th><th>Outcome</th></tr>
     <tr><td>1</td><td>T</td><td>T</td><td>T</td><td>T</td></tr>
     <tr><td>2</td><td>T</td><td>T</td><td>F</td><td>T</td></tr>
@@ -611,7 +611,7 @@ The only difference is that lines 7 and 8 will only be executed when the item to
 {% include exercise-begin.html %}
 Consider the decision (A | C) & B with the corresponding decision table:
 
-<table style="width:50%">
+<table>
     <tr><th>Decision</th><th>A</th><th>B</th><th>C</th><th>(A | C) & B</th></tr>
     <tr><td>1</td><td>T</td><td>T</td><td>T</td><td>T</td></tr>
     <tr><td>2</td><td>T</td><td>T</td><td>F</td><td>T</td></tr>
