@@ -321,17 +321,16 @@ $toc-collapse: calc(#{$content-width} + (2 * #{$toc-width}) + #{$spacing-unit});
   }
 }
 
-// table {
-//   width: 80%;
-//   // max-width: 100%;
-//   margin: auto;
-//   table-layout: fixed;
-//   overflow: auto;
-// }
+table {
+  display: block;
+  overflow: auto;
+  border: none;
+}
 
-// th,td {
-//   word-wrap: break-word;
-// }
+tbody {
+  border-collapse: collapse;
+  border: 1px solid #e8e8e8;
+}
 
 /**
  * Examples and Exercises/Answers
