@@ -7,54 +7,83 @@ toc: true
 
 ## Introduction
 
-When unit testing a piece of code we want to test this code in isolation.
-If the code requires some external dependency to run, this forms a problem.
-We do not want to use this external component when we are just testing the piece of code that uses it.
-To run the test without using external components we use mock objects.
+When unit testing a piece of code, we want to test it in isolation.
+However, if the code requires some external dependency to run, e.g.,
+a connection to a database or a webservice, this can be a problem.
+We do not want to use this external component when we are just testing the piece of code that uses it. How can we do it? We can **simulate the external component**!
+For that, we will use **mock objects**.
 
-Mocking an object creates a simulation of this object.
-To handle external dependencies we mock (simulate) the class in the system that is used to interact with the dependency.
-Instead of doing the actual work of the external components mock objects just returns fake results.
-These return values can be configured inside of the test itself.
-For testing, mock objects have some advantages.
+When we mock an object, we create a simulation of this object.
+To handle external dependencies, we mock (simulate) the class in the system that interacts with the dependency.
+Instead of doing the actual work of the external components, mock objects just return fake, hard-coded results.
+These return values can be configured inside of the test itself. We will see how it works in practice soon.
+
+The use of mock objects has some advantages.
 Returning these pre-configured values is way faster than accessing an external component.
-Simulating objects also gives a lot more control.
-If we, for example, want to make sure the system keeps going even if one of its dependencies crashes, we can just tell the simulation to crash.
+Simulating objects also gives us a lot more control.
+If we, for example, want to make sure the system keeps going even if one of its dependencies crashes, we can just tell the simulation to crash; think of how hard would it be to crash a database just to test if your system reacts to that well (although techniques such as *chaos monkey* have become really popular!).
 
-Mock objects are widely used in software testing, mainly to increase testability.
-As we have discussed, external systems that the tested system relies on are often mocked.
-These external systems include for example databases or webservices that are used by the system.
-Mocks are also used to simulate exceptions that are hard to trigger in the actual system.
-When using third party libraries that are hard to control we use mocks to simulate their behavior in certain ways that are useful to the tests.
+Mock objects are therefore widely used in software testing, mainly to increase testability.
+As we have discussed, external systems that the system under test relies on are often mocked to increase controllability and observability. We often mock:
 
-Besides using mocks to simulate the behavior of components needed to run the system, mocks can be used to test the interaction of the system with a component easily.
-This way we use mocks to increase the observability, i.e. we can observe the system's behavior easier.
-Simulating behavior of components like we discussed earlier is using mocks to increase the controllability.
+* External components that might be hard to control, or to slow to be used in a unit test, such as databases and webservices.
+* To simulate exceptions that are hard to trigger in the actual system.
+* To control the behavior of complex third party libraries.
+* To test how the different components interact (i.e., exchange messages) among each other.
 
-To use mocks in our tests we create a mock object.
-Then, once it has been created, we give it to the class that normally uses an actual implementation of the mocked object.
+
+Implementation-wise, we follow some steps:
+
+* We create a mock object.
+* Once it has been created, we give it to the class that normally uses the concrete implementation of the mocked object.
 This class is now using the mocked object while the tests are executed.
-At first, the mock does not know how to do anything.
+* At first, the mock does not know how to do anything.
 So, before running the tests, we have to tell it exactly what to do when a certain method is called.
-In the next section we will look at how this is done in Java.
+* We trigger the action on the class/method under test. During its execution, note that the mock replaces the external component.
+* We make assertions on the mock object, often related to its execution.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/kptTWbeLZ3E" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Mockito
 
 In Java the most used framework for mocking is Mockito ([mockito.org](https://site.mockito.org)).
-To perform the steps we mentioned above we use a couple of methods provided by mockito:
+To perform the steps we mentioned above, we use a couple of methods provided by Mockito:
 
-- `mock(<class>)`: creates a mock object of the given runtime class. The runtime class can be retrieved from any class by `<ClassName>.class`.
+- `mock(<class>)`: creates a mock object of the given class. The class can be retrieved from any class by `<ClassName>.class`.
 - `when(<mock>.<method>).thenReturn(<value>)`: defines the behavior when the given method is called on the mock. In this case `<value>` will be returned.
-- `verify(<mock>).<method>`: is a test that passes when the method is called on the mock and fails otherwise.
+- `verify(<mock>).<method>`: asserts that the mock object was exercised in the expected way.
 
-Much more functionalities are described in [mockito's documentation](https://javadoc.io/page/org.mockito/mockito-core/latest/org/mockito/Mockito.html).
+Much more functionalities are described in [Mockito's documentation](https://javadoc.io/page/org.mockito/mockito-core/latest/org/mockito/Mockito.html).
 
 {% include example-begin.html %}
-Suppose we have a function that filters invoices.
+Suppose we have a method that filters invoices.
 These invoices are saved in a database and retrieved from the database by this function.
 The invoices are filtered on their price.
 All those above 100 are filtered.
-Without mocks, to test the method we need to insert some testing invoices first:
+
+```java
+public class InvoiceFilter {
+
+    public List<Invoice> filter() {
+
+        InvoiceDao invoiceDao = new InvoiceDao();
+        List<Invoice> allInvoices = invoiceDao.all();
+
+        List<Invoice> filtered = new ArrayList<>();
+
+        for(Invoice inv : allInvoices) {
+            if(inv.getValue() < 100.0)
+                filtered.add(inv);
+        }
+
+        return filtered;
+
+    }
+}
+```
+
+
+Without mocks, the test would need to insert some testing invoices in the database first:
 
 ```java
 @Test
@@ -74,8 +103,42 @@ public void filterInvoicesTest() {
 }
 ```
 
+And of course, clear the database afterwards. Otherwise the test will break in the second run, as there will be two invoices stored in the database! (The database stores data permanenty; so far, we never had to 'clean' the objects; after all, they were always stored in-memory only.)
+
 Now instead of using the database, we want to replace it with a mock object.
 This way our test will be faster and we can more easily control what the Database-Access-Object returns.
+
+For that to happen, we first need to make sure we can inject the `InvoiceDao`
+to the `InvoiceFilter` class. Instead of instantiating it, we'll change the `InvoiceFilter` class to actually receive `InvoiceDao` via constructor. 
+
+```java
+public class InvoiceFilter {
+
+    private InvoiceDao dao;
+
+    public InvoiceFilter (InvoiceDao dao) {
+        this.dao = dao;
+    }
+
+    public List<Invoice> filter() {
+
+        List<Invoice> allInvoices = dao.all();
+
+        List<Invoice> filtered = new ArrayList<>();
+
+        for(Invoice inv : allInvoices) {
+            if(inv.getValue() < 100.0)
+                filtered.add(inv);
+        }
+
+        return filtered;
+
+    }
+}
+```
+
+Now, we can mock the `InvoiceDao` class and pass the mocked instance
+to the `InvoiceFilter`:
 
 ```java
 @Test
@@ -95,10 +158,17 @@ public void filterInvoicesTest() {
 }
 ```
 
-The InvoiceFilter uses the `all` method in the `InvoiceDao` to get the invoices.
-With the mock we can easily give the two invoices that we want to test on.
-Using this mock also makes sure we do not have to keep a database running while executing the tests.
+Note how we now have full control over the `InvoiceDao` class.
+The `InvoiceFilter` uses the `all` method of the `InvoiceDao` to get the invoices.
+With the mock, we can easily give the two invoices that we want to test on (note how
+we are passing `i1` and `i2`.
+Note also how we do not have to keep a database running while executing the tests!
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/baunKy04deM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 {% include example-end.html %}
+
+Mocks are a useful tool when it comes to write real isolated unit tests.
 
 
 
