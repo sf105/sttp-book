@@ -88,7 +88,7 @@ So when we execute both of our tests, the line coverage is $$100\%$$.
 More formally, we can compute line coverage 
 as: 
 
-$$\text{line_coverage} = \frac{\text{lines_covered}}{\text{lines_total}} \cdot 100\%$$.
+$$\text{line_coverage} = \frac{\text{lines_covered}}{\text{lines_total}} \cdot 100\%$$
 
 Note: Defining what constitutes a line is up to the tester. One might count, for example, the method declaration as a code line. 
 We prefer not to count the method declaration line.
@@ -192,7 +192,7 @@ We can use blocks as a coverage criteria, in the same way we did with lines: ins
 
 The formula to measure block coverage is similar:
 
-$$\text{block_coverage} = \frac{\text{blocks_covered}}{\text{blocks_total}} \cdot 100\%$$.
+$$\text{block_coverage} = \frac{\text{blocks_covered}}{\text{blocks_total}} \cdot 100\%$$
 
 {% assign todo = "show a test here that achieves 100% block coverage" %}
 {% include todo.html %}
@@ -211,7 +211,7 @@ This time, however, we do not count lines or blocks, but the number of possible 
 Whenever you have a decision block, that decision block has two outcomes. We consider our test suite to achieve
 100% branch coverage (or decision coverage, as both terms mean the same) whenever we have tests exercising all the possible outcomes.
 
-$$\text{branch_coverage} = \frac{\text{decision_outcomes_covered}}{\text{decision_outcomes_total}} \cdot 100\%$$.
+$$\text{branch_coverage} = \frac{\text{decision_outcomes_covered}}{\text{decision_outcomes_total}} \cdot 100\%$$
 
 In practice, these decisions (or branches) are easy to find in a CFG.
 Each arrow with true of false (so each arrow going out of a decision) is a branch.
@@ -324,7 +324,7 @@ The decision of this if-statement contains three conditions and can be generaliz
 To get $$100\%$$ path coverage, we would have to test all the possible combinations of these three conditions.
 We construct a truth table to find the combinations:
 
-<table style="width:50%">
+<table>
     <tr><th>Tests</th><th>A</th><th>B</th><th>C</th><th>Outcome</th></tr>
     <tr><td>1</td><td>T</td><td>T</td><td>T</td><td>T</td></tr>
     <tr><td>2</td><td>T</td><td>T</td><td>F</td><td>T</td></tr>
@@ -369,7 +369,7 @@ Let's do it in a mechanical way. See the example below.
 Let's test the decision block we have in the previous example, with its corresponding truth table. Note how each row
 represents a test $$T_n$$. In this case, tests go from 1 to 8, as we have 3 decisions, and $$2^3$$ is 8:
 
-<table style="width:50%">
+<table>
     <tr><th>Tests</th><th>A</th><th>B</th><th>C</th><th>Outcome</th></tr>
     <tr><td>1</td><td>T</td><td>T</td><td>T</td><td>T</td></tr>
     <tr><td>2</td><td>T</td><td>T</td><td>F</td><td>T</td></tr>
@@ -617,7 +617,7 @@ The only difference is that lines 7 and 8 will only be executed when the item to
 {% include exercise-begin.html %}
 Consider the decision (A | C) & B with the corresponding decision table:
 
-<table style="width:50%">
+<table>
     <tr><th>Decision</th><th>A</th><th>B</th><th>C</th><th>(A | C) & B</th></tr>
     <tr><td>1</td><td>T</td><td>T</td><td>T</td><td>T</td></tr>
     <tr><td>2</td><td>T</td><td>T</td><td>F</td><td>T</td></tr>

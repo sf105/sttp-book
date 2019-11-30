@@ -31,7 +31,27 @@ function toggleTOC(e) {
   e.target.classList.toggle("pointer_down")
 }
 
+function addMenuToggle() {
+  var links = document.getElementsByClassName("trigger")[0].getElementsByTagName("a")
+  for (var i = 0; i < links.length; i++) {
+    links[i].onclick = toggleMenu
+  }
+}
+
+function toggleMenu() {
+  var toggle = document.getElementById("nav-trigger")
+  if (toggle) {
+    if (toggle.checked) {
+      toggle.checked = false;
+    }
+  }
+}
+
 window.onload = function () {
-  addToggle(document.getElementsByClassName("toc")[0])
-  document.getElementsByClassName("toc")[0].style.display = "block"
+  var tocs = document.getElementsByClassName("toc");
+  for (var i = 0; i < tocs.length; i++) {
+    addToggle(tocs[i])
+    tocs[i].style.display = "block"
+  }
+  this.addMenuToggle()
 }
