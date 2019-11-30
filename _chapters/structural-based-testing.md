@@ -454,7 +454,7 @@ Indeed, in the example above, we saw that we need fewer tests when using MC/DC i
 {% assign todo = "write this section + when to stop testing?" %}
 {% include todo.html %}
 
-## More exercises of Control-Flow Graphs
+## More examples of Control-Flow Graphs
 
 {% assign todo = "one more example of a CFG" %}
 {% include todo.html %}
