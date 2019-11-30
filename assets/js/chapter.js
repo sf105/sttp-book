@@ -32,6 +32,9 @@ function toggleTOC(e) {
 }
 
 window.onload = function () {
-  addToggle(document.getElementsByClassName("toc")[0])
-  document.getElementsByClassName("toc")[0].style.display = "block"
+  var tocs = document.getElementsByClassName("toc");
+  for (var i = 0; i < tocs.length; i++) {
+    addToggle(tocs[i])
+    tocs[i].style.display = "block"
+  }
 }
