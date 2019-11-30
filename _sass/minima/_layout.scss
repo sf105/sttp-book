@@ -299,6 +299,17 @@ $toc-collapse: calc(#{$content-width} + (2 * #{$toc-width}) + #{$spacing-unit});
   }
 }
 
+table {
+  width: 80%;
+  max-width: 100%;
+  margin: auto;
+  table-layout: fixed;
+  overflow: auto;
+}
+
+th,td {
+  word-wrap: break-word;
+}
 
 /**
  * Examples and Exercises/Answers
@@ -328,6 +339,7 @@ $toc-collapse: calc(#{$content-width} + (2 * #{$toc-width}) + #{$spacing-unit});
   flex: 1;
   min-width: $toc-width;
   margin-left: $spacing-unit;
+  margin-right: $spacing-unit;
 }
 
 .toc ul {
@@ -365,16 +377,4 @@ $toc-collapse: calc(#{$content-width} + (2 * #{$toc-width}) + #{$spacing-unit});
 
 #toc-content-wrapper {
   display: flex;
-}
-
-table {
-  width: 80%;
-  max-width: 100%;
-  margin: auto;
-  table-layout: fixed;
-  overflow: auto;
-}
-
-th,td {
-  word-wrap: break-word;
 }
