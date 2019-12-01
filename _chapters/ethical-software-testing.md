@@ -1,6 +1,6 @@
 ---
 chapter-number: 20
-title: Responsible/Ethical Software Testing
+title: Soon: Responsible/Ethical Software Testing
 layout: chapter
 toc: true
 ---
