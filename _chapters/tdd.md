@@ -187,3 +187,82 @@ From the explanation above:
 
 {% include exercise-answer-end.html %}
 
+
+
+
+{% include exercise-begin.html %}
+Remember the `RomanNumeral` problem?
+
+```
+**The Roman Numeral problem**
+
+It is our goal to implement a program that receives a string as a parameter
+containing a roman number and then converts it to an integer.
+
+In roman numeral, letters represent values:
+
+* I = 1
+* V = 5
+* X = 10
+* L = 50
+* C = 100
+* D = 500
+* M = 1000
+
+We can combine these letters to form numbers.
+The letters should be ordered from the highest to the lowest value.
+For example `CCXVI` would be 216.
+
+When we put a lower value in front of a higher one, we substract that value from the higher value.
+For example we make 40 not by XXXX, but instead we use $$50 - 10 = 40$$ and have the roman number `XL`.
+Combining both these principles we could give our method `MDCCCXLII` and it should return 1842.
+```
+
+Implement this program. Practice TDD!
+
+{% include answer-begin.html %}
+
+How did it feel?
+
+{% include exercise-answer-end.html %}
+
+
+
+
+{% include exercise-begin.html %}
+Which of the following **is the least important** reason why one does Test-Driven Development?
+
+1. As a consequence of the practice of TDD, software systems get completely tested.
+2. TDD practitioners use the feedback from the test code as a design hint.
+3. The practice of TDD enables developers to have steady, incremental progress throughout the development of a feature.
+4. The use of mocks objects helps developers to understand the relationships between objects.
+{% include answer-begin.html %}
+Option 1 is the least important one.
+
+Although a few studies show that the number of tests written by TDD practitioners are often higher than the number of tests written by developers not practicing TDD, this is definitely not the main reason why developers have been using TDD. In fact, among the alternatives, it's the least important one. All other alternatives are more important reasons, according to the TDD literature (e.g., Kent Beck's book, Freeman's and Pryce's book.
+
+{% include exercise-answer-end.html %}
+
+
+
+
+
+{% include exercise-begin.html %}
+TDD has become a really popular practice among developers. According to them, TDD has several benefits. Which of the following statements 
+**is not** considered a benefit from the practice of TDD?
+
+*Note:* We are looking at the perspective of developers, which may not always match the results of empirical research.
+
+1. Better team integration. Writing tests is a social activity and makes the team more aware of their code quality. 
+
+2. Baby steps. Developers can take smaller steps whenever they feel they have to.
+
+3. Refactoring. The cycle suggests developers to constantly improve their code.
+
+4. Design for testability. Developers are ``forced'' to write testable code from the very beginning.
+
+{% include answer-begin.html %}
+Option 1 is not a benefit of TDD. The
+TDD literature says nothing about team integration.
+
+{% include exercise-answer-end.html %}
