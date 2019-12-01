@@ -1071,3 +1071,81 @@ The two (cancel and time out) outgoing edges from WARMING and DEFROSTING (four e
 So there will be two fewer transitions.
 
 {% include exercise-answer-end.html %}
+
+
+
+
+
+
+
+
+{% include exercise-begin.html %}
+
+See the requirement below:
+
+```
+Stefan works for Foodgram, a piece of software that enables users to send pictures of the dishes they prepare themselves. Foodgram's upload system has specific rules:
+
+* The software should only accept images in JPG format.
+* The software should not accept images that are bigger than 20MB.
+* The software accepts images in both high and low resolution.
+
+As soon as a user uploads a photo, the aforementioned rules are applied. 
+The software then either says *"Congratulations! Your picture was uploaded successfully"*, or *"Ooops, something went wrong!"*" (without any specific details about why it happened).
+```
+
+Create a decision table that takes the three conditions and their respective outcomes into account. 
+
+*Note: conditions should be modeled as boolean decisions.*
+
+
+{% include answer-begin.html %}
+
+
+||C1|C2|C3|C4|C5|C6|C7|C8|
+|Valid format?|T|T|T|T|F|F|F|F|
+|Valid size?|T|T|F|F|T|T|F|F|
+|High resolution?|T|F|T|F|T|F|T|F|
+|-|-|-|-|-|-|-|-|-|
+|Outcome|success|success|fail|fail|fail|fail|fail|fail|
+
+
+
+{% include exercise-answer-end.html %}
+
+
+
+
+
+
+
+{% include exercise-begin.html %}
+
+
+Twitter is a software system that enables users to share short messages within their friends. 
+Twitter's revenue model is ultimately based on advertisements ("ads").
+Twitter's system needs to decide when to serve ads to its users, and which ones. For a given user a given ad can be *highly-relevant*, and the system seeks to serve the most relevant ads as often as possible without scaring users away.
+
+To that end, assume that the system employs the following rules to decide whether a user *U* gets served an ad *A* at the moment user *U* opens their Twitter app:
+
+* If the user *U* has not been active during the past two weeks, she will not get to see add *A*;
+* If the user *U* has already been served an ad during her last hour of activity, she will not get to see ad *A*;
+* Furthermore, if the user *U* has over 1000 followers (an influencer), she will only get to see ad *A* if *A* is labeled as *highly-relevant* for *U*. Otherwise, user *U* will see *A* even if it is not *highly-relevant*.
+
+We can model this procedure in a decision table, in various ways.
+The complete table would have four conditions and 16 variants. We will try to create a more compact decision table. Note: We will use Boolean conditions only.
+
+One way is to focus on the positive cases only, i.e., specify only the variants in which ad *A* is being served to user *U*. If you don't use 'DC' (don't care) values, how will the decision table look like?
+
+{% include answer-begin.html %}
+
+| | T1 | T2 | T3 |
+|User active in past two weeks      | T | T | T| 
+|User has seen ad in last two hours | F | F | F| 
+|User has over 1000 followers       | T | F | F| 
+|Ad is highly relevant to user      | T | T | F| 
+|-|-|-|-|
+|Serve ad?                          | T | T | T| 
+
+{% include exercise-answer-end.html %}
+
