@@ -152,7 +152,7 @@ Suzanne observes that more than 50% of bugs have been happening in the 'Internat
 Suzanne then promises her manager that she will design test cases that will completely cover the 'International payments' module, and thus, find 
 all the bugs.
 
-Which of the following testing principles might explain why this is \textbf{not} possible?
+Which of the following testing principles might explain why this is **not** possible?
 
 1. Pesticide paradox. 
 2. Exhaustive testing.

@@ -330,19 +330,11 @@ An on-point is the (single) number on the boundary. It may or may not make the c
 
 {% include exercise-begin.html %}
 
-A game has the following condition: `numberOfPoints > 1024`. Which of the following
-statements correctly performs a boundary analysis?
+A game has the following condition: `numberOfPoints > 1024`. Perform a boundary analysis.
 
-1. on point = 1024, off point = 1025, in point = 1028, out point = 512
-
-2. on point = 1024, off point = 1023, in point = 1028, out point = 512
-
-3. on point = 1024, off point = 1023, in point = 512, out point = 1028
-
-4. on point = 1024, off point = 1025, in point = 512, out point = 1028
 
 {% include answer-begin.html %}
-Option 1 is correct.
+on point = 1024, off point = 1025, in point = 1028, out point = 512
 
 The on point is the number precisely in the boundary = 1024. off point is the closest number to the boundary and has the opposite result of on point. In this case, 1024 makes the condition false, so the off point should make it true. 1025. In point makes conditions true, e.g., 1028. Out point makes the condition false, e.g., 512.
 {% include exercise-answer-end.html %}

@@ -315,7 +315,7 @@ problems in their codebase:
 4. Some classes have too many attributes/fields
 
 To increase the testability, the team has budget to work on two out of the four issues above.
-Which items shouls Sarah recommend them to tackle first?
+Which items should Sarah recommend them to tackle first?
 
 Note: All of the four issues should obviously be fixed.
 However, try to prioritize the two most important onces: Which influence the testability the most?
