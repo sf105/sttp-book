@@ -42,10 +42,10 @@ reasons we have to keep updating it!
 ## How to contribute
 
 We accept any kind of contribution, from typo fixes, rephrasing,
-illustrations to support the text, video lectures, exercises,
-code examples to full chapters. Just open a Pull Request in our GitHub repository.
+illustrations, videos, exercises,
+code examples to full chapters. Just open a [Pull Request](https://github.com/SERG-Delft/sqt-book/pulls) in our [GitHub repository](https://github.com/SERG-Delft/sqt-book).
 Or, if you feel you are not ready to contribute, but want to see some content
-here, just open an issue.
+here, just [open an issue](https://github.com/SERG-Delft/sqt-book/issues).
 
 Note that everything you create will be licensed under the license below. We will
 add your name in acknowledgements.
