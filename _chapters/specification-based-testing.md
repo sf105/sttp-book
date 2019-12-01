@@ -505,3 +505,41 @@ public V put(K key, V value) {
 Option 4 is the incorrect one.
 This is a functional based technique. No need for source code.
 {% include exercise-answer-end.html %}
+
+
+
+
+
+{% include exercise-begin.html %}
+Suppose a `find` program that finds occurrences of a pattern in a file. The program has the following syntax:
+
+```
+find <pattern> <file>
+```
+
+A tester, after reading the specs and following the Category-Partition method, devised the following test specification:
+
+
+* Pattern size: empty, single character, many characters, longer than any line in the file.
+* Quotting: pattern is quoted, pattern is not quoted, pattern is improperly quoted.
+* File name: good file name, no file name with this name, omitted.
+* Occurrences in the file: none, exactly one, more than one.
+* Occurrences in a single line, assuming line contains the pattern: one, more than one.
+
+However, the number of combinations is now too high. Which of the following actions we **should not take** to reduce the number of combinations?
+
+
+1. We should treat pattern size 'empty' as exceptional, and thus, test it just once.
+
+1. We should constraint the options in the 'occurences in a single line' category to happen only if 'occurences in the file' are either exactly one or more than one. % It does not make sense to have none occurences in a file and one pattern in a line.
+
+1. We should treat 'pattern is improperly quoted' as exceptional, and thus, test it just once.
+
+
+1. We should constraint the 'good file name' option to happen only if 'pattern is not quoted' also happens.
+
+{% include answer-begin.html %}
+We should not take option 4.
+
+It does not make sense to have none occurences in a file and one pattern in a line.
+{% include exercise-answer-end.html %}

@@ -214,9 +214,6 @@ From the values you can see that each of the six test cases corresponds to one o
 
 ## Exercises
 
-Below you will find some exercises to practise with the material discussed in this chapter.
-After each exercise you can view the answer by clicking the button.
-
 {% include exercise-begin.html %}
 We have the following method.
 
@@ -292,7 +289,7 @@ We extend the game with a more complicated condition: `(numberOfPoints <= 570 &&
 Perform boundary analysis on this condition.
 What is the resulting domain matrix?
 {% include answer-begin.html %}
-<!-- !!Not sure if this domain matrix is correct!!  -->
+
 ![Answer domain matrix](/assets/img/chapter3/exercises/domain_exercise.png)
 
 Note that we require 7 test cases in total: `numberOfPoints <= 570` and `numberOfLives > 10` each have one on- and one off-point.
@@ -310,3 +307,43 @@ That is why, when testing `c3`, `c1` or `c2` has to be false, i.e. and out-point
 Therefore we use two different typical rows for the `numberOfLives` variable.
 The same could have been done with two typical rows for the `numberOfPoints` variable.
 {% include exercise-answer-end.html %}
+
+
+
+
+{% include exercise-begin.html %}
+Regarding **boundary analysis of inequalities** (e.g., `a < 10`), which of the following statements **is true**?
+
+1. There can only be a single on-point which always makes the condition true.
+2. There can be multiple on-points for a given condition which may or may not make the condition true.
+3. There can only be a single off-point which may or may not make the condition false.
+4. There can be multiple off-points for a given condition which always make the condition false.
+
+{% include answer-begin.html %}
+
+An on-point is the (single) number on the boundary. It may or may not make the condition true. The off point is the closest number to the boundary that makes the condition to be evaluated to the opposite of the on point. Given it's an inequality, there's only a single off-point.
+{% include exercise-answer-end.html %}
+
+
+
+
+
+{% include exercise-begin.html %}
+
+A game has the following condition: `numberOfPoints > 1024`. Which of the following
+statements correctly performs a boundary analysis?
+
+1. on point = 1024, off point = 1025, in point = 1028, out point = 512
+
+2. on point = 1024, off point = 1023, in point = 1028, out point = 512
+
+3. on point = 1024, off point = 1023, in point = 512, out point = 1028
+
+4. on point = 1024, off point = 1025, in point = 512, out point = 1028
+
+{% include answer-begin.html %}
+Option 1 is correct.
+
+The on point is the number precisely in the boundary = 1024. off point is the closest number to the boundary and has the opposite result of on point. In this case, 1024 makes the condition false, so the off point should make it true. 1025. In point makes conditions true, e.g., 1028. Out point makes the condition false, e.g., 512.
+{% include exercise-answer-end.html %}
+
