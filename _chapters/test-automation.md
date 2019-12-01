@@ -270,3 +270,7 @@ Side note 2: In industry, the term _automated software testing_ is related to th
 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/pPv37kPqvAE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+## References
+
+* Pragmatic Unit Testing in Java 8 with Junit. Langr, Hunt, and Thomas. Pragmatic Programmers, 2015.

@@ -102,6 +102,12 @@ We cannot forget about the validation part, where we check if the software meets
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/dkbvb_wTN-M" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+## References
+
+* Chapters 1-3 of the Foundations of software testing: ISTQB certification. Graham, Dorothy, Erik Van Veenendaal, and Isabel Evans, Cengage Learning EMEA, 2008.
+
+
+
 ## Exercises
 
 Below you will find some exercises to practise the material with.

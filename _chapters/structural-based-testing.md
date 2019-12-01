@@ -463,6 +463,18 @@ Indeed, in the example above, we saw that we need fewer tests when using MC/DC i
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/busfqNkpgKI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+## References
+
+* Chapter 4 of the Foundations of software testing: ISTQB certification. Graham, Dorothy, Erik Van Veenendaal, and Isabel Evans, Cengage Learning EMEA, 2008.
+
+* Chapter 12 of the Software Testing and Analysis: Process, Principles, and Techniques. Mauro Pezzè, Michal Young, 1st edition, Wiley, 2007.
+
+* Zhu, H., Hall, P. A., & May, J. H. (1997). Software unit test coverage and adequacy. ACM computing surveys (csur), 29(4), 366-427.
+
+* Cem Kaner on Code Coverage: http://www.badsoftware.com/coverage.htm
+
+* Arie van Deursen on Code Coverage: http://avandeursen.com/2013/11/19/test-coverage-not-for-managers/
+
 
 ## Exercises
 

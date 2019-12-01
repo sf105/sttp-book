@@ -170,6 +170,12 @@ Note also how we do not have to keep a database running while executing the test
 
 Mocks are a useful tool when it comes to write real isolated unit tests.
 
+## References
+
+* Fowler, Martin. Mocks aren't stubs. https://martinfowler.com/articles/mocksArentStubs.html
+
+* Mockito's website: https://site.mockito.org
+
 
 
 ## Exercises

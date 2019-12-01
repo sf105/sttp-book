@@ -159,7 +159,9 @@ Therefore, we believe that is is not the practice by itself that helps developer
 
 Conclusion: Developers believe that the practice of test-driven development helps them to improve their class design, as the constant need of writing a unit test for each piece of the software forces them to create testable classes. These small feedbacks — is your test easy to be tested or not? — makes them think and rethink about the class and improve it. Also, as the number of tests grow, they act as a safety net, allowing developers to refactor freely, and also try and experiment different approaches to that code. Based on that, we suggest developers to experiment the practice of test-driven development, as its effects look positive to software developers.
 
+## References
 
+* Beck, K. (2003). Test-driven development: by example. Addison-Wesley Professional.
 
 ## Exercises
 

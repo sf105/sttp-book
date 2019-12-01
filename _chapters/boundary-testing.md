@@ -197,6 +197,11 @@ From the values you can see that each of the six test cases corresponds to one o
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/rPcMJg62wM4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+## References
+
+* Jeng, B., & Weyuker, E. J. (1994). A simplified domain-testing strategy. ACM Transactions on Software Engineering and Methodology (TOSEM), 3(3), 254-270.
+
+
 ## Exercises
 
 Below you will find some exercises to practise with the material discussed in this chapter.

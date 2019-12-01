@@ -690,6 +690,23 @@ We will discuss more about AI techniques in a future chapter.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/7kB6JaSH9p8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+
+## References
+
+* C2 Wiki, What are assertions? http://wiki.c2.com/?WhatAreAssertions
+
+* Mitchell, R., McKim, J., & Meyer, B. (2001). Design by contract, by example. Addison Wesley Longman Publishing Co., Inc..
+
+* Meyer, B. (2002). Design by contract. Prentice Hall.
+
+* Liskov, B. H., & Wing, J. M. (1994). A behavioral notion of subtyping. ACM Transactions on Programming Languages and Systems (TOPLAS), 16(6), 1811-1841.
+
+* "Polymorphic Server Test" in Binder, R. V. (1994). Object-oriented software testing. Communications of the ACM, 37(9), 28-30.
+
+
+
+
+
 ## Exercises
 
 Below you will find some exercises to practise with the material covered in this chapter.

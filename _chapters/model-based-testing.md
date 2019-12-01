@@ -756,6 +756,11 @@ Therefore, when the system transitions to the `ON` state it will be in both `LOC
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/gijO3mlcMCg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+## References
+
+* Chapter 4 of the Foundations of software testing: ISTQB certification. Graham, Dorothy, Erik Van Veenendaal, and Isabel Evans, Cengage Learning EMEA, 2008.
+
+* van Deursen, A. (2015). Beyond Page Objects: Testing Web Applications with State Objects. ACM Queue, 13(6), 20.
 
 ## Exercises
 

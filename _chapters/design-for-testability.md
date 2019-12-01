@@ -158,6 +158,13 @@ Note how there is a [deep synergy between well design production code and testab
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/VaScxLhsDBQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+## References
+
+* Cockburn, Alistair. The Hexagonal Architecture. https://wiki.c2.com/?HexagonalArchitecture
+
+* Hevery, Misko. The Testability Guide. http://misko.hevery.com/attachments/Guide-Writing%20Testable%20Code.pdf
+
+
 ## Exercises
 
 

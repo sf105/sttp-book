@@ -155,6 +155,14 @@ We will discuss design for testability in future chapters.
 {% assign todo = "to be written" %}
 {% include todo.html %}
 
+## References
+
+* Chapter 2 of the Foundations of software testing: ISTQB certification. Graham, Dorothy, Erik Van Veenendaal, and Isabel Evans, Cengage Learning EMEA, 2008.
+
+* Vocke, Ham. The Practical Test Pyramid (2018), https://martinfowler.com/articles/practical-test-pyramid.html.
+
+* Fowler, Martin. TestingPyramid (2012). https://martinfowler.com/bliki/TestPyramid.html
+
 ## Exercises
 
 
