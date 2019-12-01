@@ -977,3 +977,97 @@ Draw the transition tree of this state machine.
 ![](/assets/img/model-based-testing/exercises/generic_transition_tree.svg)
 
 {% include exercise-answer-end.html %}
+
+
+
+
+
+
+
+{% include exercise-begin.html %}
+
+
+
+The advertisement (ad) feature is an important source of income for the company. Because of that, the life cycle of an ad needs to be better modelled. 
+Our product team defined the following rules:
+
+* The life cycle of an ad starts with an 'empty' ad being created.
+* The company provides information about the ad. More specifically, the company defines an image, a description, and how many times it should appear. When all these information is set, the ad then needs to wait for approval.
+* An administrator checks the content of the ad. If it follows all the rules, the ad then waits for payment. If the ad contains anything illegal, it then goes back to the very beginning.
+* As soon as the company makes the payment, the ad becomes available to users.
+* When the number of visualizations is reached, the ad is then considered done. At this moment, the company might consider running the campaign again, which moves the ad to wait for payment again. The company might also decide to simply end the campaign at that moment, which puts the ad in a finalized state.  
+* While appearing for the users, if more than 10\% of the users complain about the ad, the ad is then marked as blocked. Cute Babies then gets in contact with the company. After understanding the case, the ad either starts to appear again for the users, or gets marked as innapropriate. An innapropriate ad will never be shown again to the users.
+
+Devise a state diagram that describes the life cycle of an ad.
+
+
+{% include answer-begin.html %}
+
+![](/assets/img/model-based-testing/exercises/ads.png)
+
+{% include exercise-answer-end.html %}
+
+
+
+
+
+
+
+
+
+
+
+
+{% include exercise-begin.html %}
+
+A microwave oven has the following requirements:
+
+* Its initial state is `OFF`.
+* When the user `turns it on`, the machine goes to an `ON` state.
+* If the user selects `warms meal`, then, the `WARMING` process starts. It goes back to `ON` when the defined `time is reached`. A user may `cancel` it at any time, taking the microwave back to the `ON` state.
+* If the user selects `defrost meal`, then, the `DEFROSTING` process starts. It goes back to `ON` when the defined `time is reached`. A user may `cancel` it at any time, taking the microwave back to the `ON` state.
+* The user can `turn off` the microwave (after which it is `OFF`), but only if the microwave is not warming up or defrosting food.
+
+Draw a minimal state machine to represent the requirements. For this question do not make use of super (OR) states.
+Also, remember that, if a transition is not specified in the requirements, it simply does not exist, and thus, should not be represented in the state machine.
+
+
+{% include answer-begin.html %}
+
+![](/assets/img/model-based-testing/exercises/solution-microwave-statemachine.png)
+
+{% include exercise-answer-end.html %}
+
+
+
+
+{% include exercise-begin.html %}
+
+Devise a state transition tree for the microwave state machine.
+
+{% include answer-begin.html %}
+
+
+![](/assets/img/model-based-testing/exercises/solution-microwave-transitiontree.png)
+
+{% include exercise-answer-end.html %}
+
+{% include exercise-begin.html %}
+
+Again consider the state machine requirements for the microwave.
+There appears to be some redundancy in the defrosting and warming up functionality, which potentially can be described using super states (also called OR-states).
+Which effect does this have on the total number of states and transitions for the resulting diagram with a super state?
+
+1. There will be one extra state, and two less transitions.
+2. There will be one state less, and the same number of transitions.
+3. The total number of states will remain the same, and there will be two less transitions.
+4. This has no effect on the total number of states and transitions.
+
+
+{% include answer-begin.html %}
+
+There will be one extra super state (ACTIVE), which will be a superstate of the existing WARMING and DEFROSTING states. The edges from ON to WARMING and DEFROSTING will remain.
+The two (cancel and time out) outgoing edges from WARMING and DEFROSTING (four edges in total) will be replaced by two edges going out of the super ACTIVE state.
+So there will be two fewer transitions.
+
+{% include exercise-answer-end.html %}
