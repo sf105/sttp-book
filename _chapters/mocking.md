@@ -234,10 +234,62 @@ The correct answer is 4.
 
 
 
+{% include exercise-begin.html %}
+
+You are testing a system that triggers advanced events based on complex combinations of Boolean external conditions relating to the weather (outside temperature, amount of rain, wind, ...). 
+The system has been cleanly designed and consists of a set of cooperating classes that each have a single responsibility.
+You create a decision table for this logic, and decide to test it using mocks. Which is a valid test strategy?
+
+
+1. You use mocks to support observing the external conditions.
+2. You create mock objects to represent each variant you need to test.
+3. You use mocks to control the external conditions and to observe the event being triggered.
+4. You use mocks to control the triggered events.
+
+{% include answer-begin.html %}
+
+You need mocks to both control and observe the behavior of the (external) conditions you mocked.
+
+{% include exercise-answer-end.html %}
 
 
 
 
 
+{% include exercise-begin.html %}
+Below, we show the `InvoiceFilter` class. This class is responsible for returning all the invoices that have an amount smaller than 100.0. It makes use of the InvoiceDAO class, which is responsible for the communication with the database.
+
+```java
+public class InvoiceFilter {
+
+    private InvoiceDao invoiceDao;
+
+    public InvoiceFilter(InvoiceDao invoiceDao) {
+        this.invoiceDao = invoiceDao;
+    }
+
+    public List<Invoice> filter() {
+        List<Invoice> filtered = new ArrayList<>();
+        List<Invoice> allInvoices = invoiceDao.all();
+
+        for(Invoice inv : allInvoices) {
+            if(inv.getValue() < 100.0)
+                filtered.add(inv);
+        }
+
+        return filtered;
+    }
+}
+```
+
+Which of the following statements is **false** about this class?
 
 
+1. Integration tests would help us achieve a 100% branch coverage, which is not possible solely via unit tests.
+2. Its implementation allows for dependency injection, which enables mocking.
+3. It is possible to write completely isolated unit tests for it by, e.g., using mocks.
+4. The InvoiceDao class (a direct dependency of the InvoiceFilter) itself should be tested by means of integration tests.
+{% include answer-begin.html %}
+
+Option 1 is the false one. We can definitely get to 100% branch coverage there with the help of mocks.
+{% include exercise-answer-end.html %}
