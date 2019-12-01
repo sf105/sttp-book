@@ -709,11 +709,10 @@ We will discuss more about AI techniques in a future chapter.
 
 ## Exercises
 
-Below you will find some exercises to practise with the material covered in this chapter.
-After each exercise you can directly view the answer.
 
 {% include exercise-begin.html %}
-For this exercise consider the following piece of code.
+
+See the code below:
 
 ```java
 public Square squareAt(int x, int y) {
