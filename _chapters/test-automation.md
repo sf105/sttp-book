@@ -274,3 +274,37 @@ Side note 2: In industry, the term _automated software testing_ is related to th
 ## References
 
 * Pragmatic Unit Testing in Java 8 with Junit. Langr, Hunt, and Thomas. Pragmatic Programmers, 2015.
+
+## Exercises
+
+{% include exercise-begin.html %}
+
+Implement the `RomanNumeral` class. Then, write as many tests as you
+can for it, using JUnit.
+
+For now, do not worry about how to derive test cases. Just follow
+your intuition. 
+
+{% include answer-begin.html %}
+
+Writing tests is fun, isn't it?
+
+{% include exercise-answer-end.html %}
+
+
+{% include exercise-begin.html %}
+
+Choose a problem from [Codebat](https://codingbat.com/java/Logic-2). Solve it.
+
+Then, write as many tests as you
+can for it, using JUnit.
+
+For now, do not worry about how to derive test cases. Just follow
+your intuition. 
+
+{% include answer-begin.html %}
+
+Writing tests is fun, isn't it?
+
+{% include exercise-answer-end.html %}
+
