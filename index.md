@@ -21,6 +21,7 @@ as well as able to reflect about their limitations, when and when not to apply t
 
 * Write maintainable test code by avoiding well-known test code smells (e.g., Assertion Roulette, Slow or Obscure Tests).
 
+
 ## Authors
 
 {% include authors.md %}
