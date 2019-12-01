@@ -31,6 +31,23 @@ as well as able to reflect about their limitations, when and when not to apply t
 * Wouter Polet: Jekyll implementation and initial transcripts of the lectures.
 * TU Delft's New Media Centre: video recording and editing 
 
+## Adopting this book
+
+Feel free to adopt these lecture notes in your software testing course.
+We should release our accompanying lectures slides soon. If you adopt
+this book, please let us know; the more universities adopt it, the more
+reasons we have to keep updating it!
+
+## How to contribute
+
+We accept any kind of contribution, from typo fixes, rephrasing,
+illustrations to support the text, video lectures, exercises,
+code examples to full chapters. Just open a Pull Request in our GitHub repository.
+Or, if you feel you are not ready to contribute, but want to see some content
+here, just open an issue.
+
+Note that everything you create will be licensed under the license below. We will
+add your name in acknowledgements.
 
 ## License
 
