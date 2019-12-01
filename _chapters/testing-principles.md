@@ -110,8 +110,6 @@ We cannot forget about the validation part, where we check if the software meets
 
 ## Exercises
 
-Below you will find some exercises to practise the material with.
-After each question you can click the button to show the answer to the question.
 
 {% include exercise-begin.html %}
 Having a certain terminology helps testers to explain the problems they have with a program or in their software.
@@ -144,3 +142,40 @@ While the software does not have a lot of bugs, it is not giving the user what t
 In this case the verification was good, but they need work on the validation.
 {% include exercise-answer-end.html %}
 
+
+
+
+{% include exercise-begin.html %}
+Suzanne, a junior software testing, just joined a very large online payment company in the Netherlands. As a first task, Suzanne analyzed their past two years of bug reports.
+Suzanne observes that more than 50% of bugs have been happening in the 'International payments module. 
+
+Suzanne then promises her manager that she will design test cases that will completely cover the 'International payments' module, and thus, find 
+all the bugs.
+
+Which of the following testing principles might explain why this is \textbf{not} possible?
+
+1. Pesticide paradox. 
+2. Exhaustive testing.
+3. Test early.
+4. Defect clustering.
+{% include answer-begin.html %}
+Exhaustive testing is impossible.
+{% include exercise-answer-end.html %}
+
+
+
+{% include exercise-begin.html %}
+
+John strongly believes in unit testing. In fact, this is the only type of testing he actually
+does at any project he's in. All the testing principles below, but one, might help in convincing John that he should also focus on different types of testing. 
+
+Which of the following **is the least related** related to help John in moving away from his 'only unit testing' approach?
+
+1. Pesticide paradox. 
+2. Tests are context-dependent.
+3. Absence-of-errors fallacy.
+4. Test early.
+{% include answer-begin.html %}
+
+Test early, although an important principle, is definitely not related to the problem of only doing unit tests. All others help people in understanding that variation, different types of testing, is important.
+{% include exercise-answer-end.html %}
