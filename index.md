@@ -28,7 +28,7 @@ as well as able to reflect about their limitations, when and when not to apply t
 ## Acknowledgments
 
 * Annibale Panichella: lecture on mutation testing
-* Wouter Polet: initial implementation of the online book
+* Wouter Polet: Jekyll implementation and initial transcripts of the lectures.
 * TU Delft's New Media Centre: video recording and editing 
 
 
