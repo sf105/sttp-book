@@ -79,7 +79,7 @@ There is, of course, no universal answer. While some research shows the advantag
 
 Will I create a better class design if I use Test-Driven Development? Well, yes and no; TDD doesn't do magic. In the following, we discuss the effects of the practice, and how the practice can help developers during class design.
 
-Developers commonly argue that TDD helps software design, improving internal code quality. For example, Kent Beck [4], Robert Martin [5], Steve Freeman [6], and Dave Astels [7], state in their books (without scientific evidence) that the writing of unit tests in a TDD fashion promotes significant improvement in class design, helping developers to create simpler, more cohesive, and less coupled classes. They even consider TDD as a class design technique [8], [9]. Nevertheless, the way in which TDD actually guides developers during class design is not yet clear.
+Developers commonly argue that TDD helps software design, improving internal code quality. For example, Kent Beck [1], Robert Martin [2], Steve Freeman [3], and Dave Astels [4], state in their books (without scientific evidence) that the writing of unit tests in a TDD fashion promotes significant improvement in class design, helping developers to create simpler, more cohesive, and less coupled classes. They even consider TDD as a class design technique [5], [6]. Nevertheless, the way in which TDD actually guides developers during class design is not yet clear.
 
 After interviewing some developers, we observed the following.
 
@@ -87,7 +87,7 @@ After interviewing some developers, we observed the following.
 
 Participants affirmed that the practice of TDD did not change their class design during the experiment. The main justification was that their experience and previous knowledge regarding object-orientation and design principles guided them during class design. They also affirmed that a developer with no knowledge in object-oriented design would not create a good class design just by practicing TDD or writing unit tests.
 
-The participants gave two good examples reinforcing the point. One of them said that he made use of a design pattern [30] he learned a few days before. Another participant mentioned that his studies on SOLID principles helped him during the exercises.
+The participants gave two good examples reinforcing the point. One of them said that he made use of a design pattern he learned a few days before. Another participant mentioned that his studies on SOLID principles helped him during the exercises.
 
 The only participant who had never practiced TDD before stated that he did not feel any improvement in the class design when practicing the technique. Curiously, this participant said that he considered TDD a design technique. It somehow indicates that the popularity of the effects of TDD in class design is high. That opinion was slightly different from that of experienced participants, who affirmed that TDD was not only about design, but also about testing.
 
@@ -99,7 +99,7 @@ According to them, TDD can help during class design process, but in order to ach
 
 ### Baby steps and simplicity
 
-TDD suggests developers to work in small (baby) steps; one should define the smallest possible functionality, write the simplest code that makes the test green, and do one refactoring at a time [4].
+TDD suggests developers to work in small (baby) steps; one should define the smallest possible functionality, write the simplest code that makes the test green, and do one refactoring at a time.
 
 In the interviews, participants commented about this. One of them mentioned that, when not writing tests, a developer thinks about the class design at once, creating a more complex structure than needed.
 
@@ -141,7 +141,7 @@ Maybe the main reason for the practice of TDD helping developers in their class 
 
 When it is not easy to test a specific piece of code, developers understand it as a class design smell. When this happens, developers usually try to refactor the code to make it easier to test. A participant also affirmed that he takes it as a rule; if it is hard to test, then the code may be improved.
 
-Feathers [33] raised this point: the harder it is to write the test, the higher the chance of a class design problem. According to him, there is a strong synergy between a highly testable class and a good class design; if developers are looking for testability, they end up creating good class design; if they are looking for good class design, they end up writing testable code.
+Feathers [7] raised this point: the harder it is to write the test, the higher the chance of a class design problem. According to him, there is a strong synergy between a highly testable class and a good class design; if developers are looking for testability, they end up creating good class design; if they are looking for good class design, they end up writing testable code.
 
 Participants went even further. During the interviews, many of them mentioned patterns that made (and make) them think about possible design problems in the class they build. As an example, they told us that when they feel the need to write many different unit tests to a single method, this may be a sign of a non-cohesive method. They also said that when a developer feels the need to write a big scenario for a single class or method, it is possible to infer that this need emerges in classes dealing with too many objects or containing too many responsibilities, and thus, it is not cohesive. They also mentioned how they detect coupling issues. According to them, the abusive use of mocking objects indicates that the class under testing has coupling issues.
 
@@ -162,6 +162,20 @@ Conclusion: Developers believe that the practice of test-driven development help
 ## References
 
 * Beck, K. (2003). Test-driven development: by example. Addison-Wesley Professional.
+
+* [1] Beck K (2002) Test-driven development by example. 1° edn. Addison-Wesley Professional, Boston, USA.
+
+* [2] Martin R (2006) Agile principles, patterns, and practices in C#. 1st edition. Prentice Hall, Upper Saddle River.
+
+* [3] Steve Freeman, Nat Pryce (2009) Growing object-oriented software, Guided by Tests. 1° edn. Addison-Wesley Professional, Boston, USA.
+
+* [4] Astels D (2003) Test-driven development: a practical guide. 2nd edition. Prentice Hall.
+
+* [5] Janzen D, Saiedian H (2005) Test-driven development concepts, taxonomy, and future direction. Computer 38(9): 43–50. doi:10.1109/MC.2005.314.
+
+* [6] Beck K (2001) Aim, fire. IEEE Softw 18: 87–89. doi:10.1109/52.951502.
+
+* [7] Feathers M (2007) The deep synergy between testability and good design. https://web.archive.org/web/20071012000838/http://michaelfeathers.typepad.com/michael_feathers_blog/2007/09/the-deep-synerg.html.
 
 ## Exercises
 
