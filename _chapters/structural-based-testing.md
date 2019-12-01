@@ -443,6 +443,12 @@ Indeed, in the example above, we saw that we need fewer tests when using MC/DC i
 <iframe width="560" height="315" src="https://www.youtube.com/embed/HzmnCVaICQ4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
+## Loop boundary adequacy
+
+
+{% assign todo = "write about the loop boundary adequacy" %}
+{% include todo.html %}
+
 ## Criteria subsumption
 
 {% assign todo = "write about the criteria subsumption" %}
@@ -477,9 +483,6 @@ Indeed, in the example above, we saw that we need fewer tests when using MC/DC i
 
 
 ## Exercises
-
-Below you will find exercises with which you can practise the material you just learned.
-You can view the answer to the question by clicking the button.
 
 For the first couple of exercises we use the following code:
 
@@ -553,12 +556,41 @@ This test also covers lines 6-8.
 Finally a third test is needed to cover line 11 (`removeElementNotPresentInListTest`).
 {%include exercise-answer-end.html %}
 
+
+
+
+
+
+
+
 {% include exercise-begin.html %}
 Create the Control Flow Graph (CFG) for the `remove` method.
 {% include answer-begin.html %}
 ![LinkedList exercise CFG](/assets/img/chapter5/exercises/CFG-LinkedList.svg)
 L\<number\> in the diagram represents the line number of the code that is in the block or decision.
 {%include exercise-answer-end.html %}
+
+
+
+{% include exercise-begin.html %}
+Look at the CFG you just created. Which of the following sentences **is false**?
+
+1. A minimal test suite that achieves 100% basic condition coverage has more test cases than a minimal test suite that achieves 100% branch coverage.
+
+2. The method `unlink()` is for now treated as an 'atomic' operation, but also deserves specific test cases, as its implementation might also contain decision blocks.
+
+3. A minimal test suite that achieves 100% branch coverage has the same number of test cases as a minimal test suite that achieves 100% full condition coverage.
+
+4. There exists a single test case that, alone, is able to achieve more than 50% of line coverage.
+{% include answer-begin.html %}
+
+Option 1 is the false one.
+
+A minimal test suite that achieves 100\% (either basic or full) condition has the same number of tests as a minimal test suite that achieves 100\% branch coverage. All decisions have just a single branch, so condition coverage doesn't make a difference here. Moreover, a test case that exercises lines 1, 6, 7, 8, 9, 10 achieves around 54\% coverage (6/11).
+
+{%include exercise-answer-end.html %}
+
+
 
 {% include exercise-begin.html %}
 Give a test suite (i.e. a set of tests) that achieves $$100\%$$ **branch** coverage on the `remove` method.
@@ -627,7 +659,7 @@ The only difference is that lines 7 and 8 will only be executed when the item to
 {% include exercise-answer-end.html %}
 
 {% include exercise-begin.html %}
-Consider the decision (A | C) & B with the corresponding decision table:
+Consider the decision `(A or C) and B` with the corresponding decision table:
 
 <table>
     <tr><th>Decision</th><th>A</th><th>B</th><th>C</th><th>(A | C) & B</th></tr>
@@ -765,7 +797,7 @@ T2 makes all the decision false.
 Therefore the coverage is $$\frac{4}{6} \cdot 100\% = 66\%$$.
 {% include exercise-answer-end.html %}
 
-The next couple of exercises use Java's implementation of the LinkedList's computeIfPresent method.
+The next couple of exercises use Java's implementation of the LinkedList's `computeIfPresent()` method.
 
 ```java
 public V computeIfPresent(K key, BiFunction<? super K, ? super V, ? extends V> rf) {
@@ -826,4 +858,59 @@ Then with another test we can cover false from L1 and false from L8.
 We add another test to cover false from the decision in line 10.
 Finally an additional test is needed to cover the true branch out of the decision in line 10.
 This gives us a minimum of 4 tests.
+{% include exercise-answer-end.html %}
+
+
+
+
+{% include exercise-begin.html %}
+Which of the following statements concerning the subsumption relations between test adequacy criteria **is true**:
+
+
+1. MC/DC subsumes statement coverage.
+2. Statement coverage subsumes branch coverage.
+3. Branch coverage subsumes path coverage.
+4. Basic condition coverage subsumes branch coverage.
+{% include answer-begin.html %}
+
+MC/DC does subsume statement coverage. Basic condition coverage does not subsume branch coverage; full condition coverage does.
+{% include exercise-answer-end.html %}
+
+
+
+
+
+
+{% include exercise-begin.html %}
+A test suite satisfies the loop boundary adequacy
+criterion if for every loop L:
+
+1. Test cases iterate L zero times, once, and more than once.
+2. Test cases iterate L once and more than once.
+3. Test cases iterate L zero times and one time.
+4. Test cases iterate L zero times, once, more than once, and N, where N is the maximum number of iterations.
+{% include answer-begin.html %}
+Option 1 is correct.
+{% include exercise-answer-end.html %}
+
+
+
+
+
+
+
+{% include exercise-begin.html %}
+Consider the expression `((A and B) or C)`.
+If we aim to achieve 100\% \emph{Modified Condition / Decision Coverage} (MC/DC), the **minimum** set of tests we should select is:
+
+1. {2, 3, 4, 6}
+2. {1, 3, 4, 6}
+3. {2, 3, 5, 6}
+4. {3, 4, 7, 8}
+{% include answer-begin.html %}
+
+Option 1 is the correct one.
+
+Tests for A = (2,6), B = (2,4), C = (3, 4), (5, 6), (7,8). Thus, from the options, tests 2, 3, 4 and 6 are the only ones that achieve 100% MC/DC. Note that 2, 4, 5, 6 could also be a solution.
+
 {% include exercise-answer-end.html %}
