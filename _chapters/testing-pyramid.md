@@ -206,3 +206,55 @@ The correct answer is 1.
 4. The different test levels do not find the same kind of bugs, so settling down on one of the levels is not a good idea.
 
 {% include exercise-answer-end.html %}
+
+
+
+
+{% include exercise-begin.html %}
+The tester should now write an integration test for the `OrderDao` class below.
+
+```java
+public class OrderDeliveryBatch {
+
+  public void runBatch() {
+
+    OrderDao dao = new OrderDao();
+    DeliveryStartProcess delivery = new DeliveryStartProcess();
+
+    List<Order> orders = dao.paidButNotDelivered();
+
+    for(Order order : orders) {
+      delivery.start(order);
+
+      if(order.isInternational()) {
+        order.setDeliveryDate("5 days from now");
+      } else {
+        order.setDeliveryDate("2 days from now");
+      }
+    }
+  }
+}
+
+class OrderDao {
+  // accesses a database
+}
+
+class DeliveryStartProcess {
+  // communicates with a third-party webservice
+}
+```
+
+Which one of the following statements **is not required** when writing
+an integration test for this class?
+
+1. Reset the database state before each test.
+2. Apply the correct schema to the database under test.
+3. Assert that any database constraints are met.
+4. Set the transaction autocommit to true.
+
+{% include answer-begin.html %}
+Option 4 is not required.
+
+Changing the transaction level is not really required. Better would be to actually exercise the transaction policy your application uses in production.
+
+{% include exercise-answer-end.html %}
