@@ -1,6 +1,6 @@
 ---
 chapter-number: 18
-title: "Soon: AI and Search-Based Software Testing"
+title: AI and Search-Based Software Testing (soon)
 layout: chapter
 toc: true
 ---

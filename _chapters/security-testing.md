@@ -1,6 +1,6 @@
 ---
 chapter-number: 19
-title: "Soon: Security Testing"
+title: Security Testing (soon)
 layout: chapter
 toc: true
 ---

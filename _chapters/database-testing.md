@@ -1,6 +1,6 @@
 ---
 chapter-number: 15
-title: "Soon: Database/SQL testing"
+title: Database/SQL testing (soon)
 layout: chapter
 toc: true
 ---
