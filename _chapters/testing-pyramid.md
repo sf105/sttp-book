@@ -109,7 +109,7 @@ components are working together. There is no silver bullet.
 We discussed three levels of tests: unit, system, and integration. How much should we do of each?
 A famous diagram that help us in discussion is the so-called **testing pyramid**.
 
-![Testing pyramid](/assets/img/chapter6/testing_pyramid.svg)
+![Testing pyramid](/assets/img/testing-pyramid/testing_pyramid.svg)
 
 The diagram indicates all the test levels we discussed, plus *manual testing*. The more you go to the top, the more
 real the test is; however, the more complex it is to devise it.
@@ -142,7 +142,7 @@ Manual testing is mainly used for exploratory testing. In practice, exploratory 
 Something you should definitely try to avoid is the so-called *ice cream cone*.
 The cone is the testing pyramid, but put upside down.
 
-![Ice cream cone](/assets/img/chapter6/ice_cream_cone.svg)
+![Ice cream cone](/assets/img/testing-pyramid/ice_cream_cone.svg)
 
 It is common to see teams mostly relying on manual tests. Whenever they have system tests, it is not because they believe on the power
 of system tests, but because the system was so badly designed, that unit and integration tests are just impossible to be automated.
@@ -170,7 +170,7 @@ We will discuss design for testability in future chapters.
 Now we have a skeleton for the testing pyramid.
 What words/sentences should be at the numbers?
 
-![Testing Pyramid exercise skeleton](/assets/img/chapter6/exercises/pyramid_skeleton.svg)
+![Testing Pyramid exercise skeleton](/assets/img/testing-pyramid/exercises/pyramid_skeleton.svg)
 
 (Try to answer the question without scrolling up!)
 {% include answer-begin.html %}

@@ -175,7 +175,7 @@ public class CountLetters {
 
 The corresponding CFG:
 
-![Control flow graph example](/assets/img/chapter5/examples/CFG-branch-example.svg)
+![Control flow graph example](/assets/img/structural-testing/examples/CFG-branch-example.svg)
 
 Note that we split the for-loop into two blocks (variable initialization, and increment) and a decision.
 Every decision has one outgoing arrow for true and one for false, indicating what the program will do based on the condition.
@@ -276,7 +276,7 @@ Instead of branch coverage, we are interested in the condition coverage that the
 
 We start by building the more fine-grained CFG:
 
-![Control Flow Graph example with conditions](/assets/img/chapter5/examples/CFG-condition-example.svg)
+![Control Flow Graph example with conditions](/assets/img/structural-testing/examples/CFG-condition-example.svg)
 
 You can see that this new CFG has way more decision blocks than the previous one.
 
@@ -566,7 +566,7 @@ Finally a third test is needed to cover line 11 (`removeElementNotPresentInListT
 {% include exercise-begin.html %}
 Create the Control Flow Graph (CFG) for the `remove` method.
 {% include answer-begin.html %}
-![LinkedList exercise CFG](/assets/img/chapter5/exercises/CFG-LinkedList.svg)
+![LinkedList exercise CFG](/assets/img/structural-testing/exercises/CFG-LinkedList.svg)
 L\<number\> in the diagram represents the line number of the code that is in the block or decision.
 {%include exercise-answer-end.html %}
 
@@ -718,7 +718,7 @@ This code is based on the [same ends problem](https://codingbat.com/prob/p131516
 {% include exercise-begin.html %}
 Draw the Control Flow Graph of the source code above.
 {% include answer-begin.html %}
-![Control Flow Graph answer](/assets/img/chapter5/exercises/CFG-sameEnds.svg)
+![Control Flow Graph answer](/assets/img/structural-testing/exercises/CFG-sameEnds.svg)
 
 L\<number\> represents the line numbers that the code blocks cover.
 {% include exercise-answer-end.html %}
@@ -832,7 +832,7 @@ public V computeIfPresent(K key, BiFunction<? super K, ? super V, ? extends V> r
 Draw the Control Flow Graph (CFG) of the method above.
 {% include answer-begin.html %}
 
-![Control Flow Graph answer](/assets/img/chapter5/exercises/CFG-computeIfPresent.svg)
+![Control Flow Graph answer](/assets/img/structural-testing/exercises/CFG-computeIfPresent.svg)
 
 The L\<number\> in the blocks represent the line number corresponding to the blocks.
 {% include exercise-answer-end.html %}

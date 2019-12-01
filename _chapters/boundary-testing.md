@@ -48,7 +48,7 @@ This boundary is between the remaining life.
 When the remaining life is smaller than 3, it belongs to partition 2; otherwise it belongs to partition 3.
 
 We can visualize these partitions with their boundaries in a diagram.
-![Partitions with their boundaries](/assets/img/chapter3/examples/partition_boundaries.svg)
+![Partitions with their boundaries](/assets/img/boundary-testing/examples/partition_boundaries.svg)
 
 {% include example-end.html %}
 
@@ -88,7 +88,7 @@ This will be $$99$$,  $$99 < 100$$ is true.
 
 We show all these points in the diagram below.
 
-![On- and off-points, in- and out-points](/assets/img/chapter3/examples/on_off_points.svg)
+![On- and off-points, in- and out-points](/assets/img/boundary-testing/examples/on_off_points.svg)
 {% include example-end.html %}
 
 As a tester, you devise test cases for these different points.
@@ -113,7 +113,7 @@ If we would set the in-point to the on- or off-point, we would be testing two bo
 To find these values and display the test cases in a structured manner, we use a **domain matrix**.
 In general the table looks like the following:
 
-![Template for domain matrix](/assets/img/chapter3/boundary_template.png)
+![Template for domain matrix](/assets/img/boundary-testing/boundary_template.png)
 
 In this template, we have two conditions with two parameters (see the $$x > a \land y > b$$ condition).
 We list the variables, with all their conditions.
@@ -131,13 +131,13 @@ We have the following condition that we want to test: `x >= 5 && x < 20 && y <= 
 
 We start by making the domain matrix, having space for each of the conditions and both parameters.
 
-![Empty boundary table example](/assets/img/chapter3/examples/boundary_table_empty.png)
+![Empty boundary table example](/assets/img/boundary-testing/examples/boundary_table_empty.png)
 
 Here you see that we need 6 test cases, because there are 3 conditions.
 Now it is time to fill in the table.
 We get the on- and off-points like in the previous example.
 
-![Boundary tables example filled in](/assets/img/chapter3/examples/boundary_table.png)
+![Boundary tables example filled in](/assets/img/boundary-testing/examples/boundary_table.png)
 
 Now we have derived the six test cases that we can use to test the boundaries.
 {% include example-end.html %}
@@ -290,7 +290,7 @@ Perform boundary analysis on this condition.
 What is the resulting domain matrix?
 {% include answer-begin.html %}
 
-![Answer domain matrix](/assets/img/chapter3/exercises/domain_exercise.png)
+![Answer domain matrix](/assets/img/boundary-testing/exercises/domain_exercise.png)
 
 Note that we require 7 test cases in total: `numberOfPoints <= 570` and `numberOfLives > 10` each have one on- and one off-point.
 `energyLevel == 5` is an equality, so we have two off-points and one on-point.
