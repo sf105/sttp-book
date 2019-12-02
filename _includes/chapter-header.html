@@ -1,11 +1,10 @@
 <header class="site-header" role="banner">
 
-  <div class="wrapper">
+  <div class="title-wrapper wrapper">
     {%- assign default_paths = site.pages | map: "path" -%}
     {%- assign page_paths = site.header_pages | default: default_paths -%}
-    <a class="long-site-title site-title" rel="author" href='{{ "/" | relative_url }}'>{{ site.title | escape }}</a>
-    <a class="short-site-title site-title" rel="author" href='{{ "/" | relative_url }}'>{{ site.title | truncatewords: 1, "" }}</a>
-
+    <a class="site-title" rel="author" href='{{ "/" | relative_url }}'>{{ site.title | escape }}</a>
+    
     {%- if page_paths -%}
     <nav class="site-nav">
       <input type="checkbox" id="nav-trigger" class="nav-trigger" />

@@ -26,6 +26,7 @@ $toc-collapse: calc(#{$content-width} + (2 * #{$toc-width}) + #{$spacing-unit});
   white-space: nowrap;
   width: 100%;
   overflow: hidden;
+  text-overflow: ellipsis;
 
   &,
   &:visited {
@@ -33,20 +34,11 @@ $toc-collapse: calc(#{$content-width} + (2 * #{$toc-width}) + #{$spacing-unit});
   }
 }
 
-.short-site-title {
-  display: none;
-
-  @include media-query($toc-collapse) {
-    display: block;
-  }
-}
-
-.long-site-title {
-  display: block;
-  
-  @include media-query($toc-collapse) {
-    display: none;
-  }
+.title-wrapper {
+  max-width: calc(#{$content-width} - #{$spacing-unit} - 38px);
+  max-width: webkit-calc(#{$content-width} - #{$spacing-unit} - 38px);
+  padding-right: calc(#{$spacing-unit} + 38px);
+  padding-right: -webkit-calc(#{$spacing-unit} + 38px);
 }
 
 .site-nav {
