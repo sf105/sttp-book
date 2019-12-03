@@ -55,8 +55,6 @@ We can visualize these partitions with their boundaries in a diagram.
 To sum up: you should devise tests for the inputs at the 
 boundaries of your classes.
 
-{% assign todo = "Bring the chocolate example, from the video here, and discuss its partitions." %}
-{% include todo.html %}
 
 ## Analysing conditions
 
@@ -142,6 +140,94 @@ We get the on- and off-points like in the previous example.
 Now we have derived the six test cases that we can use to test the boundaries.
 {% include example-end.html %}
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/rPcMJg62wM4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+## Boundaries that are not so explicit
+
+Let's revisit the example from the specification-based techniques chapter. There, we had a program
+where the goal was to return the amount of bars needed in order to build some boxes of chocolates:
+
+{% include example-begin.html %}
+**Chocolate bars**
+
+A package should store a total number of kilos. 
+There are small bars (1 kilo each) and big bars (5 kilos each). 
+We should calculate the number of small bars to use, 
+assuming we always use big bars before small bars. Return -1 if it can't be done.
+
+The input of the program is thus the number of small bars, the number of big bars,
+and the total amount of kilos to store.
+{% include example-end.html %}
+
+And these were the classes we derived after applying the category/partition method:
+
+* **Need only small bars**. A solution that only uses the provided small bars.
+* **Need only big bars**. A solution that only uses the provided big bars.
+* **Need Small + big bars**. A solution that has to use both small and big bars.
+* **Not enough bars**. A case in which it's not possible, because there are not enough bars.
+* **Not from the specs**: An exceptional case.
+
+A developer implemented the following code for the requirement, and all the tests pass.
+
+```java
+public int calculate(int small, int big, int total) {
+  int maxBigBoxes = total / 5;
+  int bigBoxesWeCanUse = maxBigBoxes < big ? maxBigBoxes : big;
+  
+  total -= (bigBoxesWeCanUse * 5);
+
+  if(small <= total)
+      return -1;
+  return total;
+}
+```
+
+However, another developer tried `(2,3,17)` as an input and the program crashed. After some debugging,
+they noticed that the if statement should had been `if(small < total)` instead of
+`if(small <= total)`. This smells like a bug that could had been caught via boundary testing!
+
+Note that the test `(2,3,17)` belongs to the **need small + big bars** partition. In this case,
+the program will make use of all the big bars (there are 3 available) and then *all* the small bars available (there are 
+2 available). Note that the buggy program would work if we had 3 available small bars (having `(3, 3, 17)` as input).
+This is a boundary.
+
+How can we apply boundary testing here? 
+
+![Partitions and boundaries](/assets/img/boundary-testing/partition-boundary.png)
+
+Boundaries also happen when we are going from "one partition" to 
+another. 
+In these cases, what we should do is to devise test cases for a sequence of inputs that move
+from one partition to another.
+
+For example, let's focus on the bug caused by the `(2,3,17)` input.
+
+* `(1,3,17)` should return *not possible* (1 small bar is not enough). This test case belongs to the **not enough bars** partition.
+* `(2,3,17)` should return 2. This test case belongs to **need for small + big bars** partition.
+
+There is a boundary between the `(1,3,17)` and the `(2,3,17)`. We should make sure the software still behaves correctly in these cases.
+
+Let's explore another boundary. Let's focus on the **only big bars** partition. We should find inputs that transition from this
+partition to another one:
+
+* `(10, 1, 10)` returns 5. This input belongs to the **need small + big bars** partition.
+* `(10, 2, 10)` returns 0. This input belongs to the **need only big bars** partition.
+
+One more? Let's focus on the **only small bars** partition:
+
+* `(3, 2, 3)` returns 3. We need only small bars here, and therefore, this input belongs to the **only small bars** partition.
+* `(2, 2, 3)` returns -1. We can't make the boxes. This input belongs to the **Not enough bars** partition.
+
+A partition might make boundaries with other partitions. See:
+
+* `(4, 2, 4)` returns 4. We need only small bars here, and therefore, this input belongs to the **only small bars** partition.
+* `(4, 2, 5)` returns 0. We need only bigs bars here, and therefore, this input belongs to the **only big bars** partition.
+
+Your lesson is: explore the boundaries in between your partitions!
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/uP_SpXtHxoQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
 ## Automating boundary testing with JUnit (via Parameterized Tests)
 
 We just analysed the boundaries and derived test cases using a domain matrix.
@@ -195,12 +281,53 @@ The assertion in the test checks if the result of the method, with the `x` and `
 From the values you can see that each of the six test cases corresponds to one of the test cases in the domain matrix.
 {% include example-end.html %}
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/rPcMJg62wM4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/fFksNXJJfiE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 
 ## The CORRECT way
 
-{% assign todo = "Write the accompanying text." %}
-{% include todo.html %}
+The *Pragmatic Unit Testing in Java 8 with JUnit*, by Langr, Hunt, and Thomas, has an interesting discussion about boundary conditions.
+Authors call it the **CORRECT** way, as each letter represents one boundary condition you should consider:
+
+* Conformance: 
+  * Many data elements must conform to a specific format. Example: e-mail (always name@domain). If you expect an e-mail, and you do not
+  receive an e-mail, your software might crash.
+  * What should we do? Test when your input is not in conformance with what is expected.
+
+* Ordering:
+  * Some inputs might come in specific orders. Imagine a system that receives different products to be inserted in a basket. The order of the data might influence the output. What happens if the list is ordered? Unordered?
+  * What should we do? Make sure our program works even if the data comes in an unordered manner (or return an elegant failure to user, avoiding the crash).
+
+* Range:
+  * Inputs often should usually be within a certain range. Example: Age should always be greater than 0 and smaller than 120.
+  * What should we do? Test what happens when we provide inputs that are outside of the expected range.
+
+
+* Reference:
+  * In OOP systems, objects refer to other objects. Sometimes these relationships get very deep. Moreover, we might depend on
+  external dependencies. What happens if these dependencies don't behave as expected?
+  * What should we do? When testing a method, consider:
+    * What it references outside its scope
+    * What external dependencies it has
+    * Whether it depends on the object being in a certain state
+    * Any other conditions that must exist
+
+* Existence:
+  * Does something really exist? What if it doesn't? Imagine you query a database, and your database returns empty. Will our software
+  behave correctly?
+  * What should we do? What happens if we something we are expecting does not really exist?
+
+
+* Cardinality:
+  * Basically, the famous *off-by-one* errors. In simple words, our loop performed one step less (or more) than it should.
+  * What should we do? Make sure we test our loops in different situations, such as when it actually performs zero iterations,
+  one iterations, or many. (We'll discuss more about loops in the structural-based testing chapter).
+
+* Time
+  * Many perspectives here. First, systems rely a lot on dates and times. What happens if we receive inputs that are not
+  ordered in regards to date and time?
+  * Timeouts: does our system handle timeouts well?
+  * Concurrency: does our system handle concurrency well?
 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/oxNEUYqEvzM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

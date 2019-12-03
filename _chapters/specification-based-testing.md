@@ -246,14 +246,45 @@ Each of the test cases corresponds to one of the partitions that we want to test
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/frzRmafsPBk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-## More examples of specification-based testing
+## One more example of specification-based testing
 
+Imagine the following requirement:
 
-{% assign todo = "one more complicated example here, the chocolate one, where the characteristics are not really direct in the specification." %}
-{% include todo.html %}
+{% include example-begin.html %}
+**Chocolate bars**
 
-{% assign todo = "one more example, the one from Xavier's lecture" %}
-{% include todo.html %}
+A package should store a total number of kilos. 
+There are small bars (1 kilo each) and big bars (5 kilos each). 
+We should calculate the number of small bars to use, 
+assuming we always use big bars before small bars. Return -1 if it can't be done.
+
+The input of the program is thus the number of small bars, the number of big bars,
+and the total amount of kilos to store.
+{% include example-end.html %}
+
+In this example, the partitions are a bit more "hidden". We have to really understand the problem in order to derive
+the partitions. You should spend some time (try to even implement it!!) in understanding it.
+
+Now, let's think about the classes/partitions:
+
+* **Need only small bars**. A solution that only uses the provided small bars.
+* **Need only big bars**. A solution that only uses the provided big bars.
+* **Need Small + big bars**. A solution that has to use both small and big bars.
+* **Not enough bars**. A case in which it's not possible, because there are not enough bars.
+* **Not from the specs**: An exceptional case.
+
+For each of these classes, we can devise concrete test cases:
+
+* **Need only small bars**. small = 1, big = 1, total = 10
+* **Need only big bars**. small = 5, big = 3, total = 10
+* **Need Small + big bars**. small = 5, big = 3, total = 17
+* **Not enough bars**. small = 4, big = 2, total = 3
+* **Not from the specs**: small = 4, big = 2, total = -1
+
+This example shows why deriving good test cases is challenging. Specifications can be complex and we need to
+fully understand the problem!
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/T8caAUwgquQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
 ## Random testing vs specification-based testing
