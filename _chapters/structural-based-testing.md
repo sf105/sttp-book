@@ -26,9 +26,6 @@ We will cover the following coverage criteria:
 - Path coverage
 - MC/DC coverage
 
-{% assign todo = "explain how we use these criteria to guide our testing in general terms" %}
-{% include todo.html %}
-
 ## Line (and statement) coverage
 
 As the name suggests, when determining the line coverage, we look at the amount of lines of code that are covered by the tests (more specifically,
@@ -194,8 +191,11 @@ The formula to measure block coverage is similar:
 
 $$\text{block_coverage} = \frac{\text{blocks_covered}}{\text{blocks_total}} \cdot 100\%$$
 
-{% assign todo = "show a test here that achieves 100% block coverage" %}
-{% include todo.html %}
+Note that blocks do not depend on how the developer wrote the code. Thus, we will not suffer from
+having different coverage numbers just because the developer wrote the code in a different way.
+
+For the `CountLetters` program, a test T1 = "cats and dogs" exercises all the blocks, and thus,
+reaches 100% block coverage.
 
 
 
@@ -270,6 +270,9 @@ decision outcomes to count:
 
 $$\text{condition_coverage} = \frac{\text{conditions_outcome_covered}}{\text{conditions_outcome_total}} \cdot 100\%$$
 
+We achieve 100% condition coverage whenever all the outcomes of all the conditions in our program have been exercised.
+In other words, whenever all the conditions have been `true` and `false` at least once.
+
 {% include example-begin.html %}
 Once again we look at the program that counts the words ending with an "r" or an "s".
 Instead of branch coverage, we are interested in the condition coverage that the tests give.
@@ -290,8 +293,22 @@ However, we will try to do even better in the next section.
 
 ## Condition + Branch coverage
 
-{% assign todo = "explain the difference with basic condition coverage" %}
-{% include todo.html %}
+Let's think carefully about condition coverage. If we only focus on exercising the individual conditions themselves, but do not
+think of the overall decision, we might end up in a situation like the one below.
+
+Imagine a `if(a > 10 && b > 20)` condition. A test `T1 = (20, 10)` makes the first condition `a > 10` to be true, and the
+second condition `b > 20` to be false. A test `T2 = (5, 30)` makes the first condition to be false, and the second condition to
+be true. Note that T1 and T2 together achieve 100% **basic condition** coverage; after all, both conditions have been exercised
+as true and false. However, the final outcome of the entire decision was also false! This means, we found a case where
+we achieved 100% basic condition coverage, but only 50% branch coverage! This is no good. This is way we called it
+**basic condition coverage**.
+
+In practice, whenever we use condition coverage, we actually do **branch + condition coverage**. In other words, we make sure
+that we achieve 100% condition coverage (i.e., all the outcomes of all conditions are exercised) and 100% branch coverage (all the outcomes
+of the decisions are exercised).
+
+From now on, whenever we mention **condition coverage**, we mean **condition + branch coverage**.
+
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/oWPprB9GBdE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -445,27 +462,114 @@ Indeed, in the example above, we saw that we need fewer tests when using MC/DC i
 
 ## Loop boundary adequacy
 
+What to do when we have loops? After all, whenever there is a loop, the block inside of the loop might be executed many
+times; this would make testing more complicated.
 
-{% assign todo = "write about the loop boundary adequacy" %}
+Think of a `while(true)` loop. It can go forever. If we wanted to be rigorous about it, we would have to test the program
+where the loop block is executed one time, two times, three times, ... Imagine a `for(i = 0; i < 10; i++)` loop with a `break` inside
+of the body. We would have to test what happens if the loop body executes one time, two times, three times, ..., up to ten times.
+It might be impossible to exhaustively test all the combinations!
+
+What trade-off can we make? And, more especifically, for unbounded loops, where we do not really know how many times it will
+be executed. We can define a **loop boundary adequacy criteria**:
+
+A test suite satisfies this criterion if and only if for every loop:
+
+* A test case exercises the loop zero times
+* A test case exercises the loop once
+* A test case exercises the loop multiple times
+
+Pragmatically speaking, the main challenge is devising tests where the loop is exercised multiple times. Devising tests that can 
+indeed explore the space efficiently requires a good understanding of the program itself. Our tip is for you to make a little use of
+specification-based techniques here. If you understand the specs, you might be able to devise good tests for the particular loop.
+
+
+{% assign todo = "record a video about the loop boundary adequacy" %}
 {% include todo.html %}
 
 ## Criteria subsumption
 
-{% assign todo = "write about the criteria subsumption" %}
+You might have noticed that, the more criteria we studied, the more "rigorous" they became. We started our discussion
+with line coverage. Then we discussed branch coverage, and we noticed that we could generate more tests if we focused
+on branchs. Then, we discussed branch + condition coverage, and we noticed that we could generate even more tests
+if we also focused on the conditions. And we kept doing that up to here.
+
+There is indeed a relationship between all these criteria. Some strategies **subsume** other strategies.
+More formally, a strategy X subsumes strategy Y if all elements that Y exercises are also exercised by X. You can see in 
+the figure below how the relationship among all the coverage criteria we studied.
+
+
+You can see that, for example, branch coverage subsumes line coverage. This means that 100% of branch coverage always implies in 100% line coverage; however, 100% of line coverage does not imply in 100% branch coverage. 100% of branch + condition coverage imply in 100% branch coverage and 100% of line coverage.
+
+![Criteria subsumption](/assets/img/structural-testing/subsumption.png)
+
+{% assign todo = "record a video about the criteria subsumption" %}
 {% include todo.html %}
 
-
-## How to use structural testing in practice
-
-{% assign todo = "write this section + when to stop testing?" %}
-{% include todo.html %}
 
 ## More examples of Control-Flow Graphs
 
-{% assign todo = "one more example of a CFG" %}
-{% include todo.html %}
+We can do Control-Flow Graphs for programs in any programming language. For example, see the piece of
+Python code below:
+
+{% include example-begin.html %}
+```python
+# random_ads is a list of ads.
+# an ad contains three attributes:
+# * available: true/false indicating whether the ad 
+#   is still available.
+# * reached: true/false indicating 
+#   whether the number of paid prints was reached.
+# * prints: an integer indicating the 
+#   number of times that the ad was printed.
+def validate_ads(random_ads):
+01. valid_ads = []
+02. invalid_ads = []
+
+03. for random_ad in random_ads:
+04.   if random_ad.available and not random_ad.reached:
+05.     valid_ads.add(random_ad)
+06.   else:
+07.     invalid_ads.add(random_ad)
+
+08. for valid_ad in valid_ads:
+09.   valid_ad.prints += 1
+
+10. return valid_ads, invalid_ads
+```
+
+A CFG for this piece of code would look like:
+
+![CFG in Python](/assets/img/structural-testing/examples/cfg-python.png)
+
+*Study tip:* Note how we modelled the `for each` loop.
+
+{% include example-end.html %}
+
+## How to use structural testing in practice
+
+As a tester, you use the different coverage criteria to derive tests. If you decide that your goal is to achieve
+at least 80% branch + condition coverage, you derive tests until you reach it.
+
+Is there any advantage in using structural testing? We refer to two papers:
+
+* Hutchins et al.: "Within the limited domain of our experiments, test sets achieving coverage levels over 90% usually showed significantly better fault detection than randomly chosen test sets of the same size. In addition, significant improvements in the effectiveness of coverage-based tests usually occurred as coverage increased from 90% to 100%. However, the results also indicate that 100% code coverage alone is not a reliable indicator of the effectiveness of a test set."
+* Namin and Andrews: "Our experiments indicate that coverage is sometimes correlated with effectiveness when size is controlled for, and that using both size and coverage yields a more accurate prediction of effectiveness than size alone. This in turn suggests that both size and coverage are important to test suite effectiveness."
+
+For interested readers, a extensive literature review on the topic can be found in
+Zhu, H., Hall, P. A., & May, J. H. (1997). Software unit test coverage and adequacy. ACM computing surveys (csur), 29(4), 366-427.
+
+
+References:
+
+- Hutchins, M., Foster, H., Goradia, T., & Ostrand, T. (1994, May). Experiments of the effectiveness of data flow-and control flow-based test adequacy criteria. In Proceedings of the 16th international conference on Software engineering (pp. 191-200). IEEE Computer Society Press.
+- Namin, A. S., & Andrews, J. H. (2009, July). The influence of size and coverage on test suite effectiveness. In Proceedings of the eighteenth international symposium on Software testing and analysis (pp. 57-68). ACM.
+
+
 
 ## Full review of the concepts
+
+Watch a summary of one of our lectures in structural testing!
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/busfqNkpgKI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
