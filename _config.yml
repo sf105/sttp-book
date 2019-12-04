@@ -48,3 +48,4 @@ collections:
     output: true
     permalink: /:title/
 
+google_analytics: UA-154019382-1
