@@ -7,7 +7,7 @@ toc: true
 
 ## Motivation
 
-**Welcome to the software testing course from Delft University of Technology!** In this course we are going to teach you how to effectively test a 
+**Welcome to the first chapter of Software Testing: From Theory to Practice!** In this book, we are going to teach you how to effectively test a 
 software and make sure it works, and how to, as much as possible, 
 automate every step that we can. 
 

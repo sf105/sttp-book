@@ -4,11 +4,11 @@ layout: home
 
 <img id="home-img" src="{{ '/assets/img/header.jpg' | relative_url }}" />
 
-Welcome to the lecture notes of TU Delft's CSE1110 Software Quality and Testing course.
+Welcome to **Software Testing: From Theory to Practice**.
 
-This course covers the most important testing techniques needed to build high quality software systems. Specific topics covered are quality attributes, maintainability and testability, manual and exploratory testing, automated testing, devops, test adequacy, model-based testing, state-based testing, decision tables, reviews and inspections, design-by-contract, test-driven design, unit versus integration testing, mocks and stubs.
+This book covers the most important testing techniques needed to build high quality software systems. Specific topics covered are quality attributes, maintainability and testability, manual and exploratory testing, automated testing, devops, test adequacy, model-based testing, state-based testing, decision tables, reviews and inspections, design-by-contract, test-driven design, unit versus integration testing, mocks and stubs.
 
-Our learning goals are:
+We expect readers to be able to:
 
 * Create unit, integration, and system tests using current existing tools (i.e., JUnit, Mockito, and JaCoCo) that successfully test complex software systems.
 
@@ -34,7 +34,7 @@ as well as able to reflect about their limitations, when and when not to apply t
 
 ## Adopting this book
 
-Feel free to adopt these lecture notes in your software testing course.
+Feel free to adopt this book in your software testing course.
 We should release our accompanying lectures slides soon. If you adopt
 this book, please let us know; the more universities adopt it, the more
 reasons we have to keep updating it!
@@ -52,7 +52,7 @@ add your name in acknowledgements.
 
 ## License
 
-These lecture notes are licensed under [CC-BY-NC-SA 4.0 International](https://creativecommons.org/licenses/by-nc-sa/4.0/). 
+This book is licensed under [CC-BY-NC-SA 4.0 International](https://creativecommons.org/licenses/by-nc-sa/4.0/). 
 You are free to share, copy, and redistribute the material in any medium or format
 as well as adapt, remix, transform, and build upon the material under the following
 terms:
