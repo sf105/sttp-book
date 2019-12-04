@@ -35,8 +35,8 @@ $toc-collapse: calc(#{$content-width} + (2 * #{$toc-width}) + #{$spacing-unit});
 }
 
 .title-wrapper {
-  max-width: calc(#{$content-width} - #{$spacing-unit} - 38px);
-  max-width: webkit-calc(#{$content-width} - #{$spacing-unit} - 38px);
+  max-width: calc(#{$content-width} - 2 * #{$spacing-unit} - 38px);
+  max-width: webkit-calc(#{$content-width} - 2 * #{$spacing-unit} - 38px);
   padding-right: calc(#{$spacing-unit} + 38px);
   padding-right: -webkit-calc(#{$spacing-unit} + 38px);
 }
