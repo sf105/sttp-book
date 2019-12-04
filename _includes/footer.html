@@ -28,7 +28,7 @@
             {% assign sorted_chapters = site.chapters | sort: "chapter-number" %}
             {% for chapter in sorted_chapters %}
               <li>
-                <a href="{{ chapter.url }}">Chapter {{ chapter.chapter-number }} - {{ chapter.title }}</a>
+                <a href="{{ chapter.url | relative_url }}">Chapter {{ chapter.chapter-number }} - {{ chapter.title }}</a>
               </li>
             {% endfor %}
           </ul>
