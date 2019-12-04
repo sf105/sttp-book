@@ -46,4 +46,5 @@ highlighter: rouge
 collections:
   chapters:
     output: true
+    permalink: /:title/
 
