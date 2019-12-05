@@ -159,7 +159,7 @@ public void filterInvoicesTest() {
 ```
 
 Note how we now have full control over the `InvoiceDao` class.
-The `InvoiceFilter` uses the `all` method of the `InvoiceDao` to get the invoices.
+The `InvoiceFilter` uses the `all()` method of the `InvoiceDao` to get the invoices.
 With the mock, we can easily give the two invoices that we want to test on (note how
 we are passing `i1` and `i2`.
 Note also how we do not have to keep a database running while executing the tests!
@@ -167,6 +167,13 @@ Note also how we do not have to keep a database running while executing the test
 <iframe width="560" height="315" src="https://www.youtube.com/embed/baunKy04deM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 {% include example-end.html %}
+
+{% assign todo = "Add one more example with Mockito here, using the verify()" %}
+{% include todo.html %}
+
+{% assign todo = "Add one more example with Mockito here, using the spy()" %}
+{% include todo.html %}
+
 
 Mocks are a useful tool when it comes to write real isolated unit tests.
 
