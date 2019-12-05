@@ -88,6 +88,11 @@ This will be $$99$$,  $$99 < 100$$ is true.
 We show all these points in the diagram below.
 
 ![On- and off-points, in- and out-points](/assets/img/boundary-testing/examples/on_off_points.svg)
+
+{% assign todo = "The same example, but now with x >= 100" %}
+{% include todo.html %}
+
+
 {% include example-end.html %}
 
 As a tester, you devise test cases for these different points.
