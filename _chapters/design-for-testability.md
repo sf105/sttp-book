@@ -3,7 +3,7 @@ chapter-number: 10
 title: Design for Testability
 layout: chapter
 toc: true
-author: by Maurício Aniche
+author: Maurício Aniche
 ---
 
 ## Introduction

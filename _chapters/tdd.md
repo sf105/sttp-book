@@ -3,7 +3,7 @@ chapter-number: 11
 title: Test-Driven Development
 layout: chapter
 toc: true
-author: by Maurício Aniche
+author: Maurício Aniche
 ---
 
 ## Introduction

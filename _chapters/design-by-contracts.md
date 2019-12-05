@@ -3,7 +3,7 @@ chapter-number: 13
 title: Design by Contracts and Property-Based Testing
 layout: chapter
 toc: true
-author: by Arie van Deursen
+author: Arie van Deursen
 ---
 
 Can the production code test itself?

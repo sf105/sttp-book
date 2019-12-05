@@ -16,7 +16,7 @@
             <h1 class="post-title p-name" itemprop="name headline">Chapter {{ page.chapter-number }} - {{ page.title | escape }}</h1>
             <p class="post-meta">
               {%- if page.author -%}
-                • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">{{ page.author }}</span></span>
+                • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">by {{ page.author }}</span></span>
               {%- endif -%}</p>
           </header>
 

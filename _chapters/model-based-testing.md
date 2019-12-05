@@ -3,7 +3,7 @@ chapter-number: 6
 title: Model-Based Testing
 layout: chapter
 toc: true
-author: by Arie van Deursen
+author: Arie van Deursen
 ---
 
 In model based testing, we use models of the system to derive tests.

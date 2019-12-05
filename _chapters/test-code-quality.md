@@ -3,6 +3,7 @@ chapter-number: 12
 title: Test code quality and test code smells
 layout: chapter
 toc: true
+author: Maurício Aniche
 ---
 
 We have been writing a lot of test cases and we have automated all these test cases.

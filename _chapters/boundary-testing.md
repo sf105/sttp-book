@@ -3,7 +3,7 @@ chapter-number: 5
 title: Boundary Testing
 layout: chapter
 toc: true
-author: by Maurício Aniche
+author: Maurício Aniche and Arie van Deursen
 ---
 
 ## Introduction
