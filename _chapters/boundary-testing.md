@@ -89,7 +89,7 @@ We show all these points in the diagram below.
 
 ![On- and off-points, in- and out-points](/assets/img/boundary-testing/examples/on_off_points.svg)
 
-{% assign todo = "The same example, but now with x >= 100" %}
+{% assign todo = "The same example, but now with x <= 100" %}
 {% include todo.html %}
 
 
