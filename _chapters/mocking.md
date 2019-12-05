@@ -3,6 +3,7 @@ chapter-number: 9
 title: Mock Objects
 layout: chapter
 toc: true
+author: by Maurício Aniche
 ---
 
 ## Introduction

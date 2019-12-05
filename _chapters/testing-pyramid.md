@@ -3,6 +3,7 @@ chapter-number: 8
 title: The Testing Pyramid
 layout: chapter
 toc: true
+author: by Maurício Aniche
 ---
 
 We have studied different techniques to derive test cases. More specifically, 

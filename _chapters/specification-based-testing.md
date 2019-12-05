@@ -3,6 +3,7 @@ chapter-number: 4
 title: Specification-Based Testing
 layout: chapter
 toc: true
+author: by Maurício Aniche
 ---
 
 ## Introduction

@@ -3,6 +3,7 @@ chapter-number: 3
 title: Testing Principles 
 layout: chapter
 toc: true
+author: by Maurício Aniche and Arie van Deursen
 ---
 
 Now that we have some basic tools to design and automate our tests, we can think more about some testing concepts.

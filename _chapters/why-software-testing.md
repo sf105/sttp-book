@@ -3,6 +3,7 @@ chapter-number: 1
 title: Why software testing?
 layout: chapter
 toc: true
+author: by Maurício Aniche
 ---
 
 ## Motivation

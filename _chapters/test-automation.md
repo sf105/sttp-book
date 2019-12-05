@@ -3,6 +3,7 @@ chapter-number: 2
 title: Software Testing Automation
 layout: chapter
 toc: true
+author: by Maurício Aniche
 ---
 
 ## Getting started with test automation
