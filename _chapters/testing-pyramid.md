@@ -291,8 +291,6 @@ As testers, we know that a bug can be anywhere, including in the SQL queries the
 1. System testing.
 1. Stress testing.
 
-\end{answers}
-
 
 {% include answer-begin.html %}
 Unit testing.

@@ -327,7 +327,6 @@ Suppose you want to test class A, which approach(es) can you take to be able to 
 2. Neither.
 3. Only approach 2.
 1. Both.
-\end{answers}
 
 
 {% include answer-begin.html %}
