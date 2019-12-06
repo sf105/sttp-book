@@ -43,8 +43,6 @@ So, before running the tests, we have to tell it exactly what to do when a certa
 * We trigger the action on the class/method under test. During its execution, note that the mock replaces the external component.
 * We make assertions on the mock object, often related to its execution.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/kptTWbeLZ3E" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
 ## Mockito
 
 In Java the most used framework for mocking is Mockito ([mockito.org](https://site.mockito.org)).
@@ -106,6 +104,8 @@ public void filterInvoicesTest() {
 
 And of course, clear the database afterwards. Otherwise the test will break in the second run, as there will be two invoices stored in the database! (The database stores data permanenty; so far, we never had to 'clean' the objects; after all, they were always stored in-memory only.)
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0WY7IWbANd8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 Now instead of using the database, we want to replace it with a mock object.
 This way our test will be faster and we can more easily control what the Database-Access-Object returns.
 
@@ -165,9 +165,14 @@ With the mock, we can easily give the two invoices that we want to test on (note
 we are passing `i1` and `i2`.
 Note also how we do not have to keep a database running while executing the tests!
 
+{% include example-end.html %}
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/kptTWbeLZ3E" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/baunKy04deM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-{% include example-end.html %}
+
+## More about Mockito
 
 {% assign todo = "Add one more example with Mockito here, using the verify()" %}
 {% include todo.html %}
