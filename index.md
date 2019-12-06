@@ -35,9 +35,17 @@ as well as able to reflect about their limitations, when and when not to apply t
 ## Adopting this book
 
 Feel free to adopt this book in your software testing course.
+The slides we use in the background of our videos can be found
+in our [video slides repository](https://github.com/sttp-book/video-slides).
 We should release our accompanying lectures slides soon. If you adopt
 this book, please let us know; the more universities adopt it, the more
 reasons we have to keep updating it!
+
+## Exercises
+
+This book contains several code examples. You can find them all
+in our [code examples repository](https://github.com/sttp-book/code-examples).
+Student: learn from it!
 
 ## How to contribute
 
