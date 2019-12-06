@@ -175,6 +175,10 @@ Note also how we do not have to keep a database running while executing the test
 {% assign todo = "Add one more example with Mockito here, using the spy()" %}
 {% include todo.html %}
 
+## Mocking in practice: when to mock?
+
+{% assign todo = "Discuss here when to mock" %}
+{% include todo.html %}
 
 Mocks are a useful tool when it comes to write real isolated unit tests.
 
