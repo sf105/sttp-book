@@ -625,6 +625,28 @@ Finally, you can also see more detailed results in the source code and check whi
 
 ## Exercises
 
-{% assign todo = "We need to develop some exercises for this chapter" %}
+
+{% include exercise-begin.html %}
+
+"*Crimes* happen in a *city*. One way for us to know that the *police* is actually able to detect these *crimes*, we can *simulate crimes* and see whether the *police* is able to detect them."
+
+In the analogy above, we can replace crimes by bugs, city by software, and police by test suite. What should we replace **simulate crimes** by?
+
+1. Mutation testing
+1. Fuzzing testing
+1. Search-based software testing
+1. Combinatorial testing
+
+{% include answer-begin.html %}
+
+Mutation testing.
+
+{% include exercise-answer-end.html %}
+
+
+
+
+
+{% assign todo = "We need to develop more exercises for this chapter" %}
 {% include todo.html %}
 

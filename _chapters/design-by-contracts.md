@@ -863,3 +863,44 @@ A 4xx code means that the client invoked the server in a wrong way, which corres
 A 5xx code means that the server was not able to handle the request of the client, which was correct.
 This corresponds to failing to meet a postcondition.
 {% include exercise-answer-end.html %}
+
+
+
+{% include exercise-begin.html %}
+
+A method M belongs to a class C and has a precondition P and a postcondition Q. 
+Now, suppose that a developer creates a class C' that extends C, and 
+creates a method M' that overrides M. 
+Which one of the following statements correctly explains the relative
+strength of the pre (P') and postconditions (Q') of the overridden method M'?
+
+
+1. P' should be equal or weaker than P, and Q' should be equal or stronger than Q.
+2. P' should be equal or stronger than P, and Q' should be equal or stronger than Q.
+3. P' should be equal or weaker than P, and Q' should be equal or weaker than Q.
+4. P' should be equal or stronger than P, and Q' should be equal or weaker than Q.
+
+{% include answer-begin.html %}
+
+P' should be equal or weaker than P, and Q' should be equal or stronger than Q.
+
+{% include exercise-answer-end.html %}
+
+
+{% include exercise-begin.html %}
+
+Which of the following is a valid reason to use assertions in your code?
+
+
+1. To verify expressions with side effects.
+1. To handle exceptional cases in the program.
+1. To conduct user input validation.
+1. To make debugging easier.
+
+
+
+{% include answer-begin.html %}
+To make debugging easier.
+{% include exercise-answer-end.html %}
+
+

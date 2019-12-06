@@ -357,6 +357,208 @@ Link: https://testing.googleblog.com/2016/05/flaky-tests-at-google-and-how-we.ht
 
 ## Exercises
 
-{% assign todo = "We need to develop exercises." %}
-{% include todo.html %}
+{% include exercise-begin.html %}
+
+Jeanette just heard that two tests are behaving strangely: when executed in isolation, both of them pass. However, when executed together, they fail. Which one of the following **is not** cause for this?
+
+1. Both tests are very slow.
+1. They depend upon the same external resources.
+1. The execution order of the tests matter.
+1. They do not perform a clean-up operation after execution.
+
+{% include answer-begin.html %}
+
+Correct: Both tests are very slow.
+
+{% include exercise-answer-end.html %}
+
+
+
+
+{% include exercise-begin.html %}
+
+RepoDriller is a project that extracts information from Git repositories. Its integration tests consumes lots of real Git repositories, each one with a different characteristic, e.g., one repository contains a merge commit, another repository contains a revert operation, etc.
+
+Its tests look like what you see below:
+
+```java
+@Test
+public void test01() {
+
+  // arrange: specific repo
+  String path = "test-repos/git-4";
+
+  // act
+  TestVisitor visitor = new TestVisitor();
+  new RepositoryMining()
+  .in(GitRepository.singleProject(path))
+  .through(Commits.all())
+  .process(visitor)
+  .mine();
+  
+  // assert
+  Assert.assertEquals(3, visitor.getVisitedHashes().size());
+  Assert.assertTrue(visitor.getVisitedHashes().get(2).equals("b8c2"));
+  Assert.assertTrue(visitor.getVisitedHashes().get(1).equals("375d"));
+  Assert.assertTrue(visitor.getVisitedHashes().get(0).equals("a1b6"));
+}
+```
+
+
+Which test smell does this piece of code suffers from?
+
+1. Mystery guest
+1. Condition logic in test
+1. General fixture
+1. Flaky test
+
+{% include answer-begin.html %}
+
+Correct answer: Mystery guest
+
+{% include exercise-answer-end.html %}
+
+
+{% include exercise-begin.html %}
+
+In the code below, we present the source code of an automated test.
+However, Joe, our new test specialist, believes this test is smelly and it can be better written.
+Which of the following could be Joe's main concern?
+
+  
+1. The test contains code that may or may not be executed, making the test less readable.
+2. It is hard to tell which of several assertions within the same test method will cause a test failure.
+3. The test depends on external resources and has nondeterministic results depending on when/where it is run.
+4. The test reader is not able to see the cause and effect between fixture and verification logic because part of it is done outside the test method.
+
+```java
+@Test
+public void flightMileage() {
+  // setup fixture
+  // exercise contructor
+  Flight newFlight = new Flight(validFlightNumber);
+  // verify constructed object
+  assertEquals(validFlightNumber, newFlight.number);
+  assertEquals("", newFlight.airlineCode);
+  assertNull(newFlight.airline);
+  // setup mileage
+  newFlight.setMileage(1122);
+  // exercise mileage translater
+  int actualKilometres = newFlight.getMileageAsKm();    
+  // verify results
+  int expectedKilometres = 1810;
+  assertEquals(expectedKilometres, actualKilometres);
+  // now try it with a canceled flight
+  newFlight.cancel();
+  boolean flightCanceledStatus = newFlight.isCancelled();
+  assertFalse(flightCanceledStatus);
+}
+```
+
+{% include answer-begin.html %}
+
+Correct answer: It is hard to tell which of several assertions within the same test method will cause a test failure.
+
+{% include exercise-answer-end.html %}
+
+
+
+
+
+{% include exercise-begin.html %}
+
+See the test code below. What is the most likely test code smell that this piece of code presents?
+
+```java
+@Test
+void test1() {
+  // webservice that communicates with the bank
+  BankWebService bank = new BankWebService();
+
+  User user = new User("d.bergkamp", "nl123");
+  bank.authenticate(user);
+  Thread.sleep(5000); // sleep for 5 seconds
+
+  double balance = bank.getBalance();
+  Thread.sleep(2000);
+
+  Payment bill = new Payment();
+  bill.setOrigin(user);
+  bill.setValue(150.0);
+  bill.setDescription("Energy bill");
+  bill.setCode("YHG45LT");
+
+  bank.pay(bill);
+  Thread.sleep(5000);
+
+  double newBalance = bank.getBalance();
+  Thread.sleep(2000);
+  
+  // new balance should be previous balance - 150
+  Assertions.assertEquals(newBalance, balance - 150);
+}
+```
+
+1. Flaky test.
+2. Test code duplication.
+3. Obscure test.
+4. Long method.
+
+{% include answer-begin.html %}
+
+Flaky test.
+{% include exercise-answer-end.html %}
+
+
+
+{% include exercise-begin.html %}
+
+In the code below, we show an actual test from Apache Commons Lang, a very popular open source Java library. This test focuses on the static `random()` method, which is responsible for generating random characters. A very interesting detail in this test is the comment: *Will fail randomly about 1 in 1000 times.*
+
+```java
+/**
+ * Test homogeneity of random strings generated --
+ * i.e., test that characters show up with expected frequencies
+ * in generated strings.  Will fail randomly about 1 in 1000 times.
+ * Repeated failures indicate a problem.
+ */
+@Test
+public void testRandomStringUtilsHomog() {
+    final String set = "abc";
+    final char[] chars = set.toCharArray();
+    String gen = "";
+    final int[] counts = {0,0,0};
+    final int[] expected = {200,200,200};
+    for (int i = 0; i< 100; i++) {
+       gen = RandomStringUtils.random(6,chars);
+       for (int j = 0; j < 6; j++) {
+           switch (gen.charAt(j)) {
+               case 'a': {counts[0]++; break;}
+               case 'b': {counts[1]++; break;}
+               case 'c': {counts[2]++; break;}
+               default: {fail("generated character not in set");}
+           }
+       }
+    }
+    // Perform chi-square test with df = 3-1 = 2, testing at .001 level
+    assertTrue("test homogeneity -- will fail about 1 in 1000 times",
+        chiSquare(expected,counts) < 13.82);
+}
+```
+
+Which one of the following **is incorrect** about the test?
+
+1. The test is flaky because of the randomness that exists in generating characters.
+1. The test checks for invalidly generated characters, and that characters are picked in the same proportion.
+1. The method being static has nothing to do with its flakiness.
+1. To avoid the flakiness, a developer could have mocked the random function. 
+
+
+{% include answer-begin.html %}
+
+To avoid the flakiness, a developer could have mocked the random function. It does not make sense, the test is about testing the generator and its homogeinity; if we mock, the test looses its purposes.
+
+{% include exercise-answer-end.html %}
+
+
 

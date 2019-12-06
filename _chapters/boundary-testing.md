@@ -472,3 +472,32 @@ on point = 1024, off point = 1025, in point = 1028, out point = 512
 The on point is the number precisely in the boundary = 1024. off point is the closest number to the boundary and has the opposite result of on point. In this case, 1024 makes the condition false, so the off point should make it true. 1025. In point makes conditions true, e.g., 1028. Out point makes the condition false, e.g., 512.
 {% include exercise-answer-end.html %}
 
+
+
+
+
+
+
+{% include exercise-begin.html %}
+
+Which one of the following statements about the **CORRECT** principles is **true**?
+
+1. We should suppose that external dependencies are already on the right state for the test (REFERENCE).
+1. We should test different methods from the same class in an isolated way in order to avoid order issues (TIME).
+1. Whenever we encounter a loop, we should always test whether the program works for 0, 1, and 10 iterations (CARDINALITY).
+1. We should always test the behavior of our program when any expected data actually does not exist (EXISTENCE).
+
+{% include answer-begin.html %}
+
+We should always test the behavior of our program when any expected data actually does not exist (EXISTENCE).
+
+{% include exercise-answer-end.html %}
+
+
+
+
+
+
+
+
+

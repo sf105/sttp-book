@@ -259,3 +259,89 @@ Option 4 is not required.
 Changing the transaction level is not really required. Better would be to actually exercise the transaction policy your application uses in production.
 
 {% include exercise-answer-end.html %}
+
+
+{% include exercise-begin.html %}
+
+A newly developed product started off with some basic unit tests but later on decided to only add integration tests and system tests for the new code that was written. This was because a user interacts with the system as a whole and therefore these types of tests were considered more valuable. Thus, unit tests became less prevalent, whereby integration tests and system tests became a more crucial part of the test suite. This transition can be described as:
+
+1. Transitioning from a testing pyramid to an ice-cream cone pattern
+2. Transitioning from an ice-cream cone anti-pattern to a testing pyramid
+3. Transitioning form an ice-cream cone pattern to a testing pyramid
+4. Transitioning from a testing pyramid to an ice-cream cone anti-pattern
+
+
+{% include answer-begin.html %}
+Correct answer: Transitioning from a testing pyramid to an ice-cream cone anti-pattern
+{% include exercise-answer-end.html %}
+
+
+
+
+
+{% include exercise-begin.html %}
+
+
+TU Delft just built an in-house software to control the payroll of its employees. The applications makes use of Java web technologies and stores data in a Postgres database. Clearly, the application frequently retrieves, modifies, and inserts large amounts of data into the database. All this communication is made by Java classes that send (complex) SQL queries to the database. 
+
+As testers, we know that a bug can be anywhere, including in the SQL queries themselves. We also know that there are many ways to exercise our system. Which one of the following **is not** a good option to detect in the SQL queries?
+  
+1. Unit testing.
+1. Integration testing.
+1. System testing.
+1. Stress testing.
+
+\end{answers}
+
+
+{% include answer-begin.html %}
+Unit testing.
+{% include exercise-answer-end.html %}
+
+
+
+
+
+
+{% include exercise-begin.html %}
+
+Choosing the level of a test is a matter of a trade-off. After all, each 
+test level has advantages and disadvantages.
+Which one of the following is the **main advantage** of a test at system level?
+
+
+1. The interaction with the system is much closer to reality.
+1. In a continuous integration environment, system tests provide real feedback to developers.
+1. Given that system tests are never flaky, they provide developers with more stable feedback.
+1. A system test is written by product owners, making it closer to reality.
+
+
+{% include answer-begin.html %}
+
+The interaction with the system is much closer to reality.
+
+{% include exercise-answer-end.html %}
+
+
+
+
+{% include exercise-begin.html %}
+
+What is the main reason for the number of recommended system tests in the testing pyramid to be smaller than the number of unit tests?
+
+
+1. Unit tests are as good as system tests.
+1. System tests do not provide developers with enough quality feedback.
+1. There are no good tools for system tests.
+1. System tests tend to be slow and often are non-deterministic.
+
+{% include answer-begin.html %}
+
+System tests tend to be slow and often are non-deterministic.
+See https://martinfowler.com/bliki/TestPyramid.html!
+
+{% include exercise-answer-end.html %}
+
+
+
+
