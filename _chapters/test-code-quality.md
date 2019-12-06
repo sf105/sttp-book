@@ -6,23 +6,32 @@ toc: true
 author: Maurício Aniche
 ---
 
-We have been writing a lot of test cases and we have automated all these test cases.
-This automation process means writing code to execute the test cases.
-As the production code base becomes very large and complex, so does the test code base.
-Like with the production code, this means that we need to put some effort in making high quality test code and to keep this test code maintainable.
+## Introduction
 
-In this chapter we go over some good practices for writing test code and so-called test smells.
-These test smells are structures or pieces of code you see in the test code base that indicate problems in the test code or in the system.
+You probably noticed that the amount of JUnit automated test cases that we
+have written so far is quite significant. This is what happens in practice:
+the test code base grows up very fast. And
+like with the production code, **we have to put some extra effort in making high-quality test code bases so that we can maintain and evolve them in a
+sustainable way**.
 
-## Act Arrange Assert
+In this chapter, we go over some good practices 
+for writing test code. We'll discuss the so-called **test code smells**.
+These test smells are structures or pieces of code you see in the test code base that indicate problems in the test code or in the system. This is a clear
+analogy to **code smells**, however focused on test code.
 
+To understand how to write good test code, we first should understand
+the structure of a test method.
 Automated tests are very similar in structure.
-They almost all follow the AAA structure.
-This stands for **Arrange**, **Act**, and **Assert**.
-In the **Arrange** phase we get everything we need to execute the test.
-This usually means initializing some object and/or setting some values.
-The **Act** phase is where the production code is used to determine a certain result.
-This result is then used in the **Assert** phase, where we assert that the result is what we expect it to be.
+They almost always follow the AAA ("triple A") structure.
+This acronym stands for **Arrange**, **Act**, and **Assert**.
+In the **Arrange** phase, we get everything we need to execute the test.
+This usually means initializing some object and/or setting up some values.
+Some people call it the "set up of the test". In practice, this is where
+we write the inputs we devised using any of the testing techniques
+we discussed.
+The **Act** phase is where the production code under test is exercised.
+It is usually done by means of one or many method calls.
+The result is then used in the **Assert** phase, where we assert that it is what we expect it to be.
 
 {% include example-begin.html %}
 We have an automated test:
@@ -30,188 +39,212 @@ We have an automated test:
 ```java
 @Test
 public void nonLeapCenturialYears() {
-1.  LeapYear ly = new LeapYear();
+	// this is the arrange
+1.  int year = 1500;
 
-2.  boolean leap = ly.isLeapYear(1500);
+	// this is the act
+2.  LeapYear ly = new LeapYear();
+3.  boolean leap = ly.isLeapYear(year);
 
-3.  assertFalse(leap);
+	// this is the assert
+4.  assertFalse(leap);
 }
 ```
 
 This test is made for the `LeapYear` class and tests the `isLeapYear` method.
-We find the *arrange* part at the start: we create an instance of `LeapYear` in line 1.
-Then we use this instance to find the result of the method in line 2.
+We find the *arrange* part at the start: we define `1500` as the year we 
+want to pass to the production method.
+Then we use this value as an input to the method under test in lines 2 and 3.
 This is the *act* part; we use the production code to find a result for a certain input.
-In line 3. we *assert* that the result is false.
+In line 4, we *assert* that the result is false.
 {% include example-end.html %}
 
-## Code smells
+<iframe width="560" height="315" src="https://www.youtube.com/embed/tH_-iIwbDmc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-In production code we use the term **code smells** for indications or symptoms that indicate a deeper problem in the system.
-Some very well-known examples are long method or long classes.
-Lots of research tell us that these code smells hinder the comprehensibility and the maintainability of software systems.
-If there are a lot of code smells in a system, it will be very hard to fix an issue or to add a feature later on.
 
-Code smells can also occur in the test code.
-When this happens, we talk of **test smells**.
-Research shows that these test smells occur a lot in real life and, unsurprisingly, often negatively impact the system.
-For example, a paper by Bavota and his co-authors shows that the test smells are widely spread and negatively impact the comprehensibility of the code.
-Another study by Spadini and his co-authors says that tests, that are affected by test smells, have defects and are changed more often than tests that are not affected.
-Throughout this chapter we will go over some test smells and how to avoid them.
+## The FIRST principles
 
-## FIRST
+Now, let's discuss some best practices in test code.
+We will discuss the "FIRST Properties of Good Tests". They come originally
+from the Pragmatic Unit Testing book (see references). Each letter in the
+acronym represents one best practice.
 
-Before we discuss the test smells, we would like to have a look at some best practices first.
-Here we follow the FIRST Properties of Good Test, where each letter in FIRST stands for one of the properties.
+- **Fast**: 
+In practice, it is really important to run the test after each change, to check that the changes do not break anything.
+For that to happen smmothly, **the test execution should be fast**. 
+Although we do not have a hard line for when a test is slow or fast,
+the idea is, however, that when it takes a long time to run a test, developers will not run the test all the time;
+it would take just too much of their time.
+In order to keep our tests fast, we should use as few slow dependencies as possible.
+We have already seen a way to do this with mock objects.
 
-- **Fast**: the test should be fast.
-We do not have a hard line for when a test is slow or fast.
-The idea is, however, that when it takes a long time to run a test, developers will not run the test all the time;
-it would take too much of their time.
-It is important to run the test after each change, because we want to check that the changes do not break anything.
-In order to keep our tests fast, we try to use as few slow dependencies as possible.
-We have already seen a way to do this; with mock objects.
-- **Isolated**: When writing a test, we want the test to be isolated in a two different perspectives.
+- **Isolated**: When writing a test, we want this specific **test to be as isolated as possible** in a two different perspectives.
 The first one is in terms of what it tests.
 The test should check an isolated piece of functionality.
-Following this, good unit tests only focus on small pieces of code.
+Following this, **good unit tests only focus on small pieces of code or in single
+functionalities**.
 Another perspective is the isolation from other tests.
-The tests should not depend on each other.
-When, for example, test A only works when test B is run before it, the tests are not independent.
-To have this independence you have to be careful with shared resources between the tests: The resources have to be the same at the end of a test as they were at the beginning.
-- **Repeatable**: A repeatable test is a test that gives the same result, no matter how many times it is executed.
-If a test fails sometimes and then if you run it a couple of times suddenly passes, we cannot really trust the test's results anymore.
-Repeatable tests are related to isolated tests: When a test is not repeatable, it is often not isolated well.
-- **Self-validating/Self-arranging**: The tests should validate the result themselves.
-We write test code to automate the tests, so we do not want to compare the results ourselves.
-Tests are made self-validating by using assertions.
+**Tests should not depend on each other.**
+When, for example, test A only works when test B runs before, tests are not independent anymore.
+To avoid such dependency, you have to be careful with shared resources between the tests, e.g., databases, files. The resources have to be the same at the end of a test as they were at the beginning (i.e., your tests should "clean their messes up" at the end of their execution).
+
+- **Repeatable**: **A repeatable test is a test that gives the same result, no matter how many times it is executed.**
+If a test sometimes fails and sometimes passes, without any changes in the system, you suddenly loose confidence in that test.
+Repeatable tests are related to isolated tests. A test that is not so well isolated tend to be not repeatable. (We will call these tests, *flaky tests* later on in this chapter).
+
+- **Self-validating/Self-arranging**: **The tests should validate the result themselves.**
+We write test code to automate the tests, so that we do have to compare the results ourselves.
+Tests are made self-validating by using assertions. Tests should act as oracles:
+they should make sure that the program behaved as expeted.
 When we talk about self-validating, we should also talk about **self-arranging**.
 This means that the test should reach the required initial state itself.
-For example if the code uses a database, the test should make sure that this database contains the necessary data to run the code.
+For example, if the production code uses a database and requires that this database is in some state before running, the test should make sure that this database contains the necessary data to run the code.
+
 - **Timely**: The final property is timely.
-Now we are not talking just about the code, but also about the development process.
+Now, we are not talking just about the code, but also about the development process.
 Automated tests should be written often and shortly after the production code.
-In the software testing community we call this becoming "test infected": Testing the software should become a habit.
-If the automated tests are left for a long time after the production code is written, chances are high that they are not written at all.
-In a later chapter we discuss Test Driven Development.
-There, this is taken even further by writing the tests before writing the production code.
-For now, keep in mind that you should write tests very frequently.
+If we leave automated tests to the end of the process, e.g., long after the production code is written, chances are that they will not be written at all.
+We should become "test infected"! Testing the software should become a habit.
+(We also discuss the idea of Test-Driven Development, or development guided by the tests in a specific chapter.)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/5wLrj-cr9Cs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Test Smells
 
-Now that we covered some best practices we can start looking at the test smells.
+Now that we covered some best practices we can start looking at the other
+side of the coin, **the test smells**.
+
+In production code we use the term **code smells** for indications or symptoms that indicate a deeper problem in the system.
+Some very well-known examples are *Long Method*, *Long Class*, or *God Class*.
+A good number of research papers show us that code smells hinder the comprehensibility and the maintainability of software systems.
+
+Code smells can also occur in the test code.
+We call them **test smells**.
+Research also shows that these test smells occur a lot in real life and, unsurprisingly, often negatively impact the system.
+For example, a paper by Bavota and his co-authors shows that the test smells are widely spread and negatively impact the comprehensibility of the code.
+Another study by Spadini and his co-authors says that tests, that are affected by test smells, have defects and are changed more often than tests that are not affected.
+
 You will see that most of these smells can be mapped to one of the best practices.
+Throughout this chapter we will go over some test smells and how to avoid them.
+There are more test smells you can study, though. A good reference for future studies here is the xUnit Test Patterns book, by
+Meszaros.
+
 
 One common test smell is **Code Duplication**.
-That this is a common test smell is not so surprising, as it is also very common in production code.
+It is not surprising that this is a test smell, as it is also very common in production code.
 We already noted that the tests are all very similar in structure.
 With that we can very easily get code duplication.
-Developers will often just copy paste the code instead of coming up with some private method, or abstractions.
+Developers often just copy paste the code instead of coming up with some private method, or more generally, abstractions.
+
 The problem with duplicate code is mostly its effect on the maintainability of code.
-If there is a fault in the duplicated piece of code and you want to correct it, you will have to correct it in all the places where the code was duplicated.
-Then it is very easy to forget one of the places and you end up with faulty code in your tests.
+If there is a need for a change in the duplicated piece of code, you will have to apply the change in all the places where the code was duplicated. 
+In practice, it is very easy to forget one of the places, and you end up with problematic code in your tests.
 This is similar to the impact of code duplication in production code.
 Because of its effect on the maintainability of a system, code duplication is considered to be a test smell.
 
 Another very common test smell is called **Assertion Roulette**.
-Assertion roulette is when a test fails and it is very hard for the developers to understand the failing assertion.
-This is problematic, because the developer cannot see what is going wrong exactly and therefore cannot fix the error.
-Assertion roulette can happen because of a couple of reasons.
+Assertion roulette is when a test fails, and it is very hard for the developers to understand the failing assertion, i.e., why does it fail?
+This is problematic, as the developer cannot see what is going wrong exactly and therefore cannot fix the error.
+Assertion roulette can happen due to a couple of reasons.
 The first one is the amount of assertions in the test.
-With a lot of assertions it's hard to see what each of the assertions does.
-So, with a lot of assertions in a test case and one of them failing it can be difficult to understand its context and locate the fault in the production code.
-The second reason is the complexity of the assertion itself.
-By just looking at the assertion it will be very hard to see what the assertion is checking.
-Sometimes just adding a comment, or in JUnit a message, to the assert can help.
-Another widely used strategy is called the "one assertion per method" strategy.
-With that strategy we aim to have the least amount of assertions in a test method as possible.
-This can be taken to the extreme by just allowing exactly one assertion per method.
-More pragmatically though, when you see a test method with a lot of assertions you can probably think about splitting it up in a couple separate tests.
+A test that contains a lot of assertions might make the life of developer more difficult when one assertion fails. After all, understanding the full context of a complex sequence of assertions is just harder than understanding the full context of a simple sequence of assertions.
+Sometimes just adding a comment, or JUnit message in the assertion can help.
 
-The next test smell corresponds to the Fast of FIRST: **Slow tests**.
-As we discussed test cases should be fast, because then the developers can run the test after each small change they make.
+Another widely used strategy is called the "one assertion per method" strategy.
+With that strategy, we aim to have the least amount of assertions in a test method as possible.
+This can be taken to the extreme by just allowing exactly one assertion per method.
+More pragmatically though, when you see a test method with a lot of assertions, you can probably think about splitting it up in a couple separate tests.
+
+The next test smell corresponds to the Fast of FIRST principles: **Slow tests**.
+As we discussed, test cases should be fast, because then the developers can run the test after each small change they make.
 Slower tests will be executed less frequently and therefore give less feedback to the developer.
 When you encounter a slow test you should really try to speed it up.
 If you have a very slow dependency, you could for example try to mock it.
-Be aware that mocking also takes time, so you also do not want to use too many mocks in your tests.
+
 
 Another test smell relates to the Self-arranging of FIRST: **Resource Optimism**.
-Resource optimism means that a test assumes that a necessary resource is readily available at the start of its execution.
-Again with the database example: The test should make sure that the required data gets stored in the database, so it cannot assume it is already there.
+Resource optimism happens when a test assumes that a necessary resource (e.g., a database) is readily available at the start of its execution.
+Again, with the database example: to avoid resource optimism, a test should not assume that the database is already in the correct state, and should set up the state there itself, by means of, for example, INSERT instructions at the beginning of the test method.
+
 Another type of resource optimism is assuming that the resource is available all the time.
-When we are using a webservice, for example, this might not always be the case.
-To avoid this test smell you have two options.
+When we are using a webservice, for example, this might not always be the case, as the webservice might be down for reasons we do not control.
+To avoid this test smell, you have two options:
 One is again to avoid using external resources, by using mock objects.
-As you have already seen, with mock object we do not need the external resources.
 If you cannot avoid using the external dependencies, you can make the test robust enough.
-In that case you can skip the test when the resource is unavaiable and provide a message containing why the test is skipped.
-This is at least better than letting the test fail.
-In addition to changing your tests, you have to make sure that all the environments that the tests are run in have the required resources available.
-Continuous integration tools like Jenkins, CircleCI, and Travis can help you to make sure that you run the tests always in the same environment.
+In that case, you can skip the test when the resource is unavailable, and provide a message explaining why the test was skipped.
+This is, at least, better than letting the test fail for a bad reason.
+
+In addition to changing your tests, you have to make sure that all the environments that the tests are executed have the required resources available.
+Continuous integration tools like Jenkins, CircleCI, and Travis can help you in making sure that you run the tests always in the same environment.
 
 The next test smell is **Test Run War**.
-This happens when the tests pass if you execute them alone, but fail as soon as someone else runs the tests at the same time.
-This typically happens when you are using the same database.
-Then it does not even matter that the tests are run on different machine; they alter each other resources.
-This corresponds to the Isolation of FIRST.
-When you encounter a Test Run War, the tests are not well isolated.
+This happens when the tests pass if you execute them alone, but fail as soon as someone else runs the test at the same time.
+This often happen when the tests consume the same resource, e.g., the same database.
+Imagine a test suite that communicates to a global database. When developer 1 runs the test, the test changes the state of the database; at the same time, developer 2 runs the same test that also goes to the same database. Now, both tests are touching the same database at the same time. This unexpected situation which might make the test to fail.
+If you feel like we talked about this before, you are correct; this smell is highly related to the *Isolation* of the FIRST princinples.
+When you encounter a Test Run War, make sure to isolate them well.
 
-Another test smell that we often encounter is **General Fixture**.
-Fixture basically means the arrange part of the test, where we create all the objects needed to run the tests.
-We often see developers creating one method to create the objects needed for the tests.
-Such a fixture does not need to be a problem, but when test A uses a part of the fixture and part B another part the fixture is too general.
-The problem with a general fixture is that it becomes very hard to understand what a test needs and uses.
-To resolve this issue you have to make sure that the tests all contain clear and concise fixures, which all have just the needed objects.
-Later we will see a design pattern called test data builder, that helps avoiding this test smell.
+Another test smell that we often encounter is the **General Fixture**.
+A fixture basically means the arrange part of the test, where we create all the objects and inputs needed by the test.
+We often see developers creating one large method (using, for example, the `@BeforeEach` annotation of JUnit) that creates *all* the objects needed by the *all* tests.
+Having such a fixture is not necessarily a problem. However, when test A uses just part of this fixture, and part B uses just another part, this means that this fixture is too generic.
+The problem with a generic fixture is that it becomes very hard to understand what a single test really needs and uses.
+To resolve this issue, you have to make sure that the tests contain clear and concise fixures, nothing more than what it really needs.
+Explore the design pattern called **[Test Data Builder](http://www.natpryce.com/articles/000714.html)**, that helps us in avoiding this test smell.
 
 The **Indirect tests** smell concerns the class that is tested by a test class.
-When the test not just tests the class under test, but by testing it also tests another class, we call it an indirect test.
-This is problemetic, because when one class is not working properly, you suddenly have a lot of tests failing.
-For example, we have a test class for class B, that also tests class A.
-Now if there is a fault in class A, the tests for class A will fail (this is to be expected), but also the tests of class B will fail.
-While there is nothing wrong with class B.
-These extra failing tests are cumbersome and costs a lot of time of the developer.
-So we need to keep our tests focused and make sure that they do not indirectly test other classes.
+When the test goes beyond testing the class under test, but also tests other classes, we call it an *indirect test*.
+This might problematic due to the change propagation that might happen in this test. Imagine a test class `ATest` that tests not only class `A`, but also class `B`. If a bug exists in class `B`, we expect tests in `BTest` to fail; however, the tests for class `A` in `ATest` will also break, due to 
+this indirect testing.
+
+These extra failing tests are cumbersome and might cost a good amount of time from the developer.
+We should try as much as possible to keep our tests focused, making sure that they do not indirectly test other classes.
 
 Finally, we have the test smell called **Sensitive Equality**.
 We use assertions to verify that the production code behaves as expected.
-This test smell is when we have assertions that are too strict.
-Then when you change a small thing in the production code, the tests will break and they have to be edited as well.
-This is not a kind of test that we want: We want our tests to be as resilient as possible.
-If we then make a small change in the production code, we do not have to immediately change the test code as well.
+This test smell is when we have assertions that are too strict. Or, in other
+words, too sensitive. We want our tests to be as resilient as possible, and only break if there is indeed a bug in the system. We do not want small changes that do not affect the behavior of the class to break our tests.
 
-All these test smells are covered more in-depth in XUnit Test Patterns by Gerard Meszaros.
+A clear example of such a smell is when the developer decides to use
+the results of a `toString()` method to assert the expected behavior.
+Imagine an assertion like `Assertion.assertTrue(invoice.toString().contains("Playstation"))`.
+`toString()`s change quite often; but a change in `toString()` should not
+break all the tests... If the developer had made the assertion to focus
+on the specific property, e.g., `Assertion.assertEquals("Playstation", invoice.getProduct().getName())`, this would not had happened.
+
+Again, all these test smells are covered more in-depth in XUnit Test Patterns by Gerard Meszaros.
 We highly recommend you to read that book!
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/QE-L818PDjA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/DLfeGM84bzg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Flaky Tests
 
-What often happens is that a test sometimes passes, but sometimes it also fails.
-You might have encountered this yourself as well.
-We call such tests **Flaky tests**.
-
-Flaky tests hurt the development process, because if we have a flaky test the development team loses confidence in the tests suite.
-After all, at some point they do not know anymore if there is a real bug in the system or if the test fails, while there is nothing wrong.
-We like to have no flaky tests in our test suite.
+It is unfortunately quite common to have tests in our test suite
+that sometimes passes, but sometimes fails. We do not like these tests;
+after all, if a test gives us false positives, we can not really trust on them.
+We call such tests, **flaky tests**.
 
 Flaky tests can have a lot of causes.
-We will name a few examples.
-A test could be flaky, because it depends on an external infrastructure.
+We will name a few examples:
+
+* A test could be flaky, because it **depends on an external and/or shared resource**.
 Let's say we need a database to run our tests.
-At some times the test can pass, because the database is available, and at other times it might fail, because then the database is not available.
-In this case the test depends on the availability of an external infrastructure.
-Another reason could be that the tests are using a shared resource.
-We covered this scenario in the previous section.
-The tests can also be flaky because of time-outs.
+Sometimes the test passes, because the database is available; sometimes it fails, because then the database is not available.
+In this case, the test depends on the availability of an external infrastructure.
+
+* The tests can also be flaky because of time-outs.
 This cause is common in web applications.
-With timeouts the test waits for something to happen in the web application.
+With timeouts, the test waits for something to happen in the web application, e.g.,
+a new message to appear in an HTML element.
 If the web application is a bit slower than normal, the test will suddenly fail.
-Finally we could have interacting tests.
+
+* Finally we could have interacting tests, which we also discussed above.
 Then test A influences the result of test B, possibly causing it to fail.
 All these examples are plausible causes of flakiness that actually occur in practice.
 
 As you might have notices, a lot of the causes of flaky tests correspond to scenarios we described when discussing the test smells.
-Actually, research shows that there is a correlation between a test being affected by test smells and it being flaky.
-In other words: If you find and handle the test smells well, you will probably resolve the cause of flakiness as well.
 The quality of our test code is indeed very important!
 
 If you want to find the exact cause of a flaky test, the author of the XUnit Test Patterns book has made a whole decision table.
@@ -221,23 +254,40 @@ For example: Does the flaky test get worse over time?
 This means if the test gets slower and slower to execute.
 If this is true, you probably have a resource leakage in the tests, otherwise it is probably a non-deterministic test.
 
+If you want to read more about flaky tests, we suggest the following papers and blog posts (including Google discussing how problematic flaky tests are for their development teams):
+
+- Luo, Q., Hariri, F., Eloussi, L., & Marinov, D. (2014, November). An empirical analysis of flaky tests. In Proceedings of the 22nd ACM SIGSOFT International Symposium on Foundations of Software Engineering (pp. 643-653). ACM. 
+Authors' version: http://mir.cs.illinois.edu/~eloussi2/publications/fse14.pdf
+- Bell, J., Legunsen, O., Hilton, M., Eloussi, L., Yung, T., & Marinov, D. (2018, May). D e F laker: automatically detecting flaky tests. In Proceedings of the 40th International Conference on Software Engineering (pp. 433-444). ACM. 
+Authors' version: http://mir.cs.illinois.edu/legunsen/pubs/BellETAL18DeFlaker.pdf
+- Lam, W., Oei, R., Shi, A., Marinov, D., & Xie, T. (2019, April). iDFlakies: A Framework for Detecting and Partially Classifying Flaky Tests. In 2019 12th IEEE Conference on Software Testing, Validation and Verification (ICST) (pp. 312-322). IEEE. 
+Authors' version: http://taoxie.cs.illinois.edu/publications/icst19-idflakies.pdf
+- Listfield, J. Where do our flaky tests come from?  
+Link: https://testing.googleblog.com/2017/04/where-do-our-flaky-tests-come-from.html, 2017.
+- Micco, J. Flaky tests at Google and How We Mitigate Them.  
+Link: https://testing.googleblog.com/2016/05/flaky-tests-at-google-and-how-we.html, 2017.
+- Fowler, M. Eradicating Non-Determinism in Tests. Link: https://martinfowler.com/articles/nonDeterminism.html, 2011.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/WGv5vObcqh8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
 ## Readability
 
-As we often need to improve the test suite, developers will spend a lot of time working on the test code.
+As developers are often working on their test code bases.
 Therefore, it is crucial that the developers can understand the test code easily.
-We need readable and understandable test code.
-But how can you do this?
-We give you some tips to write readable test code in this section.
+**We need readable and understandable test code.**
+But how can we do this?
+In the following, we give you some tips to write readable test code.
 
-The first tip concerns the structure of your tests.
-As you have seen earlier test all follow the same structure: Arrange, Act and Assert.
-When these are clearly separated, it is easier to see what is happening in the test.
-In the example at the start of this chapter, we did this by just adding some blank lines between the different parts.
+* The first tip concerns the **structure of your tests**.
+As you have seen earlier, tests all follow the same structure: Arrange, Act and Assert.
+When **these are clearly separated, it is easier for a developer to see what is happening in the test**.
+In the example, at the start of this chapter, we did this by just adding some blank lines between the different parts.
 
-A second tip is about information in tests.
-Test are full of information, i.e. the input values and the expected results.
-Then dealing with complex object, the information in the test will also become complex.
-So you have to make sure that the information present in a test is easy to understand.
+* A second tip is about the **information in tests**.
+Test are full of information, i.e., input values, expected results.
+However, we often have to deal with complex data structures and information, which makes the test code naturally complex.
+**We should make sure that the important information present in a test is easy to understand.**
 An easy way to do this is by storing the values in variables with descriptive names.
 This is illustrated in the example below.
 
@@ -249,13 +299,14 @@ We have written a test for an invoice that checks if the invoice has been paid.
 public void invoiceNotPaid() {
   Invoice inv = new Invoice(1, 10.0, 25.0);
 
-  boolean paid = inv.isPaid();
+  boolean p = inv.isPaid();
 
-  assertFalse(paid);
+  assertFalse(p);
 }
 ```
 
-In the test above it is not clear what the values mean: It is not clear what information is in the test.
+As you can see, is not clear what all the hard-coded values really mean (what does 1, 10.0, or 25.0 mean?), and thus, it is not clear what kind of information this test deals with.
+
 Let's rewrite the test with some variables.
 
 ```java
@@ -272,12 +323,40 @@ public void invoiceNotPaid() {
 }
 ```
 
-With these variables it is clear what the values actually mean.
-The ID can be any number (does not really matter what), hence the `any` at the front.
-And then we use some values for the tax and the actual amount in of the invoice.
-With the variables it is easier to find out what the information in the test is.
+The variables with descriptive names makes it easier for a developer
+to understand what they actually mean.
+Now, we clearly see that the ID can be any number (does not really matter which one for this test), hence the `any` at the front. The variables `tax` and
+`amount` also now clearly explain what the previously "magic numbers with no explanation" mean.
 {% include example-end.html %}
 
-Finally we have a small tip for assertions.
+* Finally we have a small tip for assertions.
 When an assertions fails, a developer should be able to quickly see what is going wrong in order to fix the fault in the code.
-If the assertion in your test is  complex, you might want to express it in a different way, or to add a message to the assertion.
+If the assertion in your test is complex, you might want to express it in a different way. For example, you might create a helper that performs this assertion step by step, so that a developer can easily follow the idea. Or you might want to add an explanatory message to the assertion. Or, even, why not a code comment?
+Frameworks like [AssertJ](https://joel-costigliola.github.io/assertj/) have become really popular among developers, due to its expresiveness in assertions.
+
+{% assign todo = "Example here of assertj" %}
+{% include todo.html %}
+
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/RlqLCUl2b0g" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+## References
+
+- Chapter 5 of Pragmatic Unit Testing in Java 8 with Junit. Langr, Hunt, and Thomas. Pragmatic Programmers, 2015.
+- Meszaros, G. (2007). xUnit test patterns: Refactoring test code. Pearson Education.
+- Bavota, G., Qusef, A., Oliveto, R., De Lucia, A., & Binkley, D. (2012, September). An empirical analysis of the distribution of unit test smells and their impact on software maintenance. In 2012 28th IEEE International Conference on Software Maintenance (ICSM) (pp. 56-65). IEEE.
+- Bavota, G., Qusef, A., Oliveto, R., De Lucia, A., & Binkley, D. (2015). Are test smells really harmful? An empirical study. Empirical Software Engineering, 20(4), 1052-1094.
+- Luo, Q., Hariri, F., Eloussi, L., & Marinov, D. (2014, November). An empirical analysis of flaky tests. In Proceedings of the 22nd ACM SIGSOFT International Symposium on Foundations of Software Engineering (pp. 643-653). ACM. 
+- Bell, J., Legunsen, O., Hilton, M., Eloussi, L., Yung, T., & Marinov, D. (2018, May). D e F laker: automatically detecting flaky tests. In Proceedings of the 40th International Conference on Software Engineering (pp. 433-444). ACM. 
+- Lam, W., Oei, R., Shi, A., Marinov, D., & Xie, T. (2019, April). iDFlakies: A Framework for Detecting and Partially Classifying Flaky Tests. In 2019 12th IEEE Conference on Software Testing, Validation and Verification (ICST) (pp. 312-322). IEEE. 
+- Listfield, J. Where do our flaky tests come from?  
+Link: https://testing.googleblog.com/2017/04/where-do-our-flaky-tests-come-from.html, 2017.
+- Micco, J. Flaky tests at Google and How We Mitigate Them.  
+Link: https://testing.googleblog.com/2016/05/flaky-tests-at-google-and-how-we.html, 2017.
+- Fowler, M. Eradicating Non-Determinism in Tests. Link: https://martinfowler.com/articles/nonDeterminism.html, 2011.
+
+## Exercises
+
+{% assign todo = "We need to develop exercises." %}
+{% include todo.html %}
+
