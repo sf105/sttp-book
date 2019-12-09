@@ -12,8 +12,8 @@ A high number of bugs happen in the **boundaries** of your program.
 In this chapter we are going to derive tests for these boundaries.
 
 The boundaries can reside between partitions or specific conditions.
-Off-by-one errors, i.e., when your program outcome is "off by one", 
-often occur because of the lack of boundary testing. 
+Off-by-one errors, i.e., when your program outcome is "off by one",
+often occur because of the lack of boundary testing.
 
 ## Boundaries in between classes/partitions
 
@@ -22,7 +22,7 @@ with the other classes.
 
 We can find such boundaries by finding a pair of consecutive input values $$[p_1,p_2]$$, where $$p_1$$ belongs to partition A, and $$p_2$$ belongs to partition B.
 In other words,
-the boundary itself is where our program changes from our class to the other. 
+the boundary itself is where our program changes from our class to the other.
 As testers, we should make sure that everything works smoothly (i.e., the program
 still behaves correctly) near these values.
 
@@ -89,9 +89,14 @@ We show all these points in the diagram below.
 
 ![On- and off-points, in- and out-points](/assets/img/boundary-testing/examples/on_off_points.svg)
 
-{% assign todo = "The same example, but now with x <= 100" %}
-{% include todo.html %}
+Let's compare this to the condition $$x <= 100$$:
 
+- The on-point is still $$100$$: this is the point in the condition
+- Now the condition is true for the on-point. So, the off-point should make the condition false; the off-point is $$101$$.
+
+![On-, off-, in- and out-points 2](/assets/img/boundary-testing/examples/on_off_points2.svg)
+
+Note that in the diagram the on-point is part of the in-points and the off-point is part of the out-points.
 
 {% include example-end.html %}
 
