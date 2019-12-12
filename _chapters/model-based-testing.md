@@ -752,10 +752,17 @@ Therefore, when the system transitions to the `ON` state it will be in both `LOC
 {% assign todo = "Write the video's accompanying text" %}
 {% include todo.html %}
 
-
 <iframe width="560" height="315" src="https://www.youtube.com/embed/NMGX7TEMXdE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/gijO3mlcMCg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+## Other examples of real-world models
+
+Slack shared their internal flow chart that decides whether
+to send a notification of a message. Impressive, isn't it?
+
+![How Slack decides to send notifications to users](/assets/img/model-based-testing/examples/slack.jpg)
+
 
 ## References
 
