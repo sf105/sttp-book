@@ -89,14 +89,14 @@ We show all these points in the diagram below.
 
 ![On- and off-points, in- and out-points](/assets/img/boundary-testing/examples/on_off_points.svg)
 
-Let's compare this to the condition $$x <= 100$$:
+Now, let's compare it to the next condition $$x <= 100$$ (note how similar they are; the only difference is that, in this one, we use smaller than or equals to):
 
 - The on-point is still $$100$$: this is the point in the condition
 - Now the condition is true for the on-point. So, the off-point should make the condition false; the off-point is $$101$$.
 
 ![On-, off-, in- and out-points 2](/assets/img/boundary-testing/examples/on_off_points2.svg)
 
-Note that in the diagram the on-point is part of the in-points and the off-point is part of the out-points.
+Note that, in the diagram, the on-point is part of the in-points, and the off-point is part of the out-points.
 
 {% include example-end.html %}
 
