@@ -755,29 +755,29 @@ One thing we have not looked at yet is how these state machines are represented 
 States are very common in programming.
 Most classes in Object-Oriented-Programming each correspond to their own small state machine.
 
-In these classes we distinguish two types of methods: **inspection** and **trigger** methods.
+In these classes, we distinguish two types of methods: **inspection** and **trigger** methods.
 An **inspection** method only provides information about an object's state.
 This information consists of the values or fields of an object.
-The inspection methods only provide information, they do not change the state (or values) of an object.
+The inspection methods only provide information. They do not change the state (or values) of an object.
 **Trigger** methods bring the class into a new state.
-This can be done by changing some of the class's values.
+This can be done by changing some of the class' values.
 These trigger methods correspond to the events on the transitions in the state machine.
 
-In a test we want to bring the class in different states and assert that after each transition it is in the expected state.
-In other words a **test scenario** is basically a series of calls on the class's trigger methods.
-Between these calls we can call the inspection methods to check the state.
+In a test, we want to bring the class to different states and assert that after each transition, the class is in the expected state.
+In other words, a **test scenario** is basically a series of calls on the class's trigger methods.
+Between these calls, we can call the inspection methods to check the state.
 
 #### Abstraction layer
 
 When a state machine corresponds to a single class, we can easily use the methods described above to test the state machine.
 However, sometimes the state machine spans over multiple classes.
-In that case you might not be able to easily identify the inspection and trigger methods.
-In this scenario the state machines can even correspond to end-to-end testing.
-Here the flow of the entire system is under test, from input to output.
+In that case, you might not be able to easily identify the inspection and trigger methods.
+In this scenario, the state machines can even correspond to *end-to-end testing*.
+Here, the flow of the entire system is under test, from input to output.
 
 The system under test does not always provide a nice programing interface (API) to inspect the state or trigger the event for the transitions.
 A common example of such a system is a web application.
-In the end the web application works through a browser.
+In the end, the web application works through a browser.
 To access the state or to trigger the transitions you would then need to use a dedicated tool, like [webdriver](https://webdriver.io/).
 Using such a dedicated tool directly is not ideal, as you would have to specify each individual click on the web page to trigger events.
 What we actually need is an abstraction layer on top of the system under test.
@@ -789,37 +789,37 @@ Triggering a transition is just one method call and checking the state also requ
 
 #### Page Objects
 
-In web application testing creating these abstraction layers is very common.
-In this context the abstractions are called **Page Objects**.
+Creating these abstraction layers is very common when testing web applications.
+In this context, the abstractions are called **Page Objects**.
 
 {% include example-begin.html %}
-An example of a page object is shown in the diagram, made by Marting Fowler, below.
+An example of a page object is shown in the diagram, made by Martin Fowler, below:
 
 ![Page Objects diagram by Martin Fowler](/assets/img/model-based-testing/page_objects.png)
 
-At the bottom you can see a certain web page that we want to test.
+At the bottom, you can see a certain web page that we want to test.
 The tool for communicating through the browser (webdriver for example), gives an API to access the HTML elements.
-Additionally, the tool supports clicking on elements, for example on a certain button.
+Additionally, the tool supports clicking on elements. For example, on a certain button.
 
 If we use this API directly in the tests, the tests become unreadable very quickly.
 So, we create a page object with just the methods that we need in the tests.
 These methods correspond to the application, rather than the HTML elements.
-The page objects implements these methods by using the API provided by the tool.
+The page objects implement these methods by using the API provided by the tool.
 
-Then the tests use these methods instead of the ones about the HTML elements.
+Then, the tests use these methods instead of the ones about the HTML elements.
 Because we are using methods that correspond to the application itself, they will be more readable than tests without the page objects.
 {% include example-end.html %}
 
 #### State Objects
 
-The page objects give us an abstraction for single pages or even fragments of pages.
+Page objects give us an abstraction for single pages or even fragments of pages.
 This is already better than using the API for the HTML elements in the test, but we can take it a bit further.
 We can make the page objects correspond to the states in the navigational state machine.
 A navigational state machine is a state machine that describes the flow through a web application.
 Each page will be a represented as a state.
 The events of the transitions between these states show how the user can go from one to another page.
 
-With this approach the page objects each correspond to one of the states of the state machine.
+With this approach, the page objects each correspond to one of the states of the state machine.
 Now we do not call them page objects anymore, but **state objects**.
 In these state objects we have the inspection and trigger methods.
 Additionally, we have methods that can help with state **self-checking**.
@@ -845,8 +845,8 @@ A scenario consists of the following:
 
 {% include example-begin.html %}
 Let's look at a scenario for an ATM.
-If we have a balance of $100, a valid card and enough money in the machine we can give a certain amount of money requested by the user.
-Together with the money the card should be given back and the balance of the account should be decreased.
+If we have a balance of $100, a valid card and enough money in the machine, we can give a certain amount of money requested by the user.
+Together with the money, the card should be given back, and the balance of the account should be decreased.
 This can be turned into the scenario 1 below:
 
 ```text
