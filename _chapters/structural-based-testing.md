@@ -91,6 +91,7 @@ $$\text{line_coverage} = \frac{\text{lines_covered}}{\text{lines_total}} \cdot 1
 Note: Defining what constitutes a line is up to the tester. One might count, for example, the method declaration as a code line. 
 We prefer not to count the method declaration line.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/rkLsvlPlOHc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Why is line coverage a bit problematic?
 
