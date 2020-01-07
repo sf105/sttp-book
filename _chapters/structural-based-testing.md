@@ -322,6 +322,10 @@ From now on, whenever we mention **condition coverage**, we mean **condition + b
 <iframe width="560" height="315" src="https://www.youtube.com/embed/oWPprB9GBdE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
+{% assign todo = "record a video showing, in a explicit way, the difference between basic condition coverage and full condition coverage" %}
+{% include todo.html %}
+
+
 ## Path coverage
 
 Finally, with condition coverage, we looked at each condition individually. This gives us way more branches
