@@ -255,6 +255,8 @@ The second test executes this branch (by giving the word `cats|dog`) so the two 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/XiWtG8PKH-A" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+_Note:_ In the video, we use _squares_ to represent decision blocks. We did it just because otherwise the control flow graph would not fit in the video. When doing control flow graphs, please use _diamonds_ to represent decision blocks.
+
 ## (Basic) condition coverage
 
 Branch coverage gives two branches for each decision, no matter how complicated this decision is.
