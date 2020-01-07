@@ -184,6 +184,11 @@ Every decision has one outgoing arrow for true and one for false, indicating wha
 Note how agnostic this CFG representation is. You can even build CFGs of program written in different
 languages. They might even look the same!
 
+{% assign todo = "record a video explaining how to build CFGs" %}
+{% include todo.html %}
+
+
+
 ## Block coverage
 
 We can use blocks as a coverage criteria, in the same way we did with lines: instead of aiming at covering
