@@ -10,7 +10,7 @@ This book covers the most important testing techniques needed to build high qual
 
 We expect readers to be able to:
 
-* Create unit, integration, and system tests using current existing tools (i.e., JUnit, Mockito, and JaCoCo) that successfully test complex software systems.
+* Create unit, integration, and system tests using current existing tools (i.e., JUnit, Mockito, and JaCoCo) that effectively test complex software systems.
 
 * Derive test cases that deal with exceptional, corner, and bad weather cases by performing several different techniques (i.e., boundary analysis, state-based testing, decision tables)
 as well as able to reflect about their limitations, when and when not to apply them in a given context.
