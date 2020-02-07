@@ -20,7 +20,7 @@ And so why should we think about software testing? **Why should we actually care
 
 So just to give an impression of how easy doing mistakes is, let's start with a requirement.   
 
-Let's suppose we have this customer and this person wants a software that given a list of numbers the software, the software should return the smallest and the largest number in this list. 
+Let's suppose we have this customer and this person wants a software that given a list of numbers, should return the smallest and the largest number in this list. 
 
 This looks like a very simple program to do. Let's get our hands dirty and implement it in Java:
 
