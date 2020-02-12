@@ -13,7 +13,7 @@ We start with some precise definitions for certain terms.
 
 We can use a lot of different words for a system that is not behaving correctly.
 Just to name a few we have error, mistake, defect, bug, fault and failure.
-As we like to be able to describe the problem in software precisely, we need to agree on a certain vocabulairy.
+As we like to be able to describe the problem in software precisely, we need to agree on a certain vocabulary.
 For now this comes down to three terms: **failure**, **fault**, and **error**.
 
 A **failure** is a component of the (software) system that is not behaving as expected.
@@ -44,7 +44,7 @@ Here we introduce **verification** and **validation**.
 Both concepts are about assessing the quality of a system and can be described by a single question.
 
 **Validation: Are we building the right software?**
-Validation concerns the features that our system offers and the costumer, for who the system is made.
+Validation concerns the features that our system offers and the customer, for who the system is made.
 Is the system that we are building actually the system that the users want?
 Is the system actually useful?
 
