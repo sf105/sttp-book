@@ -276,10 +276,10 @@ Now, let's think about the classes/partitions:
 
 For each of these classes, we can devise concrete test cases:
 
-* **Need only small bars**. small = 1, big = 1, total = 10
+* **Need only small bars**. small = 4, big = 2, total = 3
 * **Need only big bars**. small = 5, big = 3, total = 10
 * **Need Small + big bars**. small = 5, big = 3, total = 17
-* **Not enough bars**. small = 4, big = 2, total = 3
+* **Not enough bars**. small = 1, big = 1, total = 10
 * **Not from the specs**: small = 4, big = 2, total = -1
 
 This example shows why deriving good test cases is challenging. Specifications can be complex and we need to
