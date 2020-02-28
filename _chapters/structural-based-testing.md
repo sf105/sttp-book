@@ -1,5 +1,5 @@
 ---
-chapter-number: 7
+chapter-number: 6
 title: Structural-Based Testing
 layout: chapter
 toc: true
