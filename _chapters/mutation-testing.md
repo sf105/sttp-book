@@ -1,5 +1,5 @@
 ---
-chapter-number: 16
+chapter-number: 14
 title: Mutation testing
 layout: chapter
 author: Annibale Panichella

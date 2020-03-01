@@ -27,9 +27,11 @@
           <ul>
             {% assign sorted_chapters = site.chapters | sort: "chapter-number" %}
             {% for chapter in sorted_chapters %}
+            {% if chapter.hidden != true %}
               <li>
                 <a href="{{ chapter.url | relative_url }}">Chapter {{ chapter.chapter-number }} - {{ chapter.title }}</a>
               </li>
+            {% endif %}
             {% endfor %}
           </ul>
         </nav>
