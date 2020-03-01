@@ -295,11 +295,12 @@ Link: [https://testing.googleblog.com/2016/05/flaky-tests-at-google-and-how-we.h
 <iframe width="560" height="315" src="https://www.youtube.com/embed/WGv5vObcqh8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
-## Readability
+## Improving the Readability of Test Code
 
 As developers are often working on their test code bases.
 Therefore, it is crucial that the developers can understand the test code easily.
-**We need readable and understandable test code.**
+**We need readable and understandable test code.** 
+Note that "readability" is one of the test desiderata!
 But how can we do this?
 In the following, we give you some tips to write readable test code.
 
