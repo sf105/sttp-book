@@ -180,6 +180,16 @@ Note also how we do not have to keep a database running while executing the test
 {% assign todo = "Add one more example with Mockito here, using the spy()" %}
 {% include todo.html %}
 
+## Dealing with static methods
+
+{% assign todo = "Discuss how to add an abstraction on top of a static method, so that testing becomes easier." %}
+{% include todo.html %}
+
+## Dealing with APIs you don't control
+
+{% assign todo = "Discuss how to add an abstraction on top of things you don't control, e.g., Clock." %}
+{% include todo.html %}
+
 ## Mocking in practice: when to mock?
 
 {% assign todo = "Discuss here when to mock" %}
