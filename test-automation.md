@@ -29,7 +29,8 @@ When we put a lower value in front of a higher one, we substract that value from
 For example we make 40 not by XXXX, but instead we use $$50 - 10 = 40$$ and have the roman number `XL`.
 Combining both these principles we could give our method `MDCCCXLII` and it should return 1842.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/srJ91NRpT_w" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "srJ91NRpT_w" %}
+{% include "includes/youtube.md" %}
 
 
 A possible implementation for this Roman Numeral is as follows:
@@ -151,7 +152,9 @@ Do you see more test cases? Go ahead and implement them!
 
 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/XS4-93Q4Zy8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "XS4-93Q4Zy8" %}
+{% include "includes/youtube.md" %}
+
 
 ## The need for systematic software testing
 
@@ -167,7 +170,11 @@ not be enough:
 This is why, throughout the course, we will study more systematic techniques 
 to test software.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/xyV5fZsUH9s" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+{% set video_id = "xyV5fZsUH9s" %}
+{% include "includes/youtube.md" %}
+
+
 
 
 ## An introduction to test code quality
@@ -260,7 +267,9 @@ Side note 1: If you're very interested on understanding why it is so hard to tea
 Side note 2: In industry, the term _automated software testing_ is related to the execution of test cases; in other words, JUnit code. In academia, whenever a research paper says _automated software testing_, it means automatically designing test cases (and not only the JUnit code).
 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/pPv37kPqvAE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "pPv37kPqvAE" %}
+{% include "includes/youtube.md" %}
+
 
 ## Exercises
 

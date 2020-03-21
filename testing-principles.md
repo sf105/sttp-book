@@ -28,7 +28,9 @@ An error is a human action that cause the system to run not as expected.
 For example someone can forget to think about a certain corner case that the code might run into.
 This then creates a fault in the code, which can result in a failure.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/zAty8Rpg92I" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "zAty8Rpg92I" %}
+{% include "includes/youtube.md" %}
+
 
 
 ## Verification and Validation
@@ -51,7 +53,9 @@ We can summarize verification with the question: **Are we building the system ri
 In this course, we mostly focus on verification.
 However, validation is also very important when it comes to building successful software systems.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/LZ3Fb2Jq7yw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "LZ3Fb2Jq7yw" %}
+{% include "includes/youtube.md" %}
+
 
 ## Tests, tests and more tests
 
@@ -95,7 +99,9 @@ If we have a program that works like it is specified, but is of no use for its u
 This is called the **absence-of-errors fallacy**.
 We cannot forget about the validation part, where we check if the software meets the users' needs.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/dkbvb_wTN-M" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "dkbvb_wTN-M" %}
+{% include "includes/youtube.md" %}
+
 
 ## Exercises
 
