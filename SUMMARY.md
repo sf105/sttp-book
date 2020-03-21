@@ -7,7 +7,7 @@
 
 * Testing techniques
 	* [Specification-based testing](specification-based-testing.md)
-	* Boundary testing
+	* [Boundary testing](boundary-testing.md)
 	* Structural-based testing
 	* Model-based testing
 

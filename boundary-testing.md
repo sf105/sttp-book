@@ -1,12 +1,4 @@
----
-chapter-number: 5
-title: Boundary Testing
-layout: chapter
-toc: true
-author: Maurício Aniche and Arie van Deursen
----
-
-## Introduction
+# Boundary testing
 
 A high number of bugs happen in the **boundaries** of your program.
 In this chapter we are going to derive tests for these boundaries.
@@ -26,12 +18,12 @@ the boundary itself is where our program changes from our class to the other.
 As testers, we should make sure that everything works smoothly (i.e., the program
 still behaves correctly) near these values.
 
-{% include example-begin.html %}
-**Requirement: Calculating the amount of points of the player**
-
-Our program has two inputs: the score of the player and the remaining life of the player.
-If the player's score is below 50, then it always adds 50 points.
-If the remaining life is above or equal to 3 lives and the score is greater than or equals to 50, the player's score is doubled.
+> **Requirement: Calculating the amount of points of the player**
+> 
+> Our program has two inputs: the score of the player and the remaining life of the player.
+> If the player's score is below 50, then it always adds 50 points.
+> If the remaining life is above or equal to 3 lives and the score is 
+> greater than or equals to 50, the player's score is doubled.
 
 When devising the partitions to test this method, we come up with the following partitions:
 
@@ -50,8 +42,6 @@ When the remaining life is smaller than 3, it belongs to partition 2; otherwise 
 
 We can visualize these partitions with their boundaries in a diagram.
 ![Partitions with their boundaries](/assets/img/boundary-testing/examples/partition_boundaries.svg)
-
-{% include example-end.html %}
 
 To sum up: you should devise tests for the inputs at the 
 boundaries of your classes.
@@ -74,8 +64,7 @@ First, we need to go over some terminology:
 
 Note that, depending on the condition, an on-point can be either an in- or an out-point.
 
-{% include example-begin.html %}
-Suppose we have a program that adds shipping costs when the total price is below 100.
+**Example:** Suppose we have a program that adds shipping costs when the total price is below 100.
 
 The condition used in the program is $$x < 100$$.
 
@@ -98,7 +87,7 @@ Now, let's compare it to the next condition $$x <= 100$$ (note how similar they 
 
 Note that, in the diagram, the on-point is part of the in-points, and the off-point is part of the out-points.
 
-{% include example-end.html %}
+----
 
 As a tester, you devise test cases for these different points.
 
@@ -135,7 +124,7 @@ In the colored cells you have to fill in the correct values.
 Each of these pairs of values will then give a test case.
 If we implement all the test cases that the domain matrix gives us, we exerise each boundary both for the on- and off-point independent of the other parameters.
 
-{% include example-begin.html %}
+**Example.**
 We have the following condition that we want to test: `x >= 5 && x < 20 && y <= 89`
 
 We start by making the domain matrix, having space for each of the conditions and both parameters.
@@ -149,26 +138,28 @@ We get the on- and off-points like in the previous example.
 ![Boundary tables example filled in](/assets/img/boundary-testing/examples/boundary_table.png)
 
 Now we have derived the six test cases that we can use to test the boundaries.
-{% include example-end.html %}
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/rPcMJg62wM4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+{% set video_id = "rPcMJg62wM4" %}
+{% include "includes/youtube.md" %}
+
+
 
 ## Boundaries that are not so explicit
 
 Let's revisit the example from the specification-based techniques chapter. There, we had a program
 where the goal was to return the amount of bars needed in order to build some boxes of chocolates:
 
-{% include example-begin.html %}
-**Chocolate bars**
 
-A package should store a total number of kilos. 
-There are small bars (1 kilo each) and big bars (5 kilos each). 
-We should calculate the number of small bars to use, 
-assuming we always use big bars before small bars. Return -1 if it can't be done.
-
-The input of the program is thus the number of small bars, the number of big bars,
-and the total amount of kilos to store.
-{% include example-end.html %}
+> **Chocolate bars**
+> 
+> A package should store a total number of kilos. 
+> There are small bars (1 kilo each) and big bars (5 kilos each). 
+> We should calculate the number of small bars to use, 
+> assuming we always use big bars before small bars. Return -1 if it can't be done.
+>
+> The input of the program is thus the number of small bars, the number of big bars,
+> and the total amount of kilos to store.
 
 And these were the classes we derived after applying the category/partition method:
 
@@ -236,7 +227,9 @@ A partition might make boundaries with other partitions. See:
 
 Your lesson is: explore the boundaries in between your partitions!
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/uP_SpXtHxoQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "uP_SpXtHxoQ" %}
+{% include "includes/youtube.md" %}
+
 
 
 ## Automating boundary testing with JUnit (via Parameterized Tests)
@@ -263,7 +256,7 @@ We give this list in a string.
 To execute multiple test with the same test method, the `CsvSource` expects list of strings, where each string represents the values for one test case.
 The `CsvSource` is an annotation itself, so in an implementation it would like like the following: `@CsvSource({"value11, value12", "value21, value22", "value31, value32", ...})`
 
-{% include example-begin.html %}
+
 We are going to implement the test cases that we found in the previous example using the parameterized test.
 Suppose we are testing a method that returns the result of the decision we analyzed in the example.
 To automate the tests we create a test method with three parameters: `x`, `y`, `expectedResult`.
@@ -290,9 +283,11 @@ public void exampleTest(int x, int y, boolean expectedResult) {
 The assertion in the test checks if the result of the method, with the `x` and `y` values, is the expected result.
 
 From the values you can see that each of the six test cases corresponds to one of the test cases in the domain matrix.
-{% include example-end.html %}
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/fFksNXJJfiE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+{% set video_id = "fFksNXJJfiE" %}
+{% include "includes/youtube.md" %}
+
 
 
 ## The CORRECT way
@@ -341,22 +336,18 @@ Authors call it the **CORRECT** way, as each letter represents one boundary cond
   * Concurrency: does our system handle concurrency well?
 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/oxNEUYqEvzM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-## Short summary
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/PRVqsJ5fT2I" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "oxNEUYqEvzM" %}
+{% include "includes/youtube.md" %}
 
 
-## References
+{% set video_id = "PRVqsJ5fT2I" %}
+{% include "includes/youtube.md" %}
 
-* Jeng, B., & Weyuker, E. J. (1994). A simplified domain-testing strategy. ACM Transactions on Software Engineering and Methodology (TOSEM), 3(3), 254-270.
 
-* Chapter 7 of Pragmatic Unit Testing in Java 8 with Junit. Langr, Hunt, and Thomas. Pragmatic Programmers, 2015.
 
 ## Exercises
 
-{% include exercise-begin.html %}
+**Exercise 1.**
 We have the following method.
 
 ```java
@@ -382,78 +373,35 @@ public String sameEnds(String string) {
 
 Perform boundary analysis on the condition in the for-loop: `i < half`, i.e. what are the on- and off-point and the in- and out-points?
 You can give the points in terms of the variables used in the method.
-{% include answer-begin.html %}
-The on-point is the value in the conditions: `half`.
 
-When `i` equals `half` the condition is false.
-Then the off-point makes the condition true and is as close to `half` as possible.
-This makes the off-point `half` - 1.
 
-The in-points are all the points that are smaller than half.
-Practically they will be from 0, as that is what `i` starts with.
 
-The out-points are the values that make the condition false: all values equal to or larger than `half`.
-{% include exercise-answer-end.html %}
 
-{% include exercise-begin.html %}
+
+**Exercise 2.**
 Perform boundary analysis on the following decision: `n % 3 == 0 && n % 5 == 0`.
 What are the on- and off-points?
-{% include answer-begin.html %}
-The decision consists of two conditions, so we can analyse these separately.
 
-For `n % 3 == 0` we have an on point of 3.
-Here we are dealing with an equality; the value can both go up and down to make the condition false.
-As such, we have two off-points: 2 and 4.
 
-Similarly to the first condition for `n % 5 == 0` we have an on-point of 5.
-Now the off-points are 4 and 6.
-{% include exercise-answer-end.html %}
-
-{% include exercise-begin.html %}
+**Exercise 3.**
 A game has the following condition: `numberOfPoints <= 570`.
 Perform boundary analysis on the condition.
 What are the on- and off-point of the condition?
 Also give an example for both an in-point and an out-point.
-{% include answer-begin.html %}
-The on-point can be read from the condition: 570.
 
-The off-point should make the condition false (the on-point makes it true): 571.
 
-An example of an in-point is 483.
-Then the condition evaluates to true.
 
-An example of an out-point, where the condition evaluates to false, is 893.
-{% include exercise-answer-end.html %}
-
-{% include exercise-begin.html %}
+**Exercise 4.**
 We extend the game with a more complicated condition: `(numberOfPoints <= 570 && numberOfLives > 10) || energyLevel == 5`.
 
 Perform boundary analysis on this condition.
 What is the resulting domain matrix?
-{% include answer-begin.html %}
-
-![Answer domain matrix](/assets/img/boundary-testing/exercises/domain_exercise.png)
-
-Note that we require 7 test cases in total: `numberOfPoints <= 570` and `numberOfLives > 10` each have one on- and one off-point.
-`energyLevel == 5` is an equality, so we have two off-points and one on-point.
-This gives a total of 7 test cases.
-
-For one of the first two conditions we need two typical rows. \\
-Let's rewrite the whole condition to: `(c1 && c2) || c3`.
-
-To test `c1` we have to make `c2` true, otherwise the result will always be false. \\
-The same goes for testing `c2` and then making `c1` true.
-
-However, when testing `c3`, we need to make `(c1 && c2)` false, otherwise the result will always be true.
-That is why, when testing `c3`, `c1` or `c2` has to be false, i.e. and out-point instead of an in-point.
-Therefore we use two different typical rows for the `numberOfLives` variable.
-The same could have been done with two typical rows for the `numberOfPoints` variable.
-{% include exercise-answer-end.html %}
 
 
 
 
-{% include exercise-begin.html %}
+
+**Exercise 5.**
 Regarding **boundary analysis of inequalities** (e.g., `a < 10`), which of the following statements **is true**?
 
 1. There can only be a single on-point which always makes the condition true.
@@ -461,34 +409,20 @@ Regarding **boundary analysis of inequalities** (e.g., `a < 10`), which of the f
 3. There can only be a single off-point which may or may not make the condition false.
 4. There can be multiple off-points for a given condition which always make the condition false.
 
-{% include answer-begin.html %}
-
-An on-point is the (single) number on the boundary. It may or may not make the condition true. The off point is the closest number to the boundary that makes the condition to be evaluated to the opposite of the on point. Given it's an inequality, there's only a single off-point.
-{% include exercise-answer-end.html %}
 
 
 
 
 
-{% include exercise-begin.html %}
 
+**Exercise 6.**
 A game has the following condition: `numberOfPoints > 1024`. Perform a boundary analysis.
 
 
-{% include answer-begin.html %}
-on point = 1024, off point = 1025, in point = 1028, out point = 512
-
-The on point is the number precisely in the boundary = 1024. off point is the closest number to the boundary and has the opposite result of on point. In this case, 1024 makes the condition false, so the off point should make it true. 1025. In point makes conditions true, e.g., 1028. Out point makes the condition false, e.g., 512.
-{% include exercise-answer-end.html %}
 
 
 
-
-
-
-
-{% include exercise-begin.html %}
-
+**Exercise 7.**
 Which one of the following statements about the **CORRECT** principles is **true**?
 
 1. We should suppose that external dependencies are already on the right state for the test (REFERENCE).
@@ -496,15 +430,13 @@ Which one of the following statements about the **CORRECT** principles is **true
 1. Whenever we encounter a loop, we should always test whether the program works for 0, 1, and 10 iterations (CARDINALITY).
 1. We should always test the behavior of our program when any expected data actually does not exist (EXISTENCE).
 
-{% include answer-begin.html %}
-
-We should always test the behavior of our program when any expected data actually does not exist (EXISTENCE).
-
-{% include exercise-answer-end.html %}
 
 
+## References
 
+* Jeng, B., & Weyuker, E. J. (1994). A simplified domain-testing strategy. ACM Transactions on Software Engineering and Methodology (TOSEM), 3(3), 254-270.
 
+* Chapter 7 of Pragmatic Unit Testing in Java 8 with Junit. Langr, Hunt, and Thomas. Pragmatic Programmers, 2015.
 
 
 
