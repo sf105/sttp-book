@@ -11,3 +11,5 @@
 {% include "answers/an-structural-based-testing.md" %}
 
 {% include "answers/an-model-based-testing.md" %}
+
+{% include "answers/an-testing-pyramid.md" %}

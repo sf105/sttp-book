@@ -12,7 +12,7 @@
 	* [Model-based testing](model-based-testing.md)
 
 * Design for testability
-	* The testing pyramid
+	* [The testing pyramid](testing-pyramid.md)
 	* Mock objects
 	* Design for testability
 	* Test-Driven Development

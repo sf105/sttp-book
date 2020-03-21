@@ -1,10 +1,4 @@
----
-chapter-number: 8
-title: The Testing Pyramid
-layout: chapter
-toc: true
-author: Maurício Aniche
----
+# The Testing Pyramid
 
 We have studied different techniques to derive test cases. More specifically, 
 specification-based, structural-based, and model-based techniques.
@@ -75,7 +69,10 @@ Lastly, system tests tend to become flaky.
 Flaky tests mean that the tests might pass one time, but fail the other time.
 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/5q_ZjIM_9PQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "5q_ZjIM_9PQ" %}
+{% include "includes/youtube.md" %}
+
+
 
 ## Integration testing
 
@@ -103,7 +100,9 @@ Can we fully replace system testing with integration testing? After all, it is m
 than system tests. Well... No. Some bugs are really tricky and might only happen in specific sitations where multiple
 components are working together. There is no silver bullet.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/MPjQXVYqadQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "MPjQXVYqadQ" %}
+{% include "includes/youtube.md" %}
+
 
 ## The Testing Pyramid
 
@@ -149,47 +148,30 @@ It is common to see teams mostly relying on manual tests. Whenever they have sys
 of system tests, but because the system was so badly designed, that unit and integration tests are just impossible to be automated.
 We will discuss design for testability in future chapters.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/YpKxAicxasU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "YpKxAicxasU" %}
+{% include "includes/youtube.md" %}
+
 
 ## An academic remark on the testing pyramid
 
-{% assign todo = "to be written" %}
-{% include todo.html %}
+{% set todo = "to be written" %}
+{% include "includes/todo.md" %}
 
-## References
 
-* Chapter 2 of the Foundations of software testing: ISTQB certification. Graham, Dorothy, Erik Van Veenendaal, and Isabel Evans, Cengage Learning EMEA, 2008.
-
-* Vocke, Ham. The Practical Test Pyramid (2018), https://martinfowler.com/articles/practical-test-pyramid.html.
-
-* Fowler, Martin. TestingPyramid (2012). https://martinfowler.com/bliki/TestPyramid.html
 
 ## Exercises
 
 
-{% include exercise-begin.html %}
+**Exercise 1.**
 Now we have a skeleton for the testing pyramid.
 What words/sentences should be at the numbers?
 
 ![Testing Pyramid exercise skeleton](/assets/img/testing-pyramid/exercises/pyramid_skeleton.svg)
 
 (Try to answer the question without scrolling up!)
-{% include answer-begin.html %}
-
-1. Manual
-2. System
-3. Integration
-4. Unit
-5. More reality (interchangeable with 6)
-6. More complexity (interchangeable ith 5)
-
-See the diagram in the Testing Pyramid section.
-{% include exercise-answer-end.html %}
 
 
-
-
-{% include exercise-begin.html %}
+**Exercise 2.**
 As a tester, you have to decide which test level (i.e., unit, integration, or system test) you will apply.
 Which of the following statements is true?
 
@@ -198,20 +180,8 @@ Which of the following statements is true?
 3. The most effective way to find bugs in this code is through system tests. In this case, the tester should run the entire system and exercise the batch process. Given that this code can be easily mocked, system tests would also be cheap.
 4. While all the test levels can be used for this problem, testers would likely find more bugs if they choose one level and explore all the possibilities and corner cases there.
 
-{% include answer-begin.html %}
-The correct answer is 1.
 
-1. This is correct. The primary use of integration tests is to find mistakes in the communication between a system and its external dependencies
-2. Unit tests do not cover as much as integration tests. They cannot cover the communication between different components of the system.
-3. When using system tests the bugs will not be easy to identify and find, because it can be anywhere in the system if the test fails. Additionally, system tests want to execute the whole system as if it is run normally, so we cannot just mock the code in a system test.
-4. The different test levels do not find the same kind of bugs, so settling down on one of the levels is not a good idea.
-
-{% include exercise-answer-end.html %}
-
-
-
-
-{% include exercise-begin.html %}
+**Exercise 3.**
 The tester should now write an integration test for the `OrderDao` class below.
 
 ```java
@@ -253,16 +223,10 @@ an integration test for this class?
 3. Assert that any database constraints are met.
 4. Set the transaction autocommit to true.
 
-{% include answer-begin.html %}
-Option 4 is not required.
-
-Changing the transaction level is not really required. Better would be to actually exercise the transaction policy your application uses in production.
-
-{% include exercise-answer-end.html %}
 
 
-{% include exercise-begin.html %}
 
+**Exercise 4.**
 A newly developed product started off with some basic unit tests but later on decided to only add integration tests and system tests for the new code that was written. This was because a user interacts with the system as a whole and therefore these types of tests were considered more valuable. Thus, unit tests became less prevalent, whereby integration tests and system tests became a more crucial part of the test suite. This transition can be described as:
 
 1. Transitioning from a testing pyramid to an ice-cream cone pattern
@@ -271,17 +235,7 @@ A newly developed product started off with some basic unit tests but later on de
 4. Transitioning from a testing pyramid to an ice-cream cone anti-pattern
 
 
-{% include answer-begin.html %}
-Correct answer: Transitioning from a testing pyramid to an ice-cream cone anti-pattern
-{% include exercise-answer-end.html %}
-
-
-
-
-
-{% include exercise-begin.html %}
-
-
+**Exercise 5.**
 TU Delft just built an in-house software to control the payroll of its employees. The applications makes use of Java web technologies and stores data in a Postgres database. Clearly, the application frequently retrieves, modifies, and inserts large amounts of data into the database. All this communication is made by Java classes that send (complex) SQL queries to the database. 
 
 As testers, we know that a bug can be anywhere, including in the SQL queries themselves. We also know that there are many ways to exercise our system. Which one of the following **is not** a good option to detect in the SQL queries?
@@ -292,17 +246,7 @@ As testers, we know that a bug can be anywhere, including in the SQL queries the
 1. Stress testing.
 
 
-{% include answer-begin.html %}
-Unit testing.
-{% include exercise-answer-end.html %}
-
-
-
-
-
-
-{% include exercise-begin.html %}
-
+**Exercise 6.**
 Choosing the level of a test is a matter of a trade-off. After all, each 
 test level has advantages and disadvantages.
 Which one of the following is the **main advantage** of a test at system level?
@@ -314,17 +258,8 @@ Which one of the following is the **main advantage** of a test at system level?
 1. A system test is written by product owners, making it closer to reality.
 
 
-{% include answer-begin.html %}
 
-The interaction with the system is much closer to reality.
-
-{% include exercise-answer-end.html %}
-
-
-
-
-{% include exercise-begin.html %}
-
+**Exercise 7.**
 What is the main reason for the number of recommended system tests in the testing pyramid to be smaller than the number of unit tests?
 
 
@@ -333,13 +268,13 @@ What is the main reason for the number of recommended system tests in the testin
 1. There are no good tools for system tests.
 1. System tests tend to be slow and often are non-deterministic.
 
-{% include answer-begin.html %}
-
-System tests tend to be slow and often are non-deterministic.
-See https://martinfowler.com/bliki/TestPyramid.html!
-
-{% include exercise-answer-end.html %}
 
 
 
+## References
 
+* Chapter 2 of the Foundations of software testing: ISTQB certification. Graham, Dorothy, Erik Van Veenendaal, and Isabel Evans, Cengage Learning EMEA, 2008.
+
+* Vocke, Ham. The Practical Test Pyramid (2018), https://martinfowler.com/articles/practical-test-pyramid.html.
+
+* Fowler, Martin. TestingPyramid (2012). https://martinfowler.com/bliki/TestPyramid.html
