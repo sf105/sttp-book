@@ -1,13 +1,6 @@
----
-chapter-number: 6
-title: Structural-Based Testing
-layout: chapter
-toc: true
-author: Maurício Aniche
----
 
 
-## Introduction
+# Structural-Based Testing
 
 In a previous chapter, we discussed how to test software using requirements as the main artifact for guidance.
 In this chapter, we will use a different source of information to create tests: the source code itself.
@@ -27,15 +20,17 @@ We will cover the following coverage criteria:
 - Path coverage
 - MC/DC coverage
 
+Watch a summary of one of our lectures in structural testing!
+
+{% set video_id = "busfqNkpgKI" %}
+{% include "includes/youtube.md" %}
+
 ## Line (and statement) coverage
 
 As the name suggests, when determining the line coverage, we look at the amount of lines of code that are covered by the tests (more specifically,
 by at least one test).
 
-See the example below:
-
-{% include example-begin.html %}
-We consider a piece of code that returns the points of the person that wins a game of [Black jack]("https://en.wikipedia.org/wiki/Blackjack").
+See the following example: We consider a piece of code that returns the points of the person that wins a game of [Black jack]("https://en.wikipedia.org/wiki/Blackjack").
 
 ```java
 public class BlackJack {
@@ -81,17 +76,20 @@ exercised 9 out of the 10 lines of that method).
 Line 8 is therefore the only line that the first test does not cover.
 The second test, `leftPlayerWins`, complements the first test, and executes lines 1-3, 5, 7 and 8.
 So when we execute both of our tests, the line coverage is $$100\%$$.
-{% include example-end.html %}
+
+
 
 More formally, we can compute line coverage 
 as: 
 
-$$\text{line_coverage} = \frac{\text{lines_covered}}{\text{lines_total}} \cdot 100\%$$
+$$\text{line coverage} = \frac{\text{lines covered}}{\text{lines total}} \cdot 100\%$$
 
 Note: Defining what constitutes a line is up to the tester. One might count, for example, the method declaration as a code line. 
 We prefer not to count the method declaration line.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/rkLsvlPlOHc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "rkLsvlPlOHc" %}
+{% include "includes/youtube.md" %}
+
 
 ## Why is line coverage a bit problematic?
 
@@ -101,8 +99,7 @@ The amount of lines in a piece of code is heavily dependent on the programmer th
 In Java, for example, you can often write a whole method in just one line (for your future colleagues' sake, please don't).
 In that case, the line coverage would always be $$100\%$$ if you test the method.
 
-{% include example-begin.html %}
-We are again looking at Black Jack.
+We are again looking at Black Jack example.
 The `play` method can also be written in 6 lines, instead of 10:
 
 ```java
@@ -120,7 +117,8 @@ The same `leftPlayerWins` test covered $$\frac{6}{10}$$ lines in the first `play
 Now, it covers lines 1-5, so $$\frac{5}{6}$$ lines.
 The line coverage went up from $$60\%$$ to $$83\%$$, while testing the same method with the same test.
 This is definitely not ideal.
-{% include example-end.html %}
+
+
 
 We need a better representation for source code. One that is independent of the developers' personal
 code styles.
@@ -129,7 +127,9 @@ Note: Some coverage tools measure coverage as statement level. Statements are th
 JVM, for example, executes. This is a bit better, as splitting one line code in two would not make a difference, 
 but still not good enough.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/iQECMbKLez0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "iQECMbKLez0" %}
+{% include "includes/youtube.md" %}
+
 
 
 ## Blocks and Control-Flow Graph
@@ -148,8 +148,7 @@ to false).
 
 You can see an example of a CFG below.
 
-{% include example-begin.html %}
-We write a program for the following problem:\\
+We write a program for the following problem:
 Given a sentence, you should count the number of words that end with either an "s" or an "r".
 A word ends when a non-letter appears.
 
@@ -179,13 +178,14 @@ The corresponding CFG:
 Note that we split the for-loop into two blocks (variable initialization, and increment) and a decision.
 Every decision has one outgoing arrow for true and one for false, indicating what the program will do based on the condition.
 `return words;` does not have an outgoing arrow as the program stops after that statement.
-{% include example-end.html %}
+
+
 
 Note how agnostic this CFG representation is. You can even build CFGs of program written in different
 languages. They might even look the same!
 
-{% assign todo = "record a video explaining how to build CFGs" %}
-{% include todo.html %}
+{% set todo = "record a video explaining how to build CFGs" %}
+{% include "includes/todo.md" %}
 
 
 
@@ -196,7 +196,7 @@ We can use blocks as a coverage criteria, in the same way we did with lines: ins
 
 The formula to measure block coverage is similar:
 
-$$\text{block_coverage} = \frac{\text{blocks_covered}}{\text{blocks_total}} \cdot 100\%$$
+$$\text{block coverage} = \frac{\text{blocks covered}}{\text{blocks total}} \cdot 100\%$$
 
 Note that blocks do not depend on how the developer wrote the code. Thus, we will not suffer from
 having different coverage numbers just because the developer wrote the code in a different way.
@@ -218,12 +218,12 @@ This time, however, we do not count lines or blocks, but the number of possible 
 Whenever you have a decision block, that decision block has two outcomes. We consider our test suite to achieve
 100% branch coverage (or decision coverage, as both terms mean the same) whenever we have tests exercising all the possible outcomes.
 
-$$\text{branch_coverage} = \frac{\text{decision_outcomes_covered}}{\text{decision_outcomes_total}} \cdot 100\%$$
+$$\text{branch coverage} = \frac{\text{decision outcomes covered}}{\text{decision outcomes total}} \cdot 100\%$$
 
 In practice, these decisions (or branches) are easy to find in a CFG.
 Each arrow with true of false (so each arrow going out of a decision) is a branch.
 
-{% include example-begin.html %}
+
 Let's aim at 100% branch coverage for the `count` method above. 
 
 ```java
@@ -256,9 +256,11 @@ This gives the test $$\frac{5}{6} \cdot 100\% = 83\%$$ branch coverage.
 The only branch that is not covered is the false branch at the bottom right of the CFG.
 This branch is executed when the last word does not end with an `r` or an `s`.
 The second test executes this branch (by giving the word `cats|dog`) so the two tests together have a branch/decision coverage of $$100\%$$.
-{% include example-end.html %}
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/XiWtG8PKH-A" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "XiWtG8PKH-A" %}
+{% include "includes/youtube.md" %}
+
+
 
 _Note:_ In the video, we use _squares_ to represent decision blocks. We did it just because otherwise the control flow graph would not fit in the video. When doing control flow graphs, please use _diamonds_ to represent decision blocks.
 
@@ -277,15 +279,14 @@ of one condition only. In practice, now we will exercise each condition separate
 As soon as you have the new CFG, it works the same as branch coverage. The formula is basically the same, but now we just have more
 decision outcomes to count: 
 
-$$\text{condition_coverage} = \frac{\text{conditions_outcome_covered}}{\text{conditions_outcome_total}} \cdot 100\%$$
+$$\text{condition coverage} = \frac{\text{conditions outcome covered}}{\text{conditions outcome total}} \cdot 100\%$$
 
 We achieve 100% condition coverage whenever all the outcomes of all the conditions in our program have been exercised.
 In other words, whenever all the conditions have been `true` and `false` at least once.
 
-{% include example-begin.html %}
+
 Once again we look at the program that counts the words ending with an "r" or an "s".
 Instead of branch coverage, we are interested in the condition coverage that the tests give.
-
 We start by building the more fine-grained CFG:
 
 ![Control Flow Graph example with conditions](/assets/img/structural-testing/examples/CFG-condition-example.svg)
@@ -295,7 +296,8 @@ You can see that this new CFG has way more decision blocks than the previous one
 The first test we wrote before now covers 7 conditions and the total amount of conditions is 12.
 So the condition coverage is now: $$\frac{7}{12} \cdot 100\% = 58\%$$.
 This is significantly less than the $$83\%$$ branch coverage, so we need more tests to get to 100% condition coverage.
-{% include example-end.html %}
+
+
 
 Condition coverage is an improvement over the branch coverage.
 However, we will try to do even better in the next section.
@@ -319,11 +321,13 @@ of the decisions are exercised).
 From now on, whenever we mention **condition coverage**, we mean **condition + branch coverage**.
 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/oWPprB9GBdE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "oWPprB9GBdE" %}
+{% include "includes/youtube.md" %}
 
 
-{% assign todo = "record a video showing, in a explicit way, the difference between basic condition coverage and full condition coverage" %}
-{% include todo.html %}
+
+{% set todo = "record a video showing, in a explicit way, the difference between basic condition coverage and full condition coverage" %}
+{% include "includes/todo.md" %}
 
 
 ## Path coverage
@@ -336,11 +340,9 @@ Path coverage does not consider the conditions individually; rather, it consider
 Each of these combinations is a path. You might see a path as a unique way to traverse the CFG.
 The calculation is the same as the other coverages: 
 
-$$\text{path_coverage} = \frac{\text{paths_covered}}{\text{paths_total}} \cdot 100\%$$
+$$\text{path coverage} = \frac{\text{paths covered}}{\text{paths total}} \cdot 100\%$$
 
-See the example below.
-
-{% include example-begin.html %}
+See the following example.
 In this example we focus on a small piece of the `count` method:
 
 ```java
@@ -368,14 +370,15 @@ We construct a truth table to find the combinations:
 
 This means that, for full path coverage, we would need 8 tests just to cover this if-statement.
 That is quite a lot for just a single statement!
-{% include example-end.html %}
 
 By thinking about the path coverage of our test suite, we can come up of quite some good tests.
 The main issue is that achiving 100% path coverage might not always be feasible. The number of combinations
 might be too big!
 The amount of tests needed for full path coverage will grow exponentially with the amount of conditions in a decision.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/hpE-aZYulmk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "hpE-aZYulmk" %}
+{% include "includes/youtube.md" %}
+
 
 ## MC/DC (Modified Condition/Decision Coverage)
 
@@ -395,7 +398,6 @@ can independently affect the outcome.
 
 Let's do it in a mechanical way. See the example below.
 
-{% include example-begin.html %}
 Let's test the decision block we have in the previous example, with its corresponding truth table. Note how each row
 represents a test $$T_n$$. In this case, tests go from 1 to 8, as we have 3 decisions, and $$2^3$$ is 8:
 
@@ -426,7 +428,7 @@ In test 2, A is again true, B is true, and C is false. We repeat the process: we
 in comparison to test 2, but B and C are the same (B=True, C=False).
 We find test 6.
 The outcome from test 6 (false) is not the same as the outcome of test 2 (true), so this means that the pair of tests {T2, T6} is also able
-to independently show how A can affect the final outcome.\\
+to independently show how A can affect the final outcome.
 
 * We repeat the process for test 3. We will find that the pair {T3, T7} is also a good one.
 
@@ -466,11 +468,13 @@ Let's pick, for example, 6. (Note: You can indeed have more than one set of test
 * The combinations that we need for 100% MC/DC coverage are {2, 3, 4, 6}.
 These are only 4 combinations/tests we should focus.
 This is a lot better than the 8 tests we needed for the path coverage.
-{% include example-end.html %}
+
+
 
 Indeed, in the example above, we saw that we need fewer tests when using MC/DC instead of path coverage.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/HzmnCVaICQ4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "HzmnCVaICQ4" %}
+{% include "includes/youtube.md" %}
 
 
 ## Loop boundary adequacy
@@ -497,8 +501,8 @@ indeed explore the space efficiently requires a good understanding of the progra
 specification-based techniques here. If you understand the specs, you might be able to devise good tests for the particular loop.
 
 
-{% assign todo = "record a video about the loop boundary adequacy" %}
-{% include todo.html %}
+{% set todo = "record a video about the loop boundary adequacy" %}
+{% include "includes/todo.md" %}
 
 ## Criteria subsumption
 
@@ -516,8 +520,8 @@ You can see that, for example, branch coverage subsumes line coverage. This mean
 
 ![Criteria subsumption](/assets/img/structural-testing/subsumption.png)
 
-{% assign todo = "record a video about the criteria subsumption" %}
-{% include todo.html %}
+{% set todo = "record a video about the criteria subsumption" %}
+{% include "includes/todo.md" %}
 
 
 ## More examples of Control-Flow Graphs
@@ -525,7 +529,6 @@ You can see that, for example, branch coverage subsumes line coverage. This mean
 We can do Control-Flow Graphs for programs in any programming language. For example, see the piece of
 Python code below:
 
-{% include example-begin.html %}
 ```python
 # random_ads is a list of ads.
 # an ad contains three attributes:
@@ -557,7 +560,6 @@ A CFG for this piece of code would look like:
 
 *Study tip:* Note how we modelled the `for each` loop.
 
-{% include example-end.html %}
 
 ## How to use structural testing in practice
 
@@ -572,31 +574,6 @@ Is there any advantage in using structural testing? We refer to two papers:
 For interested readers, a extensive literature review on the topic can be found in
 Zhu, H., Hall, P. A., & May, J. H. (1997). Software unit test coverage and adequacy. ACM computing surveys (csur), 29(4), 366-427.
 
-
-References:
-
-- Hutchins, M., Foster, H., Goradia, T., & Ostrand, T. (1994, May). Experiments of the effectiveness of data flow-and control flow-based test adequacy criteria. In Proceedings of the 16th international conference on Software engineering (pp. 191-200). IEEE Computer Society Press.
-- Namin, A. S., & Andrews, J. H. (2009, July). The influence of size and coverage on test suite effectiveness. In Proceedings of the eighteenth international symposium on Software testing and analysis (pp. 57-68). ACM.
-
-
-
-## Full review of the concepts
-
-Watch a summary of one of our lectures in structural testing!
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/busfqNkpgKI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-## References
-
-* Chapter 4 of the Foundations of software testing: ISTQB certification. Graham, Dorothy, Erik Van Veenendaal, and Isabel Evans, Cengage Learning EMEA, 2008.
-
-* Chapter 12 of the Software Testing and Analysis: Process, Principles, and Techniques. Mauro Pezzè, Michal Young, 1st edition, Wiley, 2007.
-
-* Zhu, H., Hall, P. A., & May, J. H. (1997). Software unit test coverage and adequacy. ACM computing surveys (csur), 29(4), 366-427.
-
-* Cem Kaner on Code Coverage: http://www.badsoftware.com/coverage.htm
-
-* Arie van Deursen on Code Coverage: http://avandeursen.com/2013/11/19/test-coverage-not-for-managers/
 
 
 ## Exercises
@@ -626,70 +603,19 @@ public boolean remove(Object o) {
 
 This is the implementation of JDK8's LinkedList remove method. Source: [OpenJDK](http://hg.openjdk.java.net/jdk8/jdk8/jdk/file/687fd7c7986d/src/share/classes/java/util/LinkedList.java).
 
-{% include exercise-begin.html %}
+**Exercise 1.**
 Give a test suite (i.e. a set of tests) that achieves $$100\%$$ **line** coverage on the `remove` method.
 Use as few tests as possible.
 
 The documentation on Java 8's LinkedList methods, that may be needed in the tests, can be found in its [Javadoc](https://devdocs.io/openjdk~8/java/util/linkedlist).
-{% include answer-begin.html %}
-Example of a test suite that achieves $$100\%$$ line coverage:
-
-```java
-@Test
-public void removeNullInListTest() {
-    LinkedList<Integer> list = new LinkedList<>();
-
-    list.add(null);
-
-    assertTrue(list.remove(null));
-}
-
-@Test
-public void removeElementInListTest() {
-    LinkedList<Integer> list = new LinkedList<>();
-
-    list.add(7);
-
-    assertTrue(list.remove(7));
-}
-
-@Test
-public void removeElementNotPresentInListTest() {
-    LinkedList<Integer> list = new LinkedList<>();
-
-    assertFalse(list.remove(5))
-}
-```
-
-Note that there exists a lot of test suites that achieve $$100\%$$ line coverage, this is just an example.
-
-You should have 3 tests.
-At least one test is needed to cover lines 4 and 5 (`removeNullInListTest` in this case).
-This test will also cover lines 1-3.
-
-Then a test for lines 9 and 10 is needed (`removeElementInListTest`).
-This test also covers lines 6-8.
-
-Finally a third test is needed to cover line 11 (`removeElementNotPresentInListTest`).
-{%include exercise-answer-end.html %}
 
 
-
-
-
-
-
-
-{% include exercise-begin.html %}
+**Exercise 2.**
 Create the Control Flow Graph (CFG) for the `remove` method.
-{% include answer-begin.html %}
-![LinkedList exercise CFG](/assets/img/structural-testing/exercises/CFG-LinkedList.svg)
-L\<number\> in the diagram represents the line number of the code that is in the block or decision.
-{%include exercise-answer-end.html %}
 
 
 
-{% include exercise-begin.html %}
+**Exercise 3.**
 Look at the CFG you just created. Which of the following sentences **is false**?
 
 1. A minimal test suite that achieves 100% basic condition coverage has more test cases than a minimal test suite that achieves 100% branch coverage.
@@ -699,83 +625,22 @@ Look at the CFG you just created. Which of the following sentences **is false**?
 3. A minimal test suite that achieves 100% branch coverage has the same number of test cases as a minimal test suite that achieves 100% full condition coverage.
 
 4. There exists a single test case that, alone, is able to achieve more than 50% of line coverage.
-{% include answer-begin.html %}
-
-Option 1 is the false one.
-
-A minimal test suite that achieves 100\% (either basic or full) condition has the same number of tests as a minimal test suite that achieves 100\% branch coverage. All decisions have just a single branch, so condition coverage doesn't make a difference here. Moreover, a test case that exercises lines 1, 6, 7, 8, 9, 10 achieves around 54\% coverage (6/11).
-
-{%include exercise-answer-end.html %}
 
 
 
-{% include exercise-begin.html %}
+
+
+
+
+**Exercise 4.**
 Give a test suite (i.e. a set of tests) that achieves $$100\%$$ **branch** coverage on the `remove` method.
 Use as few tests as possible.
 
 The documentation on Java 8's LinkedList methods, that may be needed in the tests, can be found in its [Javadoc](https://devdocs.io/openjdk~8/java/util/linkedlist).
-{% include answer-begin.html %}
-Example of a test suite that achieves $$100\%$$ branch coverage:
 
-```java
-@Test
-public void removeNullAsSecondElementInListTest() {
-  LinkedList<Integer> list = new LinkedList<>();
 
-  list.add(5);
-  list.add(null);
 
-  assertTrue(list.remove(null));
-}
-
-@Test
-public void removeNullNotPresentInListTest() {
-  LinkedList<Integer> list = new LinkedList<>();
-
-  assertFalse(list.remove(null));
-}
-
-@Test
-public void removeElementSecondInListTest() {
-  LinkedList<Integer> list = new LinkedList<>();
-
-  list.add(5);
-  list.add(7);
-
-  assertTrue(list.remove(7));
-}
-
-@Test
-public void removeElementNotPresentInListTest() {
-  LinkedList<Integer> list = new LinkedList<>();
-
-  assertFalse(list.remove(3));
-}
-```
-
-This is just one example of a possible test suite.
-Other tests can work just as well.
-You should have a test suite of 4 tests.
-
-With the CFG you can see that there are decisions in lines 1, 2, 3, 7 and 8.
-To achieve $$100\%$$ branch coverage each of these decisions must evaluate to true and to false at least once in the test suite.
-
-For the decision in line 1, we need to remove `null` and something else than `null`. This is done with the `removeElement` and `removeNull` tests.
-
-Then for the decision in line 2 the node that `remove` is looking at should not be null and null at least once in the tests.
-The node is `null` when the end of the list had been reached.
-That only happens when the element that shouls be removed is not in the list.
-Note that the decision in line 2 only gets executed when the element to remove is `null`.
-In the tests, this means that the element should be found and not found at least once. 
-
-The decision in line 3 checks if the node thet the method is at now has the element that should be deleted.
-The tests should cover a case where the element is not the item that has to be removed and a case where the element is the item that should be removed.
-
-The decisions in lines 7 and 8 are the same as in lines 2 and 3 respectively.
-The only difference is that lines 7 and 8 will only be executed when the item to remove is not `null`.
-{% include exercise-answer-end.html %}
-
-{% include exercise-begin.html %}
+**Exercise 5.**
 Consider the decision `(A or C) and B` with the corresponding decision table:
 
 <table>
@@ -791,18 +656,9 @@ Consider the decision `(A or C) and B` with the corresponding decision table:
 </table>
 
 What is the set with the minimum amount of tests needed for $$100\%$$ MC/DC (Modified Condition / Decision Coverage)?
-{% include answer-begin.html %}
-First, we find the pairs of tests that can be used for each of the conditions:
 
-- A: {2, 6}
-- B: {1, 3}, {2, 4}, {5, 7}
-- C: {5, 6}
 
-For A and C we need the decisions 2, 5 and 6.
-Then you can choose to add either 4 or 7 to cover condition B.
-
-The possible answers are: {2, 4, 5, 6} or {2, 5, 6, 7}.
-{% include exercise-answer-end.html %}
+----
 
 For the next three exercises use the code below.
 This method returns the longest substring that appears at both the beginning and end of the string without overlapping.
@@ -832,24 +688,20 @@ public String sameEnds(String string) {
 
 This code is based on the [same ends problem](https://codingbat.com/prob/p131516).
 
-{% include exercise-begin.html %}
+**Exercise 6.**
 Draw the Control Flow Graph of the source code above.
-{% include answer-begin.html %}
-![Control Flow Graph answer](/assets/img/structural-testing/exercises/CFG-sameEnds.svg)
 
-L\<number\> represents the line numbers that the code blocks cover.
-{% include exercise-answer-end.html %}
 
-{% include exercise-begin.html %}
+
+
+**Exercise 7.**
 Give a test case (by the input string and expected output) that achieves 100% line coverage.
-{% include answer-begin.html %}
-A lot of input strings give 100% line coverage.
-A very simple one is `"aa"`.
-As long as the string is longer than one character and makes the condition in line 9 true, it will give 100% line coverage.
-For `"aa"` the expected output is `"a"`.
-{% include exercise-answer-end.html %}
 
-{% include exercise-begin.html %}
+
+
+
+
+**Exercise 8.**
 Given the source code of the `sameEnds` method. Which of the following statements is **not correct**?
 
 1. It is possible to devise a single test case that achieves 100% line coverage and 100% decision coverage.
@@ -857,12 +709,9 @@ Given the source code of the `sameEnds` method. Which of the following statement
 3. It is possible to devise a single test case that achieves 100% line coverage and 100% decision + condition coverage.
 4. It is possible to devise a single test case that achieves 100% line coverage and 100% path coverage.
 
-{% include answer-begin.html %}
-Answer 4. is correct.
-The loop in the method makes it impossible to achieve 100% path coverage.
-This would require us to test all possible number of iterations.
-For the other answers we can come up with a test case: `"aXYa"`
-{% include exercise-answer-end.html %}
+
+----
+
 
 Now consider this piece of code for the FizzBuzz problem.
 Given an `int n`, it returns the string form of the number followed by "!".
@@ -883,36 +732,16 @@ public String fizzString(int n) {
 }
 ```
 
-{% include exercise-begin.html %}
+**Exercise 9.**
 Assume we have two test cases with an input integer: T1 = 15 and T2 = 8.
 
 What is the condition coverage these test cases give combined?
 
 What is the decision coverage?
-{% include answer-begin.html %}
-First the condition coverage.
-We have 8 conditions:
 
-1. Line 1: `n % 3 == 0`, true and false
-2. Line 1: `n % 5 == 0`, true and false
-3. Line 3: `n % 3 == 0`, true and false
-4. Line 5: `n % 5 == 0`, true and false
 
-T1 makes conditions 1 and 2 true and then does not cover the other conditions.
-T2 makes all the conditions false.
-In total these test cases then cover $$2 + 4 = 6$$ conditions so the condition coverage is $$\frac{6}{8} \cdot 100\% = 75\%$$
 
-Now the decision coverage.
-We have 6 decision:
-
-1. Line 1: `n % 3 == 0 && n % 5 == 0`, true and false
-2. Line 3: `n % 3 == 0`, true and false
-3. Line 5: `n % 5 == 0`, true and false
-
-Now T1 makes decision 1 true and does not cover the other decisions.
-T2 makes all the decision false.
-Therefore the coverage is $$\frac{4}{6} \cdot 100\% = 66\%$$.
-{% include exercise-answer-end.html %}
+----
 
 The next couple of exercises use Java's implementation of the LinkedList's `computeIfPresent()` method.
 
@@ -945,42 +774,19 @@ public V computeIfPresent(K key, BiFunction<? super K, ? super V, ? extends V> r
 }
 ```
 
-{% include exercise-begin.html %}
+**Exercise 10.**
 Draw the Control Flow Graph (CFG) of the method above.
-{% include answer-begin.html %}
 
-![Control Flow Graph answer](/assets/img/structural-testing/exercises/CFG-computeIfPresent.svg)
 
-The L\<number\> in the blocks represent the line number corresponding to the blocks.
-{% include exercise-answer-end.html %}
-
-{% include exercise-begin.html %}
+**Exercise 11.**
 How many tests do we need **at least** to achieve $$100\%$$ line coverage?
-{% include answer-begin.html %}
-3.
 
-One test to cover lines 1 and 2.
-Another test to cover lines 1, 3-7 and 8-13.
-Finally another test to cover lines 14 and 15. This test will also automatically cover lines 1, 3-10.
-{% include exercise-answer-end.html %}
 
-{% include exercise-begin.html %}
+**Exercise 12.**
 How many tests do we need **at least** to achieve $$100\%$$ branch coverage?
-{% include answer-begin.html %}
-4.
-
-From the CFG we can see that there are 6 branches.
-We need at least one test to cover the true branch from teh decision in line 1.
-Then with another test we can cover false from L1 and false from L8.
-We add another test to cover false from the decision in line 10.
-Finally an additional test is needed to cover the true branch out of the decision in line 10.
-This gives us a minimum of 4 tests.
-{% include exercise-answer-end.html %}
 
 
-
-
-{% include exercise-begin.html %}
+**Exercise 13.**
 Which of the following statements concerning the subsumption relations between test adequacy criteria **is true**:
 
 
@@ -988,17 +794,9 @@ Which of the following statements concerning the subsumption relations between t
 2. Statement coverage subsumes branch coverage.
 3. Branch coverage subsumes path coverage.
 4. Basic condition coverage subsumes branch coverage.
-{% include answer-begin.html %}
-
-MC/DC does subsume statement coverage. Basic condition coverage does not subsume branch coverage; full condition coverage does.
-{% include exercise-answer-end.html %}
 
 
-
-
-
-
-{% include exercise-begin.html %}
+**Exercise 14.**
 A test suite satisfies the loop boundary adequacy
 criterion if for every loop L:
 
@@ -1006,17 +804,9 @@ criterion if for every loop L:
 2. Test cases iterate L once and more than once.
 3. Test cases iterate L zero times and one time.
 4. Test cases iterate L zero times, once, more than once, and N, where N is the maximum number of iterations.
-{% include answer-begin.html %}
-Option 1 is correct.
-{% include exercise-answer-end.html %}
 
 
-
-
-
-
-
-{% include exercise-begin.html %}
+**Exercise 15.**
 Consider the expression `((A and B) or C)`.
 If we aim to achieve 100\% \emph{Modified Condition / Decision Coverage} (MC/DC), the **minimum** set of tests we should select is:
 
@@ -1024,10 +814,24 @@ If we aim to achieve 100\% \emph{Modified Condition / Decision Coverage} (MC/DC)
 2. {1, 3, 4, 6}
 3. {2, 3, 5, 6}
 4. {3, 4, 7, 8}
-{% include answer-begin.html %}
 
-Option 1 is the correct one.
 
-Tests for A = (2,6), B = (2,4), C = (3, 4), (5, 6), (7,8). Thus, from the options, tests 2, 3, 4 and 6 are the only ones that achieve 100% MC/DC. Note that 2, 4, 5, 6 could also be a solution.
 
-{% include exercise-answer-end.html %}
+
+## References
+
+* Chapter 4 of the Foundations of software testing: ISTQB certification. Graham, Dorothy, Erik Van Veenendaal, and Isabel Evans, Cengage Learning EMEA, 2008.
+
+* Chapter 12 of the Software Testing and Analysis: Process, Principles, and Techniques. Mauro Pezzè, Michal Young, 1st edition, Wiley, 2007.
+
+* Zhu, H., Hall, P. A., & May, J. H. (1997). Software unit test coverage and adequacy. ACM computing surveys (csur), 29(4), 366-427.
+
+* Cem Kaner on Code Coverage: http://www.badsoftware.com/coverage.htm
+
+* Arie van Deursen on Code Coverage: http://avandeursen.com/2013/11/19/test-coverage-not-for-managers/
+
+* Hutchins, M., Foster, H., Goradia, T., & Ostrand, T. (1994, May). Experiments of the effectiveness of data flow-and control flow-based test adequacy criteria. In Proceedings of the 16th international conference on Software engineering (pp. 191-200). IEEE Computer Society Press.
+
+* Namin, A. S., & Andrews, J. H. (2009, July). The influence of size and coverage on test suite effectiveness. In Proceedings of the eighteenth international symposium on Software testing and analysis (pp. 57-68). ACM.
+
+
