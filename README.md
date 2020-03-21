@@ -25,12 +25,13 @@ as well as able to reflect about their limitations, when and when not to apply t
 
 ## Authors
 
-Mauricio and Arie
+* [Maurício Aniche](https://www.mauricioaniche.com), Assistant Professor in Software Engineering at Delft University of Technology
+* [Arie van Deursen](https://www.avandeursen.com), Full Professor in Software Engineering at Delft University of Technology
 
 **Acknowledgments:**
 
 * Annibale Panichella: chapter on mutation testing
-* Wouter Polet: Jekyll implementation and initial transcripts of the lectures.
+* Wouter Polet: initial transcripts of the lectures.
 * TU Delft's New Media Centre: video recording and editing 
 
 ## Adopting this book
