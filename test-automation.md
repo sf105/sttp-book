@@ -1,5 +1,5 @@
 
-## Software testing automation (with JUnit)
+# Software testing automation (with JUnit)
 
 Before we explore different testing techniques, let's first get used
 to software testing automatin frameworks, like JUnit.
