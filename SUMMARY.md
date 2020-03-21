@@ -10,7 +10,7 @@
 	* [Boundary testing](boundary-testing.md)
 	* [Structural-based testing](structural-testing.md)
 	* [Model-based testing](model-based-testing.md)
-	* Design by contracts and Property-based testing
+	* [Design-by-contracts and property-based testing](design-by-contracts.md)
 
 * Pragmatic software testing
 	* [The testing pyramid](testing-pyramid.md)

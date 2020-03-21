@@ -1,10 +1,5 @@
----
-chapter-number: 13
-title: Design by Contracts and Property-Based Testing
-layout: chapter
-toc: true
-author: Arie van Deursen
----
+# Design by Contracts and Property-Based Testing
+
 
 Can the production code test itself?
 In this chapter, we'll discuss what design by contracts and
@@ -48,7 +43,7 @@ If it is, nothing happens.
 The program just continues its execution as everything is according to plan.
 However, if the `<condition>` yields false, the `assert` throws an `AssertionError`.
 
-{% include example-begin.html %}
+
 We have implemented a class representing a stack, we just show the `pop` method:
 
 ```java
@@ -73,7 +68,7 @@ We cover these in the following section.
 for debugging.
 Always include a message that describes what is going wrong if the assertion is failing.
 
-{% include example-end.html %}
+
 
 In Java, asserts can be enabled or disabled.
 If the asserts are disabled, they will never throw an `AssertionError` even if their conditions are false.
@@ -91,7 +86,9 @@ This might seem undesirable, but when executing tests,
 we want the tests to fail.
 After all, if a test fail, we just found another fault in the system that we can then fix before deploying it to final users.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Tnm0qwsEiyU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "Tnm0qwsEiyU" %}
+{% include "includes/youtube.md" %}
+
 
 Note how assertions play the role of test oracles here, but in a slightly
 different way. Just to remember, oracles inform us
@@ -112,7 +109,8 @@ We still need the specific cases in the unit tests. A combination of
 both is what we desire.
 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/OD0BY8GQs9M" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "OD0BY8GQs9M" %}
+{% include "includes/youtube.md" %}
 
 
 ## Pre- and Postconditions
@@ -137,7 +135,7 @@ Now we can write the Hoare Triple as: $$\{ preconditions \}\ method\ \{ postcond
 When writing a method, each condition that needs to hold for the method to successfully execute can be a pre-condition.
 These pre-conditions can be turned into assertions.
 
-{% include example-begin.html %}
+
 Suppose a class that keeps track of our favorite books.
 Let's define some pre-conditions for the merge method.
 
@@ -183,7 +181,7 @@ public class FavoriteBooks {
 }
 ```
 
-{% include example-end.html %}
+
 
 #### Weakening preconditions
 
@@ -195,7 +193,7 @@ This makes the method more generally applicable, but is also increases its compl
 The method always has to check some extra things to handle the cases that could had been pre-conditions.
 Finding the balance between the amount of preconditions and complexity of the method is part of designing the system.
 
-{% include example-begin.html %}
+
 We can remove some of the pre-conditions of the `merge` method by adding some if-statements to the method.
 First, we can try to remove the `!books.isEmpty()` assertions.
 This means that the method `merge` has to handle empty `books` lists itself.
@@ -241,7 +239,7 @@ public class FavoriteBooks {
 
 Note that, although we increased the complexity of method by removing some of its pre-conditions and dealing with these cases in the implementation, the method now is also easier to be called by clients. After all, the method has less pre-conditions to be called.
 
-{% include example-end.html %}
+
 
 ### Post-conditions
 
@@ -249,7 +247,6 @@ The pre-conditions of a method hold when the method is called. At the end of the
 In other words, the post-conditions formalize the effects that a method guarantees to have when it is done with its execution.
 
 
-{% include example-begin.html %}
 The `merge` method of the previous examples does two things.
 It adds the new books to the `favorites` list.
 Let's turn this into a boolean expression, so we can formulate this as a post-condition.
@@ -278,7 +275,6 @@ The other effect of the method is the notification that is sent.
 Unfortunately, we cannot easily formalize it as a post-condition.
 In a test suite, we would probably mock the `pushNotification` and then use `Mockito.verify` to verify that `booksAdded` was called.
 
-{% include example-end.html %}
 
 It is important to realise that these post-conditions only have to hold if the preconditions held when the method was called. In other words, if the method's pre-conditions were not fully satisfied, the method might not guarantee its post-conditions.
 
@@ -296,7 +292,6 @@ Maybe it is possible to combine them to one return statement with a general post
 Otherwise, the post-condition essentially becomes a disjunction of propositions.
 Each return statement forms a possible post-condition (proposition) and the method guarantees that one of these post-conditions is met.
 
-{% include example-begin.html %}
 We have a method body that has three conditions and three different return statements.
 This also gives us three post-conditions.
 The placing of these post-conditions now becomes quite important, so the whole method is becoming rather complex with the postconditions.
@@ -322,7 +317,7 @@ return ...;
 Now if `A` and `B` are true, post-condition 1 should hold.
 If `A` is true and `B` is false, postcondition 2 should hold.
 Finally, if `A` is false, postcondition 3 should hold.
-{% include example-end.html %}
+
 
 #### How weak pre-conditions affect the post-conditions?
 
@@ -339,7 +334,11 @@ the outcome can any anything. With weak pre-conditions, the method might have
 to handle different situations, leading to multiple post-conditions guarded
 by conditions over the inputs or the program state.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/LCJ91VSS3Z8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+{% set video_id = "LCJ91VSS3Z8" %}
+{% include "includes/youtube.md" %}
+
+
 
 ## Invariants
 
@@ -353,7 +352,7 @@ This method will go through the data structure/object/system and will assert whe
 If an invariant does not hold, it will then throw an `AssertionError`.
 For simpler invariants, it is common to see a boolean method that checks the invariants of the structure/object/system.
 
-{% include example-begin.html %}
+
 Suppose we have a binary tree datastructure.
 An invariant for this data structure would be that when a parent points to a child, then the child should point to this parent.
 
@@ -378,7 +377,7 @@ public void checkRep(BinaryTree tree) {
 
 In `checkRep()`, we first check if the children nodes of the current node are pointing to this node as parent.
 Then, we continue by checking the child nodes the same way we checked the current node.
-{% include example-end.html %}
+
 
 ### Class invariants
 
@@ -403,7 +402,7 @@ In these public methods, the only pre-conditions and post-conditions that have t
 When handling more complicated invariants, we can split the invariant into more methods.
 Then we use these methods in the `invariant` method.
 
-{% include example-begin.html %}
+
 We return to the `FavoriteBooks` with the `merge` method.
 We had a pre-condition saying that `favorites != null`.
 Given that this should always be true, we can turn it into a class variant.
@@ -452,9 +451,11 @@ public class FavoriteBooks {
 Note that the `invariant` method checks the two conditions.
 We call `invariant` before and after `merge` and we only assert the pre- and post-conditions that are not covered in the `invariant` method.
 We also assert the result of the `invariant` method at the end of the constructor.
-{% include example-end.html %}
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/T5kwU91W07s" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+{% set video_id = "T5kwU91W07s" %}
+{% include "includes/youtube.md" %}
+
 
 ## Design by Contracts
 
@@ -504,7 +505,9 @@ In short, using the notation of the UML diagram:
 
 The subcontract (the implementation) requires no more and ensures no less than the actual contract (the interface).
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/aA29jZYdJos" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "aA29jZYdJos" %}
+{% include "includes/youtube.md" %}
+
 
 ### Liskov Substitution Principle
 
@@ -524,7 +527,7 @@ To test the LSP, we have to make some test cases for the public methods of the s
 We could just create the same tests to each of the subclasses' test suites.
 This, however, leads to a lot of code duplication in the test code, which we would like to avoid.
 
-{% include example-begin.html %}
+
 In Java, the List interface is implemented by various sub-classes.
 Two examples are the `ArrayList` and `LinkedList`.
 Creating the tests for each of the sub-classes separately will result in the following structure.
@@ -533,7 +536,7 @@ Creating the tests for each of the sub-classes separately will result in the fol
 
 The ArrayList and LinkedList will behave the same for the methods defined in List.
 Therefore, there will be duplicate tests for these methods.
-{% include example-end.html %}
+
 
 To avoid this code duplication we can create a test suite just for the super class.
 This test suite tests just the public methods of the super class.
@@ -542,7 +545,6 @@ of the sub-classes of the super class.
 This can be done by making the test classes extend the "super test class".
 The "sub test class" will have all the common tests defined in the "super test class" and its own specific tests.
 
-{% include example-begin.html %}
 This is how the test suite looks like:
 
 ![Parallel Class Hierarchy](/assets/img/design-by-contracts/examples/parallel_architecture.svg)
@@ -552,7 +554,6 @@ List is an interface, so the `ListTest` should be abstract.
 We cannot instantiate a `List` itself, so we should not be able to execute the `ListTest` without a test class corresponding to one of List's subclasses.
 `ListTest` contains all the common tests of `ArrayListTest` and `LinkedListTest`.
 `ArrayListTest` and `LinkedListTest` can contain their specific tests.
-{% include example-end.html %}
 
 In the example, you can see that the hierarchy of the test classes is similar to the hierarchy of the classes they test.
 Therefore, we say that we use a **parallel class hierarchy** in our test classes.
@@ -569,7 +570,7 @@ By making the method abstract, we force the test classes of the concrete impleme
 We return the instance of the specific subclass in the overriden method.
 This instance is then used to execute the tests.
 
-{% include example-begin.html %}
+
 We want to use the Factory Method design pattern in our tests for the `List`.
 We start by the interface level test class.
 Here, we define the abstract method that gives us a List.
@@ -607,9 +608,10 @@ public class ArrayListTest extends ListTest {
 
 Now, the `ArrayListTest` inherits all the `ListTest`'s tests, so these will be executed when we execute the `ArrayListTest` test suite.
 Because the `createList()` method returns an `ArrayList`, the common test classes will use an `ArrayList`.
-{% include example-end.html %}
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/GQ5NTiigkb0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "GQ5NTiigkb0" %}
+{% include "includes/youtube.md" %}
+
 
 ## Property-Based Testing
 
@@ -652,8 +654,8 @@ These inputs can be very hard to debug. Smaller inputs are preferrable when it c
 When an input makes the property fail, QuickCheck tries to find shrink this input while it still makes the property fail.
 That way it gets the small part of the larger input that actually causes the problem.
 
-{% include example-begin.html %}
-A property of Strings is that if we add two strings together, the length of the result should be the same as the sum of the lengths of the two strings summed.
+As an example:
+a property of Strings is that if we add two strings together, the length of the result should be the same as the sum of the lengths of the two strings summed.
 We can use property-based testing and the QuickCheck's implementation to make tests for this property.
 
 ```java
@@ -668,7 +670,8 @@ public class PropertyTest {
 ```
 
 `concatenationLength` had the `Property` anotation, so QuickCheck will generate random values for `s1` and `s2` and execute the test with those values.
-{% include example-end.html %}
+
+
 
 Property-based testing changes the way we automate our tests.
 Usually, we just automate the execution of the tests.
@@ -689,20 +692,9 @@ The properties always have to be true, so we can use them in all the randomly ge
 
 We will discuss more about AI techniques in a future chapter.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/7kB6JaSH9p8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "7kB6JaSH9p8" %}
+{% include "includes/youtube.md" %}
 
-
-## References
-
-* C2 Wiki, What are assertions? http://wiki.c2.com/?WhatAreAssertions
-
-* Mitchell, R., McKim, J., & Meyer, B. (2001). Design by contract, by example. Addison Wesley Longman Publishing Co., Inc..
-
-* Meyer, B. (2002). Design by contract. Prentice Hall.
-
-* Liskov, B. H., & Wing, J. M. (1994). A behavioral notion of subtyping. ACM Transactions on Programming Languages and Systems (TOPLAS), 16(6), 1811-1841.
-
-* "Polymorphic Server Test" in Binder, R. V. (1994). Object-oriented software testing. Communications of the ACM, 37(9), 28-30.
 
 
 
@@ -711,8 +703,7 @@ We will discuss more about AI techniques in a future chapter.
 ## Exercises
 
 
-{% include exercise-begin.html %}
-
+**Exercise 1.**
 See the code below:
 
 ```java
@@ -731,33 +722,19 @@ public Square squareAt(int x, int y) {
 ```
 
 What assertion(s), if any, can be turned into a class invariant?
-{% include answer-begin.html %}
-`board != null`
-
-For a class invariant the assertions has to assert a class variable.
-`board` is such a class variable, unlike the other variables that are checked by the assertions.
-The other assertions are about the parameters (preconditions) or the result (postcondition).
-{% include exercise-answer-end.html %}
 
 
-{% include exercise-begin.html %}
+
+**Exercise 2.**
 Consider the piece of code in the previous example.
 Suppose we remove the last assertion (line 10), which states that the result can never be null.
 
 Are the existing preconditions of the `squareAt` method enough to ensure the property in the original line 10?
 What can we add to the class (other than the just removed postcondition) to guarentee this property?
-{% include answer-begin.html %}
-The existing preconditions are **not** enough to ensure the property in line 10.
-
-`board` itself cannot be `null` and `x` and `y` will be in its range, but the content of board can still be `null`.
-To guarantee the property again the method would have to implicitly assume an invariant, that ensures that no place in `board` is `null`.
-
-In order to do this, we would have to make the constructor ensure that no place in `board` is `null`.
-So we have to add an assertion to the constructor that asserts that every value in `board` is not `null`.
-{% include exercise-answer-end.html %}
 
 
-{% include exercise-begin.html %}
+
+**Exercise 3.**
 Your colleague works on a drawing application.
 He has created a Rectangle class.
 For rectangles, the width and height can be different from each other, but can't be negative numbers.
@@ -822,52 +799,35 @@ How can you use the assertions provided to discuss the correctness of this desig
 Is the second colleagues concern justified?
 What principle is violated, if any?
 Explain with the assertions shown in the code.
-{% include answer-begin.html %}
-The second colleague is correct.
 
-There is a problem in the `Square`'s preconditions.
-For the `resetSize` method these are stronger than the `Rectangle`'s preconditions.
-We do not just assert that the `width` and `height` should be larger than 0, but they should also be equal.
-This violates the Liskov's Substitution Principle.
-We cannot substitute a `Square` for a `Rectangle`, because we would not be able to have unequal width and height anymore.
-{% include exercise-answer-end.html %}
 
-{% include exercise-begin.html %}
+**Exercise 4.**
 You run your application with assertion checking enabled. 
 Unfortunately, it reports an assertion failure signaling a class invariant violation in one of the libraries your application makes use of.
 
 Assume that the contract of the library in question is correct, and that all relevant preconditions are encoded in assertions as well.
 
-Can you fix this problem? \\
-If so, how? \\
+Can you fix this problem? 
+If so, how? 
 If not, why?
-{% include answer-begin.html %}
-Making correct use of a class should never trigger a class invariant violation.
-We are making correct use of the class, as otherwise it would have been a precondition violation.
-This means that there is a bug in the implementation of the library, which would have to be fixed.
-As this is outside your project, you typically cannot fix this problem.
-{% include exercise-answer-end.html %}
 
-{% include exercise-begin.html %}
+
+
+
+**Exercise 5.**
 HTTP requests return a status code which can have several values. As explained on [Wikipedia](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes):
 
-- A 4xx status code "is intended for situations in which the error seems to have been caused by the client". \\
+- A 4xx status code "is intended for situations in which the error seems to have been caused by the client". 
 A well known example is the 404 (Page not found) status code.
-- A 5xx status code "indicates cases in which the server is aware that it has encountered an error or is otherwise incapable of performing the request."\\
+- A 5xx status code "indicates cases in which the server is aware that it has encountered an error or is otherwise incapable of performing the request."
 A well known example is the 500 (Internal Server Error) status code.
 
 What is the best correspondence between these status codes and pre- and postconditions?
-{% include answer-begin.html %}
-Just like the contracts we have a client and a server. \\
-A 4xx code means that the client invoked the server in a wrong way, which corresponds to failing to adhere to a precondition. \\
-A 5xx code means that the server was not able to handle the request of the client, which was correct.
-This corresponds to failing to meet a postcondition.
-{% include exercise-answer-end.html %}
 
 
 
-{% include exercise-begin.html %}
 
+**Exercise 6.**
 A method M belongs to a class C and has a precondition P and a postcondition Q. 
 Now, suppose that a developer creates a class C' that extends C, and 
 creates a method M' that overrides M. 
@@ -880,15 +840,7 @@ strength of the pre (P') and postconditions (Q') of the overridden method M'?
 3. P' should be equal or weaker than P, and Q' should be equal or weaker than Q.
 4. P' should be equal or stronger than P, and Q' should be equal or weaker than Q.
 
-{% include answer-begin.html %}
-
-P' should be equal or weaker than P, and Q' should be equal or stronger than Q.
-
-{% include exercise-answer-end.html %}
-
-
-{% include exercise-begin.html %}
-
+**Exercise 7.**
 Which of the following is a valid reason to use assertions in your code?
 
 
@@ -899,8 +851,16 @@ Which of the following is a valid reason to use assertions in your code?
 
 
 
-{% include answer-begin.html %}
-To make debugging easier.
-{% include exercise-answer-end.html %}
+## References
+
+* C2 Wiki, What are assertions? http://wiki.c2.com/?WhatAreAssertions
+
+* Mitchell, R., McKim, J., & Meyer, B. (2001). Design by contract, by example. Addison Wesley Longman Publishing Co., Inc..
+
+* Meyer, B. (2002). Design by contract. Prentice Hall.
+
+* Liskov, B. H., & Wing, J. M. (1994). A behavioral notion of subtyping. ACM Transactions on Programming Languages and Systems (TOPLAS), 16(6), 1811-1841.
+
+* "Polymorphic Server Test" in Binder, R. V. (1994). Object-oriented software testing. Communications of the ACM, 37(9), 28-30.
 
 
