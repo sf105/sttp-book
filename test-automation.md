@@ -1,19 +1,10 @@
----
-chapter-number: 2
-title: Software Testing Automation
-layout: chapter
-toc: true
-author: Maurício Aniche
----
 
-## Getting started with test automation
+## Introduction to software testing automation
 
 Before we explore different testing techniques, let's first get used
 to software testing automatin frameworks, like JUnit.
 For now, let's just use our experience as software developers to devise
 test cases.
-
-{% include example-begin.html %}
 
 **The Roman Numeral problem**
 
@@ -76,7 +67,6 @@ public class RomanNumeral {
   }
 }
 ```
-{% include example-end.html %}
 
 Now we have to think about tests for this method.
 Use your experience as a developer to get as many test cases as you can.
@@ -116,7 +106,6 @@ A couple of useful assertions are:
 More assertions and additional arguments can be found in [JUnit's documentation](https://junit.org/junit5/docs/5.3.0/api/org/junit/jupiter/api/Assertions.html).
 To make easy use of the assertions and to import them all in one go, you can use `import static org.junit.jupiter.api.Assertions.*;`.
 
-{% include example-begin.html %}
 
 We need a class and methods annotated with `@Test` to automate our test cases.
 The three cases we had, can be automated as follows.
@@ -159,7 +148,8 @@ Then we execute or run the `convert` method, which is the method we want to test
 Finally we assert that the result is what we would expect.
 
 Do you see more test cases? Go ahead and implement them!
-{% include example-end.html %}
+
+
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/XS4-93Q4Zy8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -198,7 +188,6 @@ In order to do so, we will use the `@BeforeEach` annotation.
 Like the tests, we annotate a method with this annotation.
 Then JUnit knows that before it runs the code in a test method is has to run the code in the `BeforeEach` method.
 
-{% include example-begin.html %}
 In the test code we just wrote, we can instantiate the `roman` object inside a method annotated with `BeforeEach`.
 In this case it is just one line that we move out of the test methods, but as your tests become more complicated this approach becomes more important.
 
@@ -244,7 +233,6 @@ class RomanNumeralTest {
   }
 }
 ```
-{% include example-end.html %}
 
 We will discuss test code quality in a more systematic way in a future 
 chapter.
@@ -274,40 +262,27 @@ Side note 2: In industry, the term _automated software testing_ is related to th
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/pPv37kPqvAE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-## References
-
-* Pragmatic Unit Testing in Java 8 with Junit. Langr, Hunt, and Thomas. Pragmatic Programmers, 2015.
-
 ## Exercises
 
-{% include exercise-begin.html %}
-
+**Exercise 1.**
 Implement the `RomanNumeral` class. Then, write as many tests as you
 can for it, using JUnit.
 
 For now, do not worry about how to derive test cases. Just follow
 your intuition. 
 
-{% include answer-begin.html %}
-
-Writing tests is fun, isn't it?
-
-{% include exercise-answer-end.html %}
-
-
-{% include exercise-begin.html %}
-
+**Exercise 2.**
 Choose a problem from [Codebat](https://codingbat.com/java/Logic-2). Solve it.
-
 Then, write as many tests as you
 can for it, using JUnit.
 
 For now, do not worry about how to derive test cases. Just follow
 your intuition. 
 
-{% include answer-begin.html %}
 
-Writing tests is fun, isn't it?
+## References
 
-{% include exercise-answer-end.html %}
+* Pragmatic Unit Testing in Java 8 with Junit. Langr, Hunt, and Thomas. Pragmatic Programmers, 2015.
 
+* Barr, Earl T., Mark Harman, Phil McMinn, Muzammil Shahbaz, and Shin Yoo. "The oracle problem in software testing: A survey." IEEE transactions on software engineering 41, no. 5 (2014): 507-525.
+Harvard 
