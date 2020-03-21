@@ -1,4 +1,4 @@
+.sass-cache/
 .DS_Store
-_site
-.sass-cache
-.jekyll-metadata
+_book/*
+book.pdf

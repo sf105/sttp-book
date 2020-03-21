@@ -1,12 +1,5 @@
----
-chapter-number: 1
-title: Why software testing?
-layout: chapter
-toc: true
-author: Maurício Aniche
----
 
-## Motivation
+## Why software testing?
 
 **Welcome to the first chapter of Software Testing: From Theory to Practice!** In this book, we are going to teach you how to effectively test a 
 software and make sure it works, and how to, as much as possible, 

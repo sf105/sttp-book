@@ -1,10 +1,4 @@
----
-chapter-number: 3
-title: Testing Principles 
-layout: chapter
-toc: true
-author: Maurício Aniche and Arie van Deursen
----
+# Principles of software testing
 
 Now that we have some basic tools to design and automate our tests, we can think more about some testing concepts.
 We start with some precise definitions for certain terms.
@@ -103,50 +97,29 @@ We cannot forget about the validation part, where we check if the software meets
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/dkbvb_wTN-M" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-## References
-
-* Chapters 1-3 of the Foundations of software testing: ISTQB certification. Graham, Dorothy, Erik Van Veenendaal, and Isabel Evans, Cengage Learning EMEA, 2008.
-
-
-
 ## Exercises
 
-
-{% include exercise-begin.html %}
+**Exercise 1.**
 Having a certain terminology helps testers to explain the problems they have with a program or in their software.
 
 Below is a small conversation.
 Fill each of the caps with: failure, fault, or error.
 
-**Mark**: Hey, Jane, I just observed a (1) _ _ _ _ _ _ in our software: if the user has multiple surnames, our software doesn't allow them to sign in. \\
-**Jane**: Oh, that's awful. Let me debug the code so that I can find the (2) _ _ _ _ _ _.\\
-*(a few minutes later)*\\
-**Jane**: Mark, I found it! It was my (3) _ _ _ _ _ _. I programmed that part, but never thought of this case.\\
-**Mark**: No worries, Jane! Thanks for fixing it!
-{% include answer-begin.html %}
+* **Mark**: Hey, Jane, I just observed a (1) _ _ _ _ _ _ in our software: if the user has multiple surnames, our software doesn't allow them to sign in. 
+* **Jane**: Oh, that's awful. Let me debug the code so that I can find the (2) _ _ _ _ _ _.
+*(a few minutes later)*
+* **Jane**: Mark, I found it! It was my (3) _ _ _ _ _ _. I programmed that part, but never thought of this case.
+* **Mark**: No worries, Jane! Thanks for fixing it!
 
-1. Failure, the user notices the system/program behaving incorrectly.
-2. Fault, this is a problem in the code, that is causing a failure in this case.
-3. Error, the human mistake that created the fault.
 
-{% include exercise-answer-end.html %}
-
-{% include exercise-begin.html %}
+**Exercise 2.**
 Kelly, a very experienced software tester, visits Books!, a social network focused on matching people based on books they read.
 Users do not report bugs so often; Books! developers have strong testing practices in place.
 However, users do say that the software is not really delivering what it promises.
 
 What testing principle applies to this problem?
-{% include answer-begin.html %}
-The absence-or-error fallacy.
-While the software does not have a lot of bugs, it is not giving the user what they want.
-In this case the verification was good, but they need work on the validation.
-{% include exercise-answer-end.html %}
 
-
-
-
-{% include exercise-begin.html %}
+**Exercise 3.**
 Suzanne, a junior software testing, just joined a very large online payment company in the Netherlands. As a first task, Suzanne analyzed their past two years of bug reports.
 Suzanne observes that more than 50% of bugs have been happening in the 'International payments module. 
 
@@ -159,14 +132,8 @@ Which of the following testing principles might explain why this is **not** poss
 2. Exhaustive testing.
 3. Test early.
 4. Defect clustering.
-{% include answer-begin.html %}
-Exhaustive testing is impossible.
-{% include exercise-answer-end.html %}
 
-
-
-{% include exercise-begin.html %}
-
+**Exercise 4.**
 John strongly believes in unit testing. In fact, this is the only type of testing he actually
 does at any project he's in. All the testing principles below, but one, might help in convincing John that he should also focus on different types of testing. 
 
@@ -176,7 +143,11 @@ Which of the following **is the least related** related to help John in moving a
 2. Tests are context-dependent.
 3. Absence-of-errors fallacy.
 4. Test early.
-{% include answer-begin.html %}
 
-Test early, although an important principle, is definitely not related to the problem of only doing unit tests. All others help people in understanding that variation, different types of testing, is important.
-{% include exercise-answer-end.html %}
+
+
+## References
+
+* Chapters 1-3 of the Foundations of software testing: ISTQB certification. Graham, Dorothy, Erik Van Veenendaal, and Isabel Evans, Cengage Learning EMEA, 2008.
+
+
