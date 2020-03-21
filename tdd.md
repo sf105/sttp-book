@@ -1,12 +1,5 @@
----
-chapter-number: 11
-title: Test-Driven Development
-layout: chapter
-toc: true
-author: Maurício Aniche
----
+# Test-Driven Development
 
-## Introduction
 
 We are used to write some production code and, once we are finished, we move to writing the tests.
 One disadvantage of this approach is that we might create the tests only much later.
@@ -25,8 +18,8 @@ And we do all of this in the simplest way we can.
 This simplicity means that we create the simplest implementation that solves the problem and we start with the simplest possible test case.
 After we wrote the code that makes the test pass, it is time to refactor the code we just made.
 
-{% assign todo = "Missing a video about how TDD works here" %}
-{% include todo.html %}
+{% set todo = "Missing a video about how TDD works here" %}
+{% include "includes/todo.md" %}
 
 
 TDD has some advantages:
@@ -73,8 +66,8 @@ Maybe there are too many or maybe some are not necessary.
 Given all these advantages, should we use TDD 100% of time?
 There is, of course, no universal answer. While some research shows the advantages of TDD, others are more in doubt about it.
 
-{% assign todo = "Missing a video about the advantages of TDD here" %}
-{% include todo.html %}
+{% set todo = "Missing a video about the advantages of TDD here" %}
+{% include "includes/todo.md" %}
 
 ## Test-Driven Design
 
@@ -160,52 +153,22 @@ Therefore, we believe that is is not the practice by itself that helps developer
 
 Conclusion: Developers believe that the practice of test-driven development helps them to improve their class design, as the constant need of writing a unit test for each piece of the software forces them to create testable classes. These small feedbacks — is your test easy to be tested or not? — makes them think and rethink about the class and improve it. Also, as the number of tests grow, they act as a safety net, allowing developers to refactor freely, and also try and experiment different approaches to that code. Based on that, we suggest developers to experiment the practice of test-driven development, as its effects look positive to software developers.
 
-## References
-
-* Beck, K. (2003). Test-driven development: by example. Addison-Wesley Professional.
-
-* [1] Beck K (2002) Test-driven development by example. 1° edn. Addison-Wesley Professional, Boston, USA.
-
-* [2] Martin R (2006) Agile principles, patterns, and practices in C#. 1st edition. Prentice Hall, Upper Saddle River.
-
-* [3] Steve Freeman, Nat Pryce (2009) Growing object-oriented software, Guided by Tests. 1° edn. Addison-Wesley Professional, Boston, USA.
-
-* [4] Astels D (2003) Test-driven development: a practical guide. 2nd edition. Prentice Hall.
-
-* [5] Janzen D, Saiedian H (2005) Test-driven development concepts, taxonomy, and future direction. Computer 38(9): 43–50. doi:10.1109/MC.2005.314.
-
-* [6] Beck K (2001) Aim, fire. IEEE Softw 18: 87–89. doi:10.1109/52.951502.
-
-* [7] Feathers M (2007) The deep synergy between testability and good design. https://web.archive.org/web/20071012000838/http://michaelfeathers.typepad.com/michael_feathers_blog/2007/09/the-deep-synerg.html.
-
 ## Exercises
 
 
-{% include exercise-begin.html %}
+**Exercise 1.**
 We have the following skeleton for a diagram illustrating the Test Driven Development cycle.
 What words/sentences should be at the numbers?
 
 ![Test Driven Development exercise skeleton](/assets/img/tdd/exercises/tdd_skeleton.svg)
 
 (Try to answer the question without scrolling up!)
-{% include answer-begin.html %}
-
-1. Write failing test
-2. Failing test
-3. Make test pass
-4. Passing test
-5. Refactor
-
-From the explanation above:
-
-![Test Driven Development Cycle](/assets/img/tdd/tdd_cycle.svg)
-
-{% include exercise-answer-end.html %}
 
 
 
 
-{% include exercise-begin.html %}
+
+**Exercise 2.**
 Remember the `RomanNumeral` problem?
 
 ```
@@ -235,34 +198,18 @@ Combining both these principles we could give our method `MDCCCXLII` and it shou
 
 Implement this program. Practice TDD!
 
-{% include answer-begin.html %}
 
-How did it feel?
-
-{% include exercise-answer-end.html %}
-
-
-
-
-{% include exercise-begin.html %}
+**Exercise 3.**
 Which of the following **is the least important** reason why one does Test-Driven Development?
 
 1. As a consequence of the practice of TDD, software systems get completely tested.
 2. TDD practitioners use the feedback from the test code as a design hint.
 3. The practice of TDD enables developers to have steady, incremental progress throughout the development of a feature.
 4. The use of mocks objects helps developers to understand the relationships between objects.
-{% include answer-begin.html %}
-Option 1 is the least important one.
-
-Although a few studies show that the number of tests written by TDD practitioners are often higher than the number of tests written by developers not practicing TDD, this is definitely not the main reason why developers have been using TDD. In fact, among the alternatives, it's the least important one. All other alternatives are more important reasons, according to the TDD literature (e.g., Kent Beck's book, Freeman's and Pryce's book.
-
-{% include exercise-answer-end.html %}
 
 
 
-
-
-{% include exercise-begin.html %}
+**Exercise 4.**
 TDD has become a really popular practice among developers. According to them, TDD has several benefits. Which of the following statements 
 **is not** considered a benefit from the practice of TDD?
 
@@ -274,10 +221,26 @@ TDD has become a really popular practice among developers. According to them, TD
 
 3. Refactoring. The cycle suggests developers to constantly improve their code.
 
-4. Design for testability. Developers are ``forced'' to write testable code from the very beginning.
+4. Design for testability. Developers are "forced" to write testable code from the very beginning.
 
-{% include answer-begin.html %}
-Option 1 is not a benefit of TDD. The
-TDD literature says nothing about team integration.
 
-{% include exercise-answer-end.html %}
+
+
+## References
+
+* Beck, K. (2003). Test-driven development: by example. Addison-Wesley Professional.
+
+* [1] Beck K (2002) Test-driven development by example. 1° edn. Addison-Wesley Professional, Boston, USA.
+
+* [2] Martin R (2006) Agile principles, patterns, and practices in C#. 1st edition. Prentice Hall, Upper Saddle River.
+
+* [3] Steve Freeman, Nat Pryce (2009) Growing object-oriented software, Guided by Tests. 1° edn. Addison-Wesley Professional, Boston, USA.
+
+* [4] Astels D (2003) Test-driven development: a practical guide. 2nd edition. Prentice Hall.
+
+* [5] Janzen D, Saiedian H (2005) Test-driven development concepts, taxonomy, and future direction. Computer 38(9): 43–50. doi:10.1109/MC.2005.314.
+
+* [6] Beck K (2001) Aim, fire. IEEE Softw 18: 87–89. doi:10.1109/52.951502.
+
+* [7] Feathers M (2007) The deep synergy between testability and good design. https://web.archive.org/web/20071012000838/http://michaelfeathers.typepad.com/michael_feathers_blog/2007/09/the-deep-synerg.html.
+
