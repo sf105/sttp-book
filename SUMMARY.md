@@ -9,7 +9,7 @@
 	* [Specification-based testing](specification-based-testing.md)
 	* [Boundary testing](boundary-testing.md)
 	* [Structural-based testing](structural-testing.md)
-	* Model-based testing
+	* [Model-based testing](model-based-testing.md)
 
 * Design for testability
 	* The testing pyramid

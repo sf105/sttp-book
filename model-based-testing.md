@@ -1,10 +1,4 @@
----
-chapter-number: 7
-title: Model-Based Testing
-layout: chapter
-toc: true
-author: Arie van Deursen
----
+# Model-Based Testing
 
 In model based testing, we use models of the system to derive tests.
 In this chapter we briefly show what a model is (or can be), and go over some of the models used in software testing.
@@ -19,7 +13,10 @@ Given that the model preserves some of the original attributes of the system und
 Why should we use models at all? A model gives us a structured way to understand
 how the program operates (or should operate).
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/5yuFf4-4JnE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+{% set video_id = "5yuFf4-4JnE" %}
+{% include "includes/youtube.md" %}
+
 
 ## Decision Tables
 
@@ -49,7 +46,6 @@ e.g., making `<Condition2>` true and `<Condition1>` false or making `<Condition1
 (If the order does matter in some way, a state machine might be a better model.
 We cover state machines later in this chapter.)
 
-{% include example-begin.html %}
 When choosing a phone subscription, there are a couple of options you could choose.
 Depending on these options a price per month is given.
 We consider the two options:
@@ -73,7 +69,8 @@ The decision tables is the following:
 </table>
 
 You can see the different prices for the combinations of international and auto-renewal.
-{% include example-end.html %}
+
+
 
 *Don't Care values:* In some cases the value of a condition might not influence the action.
 This is represented as a don't care value, often abbreviated to "dc".
@@ -107,7 +104,6 @@ We end up with the decision table below:
   <tr><td><i>Action</i></td><td>&lt;Action&gt;</td><td>value1<br></td><td>value1</td><td>value1</td><td>value2</td></tr>
 </table>
 
-{% include example-begin.html %}
 We add another condition to the example above.
 A loyal costumer receives the same discount as a costumer who chooses the auto-renewal option. 
 However, a costumer only gets the discount from one of the two.
@@ -121,7 +117,8 @@ The new decision table is below:
   <tr><td><i>Action</i></td><td>price/month</td><td>10</td><td>10</td><td>15</td><td>30</td><td>30</td><td>32</td></tr>
 </table>
 Note that when auto-renewal is true, the loyal condition does not change the outcome anymore and vice versa.
-{% include example-end.html %}
+
+
 
 *Default behavior*: Usually, $$N$$ conditions lead to $$2^N$$ combinations or columns.
 Often, however, the number of columns that are specified in the decision table can be smaller.
@@ -130,7 +127,6 @@ Even if we expand all the dc values.
 This is done by using a default action.
 A default action means that if a combination of condition outcomes is not present in the decision table, the default action should be the result.
 
-{% include example-begin.html %}
 If we set the default charge rate to 10 per month the new decision table can be a bit smaller:
 <table>
   <tr><th></th><th></th><th colspan="4">Variants</th></tr>
@@ -140,9 +136,11 @@ If we set the default charge rate to 10 per month the new decision table can be 
   <tr><td>Loyal</td><td>F</td><td>dc</td><td>T</td><td>F</td></tr>
   <tr><td><i>Action</i></td><td>price/month</td><td>15</td><td>30</td><td>30</td><td>32</td></tr>
 </table>
-{% include example-end.html %}
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/1u1qfJ2IrpU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+{% set video_id = "1u1qfJ2IrpU" %}
+{% include "includes/youtube.md" %}
+
 
 ### Testing decision tables
 
@@ -173,8 +171,9 @@ This way the condition that is under test individually influences the outcome, a
 By choosing the test cases efficiently MC/DC needs less tests than all variants, while still exercising the important parts of the system.
 Less tests of course means less time taken to write the tests and a faster execution of the test suite.
 
-{% include example-begin.html %}
+
 To derive the tests we expand and rearrange the decision table of the previous example:
+
 <table>
   <tr><th></th><th></th><th>v1</th><th>v2</th><th>v3</th><th>v4</th><th>v5</th><th>v6</th><th>v7</th><th>v8</th></tr>
   <tr><td rowspan="3"><br><i>Conditions</i></td>
@@ -183,6 +182,7 @@ To derive the tests we expand and rearrange the decision table of the previous e
   <tr><td>Loyal</td><td>T</td><td>F</td><td>T</td><td>F</td><td>T</td><td>F</td><td>T</td><td>F</td></tr>
   <tr><td><i>Action</i></td><td>price/month</td><td>30</td><td>30</td><td>30</td><td>32</td><td>10</td><td>10</td><td>10</td><td>15</td></tr>
 </table>
+
 First, we look at the first condition and we try to find pairs of combinations that would cover this condition according to MC/DC.
 We look for combinations where only International and the price/month changes.
 
@@ -203,17 +203,19 @@ To cover Loyal we add v7 and to cover Auto-renewal we add v2.
 Now we also cover all the possible actions.
 
 Now, for full MC/DC, we test the decisions: v2, v4, v7, v8.
-{% include example-end.html %}
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/TxAFPJx6yKI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+{% set video_id = "TxAFPJx6yKI" %}
+{% include "includes/youtube.md" %}
+
 
 ### Implementing automated test cases for decision tables
 
 Now that we know how to derive the test cases from the decision tables, it is time to implement them as automated test cases.
 
 The most obvious way to test the combinations is to create a single test for each of the conditions.
+ 
 
-{% include example-begin.html %}
 We continue with the example we created the decision table for earlier.
 To start we write the tests for combinations v2 and v3.
 Assuming that we can use some implemented methods in a PhonePlan class the tests look like this:
@@ -242,7 +244,8 @@ public void internationalLoyalTest() {
 }
 ```
 
-{% include example-end.html %}
+
+
 As you can see in the example above, the different tests for the different combinations are very similar.
 The tests do the exact same thing, but just with different values.
 To avoid the code duplication that comes with this approach to implementing decision table tests, we can use parameterized tests.
@@ -279,7 +282,8 @@ public void someTest(boolean param1, int param2, double param3, ...) {
 
 For testing the combinations out of decision tables, usually the `CsvSource` is most convienient. Other sources can be found in the [JUnit 5 docs](https://junit.org/junit5/docs/current/user-guide/#writing-tests-parameterized-tests-sources). Each string in the `CsvSource` gives one test. Such a string consists of the arguments for the test function separated by commas. The first value is the first argument, the second value the second argument etc.
 
-{% include example-begin.html %}
+
+
 With the parameterized test we can easily create all tests we need for MC/DC of the decision table in the previous examples.
 
 ```java
@@ -305,16 +309,21 @@ public void pricePerMonthTest(boolean international, boolean autoRenewal,
 
 You can see that the test is very similar as the tests in the previous example.
 Instead of directly using the values for one combination we use the parameters with the `CsvSource` to execute multiple tests.
-{% include example-end.html %}
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/tzcjDhdQfvM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "tzcjDhdQfvM" %}
+{% include "includes/youtube.md" %}
 
 ### Non-binary choices and final guidelines
 
-{% assign todo = "Write the video's accompanying text" %}
-{% include todo.html %}
+{% set todo = "Write the video's accompanying text" %}
+{% include "includes/todo.md" %}
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/RHB_HaGfNjM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+{% set video_id = "RHB_HaGfNjM" %}
+{% include "includes/youtube.md" %}
+
+
 
 
 ## State Machines
@@ -346,7 +355,6 @@ For the state diagrams that means we use the following symbols:
 - Event: ![](/assets/img/model-based-testing/uml/event_symbol.svg)
 - Initial state: ![](/assets/img/model-based-testing/uml/initial_state_symbol.svg)
 
-{% include example-begin.html %}
 For the coming examples we model a (part of a) phone.
 We start very simple with a state machines that models the phone's ability to be locked or unlocked.
 
@@ -361,7 +369,8 @@ We can use these events in the state machine.
 In the diagram the initial state is `LOCKED`.
 Usually when someone starts using their phone, it is locked.
 Therefore the initial state of the state machine should also be `LOCKED`.
-{% include example-end.html %}
+
+
 
 Sometimes an event can lead to multiple states, depending on a certain condition.
 To model this in the state machines, we use conditional transitions.
@@ -374,7 +383,7 @@ The notation for conditions and actions is as follows:
 - Conditional transition: ![](/assets/img/model-based-testing/uml/conditional_symbol.svg)
 - Action: ![](/assets/img/model-based-testing/uml/action_symbol.svg)
 
-{% include example-begin.html %}
+
 When a user types the wrong password for four times in a row, the phone gets blocked.
 We use `n` in the model to represent the amount of failed attempts.
 Let's look at the conditional transitions that we need to model this behavior first.
@@ -393,11 +402,15 @@ We can add actions to the state machine to make `n` change correctly.
 
 The added actions are setting `n` to `n+1` when an incorrect password is given and to 0 when a correct password is given.
 This way the state machine will be in the `BLOCKED` state when a wrong password is given for four times in a row.
-{% include example-end.html %}
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/h4u9k-P3W0U" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/O1_oC-7I5E4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "h4u9k-P3W0U" %}
+{% include "includes/youtube.md" %}
+
+
+{% set video_id = "O1_oC-7I5E4" %}
+{% include "includes/youtube.md" %}
+
 
 ### Testing state-machines
 
@@ -426,7 +439,7 @@ To test a single transition (for transition coverage) a bit more steps are neede
 4. If there is an action: check if this action has happened
 5. Assert that the system now is in the new state that the transition points to
 
-{% include example-begin.html %}
+
 To achieve full state coverage we need to arrive in each state once.
 For the phone example we have three states so we can make three tests.
 
@@ -440,7 +453,8 @@ With the tests above, we have covered most of the transitions as well.
 The only untested transition is the `lock button` from `UNLOCKED` to `LOCKED`.
 To test this transition, we bring the system in `UNLOCKED` by giving the correct password.
 Then we trigger the `lock button` and assert that the system is in `LOCKED`.
-{% include example-end.html %}
+
+
 
 
 #### Paths and Transition trees
@@ -462,15 +476,14 @@ Such a transition tree is created as follows:
 
 1. The root node is named as the initial state of the state machine
 2. For each of the nodes at the lowest level of the transition tree:
-  - If the state that the node corresponds to has not been covered before: \\
-    For each of the outgoing transitions of this node's state: \\
+  - If the state that the node corresponds to has not been covered before: 
+    For each of the outgoing transitions of this node's state: 
       Add a child node that has the name of the state the transition points to. If this state is already in the tree, add or increment a number after the state's name to keep the node unique
-  - If any nodes were added: \\
+  - If any nodes were added: 
      Repeat from step 2.
 
 This is also demonstrated in the example below.
 
-{% include example-begin.html %}
 To make the transition table a bit more interesting we modify the phone's state machine to have an `OFF` state instead of a `BLOCKED` state.
 See the state machine below:
 
@@ -493,7 +506,8 @@ Therefore this is the only node we should add children to.
 ![Final phone transition tree](/assets/img/model-based-testing/examples/transition_tree/transition_tree_3.svg)
 
 Now all the states of the nodes in the lowest layer have been visited before so the transition tree is done.
-{% include example-end.html %}
+
+
 
 From a transition tree, we can derive tests.
 Each leaf node in the transition tree represents one path to test.
@@ -503,7 +517,7 @@ Then, we trigger the next event that is needed for the given path and assert tha
 These events that we need to trigger can be found in the state machine.
 Then this is done until the whole path is followed.
 
-{% include example-begin.html %}
+
 In the transition tree of the previous example there are four leaf nodes: `OFF_1`, `OFF_2`, `LOCKED_1`, `LOCKED_2`.
 We want a test for each of these leaf nodes, that follows the path leading to that node.
 For `OFF_1` the test should 'move' the system from `OFF` to `LOCKED` and again to `OFF`.
@@ -511,12 +525,15 @@ Looking at the state machine this gives the events `home`, `long lock button`.
 In the test we would assert that the system is in `OFF`, then trigger `home`, assert that the system is in `LOCKED`, trigger `long lock button` and finally assert that the system is in `OFF`.
 
 The tests for the other three paths can be derived in similar fashion.
-{% include example-end.html %}
+
+
 
 Using the transition tree, each loop that is in the state machine is executed once.
 Now the amount of tests are manageable, while testing most of the important paths in the state machine.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/pvFPzvp5Dk0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "pvFPzvp5Dk0" %}
+{% include "includes/youtube.md" %}
+
 
 #### Sneak paths and Transition tables
 
@@ -566,7 +583,7 @@ We construct a transition table as follows:
 - List all events along the columns
 - For each transition in the state machine note its destination state in the correct cell of the transition table.
 
-{% include example-begin.html %}
+
 We take a look at the same state machine we created a transition table for:
 ![](/assets/img/model-based-testing/examples/phone_off_machine.svg)
 
@@ -651,7 +668,8 @@ Then we fill the table with the states that the transitions in the state machine
 </table>
 
 We can see that there is, for example, a transition from `UNLOCKED` to `LOCKED` when the event `lock button` is triggered.
-{% include example-end.html %}
+
+
 
 Now that we have the transition table, we have to decide the intended behavior for the cells that are empty.
 The default is to just ignore the event and stay in the same state.
@@ -668,7 +686,10 @@ With these tests we can verify both existing and non-existing paths.
 These techniques combined give a good testing suite from a state machine.
 So far, we looked at rather simple and small state machines.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/EMZB2IZT8WA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "EMZB2IZT8WA" %}
+{% include "includes/youtube.md" %}
+
+
 
 ### Super states and regions
 
@@ -697,7 +718,7 @@ This state has the super state's name and the same incoming and outgoing transit
 With the super states and the collapsing of super states we can modularize and combine state machines.
 This allows us to shift the state machine's focus to different parts of the system's behavior.
 
-{% include example-begin.html %}
+
 We can use a super state even in the small example of a phone's state machine.
 The two states `LOCKED` and `UNLOCKED` both represent the system in some sort of `ON` state.
 We can use this to create a super state called `ON`.
@@ -707,7 +728,8 @@ We can use this to create a super state called `ON`.
 Now we can also simplify the state machine by collapsing the super state:
 
 ![Collapsed super state example](/assets/img/model-based-testing/examples/phone_collapsed.svg)
-{% include example-end.html %}
+
+
 
 #### Regions
 
@@ -730,7 +752,6 @@ We will not cover how to expand the regions because of this reason.
 
 In general it is best to use small state machine and link these together using super states and regions.
 
-{% include example-begin.html %}
 So far when the phone was `ON` we modeled the `LOCKED` and `UNLOCKED` state.
 When the phone is on, it drains the battery.
 The system keeps track of the level of the battery.
@@ -743,9 +764,11 @@ the state machine looks like the following, with the new battery states and the 
 
 You can see that we assumed the battery to start in the normal level state.
 Therefore, when the system transitions to the `ON` state it will be in both `LOCKED` and `NORMAL BATTERY` states at once.
-{% include example-end.html %}
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/D0IQxdjI0M0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "D0IQxdjI0M0" %}
+{% include "includes/youtube.md" %}
+
+
 
 ### Implementing state-based testing in practice
 
@@ -792,7 +815,8 @@ Triggering a transition is just one method call and checking the state also requ
 Creating these abstraction layers is very common when testing web applications.
 In this context, the abstractions are called **Page Objects**.
 
-{% include example-begin.html %}
+
+
 An example of a page object is shown in the diagram, made by Martin Fowler, below:
 
 ![Page Objects diagram by Martin Fowler](/assets/img/model-based-testing/page_objects.png)
@@ -808,7 +832,8 @@ The page objects implement these methods by using the API provided by the tool.
 
 Then, the tests use these methods instead of the ones about the HTML elements.
 Because we are using methods that correspond to the application itself, they will be more readable than tests without the page objects.
-{% include example-end.html %}
+
+
 
 #### State Objects
 
@@ -843,7 +868,8 @@ A scenario consists of the following:
 - When ...: The action taken.
 - Then ...: The result at the end of the scenario.
 
-{% include example-begin.html %}
+
+
 Let's look at a scenario for an ATM.
 If we have a balance of $100, a valid card and enough money in the machine, we can give a certain amount of money requested by the user.
 Together with the money, the card should be given back, and the balance of the account should be decreased.
@@ -870,7 +896,6 @@ The small introduction above the scenario itself is part of the user story.
 A user story usually consists of multiple scenario's with respect to the user introduced.
 This user is the account holder in this example.
 
-{% include example-end.html %}
 
 With the general `Given`, `When`, `Then` structure we can describe a state transition as a scenario.
 In general the scenario for a state transition looks like this:
@@ -885,9 +910,14 @@ Then  the application conducts an action
 Each scenario will be able to cover only one transition.
 To get an overview of the system as a whole we will still have to draw the entire state machine.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/NMGX7TEMXdE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "NMGX7TEMXdE" %}
+{% include "includes/youtube.md" %}
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/gijO3mlcMCg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+{% set video_id = "gijO3mlcMCg" %}
+{% include "includes/youtube.md" %}
+
+
 
 ## Other examples of real-world models
 
@@ -897,18 +927,10 @@ to send a notification of a message. Impressive, isn't it?
 ![How Slack decides to send notifications to users](/assets/img/model-based-testing/examples/slack.jpg)
 
 
-## References
-
-* Chapter 4 of the Foundations of software testing: ISTQB certification. Graham, Dorothy, Erik Van Veenendaal, and Isabel Evans, Cengage Learning EMEA, 2008.
-
-* van Deursen, A. (2015). Beyond Page Objects: Testing Web Applications with State Objects. ACM Queue, 13(6), 20.
-
 ## Exercises
 
-Here you find some exercises to practise the material of this chapter with.
-For each of the exercises the answers are provided directly beneath the question.
 
-{% include exercise-begin.html %}
+**Exercise 1.**
 The *ColdHot* air conditioning system has the following requirements:
 
 - When the user turns it on, the machine is in an *idle* state.
@@ -917,165 +939,42 @@ The *ColdHot* air conditioning system has the following requirements:
 - If the user *turns it off*, the machine is *off*. If the user *turns it on* again, the machine is back to *idle*.
 
 Draw a minimal state machine to represent these requirements.
-{% include answer-begin.html %}
 
-![](/assets/img/model-based-testing/exercises/coldhot_state_machine.svg)
 
-You should not need more than 4 states.
-{% include exercise-answer-end.html %}
-
-{% include exercise-begin.html %}
+**Exercise 2.**
 Derive the transition tree from the state machine of the assignment above.
-{% include answer-begin.html %}
 
-![](/assets/img/model-based-testing/exercises/coldhot_transition_tree.svg)
 
-{% include exercise-answer-end.html %}
-
-{% include exercise-begin.html %}
+**Exercise 3.**
 Now derive the transition table of the *ColdHot* state machine.
 
 How many sneaky paths can we test based on the transition table?
-{% include answer-begin.html %}
-<table>
-  <tr>
-    <td></td>
-    <td>temperature reached</td>
-    <td>too hot</td>
-    <td>too cold</td>
-    <td>turn on</td>
-    <td>turn off</td>
-  </tr>
-  <tr>
-    <td>Idle</td>
-    <td></td>
-    <td>Cooling</td>
-    <td>Heating</td>
-    <td></td>
-    <td>Off</td>
-  </tr>
-  <tr>
-    <td>Cooling</td>
-    <td>Idle</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>Heating</td>
-    <td>Idle</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>Off</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td>Idle</td>
-    <td></td>
-  </tr>
-</table>
 
-There are 14 empty cells in the table, so there are 14 sneaky paths that we can test.
-{% include exercise-answer-end.html %}
 
-{% include exercise-begin.html %}
+**Exercise 4.**
 Draw the transition tree of the following state machine:
 
 ![](/assets/img/model-based-testing/exercises/order_state_machine.svg)
 
 Use sensible naming for the states in your transition tree.
-{% include answer-begin.html %}
-![](/assets/img/model-based-testing/exercises/order_transition_tree.svg)
-{% include exercise-answer-end.html %}
 
-{% include exercise-begin.html %}
+
+**Exercise 5.**
 With the transition tree you devised in the previous exercise and the state machine in that exercise.
 What is the transition coverage of a test that the following events: [order placed, order received, order fullfiled, order delivered]?
-{% include answer-begin.html %}
-We have a total of 6 transitions.
-Of these transitions the four given in the test are covered and order cancelled and order resumed are not.
-This coves a transition coverage of $$\frac{4}{6} \cdot 100\% = 66.7\%$$
-{% include exercise-answer-end.html %}
 
-{% include exercise-begin.html %}
+
+**Exercise 6.**
 Devise the decision table of the state machine that was given in the exercise above.
 Ignore the initial transition `Order placed`.
-{% include answer-begin.html %}
-<table>
-  <tr>
-    <td>STATES</td>
-    <td colspan="5">Events</td>
-  </tr>
-  <tr>
-    <td></td>
-    <td>Order received</td>
-    <td>Order cancelled</td>
-    <td>Order resumed</td>
-    <td>Order fulfilled</td>
-    <td>Order delivered</td>
-  </tr>
-  <tr>
-    <td>Submitted</td>
-    <td>Processing</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>Processing</td>
-    <td></td>
-    <td>Cancelled</td>
-    <td></td>
-    <td>Shipped</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>Cancelled</td>
-    <td></td>
-    <td></td>
-    <td>Processing</td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>Shipped</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td>Completed</td>
-  </tr>
-  <tr>
-    <td>Completed</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-</table>
-{% include exercise-answer-end.html %}
 
-{% include exercise-begin.html %}
+
+**Exercise 7.**
 How many sneak paths are there in the state machine we used in the previous exercises?
 Again ignoring the initial `Order placed` transition.
-{% include answer-begin.html %}
-20.
 
-There are 20 empty cells in the decision table.
 
-Also we have 5 states.
-This means $$5 \cdot 5 = 25$$ possible transitions.
-The state machine gives 5 explicit transitions so we have $$25 - 5 = 20$$ sneak paths.
-{% include exercise-answer-end.html %}
-
-{% include exercise-begin.html %}
+**Exercise 8.**
 Consider the following decision table:
 <table>
   <tr><th>Criteria</th><th colspan="6">Options</th></tr>
@@ -1088,36 +987,16 @@ Consider the following decision table:
 Which decision do we have to test for full MC/DC?
 
 Use as few decisions as possible.
-{% include answer-begin.html %}
 
-First we find pairs of decisions that are suitable for MC/DC: (We indicate a decision as a sequence of T and F. TTT would mean all conditions true and TFF means C1 true and C2, C3 false)
 
-- C1: {TTT, FTT}, {FTF, TTF}, {FFF, TFF}, {FFT, TFT}
-- C2: {TTT, TFT}, {TFF, TTF}
-- C3: {TTT, TTF}, {FFF, FFT}, {FTF, FTT}, {TFF, TFT},
 
-All condition can use the TTT decision, so we will use that.
-Then we can add FTT, TFT and TTF.
-Now we test each condition individually with it changing the outcome.
 
-It might look line we are done, but MC/DC requires each action to be covered at least once.
-To achieve this we add the FFF and TFF decision as test cases.
-
-In this case we need to test each explicit decision in the decision table.
-
-{% include exercise-answer-end.html %}
-
-{% include exercise-begin.html %}
+**Exercise 9.**
 See the following generic state machine.
 
 ![](/assets/img/model-based-testing/exercises/generic_state_machine.svg)
 
 Draw the transition tree of this state machine.
-{% include answer-begin.html %}
-
-![](/assets/img/model-based-testing/exercises/generic_transition_tree.svg)
-
-{% include exercise-answer-end.html %}
 
 
 
@@ -1125,10 +1004,7 @@ Draw the transition tree of this state machine.
 
 
 
-{% include exercise-begin.html %}
-
-
-
+**Exercise 10.**
 The advertisement (ad) feature is an important source of income for the company. Because of that, the life cycle of an ad needs to be better modelled. 
 Our product team defined the following rules:
 
@@ -1142,25 +1018,7 @@ Our product team defined the following rules:
 Devise a state diagram that describes the life cycle of an ad.
 
 
-{% include answer-begin.html %}
-
-![](/assets/img/model-based-testing/exercises/ads.png)
-
-{% include exercise-answer-end.html %}
-
-
-
-
-
-
-
-
-
-
-
-
-{% include exercise-begin.html %}
-
+**Exercise 11.**
 A microwave oven has the following requirements:
 
 * Its initial state is `OFF`.
@@ -1173,28 +1031,10 @@ Draw a minimal state machine to represent the requirements. For this question do
 Also, remember that, if a transition is not specified in the requirements, it simply does not exist, and thus, should not be represented in the state machine.
 
 
-{% include answer-begin.html %}
-
-![](/assets/img/model-based-testing/exercises/solution-microwave-statemachine.png)
-
-{% include exercise-answer-end.html %}
-
-
-
-
-{% include exercise-begin.html %}
-
+**Exercise 12.**
 Devise a state transition tree for the microwave state machine.
 
-{% include answer-begin.html %}
-
-
-![](/assets/img/model-based-testing/exercises/solution-microwave-transitiontree.png)
-
-{% include exercise-answer-end.html %}
-
-{% include exercise-begin.html %}
-
+**Exercise 13.**
 Again consider the state machine requirements for the microwave.
 There appears to be some redundancy in the defrosting and warming up functionality, which potentially can be described using super states (also called OR-states).
 Which effect does this have on the total number of states and transitions for the resulting diagram with a super state?
@@ -1205,23 +1045,8 @@ Which effect does this have on the total number of states and transitions for th
 4. This has no effect on the total number of states and transitions.
 
 
-{% include answer-begin.html %}
 
-There will be one extra super state (ACTIVE), which will be a superstate of the existing WARMING and DEFROSTING states. The edges from ON to WARMING and DEFROSTING will remain.
-The two (cancel and time out) outgoing edges from WARMING and DEFROSTING (four edges in total) will be replaced by two edges going out of the super ACTIVE state.
-So there will be two fewer transitions.
-
-{% include exercise-answer-end.html %}
-
-
-
-
-
-
-
-
-{% include exercise-begin.html %}
-
+**Exercise 14.**
 See the requirement below:
 
 ```
@@ -1240,19 +1065,6 @@ Create a decision table that takes the three conditions and their respective out
 *Note: conditions should be modeled as boolean decisions.*
 
 
-{% include answer-begin.html %}
-
-
-||C1|C2|C3|C4|C5|C6|C7|C8|
-|Valid format?|T|T|T|T|F|F|F|F|
-|Valid size?|T|T|F|F|T|T|F|F|
-|High resolution?|T|F|T|F|T|F|T|F|
-|-|-|-|-|-|-|-|-|-|
-|Outcome|success|success|fail|fail|fail|fail|fail|fail|
-
-
-
-{% include exercise-answer-end.html %}
 
 
 
@@ -1260,9 +1072,7 @@ Create a decision table that takes the three conditions and their respective out
 
 
 
-{% include exercise-begin.html %}
-
-
+**Exercise 15**
 Twitter is a software system that enables users to share short messages within their friends. 
 Twitter's revenue model is ultimately based on advertisements ("ads").
 Twitter's system needs to decide when to serve ads to its users, and which ones. For a given user a given ad can be *highly-relevant*, and the system seeks to serve the most relevant ads as often as possible without scaring users away.
@@ -1278,15 +1088,12 @@ The complete table would have four conditions and 16 variants. We will try to cr
 
 One way is to focus on the positive cases only, i.e., specify only the variants in which ad *A* is being served to user *U*. If you don't use 'DC' (don't care) values, how will the decision table look like?
 
-{% include answer-begin.html %}
 
-| | T1 | T2 | T3 |
-|User active in past two weeks      | T | T | T| 
-|User has seen ad in last two hours | F | F | F| 
-|User has over 1000 followers       | T | F | F| 
-|Ad is highly relevant to user      | T | T | F| 
-|-|-|-|-|
-|Serve ad?                          | T | T | T| 
 
-{% include exercise-answer-end.html %}
+
+## References
+
+* Chapter 4 of the Foundations of software testing: ISTQB certification. Graham, Dorothy, Erik Van Veenendaal, and Isabel Evans, Cengage Learning EMEA, 2008.
+
+* van Deursen, A. (2015). Beyond Page Objects: Testing Web Applications with State Objects. ACM Queue, 13(6), 20.
 
