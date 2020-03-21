@@ -6,7 +6,7 @@
 	* [Software testing automation](test-automation.md)
 
 * Testing techniques
-	* Specification-based testing
+	* [Specification-based testing](specification-based-testing.md)
 	* Boundary testing
 	* Structural-based testing
 	* Model-based testing
