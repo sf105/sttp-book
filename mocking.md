@@ -1,12 +1,5 @@
----
-chapter-number: 9
-title: Mock Objects
-layout: chapter
-toc: true
-author: Maurício Aniche
----
+# Mock Objects
 
-## Introduction
 
 When unit testing a piece of code, we want to test it in isolation.
 However, if the code requires some external dependency to run, e.g.,
@@ -54,7 +47,7 @@ To perform the steps we mentioned above, we use a couple of methods provided by 
 
 Much more functionalities are described in [Mockito's documentation](https://javadoc.io/page/org.mockito/mockito-core/latest/org/mockito/Mockito.html).
 
-{% include example-begin.html %}
+
 Suppose we have a method that filters invoices.
 These invoices are saved in a database and retrieved from the database by this function.
 The invoices are filtered on their price.
@@ -104,7 +97,9 @@ public void filterInvoicesTest() {
 
 And of course, clear the database afterwards. Otherwise the test will break in the second run, as there will be two invoices stored in the database! (The database stores data permanenty; so far, we never had to 'clean' the objects; after all, they were always stored in-memory only.)
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/0WY7IWbANd8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "0WY7IWbANd8" %}
+{% include "includes/youtube.md" %}
+
 
 Now instead of using the database, we want to replace it with a mock object.
 This way our test will be faster and we can more easily control what the Database-Access-Object returns.
@@ -165,50 +160,46 @@ With the mock, we can easily give the two invoices that we want to test on (note
 we are passing `i1` and `i2`.
 Note also how we do not have to keep a database running while executing the tests!
 
-{% include example-end.html %}
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/kptTWbeLZ3E" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/baunKy04deM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "kptTWbeLZ3E" %}
+{% include "includes/youtube.md" %}
+
+{% set video_id = "baunKy04deM" %}
+{% include "includes/youtube.md" %}
+
 
 
 ## More about Mockito
 
-{% assign todo = "Add one more example with Mockito here, using the verify()" %}
-{% include todo.html %}
+{% set todo = "Add one more example with Mockito here, using the verify()" %}
+{% include "includes/todo.md" %}
 
-{% assign todo = "Add one more example with Mockito here, using the spy()" %}
-{% include todo.html %}
+{% set todo = "Add one more example with Mockito here, using the spy()" %}
+{% include "includes/todo.md" %}
 
 ## Dealing with static methods
 
-{% assign todo = "Discuss how to add an abstraction on top of a static method, so that testing becomes easier." %}
-{% include todo.html %}
+{% set todo = "Discuss how to add an abstraction on top of a static method, so that testing becomes easier." %}
+{% include "includes/todo.md" %}
 
 ## Dealing with APIs you don't control
 
-{% assign todo = "Discuss how to add an abstraction on top of things you don't control, e.g., Clock." %}
-{% include todo.html %}
+{% set todo = "Discuss how to add an abstraction on top of things you don't control, e.g., Clock." %}
+{% include "includes/todo.md" %}
 
 ## Mocking in practice: when to mock?
 
-{% assign todo = "Discuss here when to mock" %}
-{% include todo.html %}
+{% set todo = "Discuss here when to mock" %}
+{% include "includes/todo.md" %}
 
 Mocks are a useful tool when it comes to write real isolated unit tests.
-
-## References
-
-* Fowler, Martin. Mocks aren't stubs. https://martinfowler.com/articles/mocksArentStubs.html
-
-* Mockito's website: https://site.mockito.org
-
 
 
 ## Exercises
 
-{% include exercise-begin.html %}
 
+**Exercise 1.**
 See the following class:
 
 ```java
@@ -249,20 +240,8 @@ Which of the following Mockito lines would never appear in a test for the `Order
 3. `Mockito.when(dao.paidButNotDelivered()).thenReturn(list);` (assume `dao` is an instance of `OrderDao` and `list` is an instance of `List<Order>`)
 4. `OrderDeliveryBatch batch = Mockito.mock(OrderDeliveryBatch.class);`
 
-{% include answer-begin.html %}
-The correct answer is 4.
 
-1. This line is required to create a mock for the `OrderDao` class.
-2. With this line we check that the methods calls start with `order` on a `delivery` mock we defined. The method is supposed to start each order that is paid but not delivered.
-3. With this line we define the behavior of the `paidButNotDelivered` method by telling the mock that it should return an earlier defined `list`.
-4. We would never see this happen in a test that is testing the `OrderDeliveryBatch` class. By mocking the class we do not use any of its implementation. But the implementation is the exact thing we want to test. In general we never mock the class under test.
-
-{% include exercise-answer-end.html %}
-
-
-
-{% include exercise-begin.html %}
-
+**Exercise 2.**
 You are testing a system that triggers advanced events based on complex combinations of Boolean external conditions relating to the weather (outside temperature, amount of rain, wind, ...). 
 The system has been cleanly designed and consists of a set of cooperating classes that each have a single responsibility.
 You create a decision table for this logic, and decide to test it using mocks. Which is a valid test strategy?
@@ -273,17 +252,12 @@ You create a decision table for this logic, and decide to test it using mocks. W
 3. You use mocks to control the external conditions and to observe the event being triggered.
 4. You use mocks to control the triggered events.
 
-{% include answer-begin.html %}
-
-You need mocks to both control and observe the behavior of the (external) conditions you mocked.
-
-{% include exercise-answer-end.html %}
 
 
 
 
 
-{% include exercise-begin.html %}
+**Exercise 3.**
 Below, we show the `InvoiceFilter` class. This class is responsible for returning all the invoices that have an amount smaller than 100.0. It makes use of the InvoiceDAO class, which is responsible for the communication with the database.
 
 ```java
@@ -316,17 +290,9 @@ Which of the following statements is **false** about this class?
 2. Its implementation allows for dependency injection, which enables mocking.
 3. It is possible to write completely isolated unit tests for it by, e.g., using mocks.
 4. The InvoiceDao class (a direct dependency of the InvoiceFilter) itself should be tested by means of integration tests.
-{% include answer-begin.html %}
-
-Option 1 is the false one. We can definitely get to 100% branch coverage there with the help of mocks.
-{% include exercise-answer-end.html %}
 
 
-
-
-
-{% include exercise-begin.html %}
-
+**Exercise 4.**
 Class A depends on a static method in another class B.
 Suppose you want to test class A, which approach(es) can you take to be able to test properly?
 
@@ -339,13 +305,10 @@ Suppose you want to test class A, which approach(es) can you take to be able to 
 1. Both.
 
 
-{% include answer-begin.html %}
+## References
 
-Only approach 2.
+* Fowler, Martin. Mocks aren't stubs. https://martinfowler.com/articles/mocksArentStubs.html
 
-{% include exercise-answer-end.html %}
-
-
-
+* Mockito's website: https://site.mockito.org
 
 

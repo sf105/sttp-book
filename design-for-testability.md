@@ -1,10 +1,4 @@
----
-chapter-number: 10
-title: Design for Testability
-layout: chapter
-toc: true
-author: Maurício Aniche
----
+# Design for Testability
 
 ## Introduction
 
@@ -21,7 +15,9 @@ We know that automated tests are crucial in software development; therefore, it 
 In this chapter, we'll discuss some design practices that increases
 the testability of our software systems.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/iVJNaG3iqrQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "iVJNaG3iqrQ" %}
+{% include "includes/youtube.md" %}
+
 
 ## Dependency Injection
 
@@ -38,8 +34,6 @@ We can do the same when managing the dependencies in our code.
 Instead of the class instantiating dependency itself, the class asks for the dependency (via constructor or a setter, for example).
 
 We actually applied this idea in the Mocking chapter already. But let's revisit it:
-
-{% include example-begin.html %}
 In the Mockito example, it was easy to make the `InvoiveFilter` use the mock.
 Let's assume that the `InvoiveFilter` is implemented as follows:
 
@@ -83,7 +77,7 @@ Now we can instantiate the `InvoiceFilter` and pass it a `InvoiceDao` mock in th
 
 This simple change in the design of the class makes the creation of
 automated tests easier and, therefore, increases the testability of the code.
-{% include example-end.html %}
+
 
 The dependency injection principle improves our code in many ways:
 
@@ -92,7 +86,10 @@ The dependency injection principle improves our code in many ways:
 be injected (via constructor, for example).
 * The class becomes more extensible. As a client of the class, you can pass any dependency via the constructor. Suppose a class depends on a type `A` (and receives it via constructor). As a client, you can pass `A` or any implementation of `A`, e.g., if `A` is `List`, you can pass `ArrayList` or `LinkedList`. Your class now can work with many different implementations of `A`. (You should read more about the Open/Closed Principle).
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/mGdsdBEWB5E" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+{% set video_id = "mGdsdBEWB5E" %}
+{% include "includes/youtube.md" %}
+
 
 
 ## Ports and Adapters
@@ -133,7 +130,10 @@ directly. Create a layer that abstracts the infrastructure away! This layer can 
 *Note:* The idea of separating the domain and the infrastructure is also intensively
 discussed in the Domain-Driven Design book (which we recommend you to read!).
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/hv1XV87lJgA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "hv1XV87lJgA" %}
+{% include "includes/youtube.md" %}
+
+
 
 ## Design for testability tips
 
@@ -157,19 +157,15 @@ We end this chapter with a couple of practical tips that you can use to create a
 
 Note how there is a [deep synergy between well design production code and testability](https://www.youtube.com/watch?v=4cVZvoFGJTU)!
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/VaScxLhsDBQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "VaScxLhsDBQ" %}
+{% include "includes/youtube.md" %}
 
-## References
-
-* Cockburn, Alistair. The Hexagonal Architecture. https://wiki.c2.com/?HexagonalArchitecture
-
-* Hevery, Misko. The Testability Guide. http://misko.hevery.com/attachments/Guide-Writing%20Testable%20Code.pdf
 
 
 ## Exercises
 
 
-{% include exercise-begin.html %}
+**Exercise 1.**
 How can we improve the testability of the `OrderDeliveryBatch` class?
 
 ```java
@@ -204,67 +200,9 @@ class DeliveryStartProcess {
 ```
 
 What techniques can we apply? What would the new implementation look like? Think about what you would need to do to test the `OrderDeliveryBatch` class.
-{% include answer-begin.html %}
-To test just the `runBatch` method of `OrderDeliveryBatch` (for example in a unit test) we need to be able to use mocks for at least the `dao` and `delivery` objects.
-In the current implementation this is not possible, as we cannot change `dao` or `delivery` from outside.
-In other words: We want to improve the controllability to improve the testability.
-
-The technique that we use to do so is called dependency injection.
-We can give the `dao` and `delivery` in a parameter of the method:
-
-```java
-public class OrderDeliveryBatch {
-
-  public void runBatch(OrderDao dao, DeliveryStartProcess delivery) {
-    List<Order> orders = dao.paidButNotDelivered();
-
-    for (Order order : orders) {
-      delivery.start(order);
-
-      if (order.isInternational()) {
-        order.setDeliveryDate("5 days from now");
-      } else {
-        order.setDeliveryDate("2 days from now");
-      }
-    }
-  }
-}
-```
-
-Alternatively we can create fields for the `dao` and `delivery` and a constructor that sets the fields:
-
-```java
-public class OrderDeliveryBatch {
-
-  private OrderDao dao;
-  private DeliveryStartProcess delivery;
-
-  public OrderDeliveryBatch(OrderDao dao, DeliveryStartProcess delivery) {
-    this.dao = dao;
-    this.delivery = delivery;
-  }
-
-  public void runBatch() {
-    List<Order> orders = dao.paidButNotDelivered();
-
-    for (Order order : orders) {
-      delivery.start(order);
-
-      if (order.isInternational()) {
-        order.setDeliveryDate("5 days from now");
-      } else {
-        order.setDeliveryDate("2 days from now");
-      }
-    }
-  }
-}
-```
-
-{% include exercise-answer-end.html %}
 
 
-
-{% include exercise-begin.html %}
+**Exercise 2.**
 Consider the following requirement and implementation.
 
 ```text
@@ -293,17 +231,11 @@ Why does this class have bad testability?
 What can we do to improve the testability?
 
 I.e. what makes it very hard to test the method?
-{% include answer-begin.html %}
-The method and class lack controllability.
-We cannot change the values that `Calender` gives in the method because the `getInstance` method is static.
-Mockito cannot really mock static methods, which is why we tend to avoid using static methods.
-
-We can use depencency injection to make sure we can control the `today` object by using a mock.
-{% include exercise-answer-end.html %}
 
 
 
-{% include exercise-begin.html %}
+
+**Exercise 3.**
 Sarah just joined a mobile app team that has been trying to write automated tests for a while.
 The team wants to write unit tests for some part of their code, but "that's really hard", according to the developers.
 
@@ -320,23 +252,9 @@ Which items should Sarah recommend them to tackle first?
 
 Note: All of the four issues should obviously be fixed.
 However, try to prioritize the two most important onces: Which influence the testability the most?
-{% include answer-begin.html %}
-The correct answer is 1 and 3.
 
-As we discussed it is very important to keep the domain and infrastructure separated for the testability.
-This can be done, for example, by using Ports and Adapters.
 
-Static methods cannot be mocked and are therefore very bad for the controllability of the code.
-Code that has low controllability also has a low testability, so replacing the static methods by non-static ones will be very beneficial to the testability.
-
-The large tables and lack of indices do not really influence the testability, especially not when talking about unit tests.
-There we end up mocking the classes interacting with the database anyway.
-
-Too many attributes/fields can hurt testability as we might need to create a lot of mocks for just one class under test.
-However, the static methods and mixed domain and infrastructure are worse for the testability than a large amount of attributes/fields.
-{% include exercise-answer-end.html %}
-
-{% include exercise-begin.html %}
+**Exercise 4.**
 Observability and controllability are two important concepts when it comes to software testing.
 The three developers below could benefit from improving either the observability or the controllability of the system/class under test.
 
@@ -344,11 +262,14 @@ The three developers below could benefit from improving either the observability
 2. "I need to make sure this class starts with that boolean set to false, but I simply can't do it."
 3. "I just instantiated the mock object, but there's simply no way to inject it in the class."
 
-For each developer's problem, is it related to observability or controllability?
-{% include answer-begin.html %}
+For each of the problems above: is it related to observability or controllability?
 
-1. Observability: The developer needs to be able to better observe the result.
-2. Controllability: The developer has to be able to change (control) a certain variable or field.
-3. Controllability: The developer should be able to control what instance of a class the class under test uses.
 
-{% include exercise-answer-end.html %}
+
+## References
+
+* Cockburn, Alistair. The Hexagonal Architecture. https://wiki.c2.com/?HexagonalArchitecture
+
+* Hevery, Misko. The Testability Guide. http://misko.hevery.com/attachments/Guide-Writing%20Testable%20Code.pdf
+
+* Michael Feathers. The deep synergy between well design production code and testability. https://www.youtube.com/watch?v=4cVZvoFGJTU

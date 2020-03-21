@@ -10,15 +10,14 @@
 	* [Boundary testing](boundary-testing.md)
 	* [Structural-based testing](structural-testing.md)
 	* [Model-based testing](model-based-testing.md)
+	* Design by contracts and Property-based testing
 
-* Design for testability
+* Pragmatic software testing
 	* [The testing pyramid](testing-pyramid.md)
-	* Mock objects
-	* Design for testability
+	* [Mock objects](mocking.md)
+	* [Design for testability](design-for-testability.md)
 	* Test-Driven Development
 	* Test code quality
-	* Design by contracts
-	* Property-based testing
 
 * Automated software testing
 	* Mutation testing

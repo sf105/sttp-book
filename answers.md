@@ -13,3 +13,7 @@
 {% include "answers/an-model-based-testing.md" %}
 
 {% include "answers/an-testing-pyramid.md" %}
+
+{% include "answers/an-mock-objects.md" %}
+
+{% include "answers/an-design-for-testability.md" %}
