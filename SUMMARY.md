@@ -20,8 +20,8 @@
 	* [Test code quality](test-code-quality.md)
 
 * Automated software testing
-	* Mutation testing
-	* Fuzzing testing
+	* [Mutation testing](mutation-testing.md)
+	* [Fuzzing testing](fuzzing.md)
 
 * Testing in the enterprise
 	* Web testing (soon)

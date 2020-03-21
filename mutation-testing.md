@@ -1,10 +1,4 @@
----
-chapter-number: 14
-title: Mutation testing
-layout: chapter
-author: Annibale Panichella
-toc: true
----
+# Mutation testing
 
 How do we know if we tested enough?
 For example, in the structural-based testing chapter, we discussed line coverage, branch coverage, and MC/DC.
@@ -16,7 +10,6 @@ However, these criteria alone might not enough to determine the
 quality of the test cases.
 In practice, we can exercise a large part of the system, while testing very little.
 
-{% include example-begin.html %}
 Suppose a simple class with a single method:
 
 ```java
@@ -50,7 +43,6 @@ public void testZero() {
 These tests gets us to 100% branch coverage.
 However, you probably also noticed that something is missing in these tests: 
 **the assertions**! These tests will never fail!
-{% include example-end.html %}
 
 ## Fault Detection Capability
 
@@ -65,7 +57,7 @@ For a test to be adequate according to this criterion, it has to have a meaningf
 The fault detection capability, as a test adequacy criterion, is the fundamental idea behind **mutation testing**.
 In mutation testing, we change small parts of the code, and check if the tests can find the introduced fault.
 
-{% include example-begin.html %}
+
 In the previous example, we made a test suite that was not adequate at all, according to the fault detection capability.
 As there were no assertions, the tests would never find any faults in the code.
 
@@ -130,9 +122,11 @@ This indicates that the second test has a higher fault detection capability.
 Even though both tests exercise the method in the same way and execute the same lines, we see a difference in the fault detection capability.
 This is because of the different input values for the method and the different test oracles (assertions) in the tests.
 In this case, the input values and test oracle of the `testGetValuesDifferent()` test can better detect that bug.
-{% include example-end.html %}
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/QYbqz-gFWAk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+{% set video_id = "QYbqz-gFWAk" %}
+{% include "includes/youtube.md" %}
+
 
 ## Hypotheses for Mutation Testing
 
@@ -178,7 +172,6 @@ To talk about mutation testing in a depth way, let's define some terms:
 
 We illustrate mutation testing with these concepts in the example below.
 
-{% include example-begin.html %}
 Suppose we have a `Fraction` class with a method `invert()`.
 
 ```java
@@ -299,7 +292,7 @@ public class Fraction {
 
 We see that, again, the test suite catches this error.
 The test `testInvertZero()` will fail, as it expects an exception, but none is thrown in the mutant.
-{% include example-end.html %}
+
 
 ## Automation
 
@@ -326,7 +319,7 @@ We briefly go over some common mutation operators:
 - **AOR - Assignment Operator Replacement**: Replaces an assignment operator by another assignment operator. Assignment operators include `=`, `+=`, `-=`, `/=`.
 - **SVR - Scalar Variable Replacement**: Replaces each variable reference by another variable reference that has been declared in the code.
 
-{% include example-begin.html %}
+
 For each of the mutation operators, we provide an example.
 We first show the original code, and then the mutant that could be given by the mutant operator.
 
@@ -420,7 +413,6 @@ public class Division {
 }
 ```
 
-{% include example-end.html %}
 
 Specifically to Java, there are a lot of language-specific operators.
 We can, for example, change the inheritance of the class, remove an overriding method, or change some declaration types.
@@ -436,7 +428,8 @@ We will not go into detail about these language-specific mutant operators, but s
 Of course, there exist many more mutant operators that are used by mutant generators.
 For now, you should at least have an idea what mutation operators are, how they work and what we can use them for.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/KXQTWLyR5CA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "KXQTWLyR5CA" %}
+{% include "includes/youtube.md" %}
 
 ## Mutation Analysis and Testing
 
@@ -458,7 +451,7 @@ When performing mutation testing, we count the number of mutants our test suite 
 By counting the amount of each of these mutant groups, we can give a value to the quality of our test suite.\\
 We define the **Mutation Score** as:
 
-$$\text{Mutation score } = \frac{\text{#killed mutants}}{\text{#mutants}}$$
+$$\text{Mutation score } = \frac{\text{killed mutants}}{\text{mutants}}$$
 
 Computing this mutation score is what we call **mutation analysis**.
 More formally:\\
@@ -492,7 +485,6 @@ Here, the equivalence is related to the definition of program equivalence.
 Program equivalence roughly means that two programs are functionally equivalent when they produce the same output for every possible input.
 This is also the equivalence between the normal code and an equivalent mutant.
 
-{% include example-begin.html %}
 Let's have a look at the following method. We left some irrelevant parts out.
 
 ```java
@@ -528,13 +520,13 @@ The mutant works exactly the same, even though the condition is technically diff
 Because `index` will never be negative, the `==` operator does the same as the `<=` operator.
 
 The mutant produced by the generator is an equivalent mutant in this case.
-{% include example-end.html %}
 
 Because of these equivalent mutants, we need to change the mutation score formula.
-We do not want to take the equivalent mutants into account, as there is nothing wrong with the tests when they do not kill these mutants.\\
+We do not want to take the equivalent mutants into account, as there is nothing wrong with the tests when they do not kill these mutants.
+
 The new formula becomes:
 
-$$\text{Mutation score } = \frac{\text{#killed mutants}}{\text{#non-equiv. mutants}}$$
+$$\text{Mutation score} = \frac{\text{killed mutants}}{\text{non-equivalent mutants}}$$
 
 For the denominator, we just count the amount of non-equivalent mutants, instead of all the mutants.
 To compute this new mutation score automatically, we would need a way to automatically determine whether a mutant is an equivalent mutant.
@@ -562,7 +554,6 @@ Of course, mutation testing is not without its costs.
 We have to generate the mutants, possibly remove the equivalent mutants, and execute the tests with each mutant.
 In fact, mutation testing is quite expensive, i.e., it takes a long time to perform.
 
-{% include example-begin.html %}
 Let's assume we want to do some mutation testing.
 We have:
 
@@ -579,7 +570,7 @@ Per class, we need $$20 \cdot 10 \cdot 0.2 = 40$$ seconds.
 In total, the mutation testing will take $$300 \cdot 40 = 12000$$ seconds, or 3 hours and 20 minutes.
 
 Indeed mutation testing can take a very long time.
-{% include example-end.html %}
+
 
 Because of this cost, researchers have tried to find ways to make mutation testing faster for a long time.
 Based on some observations, they came up with a couple of heuristics.
@@ -616,18 +607,15 @@ Then it generates easy to read reports based on the results.
 In these reports, you can see the line coverage and mutation score per class.
 Finally, you can also see more detailed results in the source code and check which individual mutants were kept alive. Try it out!
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/BEBhTtSZAlw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "BEBhTtSZAlw" %}
+{% include "includes/youtube.md" %}
 
-## References
 
-- Chapter 16 of the Software Testing and Analysis: Process, Principles, and Techniques. Mauro Pezzè, Michal Young, 1st edition, Wiley, 2007.
-- Just, R., Jalali, D., Inozemtseva, L., Ernst, M. D., Holmes, R., & Fraser, G. (2014, November). Are mutants a valid substitute for real faults in software testing?. In Proceedings of the 22nd ACM SIGSOFT International Symposium on Foundations of Software Engineering (pp. 654-665). ACM.
 
 ## Exercises
 
 
-{% include exercise-begin.html %}
-
+**Exercise 1.**
 "*Crimes* happen in a *city*. One way for us to know that the *police* is actually able to detect these *crimes*, we can *simulate crimes* and see whether the *police* is able to detect them."
 
 In the analogy above, we can replace crimes by bugs, city by software, and police by test suite. What should we replace **simulate crimes** by?
@@ -637,16 +625,14 @@ In the analogy above, we can replace crimes by bugs, city by software, and polic
 1. Search-based software testing
 1. Combinatorial testing
 
-{% include answer-begin.html %}
 
-Mutation testing.
-
-{% include exercise-answer-end.html %}
+{% set todo = "We need to develop more exercises for this chapter" %}
+{% include "includes/todo.md" %}
 
 
 
+## References
 
-
-{% assign todo = "We need to develop more exercises for this chapter" %}
-{% include todo.html %}
+- Chapter 16 of the Software Testing and Analysis: Process, Principles, and Techniques. Mauro Pezzè, Michal Young, 1st edition, Wiley, 2007.
+- Just, R., Jalali, D., Inozemtseva, L., Ernst, M. D., Holmes, R., & Fraser, G. (2014, November). Are mutants a valid substitute for real faults in software testing?. In Proceedings of the 22nd ACM SIGSOFT International Symposium on Foundations of Software Engineering (pp. 654-665). ACM.
 
