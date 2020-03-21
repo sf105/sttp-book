@@ -1,6 +1,5 @@
 gitbook build
 gitbook pdf
-mv book.pdf
 cp -r _book/* ../sttp-book.github.io/
 rm -rf ../sttp-book.github.io/drawio 
 rm -rf ../sttp-book.github.io/answers 
