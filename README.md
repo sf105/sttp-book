@@ -27,7 +27,7 @@ as well as able to reflect about their limitations, when and when not to apply t
 
 Mauricio and Arie
 
-## Acknowledgments
+**Acknowledgments:**
 
 * Annibale Panichella: chapter on mutation testing
 * Wouter Polet: Jekyll implementation and initial transcripts of the lectures.
@@ -42,13 +42,7 @@ Feel free to adopt this book in your software testing course.
 The slides we use in the background of our videos can be found
 in our [video slides repository](https://github.com/sttp-book/video-slides).
 We should release our accompanying lectures slides soon. _If you adopt
-this book, please let us know!
-
-## Exercises
-
-This book contains several code examples. You can find them all
-in our [code examples repository](https://github.com/sttp-book/code-examples).
-Student: learn from it!
+this book, please let us know!_
 
 ## How to contribute
 
