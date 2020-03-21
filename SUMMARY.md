@@ -17,7 +17,7 @@
 	* [Mock objects](mocking.md)
 	* [Design for testability](design-for-testability.md)
 	* [Test-Driven Development](tdd.md)
-	* Test code quality
+	* [Test code quality](test-code-quality.md)
 
 * Automated software testing
 	* Mutation testing

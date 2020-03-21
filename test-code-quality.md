@@ -1,12 +1,5 @@
----
-chapter-number: 12
-title: Test code quality and test code smells
-layout: chapter
-toc: true
-author: Maurício Aniche
----
+# Test code quality
 
-## Introduction
 
 You probably noticed that the amount of JUnit automated test cases that we
 have written so far is quite significant. This is what happens in practice:
@@ -33,7 +26,7 @@ The **Act** phase is where the production code under test is exercised.
 It is usually done by means of one or many method calls.
 The result is then used in the **Assert** phase, where we assert that it is what we expect it to be.
 
-{% include example-begin.html %}
+
 We have an automated test:
 
 ```java
@@ -57,9 +50,10 @@ want to pass to the production method.
 Then we use this value as an input to the method under test in lines 2 and 3.
 This is the *act* part; we use the production code to find a result for a certain input.
 In line 4, we *assert* that the result is false.
-{% include example-end.html %}
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/tH_-iIwbDmc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+{% set video_id = "tH_-iIwbDmc" %}
+{% include "includes/youtube.md" %}
 
 
 ## The FIRST principles
@@ -107,7 +101,9 @@ If we leave automated tests to the end of the process, e.g., long after the prod
 We should become "test infected"! Testing the software should become a habit.
 (We also discuss the idea of Test-Driven Development, or development guided by the tests in a specific chapter.)
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/5wLrj-cr9Cs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "5wLrj-cr9Cs" %}
+{% include "includes/youtube.md" %}
+
 
 ## Test Desiderata
 
@@ -239,9 +235,13 @@ on the specific property, e.g., `Assertion.assertEquals("Playstation", invoice.g
 Again, all these test smells are covered more in-depth in XUnit Test Patterns by Gerard Meszaros.
 We highly recommend you to read that book!
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/QE-L818PDjA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "QE-L818PDjA" %}
+{% include "includes/youtube.md" %}
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/DLfeGM84bzg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "DLfeGM84bzg" %}
+{% include "includes/youtube.md" %}
+
+
 
 ## Flaky Tests
 
@@ -292,7 +292,9 @@ Link: [https://testing.googleblog.com/2017/04/where-do-our-flaky-tests-come-from
 Link: [https://testing.googleblog.com/2016/05/flaky-tests-at-google-and-how-we.html](https://testing.googleblog.com/2016/05/flaky-tests-at-google-and-how-we.html), 2017.
 - Fowler, M. Eradicating Non-Determinism in Tests. Link: [https://martinfowler.com/articles/nonDeterminism.html](https://martinfowler.com/articles/nonDeterminism.html), 2011.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/-OQgBMSBL5c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "-OQgBMSBL5c" %}
+{% include "includes/youtube.md" %}
+
 
 
 ## Improving the Readability of Test Code
@@ -316,7 +318,7 @@ However, we often have to deal with complex data structures and information, whi
 An easy way to do this is by storing the values in variables with descriptive names.
 This is illustrated in the example below.
 
-{% include example-begin.html %}
+
 We have written a test for an invoice that checks if the invoice has been paid.
 
 ```java
@@ -352,38 +354,25 @@ The variables with descriptive names makes it easier for a developer
 to understand what they actually mean.
 Now, we clearly see that the ID can be any number (does not really matter which one for this test), hence the `any` at the front. The variables `tax` and
 `amount` also now clearly explain what the previously "magic numbers with no explanation" mean.
-{% include example-end.html %}
+
 
 * Finally we have a small tip for assertions.
 When an assertions fails, a developer should be able to quickly see what is going wrong in order to fix the fault in the code.
 If the assertion in your test is complex, you might want to express it in a different way. For example, you might create a helper that performs this assertion step by step, so that a developer can easily follow the idea. Or you might want to add an explanatory message to the assertion. Or, even, why not a code comment?
 Frameworks like [AssertJ](https://joel-costigliola.github.io/assertj/) have become really popular among developers, due to its expresiveness in assertions.
 
-{% assign todo = "Example here of assertj" %}
-{% include todo.html %}
+{% set todo = "Example here of assertj" %}
+{% include "includes/todo.md" %}
 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/RlqLCUl2b0g" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% set video_id = "RlqLCUl2b0g" %}
+{% include "includes/youtube.md" %}
 
-## References
 
-- Chapter 5 of Pragmatic Unit Testing in Java 8 with Junit. Langr, Hunt, and Thomas. Pragmatic Programmers, 2015.
-- Meszaros, G. (2007). xUnit test patterns: Refactoring test code. Pearson Education.
-- Bavota, G., Qusef, A., Oliveto, R., De Lucia, A., & Binkley, D. (2012, September). An empirical analysis of the distribution of unit test smells and their impact on software maintenance. In 2012 28th IEEE International Conference on Software Maintenance (ICSM) (pp. 56-65). IEEE.
-- Bavota, G., Qusef, A., Oliveto, R., De Lucia, A., & Binkley, D. (2015). Are test smells really harmful? An empirical study. Empirical Software Engineering, 20(4), 1052-1094.
-- Luo, Q., Hariri, F., Eloussi, L., & Marinov, D. (2014, November). An empirical analysis of flaky tests. In Proceedings of the 22nd ACM SIGSOFT International Symposium on Foundations of Software Engineering (pp. 643-653). ACM. 
-- Bell, J., Legunsen, O., Hilton, M., Eloussi, L., Yung, T., & Marinov, D. (2018, May). D e F laker: automatically detecting flaky tests. In Proceedings of the 40th International Conference on Software Engineering (pp. 433-444). ACM. 
-- Lam, W., Oei, R., Shi, A., Marinov, D., & Xie, T. (2019, April). iDFlakies: A Framework for Detecting and Partially Classifying Flaky Tests. In 2019 12th IEEE Conference on Software Testing, Validation and Verification (ICST) (pp. 312-322). IEEE. 
-- Listfield, J. Where do our flaky tests come from?  
-Link: https://testing.googleblog.com/2017/04/where-do-our-flaky-tests-come-from.html, 2017.
-- Micco, J. Flaky tests at Google and How We Mitigate Them.  
-Link: https://testing.googleblog.com/2016/05/flaky-tests-at-google-and-how-we.html, 2017.
-- Fowler, M. Eradicating Non-Determinism in Tests. Link: https://martinfowler.com/articles/nonDeterminism.html, 2011.
 
 ## Exercises
 
-{% include exercise-begin.html %}
-
+**Exercise 1.**
 Jeanette just heard that two tests are behaving strangely: when executed in isolation, both of them pass. However, when executed together, they fail. Which one of the following **is not** cause for this?
 
 1. Both tests are very slow.
@@ -391,17 +380,8 @@ Jeanette just heard that two tests are behaving strangely: when executed in isol
 1. The execution order of the tests matter.
 1. They do not perform a clean-up operation after execution.
 
-{% include answer-begin.html %}
 
-Correct: Both tests are very slow.
-
-{% include exercise-answer-end.html %}
-
-
-
-
-{% include exercise-begin.html %}
-
+**Exercise 2.**
 RepoDriller is a project that extracts information from Git repositories. Its integration tests consumes lots of real Git repositories, each one with a different characteristic, e.g., one repository contains a merge commit, another repository contains a revert operation, etc.
 
 Its tests look like what you see below:
@@ -437,15 +417,8 @@ Which test smell does this piece of code suffers from?
 1. General fixture
 1. Flaky test
 
-{% include answer-begin.html %}
 
-Correct answer: Mystery guest
-
-{% include exercise-answer-end.html %}
-
-
-{% include exercise-begin.html %}
-
+**Exercise 3.**
 In the code below, we present the source code of an automated test.
 However, Joe, our new test specialist, believes this test is smelly and it can be better written.
 Which of the following could be Joe's main concern?
@@ -480,18 +453,11 @@ public void flightMileage() {
 }
 ```
 
-{% include answer-begin.html %}
-
-Correct answer: It is hard to tell which of several assertions within the same test method will cause a test failure.
-
-{% include exercise-answer-end.html %}
 
 
 
 
-
-{% include exercise-begin.html %}
-
+**Exercise 4.**
 See the test code below. What is the most likely test code smell that this piece of code presents?
 
 ```java
@@ -529,15 +495,9 @@ void test1() {
 3. Obscure test.
 4. Long method.
 
-{% include answer-begin.html %}
-
-Flaky test.
-{% include exercise-answer-end.html %}
 
 
-
-{% include exercise-begin.html %}
-
+**Exercise 5.**
 In the code below, we show an actual test from Apache Commons Lang, a very popular open source Java library. This test focuses on the static `random()` method, which is responsible for generating random characters. A very interesting detail in this test is the comment: *Will fail randomly about 1 in 1000 times.*
 
 ```java
@@ -579,11 +539,21 @@ Which one of the following **is incorrect** about the test?
 1. To avoid the flakiness, a developer could have mocked the random function. 
 
 
-{% include answer-begin.html %}
 
-To avoid the flakiness, a developer could have mocked the random function. It does not make sense, the test is about testing the generator and its homogeinity; if we mock, the test looses its purposes.
+## References
 
-{% include exercise-answer-end.html %}
+- Chapter 5 of Pragmatic Unit Testing in Java 8 with Junit. Langr, Hunt, and Thomas. Pragmatic Programmers, 2015.
+- Meszaros, G. (2007). xUnit test patterns: Refactoring test code. Pearson Education.
+- Bavota, G., Qusef, A., Oliveto, R., De Lucia, A., & Binkley, D. (2012, September). An empirical analysis of the distribution of unit test smells and their impact on software maintenance. In 2012 28th IEEE International Conference on Software Maintenance (ICSM) (pp. 56-65). IEEE.
+- Bavota, G., Qusef, A., Oliveto, R., De Lucia, A., & Binkley, D. (2015). Are test smells really harmful? An empirical study. Empirical Software Engineering, 20(4), 1052-1094.
+- Luo, Q., Hariri, F., Eloussi, L., & Marinov, D. (2014, November). An empirical analysis of flaky tests. In Proceedings of the 22nd ACM SIGSOFT International Symposium on Foundations of Software Engineering (pp. 643-653). ACM. 
+- Bell, J., Legunsen, O., Hilton, M., Eloussi, L., Yung, T., & Marinov, D. (2018, May). D e F laker: automatically detecting flaky tests. In Proceedings of the 40th International Conference on Software Engineering (pp. 433-444). ACM. 
+- Lam, W., Oei, R., Shi, A., Marinov, D., & Xie, T. (2019, April). iDFlakies: A Framework for Detecting and Partially Classifying Flaky Tests. In 2019 12th IEEE Conference on Software Testing, Validation and Verification (ICST) (pp. 312-322). IEEE. 
+- Listfield, J. Where do our flaky tests come from?  
+Link: https://testing.googleblog.com/2017/04/where-do-our-flaky-tests-come-from.html, 2017.
+- Micco, J. Flaky tests at Google and How We Mitigate Them.  
+Link: https://testing.googleblog.com/2016/05/flaky-tests-at-google-and-how-we.html, 2017.
+- Fowler, M. Eradicating Non-Determinism in Tests. Link: https://martinfowler.com/articles/nonDeterminism.html, 2011.
 
 
 
