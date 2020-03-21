@@ -1,3 +1,9 @@
 {
-    "plugins": ["hints", "katex"]
+    "plugins": ["hints", "katex", "get-book"],
+	"pluginsConfig": {
+	    "get-book": {
+	      "url": "/sttp.pdf",
+	      "label": "Download book in PDF"
+	    }
+	  }
 }
