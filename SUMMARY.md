@@ -1,5 +1,9 @@
 # Summary
 
+* Preface
+
+* Acknowledgements
+
 * Getting started with software testing
 	* [Why software testing?](why-software-testing.md)
 	* [Principles of software testing](testing-principles.md)
