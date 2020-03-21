@@ -37,4 +37,5 @@
 
 * Appendix
 	* [Answers to the exercises](answers.md)
+	* [Change log](changelog.md)
 
