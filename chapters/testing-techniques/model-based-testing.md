@@ -315,8 +315,9 @@ Instead of directly using the values for one combination we use the parameters w
 
 ### Non-binary choices and final guidelines
 
-{% set todo = "Write the video's accompanying text" %}
-{% include "/includes/todo.md" %}
+{% hint style='working' %}
+Write the video's accompanying text
+{% endhint %}
 
 
 

@@ -154,8 +154,9 @@ We will discuss design for testability in future chapters.
 
 ## An academic remark on the testing pyramid
 
-{% set todo = "to be written" %}
-{% include "/includes/todo.md" %}
+{% hint style='working' %}
+to be written
+{% endhint %}
 
 
 

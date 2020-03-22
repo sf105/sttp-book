@@ -89,7 +89,7 @@ Let’s now write some JUnit tests for the leap year problem. Remember that the 
 in JUnit can be anything. It is good to name your test method after the 
 partition that the method tests.
 
-{%hint style='tip'%}
+{% hint style='tip' %}
 We discuss more about test code quality and best practices in writing test code in
 a future chapter.
 {% endhint %}
@@ -288,7 +288,7 @@ However, they generate a limited number of tests in a specific time period such 
 while computers can generate millions.
 A combination of random testing and partition testing is therefore the most beneficial.
 
-{% hint style='tip'%}
+{% hint style='tip' %}
 In future chapters, fuzzing testing and AI-based testing will be discussed, with information
 about automated random testing.
 {% endhint %}

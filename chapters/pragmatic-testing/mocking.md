@@ -173,26 +173,27 @@ Note also how we do not have to keep a database running while executing the test
 
 ## More about Mockito
 
-{% set todo = "Add one more example with Mockito here, using the verify()" %}
-{% include "/includes/todo.md" %}
-
-{% set todo = "Add one more example with Mockito here, using the spy()" %}
-{% include "/includes/todo.md" %}
+{% hint style='working' %}
+{% Add one more example with Mockito here, using the verify(), and spy()
+{% endhint %}
 
 ## Dealing with static methods
 
-{% set todo = "Discuss how to add an abstraction on top of a static method, so that testing becomes easier." %}
-{% include "/includes/todo.md" %}
+{% hint style='working' %}
+Discuss how to add an abstraction on top of a static method, so that testing becomes easier.
+{% endhint %}
 
 ## Dealing with APIs you don't control
 
-{% set todo = "Discuss how to add an abstraction on top of things you don't control, e.g., Clock." %}
-{% include "/includes/todo.md" %}
+{% hint style='working' %}
+Discuss how to add an abstraction on top of things you don't control, e.g., Clock.
+{% endhint %}
 
 ## Mocking in practice: when to mock?
 
-{% set todo = "Discuss here when to mock" %}
-{% include "/includes/todo.md" %}
+{% hint style='working' %}
+Discuss here when to mock
+{% endhint %}
 
 Mocks are a useful tool when it comes to write real isolated unit tests.
 

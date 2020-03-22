@@ -361,8 +361,9 @@ When an assertions fails, a developer should be able to quickly see what is goin
 If the assertion in your test is complex, you might want to express it in a different way. For example, you might create a helper that performs this assertion step by step, so that a developer can easily follow the idea. Or you might want to add an explanatory message to the assertion. Or, even, why not a code comment?
 Frameworks like [AssertJ](https://joel-costigliola.github.io/assertj/) have become really popular among developers, due to its expresiveness in assertions.
 
-{% set todo = "Example here of assertj" %}
-{% include "/includes/todo.md" %}
+{% hint style='working' %}
+Example here of assertj
+{% endhint %}
 
 
 {% set video_id = "RlqLCUl2b0g" %}

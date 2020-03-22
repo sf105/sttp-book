@@ -184,8 +184,9 @@ Every decision has one outgoing arrow for true and one for false, indicating wha
 Note how agnostic this CFG representation is. You can even build CFGs of program written in different
 languages. They might even look the same!
 
-{% set todo = "record a video explaining how to build CFGs" %}
-{% include "/includes/todo.md" %}
+{% hint style='working' %}
+record a video explaining how to build CFGs
+{% endhint %}
 
 
 
@@ -325,9 +326,9 @@ From now on, whenever we mention **condition coverage**, we mean **condition + b
 {% include "/includes/youtube.md" %}
 
 
-
-{% set todo = "record a video showing, in a explicit way, the difference between basic condition coverage and full condition coverage" %}
-{% include "/includes/todo.md" %}
+{% hint style='working' %}
+record a video showing, in a explicit way, the difference between basic condition coverage and full condition coverage
+{% endhint %}
 
 
 ## Path coverage
@@ -500,9 +501,9 @@ Pragmatically speaking, the main challenge is devising tests where the loop is e
 indeed explore the space efficiently requires a good understanding of the program itself. Our tip is for you to make a little use of
 specification-based techniques here. If you understand the specs, you might be able to devise good tests for the particular loop.
 
-
-{% set todo = "record a video about the loop boundary adequacy" %}
-{% include "/includes/todo.md" %}
+{% hint style='working' %}
+record a video about the loop boundary adequacy
+{% endhint %}
 
 ## Criteria subsumption
 
@@ -520,8 +521,9 @@ You can see that, for example, branch coverage subsumes line coverage. This mean
 
 ![Criteria subsumption](img/structural-testing/subsumption.png)
 
-{% set todo = "record a video about the criteria subsumption" %}
-{% include "/includes/todo.md" %}
+{% hint style='working' %}
+record a video about the criteria subsumption
+{% endhint %}
 
 
 ## More examples of Control-Flow Graphs

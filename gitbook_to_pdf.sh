@@ -10,15 +10,26 @@ if [ -d "$GITBOOK_REP" ]; then
   cd $GITBOOK_REP
   if [ -f "$SUMMARY_FILE" ]; then
     # read summary and get texts by order in a single big file
+    # we replace: 
+    #   hint tip and working by --- markdown block
+    #   $$ -> $ (for latex math mode)
     pandoc $SUMMARY_FILE -t html | \
       grep -o '<a href=['"'"'"][^"'"'"']*['"'"'"]' | \
       sed -e 's/^<a href=["'"'"']//' -e 's/["'"'"']$//'| \
-      xargs cat | sed 's/\$\$/\$/g' | \
+      xargs cat | \
+      sed 's/\$\$/\$/g' | \
+      perl -pe "s/{% hint style='tip' %}/***\n**_Tip:_** /g" | \
+      perl -pe "s/{% hint style='working' %}/***\n**_TODO:_** /g" | \
+      perl -pe 's/{% endhint %}/\n***/g' | \
+      perl -pe 's/{% include "\/includes\/youtube.md" %}//g' | \
+      perl -pe 's/{% set video_id = "([A-Za-z0-9-_]*)" %}/***\nWatch our video on YouTube:\n\nhttp:\/\/www.youtube.com\/embed\/\1\n\n***/g' | \
       pandoc -f markdown \
               --variable fontsize=11pt \
               --variable=geometry:b5paper \
               --variable mainfont="Georgia" \
               --variable documentclass=book \
+              -H latex-conf/head.tex \
+              -V subparagraph \
               --resource-path="chapters/getting-started/:chapters/intelligent-testing:chapters/pragmatic-testing:chapters/testing-techniques" \
              --toc --toc-depth=3 --pdf-engine=xelatex -o book.pdf
   else

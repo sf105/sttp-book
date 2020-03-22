@@ -625,9 +625,9 @@ In the analogy above, we can replace crimes by bugs, city by software, and polic
 1. Search-based software testing
 1. Combinatorial testing
 
-
-{% set todo = "We need to develop more exercises for this chapter" %}
-{% include "/includes/todo.md" %}
+{% hint style='working' %}
+We need to develop more exercises for this chapter
+{% endhint %}
 
 
 
