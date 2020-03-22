@@ -288,7 +288,7 @@ However, they generate a limited number of tests in a specific time period such 
 while computers can generate millions.
 A combination of random testing and partition testing is therefore the most beneficial.
 
-{% hint type='tip'%}
+{% hint style='tip'%}
 In future chapters, fuzzing testing and AI-based testing will be discussed, with information
 about automated random testing.
 {% endhint %}
