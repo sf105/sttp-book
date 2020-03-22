@@ -174,7 +174,7 @@ Note also how we do not have to keep a database running while executing the test
 ## More about Mockito
 
 {% hint style='working' %}
-{% Add one more example with Mockito here, using the verify(), and spy()
+Add one more example with Mockito here, using the verify(), and spy()
 {% endhint %}
 
 ## Dealing with static methods

@@ -19,7 +19,7 @@ This simplicity means that we create the simplest implementation that solves the
 After we wrote the code that makes the test pass, it is time to refactor the code we just made.
 
 {% hint style='working' %}
-{% Missing a video about how TDD works here %}
+Missing a video about how TDD works here
 {% endhint %}
 
 

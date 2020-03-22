@@ -30,7 +30,7 @@ if [ -d "$GITBOOK_REP" ]; then
               --variable documentclass=book \
               -H latex-conf/head.tex \
               -V subparagraph \
-              --resource-path="chapters/getting-started/:chapters/intelligent-testing:chapters/pragmatic-testing:chapters/testing-techniques" \
+              --resource-path="chapters/getting-started/:chapters/intelligent-testing:chapters/pragmatic-testing:chapters/testing-techniques:chapters/appendix" \
              --toc --toc-depth=3 --pdf-engine=xelatex -o book.pdf
   else
     echo "File '$SUMMARY_FILE' does not exist"
