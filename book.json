@@ -1,13 +1,9 @@
 {
-    "plugins": ["hints", "katex", "get-book", "ga"],
+    "plugins": ["hints", "katex", "ga"],
 	"pluginsConfig": {
 		"theme-default": {
         	"showLevel": false
     	},
-	    "get-book": {
-	      "url": "/sttp.pdf",
-	      "label": "Download book in PDF"
-	    },
 	    "ga": {
 			"token": "UA-154019382-1"
 		}
