@@ -250,7 +250,7 @@ In practice, we usually have two distinct
 tasks when performing software testing. 
 
 The first one is about analysing and designing test cases, where the goal is for us to 
-think about everything we wanna test so that we are sure that our software works as expected.   
+think about everything we wanna test so that we are sure that our software works as expected.
 Usually, this phase is done by humans, although we will explore the state-of-the-art in software testing research, where machines also try to 
 devise test cases for us. 
 We are going to explore different strategies that a person can do to design good test cases, such as functional testing, boundary testing, and structural testing.
