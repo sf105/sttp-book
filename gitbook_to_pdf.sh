@@ -13,11 +13,14 @@ if [ -d "$GITBOOK_REP" ]; then
     pandoc $SUMMARY_FILE -t html | \
       grep -o '<a href=['"'"'"][^"'"'"']*['"'"'"]' | \
       sed -e 's/^<a href=["'"'"']//' -e 's/["'"'"']$//'| \
-      xargs cat | \
-      pandoc -f markdown --variable fontsize=10pt \
+      xargs cat | sed 's/\$\$/\$/g' | \
+      pandoc -f markdown \
+              --variable fontsize=11pt \
               --variable=geometry:b5paper \
-              --variable mainfont="Arial" \
-             --variable documentclass=scrbook --toc --toc-depth=3 --pdf-engine=xelatex -o book.pdf
+              --variable mainfont="Georgia" \
+              --variable documentclass=book \
+              --resource-path="chapters/getting-started/:chapters/intelligent-testing:chapters/pragmatic-testing:chapters/testing-techniques" \
+             --toc --toc-depth=3 --pdf-engine=xelatex -o book.pdf
   else
     echo "File '$SUMMARY_FILE' does not exist"
   fi

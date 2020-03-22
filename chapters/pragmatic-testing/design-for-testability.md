@@ -273,3 +273,4 @@ For each of the problems above: is it related to observability or controllabilit
 * Hevery, Misko. The Testability Guide. http://misko.hevery.com/attachments/Guide-Writing%20Testable%20Code.pdf
 
 * Michael Feathers. The deep synergy between well design production code and testability. https://www.youtube.com/watch?v=4cVZvoFGJTU
+

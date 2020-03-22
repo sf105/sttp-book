@@ -278,3 +278,4 @@ What is the main reason for the number of recommended system tests in the testin
 * Vocke, Ham. The Practical Test Pyramid (2018), https://martinfowler.com/articles/practical-test-pyramid.html.
 
 * Fowler, Martin. TestingPyramid (2012). https://martinfowler.com/bliki/TestPyramid.html
+
