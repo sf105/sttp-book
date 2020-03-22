@@ -23,49 +23,5 @@ as well as able to reflect about their limitations, when and when not to apply t
 
 *Target audience:* 1st year Computer Science students. Knowledge in programming is required. Code examples are in Java, although easy transferrable to other languages.
 
-## Authors
 
-* [Maurício Aniche](https://www.mauricioaniche.com), Assistant Professor in Software Engineering at Delft University of Technology
-* [Arie van Deursen](https://www.avandeursen.com), Full Professor in Software Engineering at Delft University of Technology
-
-**Acknowledgments:**
-
-* Annibale Panichella: chapter on mutation testing
-* Wouter Polet: initial transcripts of the lectures.
-* TU Delft's New Media Centre: video recording and editing 
-
-## Adopting this book
-
-This book has been used by: Delft University of Technology ([Dr. Maurício Aniche](https://www.mauricioaniche.com)),
-University of Zurich ([Prof. Dr. Alberto Bacchelli](https://sback.it)), PUC-RS/Brazil ([Prof. Dr. Bernardo Copstein](https://www.linkedin.com/in/bernardo-copstein-3226095)).
-
-Feel free to adopt this book in your software testing course.
-The slides we use in the background of our videos can be found
-in our [video slides repository](https://github.com/sttp-book/video-slides).
-We should release our accompanying lectures slides soon. _If you adopt
-this book, please let us know!_
-
-## How to contribute
-
-We accept any kind of contribution, from typo fixes, rephrasing,
-illustrations, videos, exercises,
-code examples to full chapters. Just open a [Pull Request](https://github.com/sttp-book/sttp-book/pulls) in our [GitHub repository](https://github.com/sttp-book/sttp-book).
-Or, if you feel you are not ready to contribute, but want to see some content
-here, just [open an issue](https://github.com/sttp-book/sttp-book/issues).
-
-Note that everything you create will be licensed under the license below. We will
-add your name in acknowledgements.
-
-## License
-
-This book is licensed under [CC-BY-NC-SA 4.0 International](https://creativecommons.org/licenses/by-nc-sa/4.0/). 
-You are free to share, copy, and redistribute the material in any medium or format
-as well as adapt, remix, transform, and build upon the material under the following
-terms:
-(1) you must give appropriate credit, (2) you may not use the material for commercial purposes, (3) if you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original,
-(4) you may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
-
-For commercial use, please contact us.
-
-Main cover picture by [Agence Olloweb](https://unsplash.com/photos/d9ILr-dbEdg).
 

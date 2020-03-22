@@ -2,7 +2,7 @@
     "plugins": ["hints", "katex", "get-book", "ga"],
 	"pluginsConfig": {
 		"theme-default": {
-        	"showLevel": true
+        	"showLevel": false
     	},
 	    "get-book": {
 	      "url": "/sttp.pdf",
