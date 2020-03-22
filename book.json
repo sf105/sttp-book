@@ -1,6 +1,9 @@
 {
     "plugins": ["hints", "katex", "get-book", "ga"],
 	"pluginsConfig": {
+		"theme-default": {
+        	"showLevel": true
+    	},
 	    "get-book": {
 	      "url": "/sttp.pdf",
 	      "label": "Download book in PDF"
