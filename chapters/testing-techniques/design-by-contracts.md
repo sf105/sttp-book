@@ -475,7 +475,7 @@ In such design, contracts are represented by interfaces.
 These interfaces are used by the client and implemented by the server.
 The following UML diagram illustrates it:
 
-![Design by Contracts UML diagram](/assets/img/design-by-contracts/dbc_uml.svg)
+![Design by Contracts UML diagram](img/design-by-contracts/dbc_uml.svg)
 
 ### Subcontracting
 
@@ -532,7 +532,7 @@ In Java, the List interface is implemented by various sub-classes.
 Two examples are the `ArrayList` and `LinkedList`.
 Creating the tests for each of the sub-classes separately will result in the following structure.
 
-![Test classes architecture](/assets/img/design-by-contracts/examples/subclass_test.svg)
+![Test classes architecture](img/design-by-contracts/examples/subclass_test.svg)
 
 The ArrayList and LinkedList will behave the same for the methods defined in List.
 Therefore, there will be duplicate tests for these methods.
@@ -547,7 +547,7 @@ The "sub test class" will have all the common tests defined in the "super test c
 
 This is how the test suite looks like:
 
-![Parallel Class Hierarchy](/assets/img/design-by-contracts/examples/parallel_architecture.svg)
+![Parallel Class Hierarchy](img/design-by-contracts/examples/parallel_architecture.svg)
 
 Here, the `ArrayListTest` and `LinkedListTest` extend the `ListTest`.
 List is an interface, so the `ListTest` should be abstract.

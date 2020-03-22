@@ -40,7 +40,7 @@ An example of an out-point, where the condition evaluates to false, is 893.
 **Exercise 4**
 
 
-![Answer domain matrix](/assets/img/boundary-testing/exercises/domain_exercise.png)
+![Answer domain matrix](img/boundary-testing/exercises/domain_exercise.png)
 
 Note that we require 7 test cases in total: `numberOfPoints <= 570` and `numberOfLives > 10` each have one on- and one off-point.
 `energyLevel == 5` is an equality, so we have two off-points and one on-point.

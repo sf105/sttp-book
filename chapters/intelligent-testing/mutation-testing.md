@@ -445,7 +445,7 @@ If none of the tests in our test suite fails when executed against the mutant, t
 
 This process is illustrated in the diagram below:
 
-![Mutation Testing Process](/assets/img/mutation-testing/mutation_analysis_process.png)
+![Mutation Testing Process](img/mutation-testing/mutation_analysis_process.png)
 
 When performing mutation testing, we count the number of mutants our test suite killed and the number of mutants that were still alive.
 By counting the amount of each of these mutant groups, we can give a value to the quality of our test suite.\\

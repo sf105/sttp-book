@@ -11,7 +11,7 @@
 
 From the explanation above:
 
-![Test Driven Development Cycle](/assets/img/tdd/tdd_cycle.svg)
+![Test Driven Development Cycle](img/tdd/tdd_cycle.svg)
 
 
 **Exercise 2**

@@ -2,7 +2,7 @@
 
 **Exercise 1**
 
-![](/assets/img/model-based-testing/exercises/coldhot_state_machine.svg)
+![](img/model-based-testing/exercises/coldhot_state_machine.svg)
 
 You should not need more than 4 states.
 
@@ -10,7 +10,7 @@ You should not need more than 4 states.
 
 
 
-![](/assets/img/model-based-testing/exercises/coldhot_transition_tree.svg)
+![](img/model-based-testing/exercises/coldhot_transition_tree.svg)
 
 
 **Exercise 3**
@@ -65,7 +65,7 @@ There are 14 empty cells in the table, so there are 14 sneaky paths that we can 
 
 **Exercise 4**
 
-![](/assets/img/model-based-testing/exercises/order_transition_tree.svg)
+![](img/model-based-testing/exercises/order_transition_tree.svg)
 
 
 **Exercise 5**
@@ -169,26 +169,26 @@ In this case we need to test each explicit decision in the decision table.
 **Exercise 9**
 
 
-![](/assets/img/model-based-testing/exercises/generic_transition_tree.svg)
+![](img/model-based-testing/exercises/generic_transition_tree.svg)
 
 
 **Exercise 10**
 
 
-![](/assets/img/model-based-testing/exercises/ads.png)
+![](img/model-based-testing/exercises/ads.png)
 
 
 **Exercise 11**
 
 
-![](/assets/img/model-based-testing/exercises/solution-microwave-statemachine.png)
+![](img/model-based-testing/exercises/solution-microwave-statemachine.png)
 
 
 
 **Exercise 12**
 
 
-![](/assets/img/model-based-testing/exercises/solution-microwave-transitiontree.png)
+![](img/model-based-testing/exercises/solution-microwave-transitiontree.png)
 
 
 **Exercise 13**

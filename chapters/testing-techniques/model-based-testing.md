@@ -350,10 +350,10 @@ Of course there are some agreements on how to make the models.
 The notation we use is the Unified Modeling Language, UML.
 For the state diagrams that means we use the following symbols:
 
-- State: ![](/assets/img/model-based-testing/uml/state_symbol.svg)
-- Transition: ![](/assets/img/model-based-testing/uml/transition_symbol.svg)
-- Event: ![](/assets/img/model-based-testing/uml/event_symbol.svg)
-- Initial state: ![](/assets/img/model-based-testing/uml/initial_state_symbol.svg)
+- State: ![](img/model-based-testing/uml/state_symbol.svg)
+- Transition: ![](img/model-based-testing/uml/transition_symbol.svg)
+- Event: ![](img/model-based-testing/uml/event_symbol.svg)
+- Initial state: ![](img/model-based-testing/uml/initial_state_symbol.svg)
 
 For the coming examples we model a (part of a) phone.
 We start very simple with a state machines that models the phone's ability to be locked or unlocked.
@@ -364,7 +364,7 @@ A correct password unlocks the phone and if an incorrect password is given the p
 Finally, an unlocked phone can be locked again by pushing the lock button.
 We can use these events in the state machine.
 
-![](/assets/img/model-based-testing/examples/locked_unlocked_machine.svg)
+![](img/model-based-testing/examples/locked_unlocked_machine.svg)
 
 In the diagram the initial state is `LOCKED`.
 Usually when someone starts using their phone, it is locked.
@@ -380,15 +380,15 @@ To modify these values when a transition is taken in the state machine we use ac
 Actions are associated with a transition and are performed when the system uses that transition to go into another state.
 The notation for conditions and actions is as follows:
 
-- Conditional transition: ![](/assets/img/model-based-testing/uml/conditional_symbol.svg)
-- Action: ![](/assets/img/model-based-testing/uml/action_symbol.svg)
+- Conditional transition: ![](img/model-based-testing/uml/conditional_symbol.svg)
+- Action: ![](img/model-based-testing/uml/action_symbol.svg)
 
 
 When a user types the wrong password for four times in a row, the phone gets blocked.
 We use `n` in the model to represent the amount of failed attempts.
 Let's look at the conditional transitions that we need to model this behavior first.
 
-![](/assets/img/model-based-testing/examples/blocked_condition_machine.svg)
+![](img/model-based-testing/examples/blocked_condition_machine.svg)
 
 When `n` (the number of failed unlock attempts) is smaller than 3, the phone stays in `LOCKED` state.
 However, when `n` is equal to 3, the phone goes to `BLOCKED`.
@@ -398,7 +398,7 @@ In the previous state machine, `n` never changes.
 This means that the phone will never go in its `BLOCKED` state, as that requires `n` to be equal to 3.
 We can add actions to the state machine to make `n` change correctly.
 
-![](/assets/img/model-based-testing/examples/blocked_complete_machine.svg)
+![](img/model-based-testing/examples/blocked_complete_machine.svg)
 
 The added actions are setting `n` to `n+1` when an incorrect password is given and to 0 when a correct password is given.
 This way the state machine will be in the `BLOCKED` state when a wrong password is given for four times in a row.
@@ -487,23 +487,23 @@ This is also demonstrated in the example below.
 To make the transition table a bit more interesting we modify the phone's state machine to have an `OFF` state instead of a `BLOCKED` state.
 See the state machine below:
 
-![Phone state machine with off](/assets/img/model-based-testing/examples/phone_off_machine.svg)
+![Phone state machine with off](img/model-based-testing/examples/phone_off_machine.svg)
 
 The root node of the transition tree is the initial state of the state machine.
 We append a number to make it easier to distinguish this node from other nodes of the same state.
 
-![Root node transition tree](/assets/img/model-based-testing/examples/transition_tree/transition_tree_0.svg)
+![Root node transition tree](img/model-based-testing/examples/transition_tree/transition_tree_0.svg)
 
 Now we for each outgoing transition from the `OFF` state we add a child node to `OFF_0`.
 
-![Two level transition tree](/assets/img/model-based-testing/examples/transition_tree/transition_tree_1.svg)
+![Two level transition tree](img/model-based-testing/examples/transition_tree/transition_tree_1.svg)
 
 One node was added, so we continue by adding children to that node.
-![Three level transition tree](/assets/img/model-based-testing/examples/transition_tree/transition_tree_2.svg)
+![Three level transition tree](img/model-based-testing/examples/transition_tree/transition_tree_2.svg)
 
 Now, the only state we have not seen yet is `UNLOCKED` in the `UNLOCKED_0` node.
 Therefore this is the only node we should add children to.
-![Final phone transition tree](/assets/img/model-based-testing/examples/transition_tree/transition_tree_3.svg)
+![Final phone transition tree](img/model-based-testing/examples/transition_tree/transition_tree_3.svg)
 
 Now all the states of the nodes in the lowest layer have been visited before so the transition tree is done.
 
@@ -585,7 +585,7 @@ We construct a transition table as follows:
 
 
 We take a look at the same state machine we created a transition table for:
-![](/assets/img/model-based-testing/examples/phone_off_machine.svg)
+![](img/model-based-testing/examples/phone_off_machine.svg)
 
 To make the transition table we list all the states and events in the table:
 
@@ -704,7 +704,7 @@ Basically, we wrap a state machine in a super-state which we can then use as a s
 
 The notation of the super-state is as follows: 
 
-![Super state notation](/assets/img/model-based-testing/uml/super_state_symbol.svg)
+![Super state notation](img/model-based-testing/uml/super_state_symbol.svg)
 
 Because the super state is, in essence, a state machine that can be used as a state, we know what should be inside of a super state.
 The super state generally consists of multiple states and transitions, and it always has to have an initial state.
@@ -723,11 +723,11 @@ We can use a super state even in the small example of a phone's state machine.
 The two states `LOCKED` and `UNLOCKED` both represent the system in some sort of `ON` state.
 We can use this to create a super state called `ON`.
 
-![Super state example](/assets/img/model-based-testing/examples/phone_super_state.svg)
+![Super state example](img/model-based-testing/examples/phone_super_state.svg)
 
 Now we can also simplify the state machine by collapsing the super state:
 
-![Collapsed super state example](/assets/img/model-based-testing/examples/phone_collapsed.svg)
+![Collapsed super state example](img/model-based-testing/examples/phone_collapsed.svg)
 
 
 
@@ -744,7 +744,7 @@ Each region contains one state machine.
 When the systems enters the super state, it enters all the initial states of the regions.
 This means that the system is in multiple states at once.
 
-The notation of regions is: ![Region notation](/assets/img/model-based-testing/uml/region_symbol.svg)
+The notation of regions is: ![Region notation](img/model-based-testing/uml/region_symbol.svg)
 
 Expanding regions is possible, but highly impractical and usually not wanted, because expanding the region requires creating a state for each combination of states in the different regions.
 This causes the number of states and transitions to quickly explode.
@@ -760,7 +760,7 @@ The draining of the battery and the transitions between the states of this batte
 With parallel behavior like this, we can use the regions in our state machine model.
 the state machine looks like the following, with the new battery states and the regions:
 
-![Region state machine example](/assets/img/model-based-testing/examples/phone_region.svg)
+![Region state machine example](img/model-based-testing/examples/phone_region.svg)
 
 You can see that we assumed the battery to start in the normal level state.
 Therefore, when the system transitions to the `ON` state it will be in both `LOCKED` and `NORMAL BATTERY` states at once.
@@ -819,7 +819,7 @@ In this context, the abstractions are called **Page Objects**.
 
 An example of a page object is shown in the diagram, made by Martin Fowler, below:
 
-![Page Objects diagram by Martin Fowler](/assets/img/model-based-testing/page_objects.png)
+![Page Objects diagram by Martin Fowler](img/model-based-testing/page_objects.png)
 
 At the bottom, you can see a certain web page that we want to test.
 The tool for communicating through the browser (webdriver for example), gives an API to access the HTML elements.
@@ -924,7 +924,7 @@ To get an overview of the system as a whole we will still have to draw the entir
 Slack shared their internal flow chart that decides whether
 to send a notification of a message. Impressive, isn't it?
 
-![How Slack decides to send notifications to users](/assets/img/model-based-testing/examples/slack.jpg)
+![How Slack decides to send notifications to users](img/model-based-testing/examples/slack.jpg)
 
 
 ## Exercises
@@ -954,7 +954,7 @@ How many sneaky paths can we test based on the transition table?
 **Exercise 4.**
 Draw the transition tree of the following state machine:
 
-![](/assets/img/model-based-testing/exercises/order_state_machine.svg)
+![](img/model-based-testing/exercises/order_state_machine.svg)
 
 Use sensible naming for the states in your transition tree.
 
@@ -994,7 +994,7 @@ Use as few decisions as possible.
 **Exercise 9.**
 See the following generic state machine.
 
-![](/assets/img/model-based-testing/exercises/generic_state_machine.svg)
+![](img/model-based-testing/exercises/generic_state_machine.svg)
 
 Draw the transition tree of this state machine.
 

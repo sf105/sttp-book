@@ -173,7 +173,7 @@ public class CountLetters {
 
 The corresponding CFG:
 
-![Control flow graph example](/assets/img/structural-testing/examples/CFG-branch-example.svg)
+![Control flow graph example](img/structural-testing/examples/CFG-branch-example.svg)
 
 Note that we split the for-loop into two blocks (variable initialization, and increment) and a decision.
 Every decision has one outgoing arrow for true and one for false, indicating what the program will do based on the condition.
@@ -289,7 +289,7 @@ Once again we look at the program that counts the words ending with an "r" or an
 Instead of branch coverage, we are interested in the condition coverage that the tests give.
 We start by building the more fine-grained CFG:
 
-![Control Flow Graph example with conditions](/assets/img/structural-testing/examples/CFG-condition-example.svg)
+![Control Flow Graph example with conditions](img/structural-testing/examples/CFG-condition-example.svg)
 
 You can see that this new CFG has way more decision blocks than the previous one.
 
@@ -518,7 +518,7 @@ the figure below how the relationship among all the coverage criteria we studied
 
 You can see that, for example, branch coverage subsumes line coverage. This means that 100% of branch coverage always implies in 100% line coverage; however, 100% of line coverage does not imply in 100% branch coverage. 100% of branch + condition coverage imply in 100% branch coverage and 100% of line coverage.
 
-![Criteria subsumption](/assets/img/structural-testing/subsumption.png)
+![Criteria subsumption](img/structural-testing/subsumption.png)
 
 {% set todo = "record a video about the criteria subsumption" %}
 {% include "/includes/todo.md" %}
@@ -556,7 +556,7 @@ def validate_ads(random_ads):
 
 A CFG for this piece of code would look like:
 
-![CFG in Python](/assets/img/structural-testing/examples/cfg-python.png)
+![CFG in Python](img/structural-testing/examples/cfg-python.png)
 
 *Study tip:* Note how we modelled the `for each` loop.
 

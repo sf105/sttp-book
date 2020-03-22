@@ -119,7 +119,7 @@ These are the implementations of the ports that talk to the database or webservi
 
 In the schema below, you can see that the ports are therefore part of the domain.
 
-![Hexagonal Architecture](/assets/img/design-for-testability/hexagonal_architecture.svg)
+![Hexagonal Architecture](img/design-for-testability/hexagonal_architecture.svg)
  
 Ports and Adapters helps us a lot with the testability of our code.
 After all, if our core domain depends only on ports, we can easily mock them!

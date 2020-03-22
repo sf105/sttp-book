@@ -41,7 +41,7 @@ This boundary is between the remaining life.
 When the remaining life is smaller than 3, it belongs to partition 2; otherwise it belongs to partition 3.
 
 We can visualize these partitions with their boundaries in a diagram.
-![Partitions with their boundaries](/assets/img/boundary-testing/examples/partition_boundaries.svg)
+![Partitions with their boundaries](img/boundary-testing/examples/partition_boundaries.svg)
 
 To sum up: you should devise tests for the inputs at the 
 boundaries of your classes.
@@ -76,14 +76,14 @@ This will be $$99$$,  $$99 < 100$$ is true.
 
 We show all these points in the diagram below.
 
-![On- and off-points, in- and out-points](/assets/img/boundary-testing/examples/on_off_points.svg)
+![On- and off-points, in- and out-points](img/boundary-testing/examples/on_off_points.svg)
 
 Now, let's compare it to the next condition $$x <= 100$$ (note how similar they are; the only difference is that, in this one, we use smaller than or equals to):
 
 - The on-point is still $$100$$: this is the point in the condition
 - Now the condition is true for the on-point. So, the off-point should make the condition false; the off-point is $$101$$.
 
-![On-, off-, in- and out-points 2](/assets/img/boundary-testing/examples/on_off_points2.svg)
+![On-, off-, in- and out-points 2](img/boundary-testing/examples/on_off_points2.svg)
 
 Note that, in the diagram, the on-point is part of the in-points, and the off-point is part of the out-points.
 
@@ -111,7 +111,7 @@ If we would set the in-point to the on- or off-point, we would be testing two bo
 To find these values and display the test cases in a structured manner, we use a **domain matrix**.
 In general the table looks like the following:
 
-![Template for domain matrix](/assets/img/boundary-testing/boundary_template.png)
+![Template for domain matrix](img/boundary-testing/boundary_template.png)
 
 In this template, we have two conditions with two parameters (see the $$x > a \land y > b$$ condition).
 We list the variables, with all their conditions.
@@ -129,13 +129,13 @@ We have the following condition that we want to test: `x >= 5 && x < 20 && y <= 
 
 We start by making the domain matrix, having space for each of the conditions and both parameters.
 
-![Empty boundary table example](/assets/img/boundary-testing/examples/boundary_table_empty.png)
+![Empty boundary table example](img/boundary-testing/examples/boundary_table_empty.png)
 
 Here you see that we need 6 test cases, because there are 3 conditions.
 Now it is time to fill in the table.
 We get the on- and off-points like in the previous example.
 
-![Boundary tables example filled in](/assets/img/boundary-testing/examples/boundary_table.png)
+![Boundary tables example filled in](img/boundary-testing/examples/boundary_table.png)
 
 Now we have derived the six test cases that we can use to test the boundaries.
 
@@ -195,7 +195,7 @@ This is a boundary.
 
 How can we apply boundary testing here? 
 
-![Partitions and boundaries](/assets/img/boundary-testing/partition-boundary.png)
+![Partitions and boundaries](img/boundary-testing/partition-boundary.png)
 
 Boundaries also happen when we are going from "one partition" to 
 another. 

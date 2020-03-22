@@ -7,7 +7,7 @@ Test-Driven Development (TDD) suggests the opposite: why don't we start by writi
 
 The TDD cycle is illustrated in the diagram below.
 
-![Test Driven Development Cycle](/assets/img/tdd/tdd_cycle.svg)
+![Test Driven Development Cycle](img/tdd/tdd_cycle.svg)
 
 The first think of the test. 
 Then we write the test.
@@ -145,7 +145,7 @@ The first interesting myth contested by the participants was the idea that the p
 
 We agree with the rationale. In fact, when comparing to test-last approaches, developers do not have the constant feedback or the need to write testable code. They will have the same feedback only at the end, when all the production code is already written. That may be too late (or expensive) to make a big refactoring in the class design.
 
-![TDD feedback](/assets/img/tdd/tdd.svg)
+![TDD feedback](img/tdd/tdd.svg)
 
 We also agree with the confidence when refactoring. As TDD forces developers to write unit tests frequently, those tests end up working as a safety net. Any broken change in the code is quickly identified. This safety net makes developers more confident to try and experiment new design changes — after all, if the changes break anything, tests will warn developers about it. That is why they also believe the tests are a safe space to think.
 
@@ -160,7 +160,7 @@ Conclusion: Developers believe that the practice of test-driven development help
 We have the following skeleton for a diagram illustrating the Test Driven Development cycle.
 What words/sentences should be at the numbers?
 
-![Test Driven Development exercise skeleton](/assets/img/tdd/exercises/tdd_skeleton.svg)
+![Test Driven Development exercise skeleton](img/tdd/exercises/tdd_skeleton.svg)
 
 (Try to answer the question without scrolling up!)
 

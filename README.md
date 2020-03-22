@@ -1,7 +1,7 @@
 # Software Testing: From Theory to Practice
 
 
-![Book header](/assets/img/header.jpg)
+![Book header](assets/img/header.jpg)
 
 
 Welcome to **Software Testing: From Theory to Practice**!

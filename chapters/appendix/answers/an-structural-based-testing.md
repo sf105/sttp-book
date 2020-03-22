@@ -45,7 +45,7 @@ Finally a third test is needed to cover line 11 (`removeElementNotPresentInListT
 
 **Exercise 2**
 
-![LinkedList exercise CFG](/assets/img/structural-testing/exercises/CFG-LinkedList.svg)
+![LinkedList exercise CFG](img/structural-testing/exercises/CFG-LinkedList.svg)
 L\<number\> in the diagram represents the line number of the code that is in the block or decision.
 
 **Exercise 3**
@@ -137,7 +137,7 @@ The possible answers are: {2, 4, 5, 6} or {2, 5, 6, 7}.
 **Exercise 6**
 
 
-![Control Flow Graph answer](/assets/img/structural-testing/exercises/CFG-sameEnds.svg)
+![Control Flow Graph answer](img/structural-testing/exercises/CFG-sameEnds.svg)
 
 L\<number\> represents the line numbers that the code blocks cover.
 
@@ -190,7 +190,7 @@ Therefore the coverage is $$\frac{4}{6} \cdot 100\% = 66\%$$.
 
 
 
-![Control Flow Graph answer](/assets/img/structural-testing/exercises/CFG-computeIfPresent.svg)
+![Control Flow Graph answer](img/structural-testing/exercises/CFG-computeIfPresent.svg)
 
 The L\<number\> in the blocks represent the line number corresponding to the blocks.
 
