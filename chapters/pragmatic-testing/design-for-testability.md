@@ -16,7 +16,7 @@ In this chapter, we'll discuss some design practices that increases
 the testability of our software systems.
 
 {% set video_id = "iVJNaG3iqrQ" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 ## Dependency Injection
@@ -88,7 +88,7 @@ be injected (via constructor, for example).
 
 
 {% set video_id = "mGdsdBEWB5E" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 
@@ -131,7 +131,7 @@ directly. Create a layer that abstracts the infrastructure away! This layer can 
 discussed in the Domain-Driven Design book (which we recommend you to read!).
 
 {% set video_id = "hv1XV87lJgA" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 
@@ -158,7 +158,7 @@ We end this chapter with a couple of practical tips that you can use to create a
 Note how there is a [deep synergy between well design production code and testability](https://www.youtube.com/watch?v=4cVZvoFGJTU)!
 
 {% set video_id = "VaScxLhsDBQ" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 

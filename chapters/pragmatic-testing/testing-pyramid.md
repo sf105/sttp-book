@@ -70,7 +70,7 @@ Flaky tests mean that the tests might pass one time, but fail the other time.
 
 
 {% set video_id = "5q_ZjIM_9PQ" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 
@@ -101,7 +101,7 @@ than system tests. Well... No. Some bugs are really tricky and might only happen
 components are working together. There is no silver bullet.
 
 {% set video_id = "MPjQXVYqadQ" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 ## The Testing Pyramid
@@ -149,13 +149,13 @@ of system tests, but because the system was so badly designed, that unit and int
 We will discuss design for testability in future chapters.
 
 {% set video_id = "YpKxAicxasU" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 ## An academic remark on the testing pyramid
 
 {% set todo = "to be written" %}
-{% include "includes/todo.md" %}
+{% include "/includes/todo.md" %}
 
 
 

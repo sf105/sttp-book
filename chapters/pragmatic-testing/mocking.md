@@ -98,7 +98,7 @@ public void filterInvoicesTest() {
 And of course, clear the database afterwards. Otherwise the test will break in the second run, as there will be two invoices stored in the database! (The database stores data permanenty; so far, we never had to 'clean' the objects; after all, they were always stored in-memory only.)
 
 {% set video_id = "0WY7IWbANd8" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 Now instead of using the database, we want to replace it with a mock object.
@@ -163,35 +163,35 @@ Note also how we do not have to keep a database running while executing the test
 
 
 {% set video_id = "kptTWbeLZ3E" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 {% set video_id = "baunKy04deM" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 
 ## More about Mockito
 
 {% set todo = "Add one more example with Mockito here, using the verify()" %}
-{% include "includes/todo.md" %}
+{% include "/includes/todo.md" %}
 
 {% set todo = "Add one more example with Mockito here, using the spy()" %}
-{% include "includes/todo.md" %}
+{% include "/includes/todo.md" %}
 
 ## Dealing with static methods
 
 {% set todo = "Discuss how to add an abstraction on top of a static method, so that testing becomes easier." %}
-{% include "includes/todo.md" %}
+{% include "/includes/todo.md" %}
 
 ## Dealing with APIs you don't control
 
 {% set todo = "Discuss how to add an abstraction on top of things you don't control, e.g., Clock." %}
-{% include "includes/todo.md" %}
+{% include "/includes/todo.md" %}
 
 ## Mocking in practice: when to mock?
 
 {% set todo = "Discuss here when to mock" %}
-{% include "includes/todo.md" %}
+{% include "/includes/todo.md" %}
 
 Mocks are a useful tool when it comes to write real isolated unit tests.
 

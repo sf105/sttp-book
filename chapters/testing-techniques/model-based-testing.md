@@ -15,7 +15,7 @@ how the program operates (or should operate).
 
 
 {% set video_id = "5yuFf4-4JnE" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 ## Decision Tables
@@ -139,7 +139,7 @@ If we set the default charge rate to 10 per month the new decision table can be 
 
 
 {% set video_id = "1u1qfJ2IrpU" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 ### Testing decision tables
@@ -206,7 +206,7 @@ Now, for full MC/DC, we test the decisions: v2, v4, v7, v8.
 
 
 {% set video_id = "TxAFPJx6yKI" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 ### Implementing automated test cases for decision tables
@@ -311,17 +311,17 @@ You can see that the test is very similar as the tests in the previous example.
 Instead of directly using the values for one combination we use the parameters with the `CsvSource` to execute multiple tests.
 
 {% set video_id = "tzcjDhdQfvM" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 ### Non-binary choices and final guidelines
 
 {% set todo = "Write the video's accompanying text" %}
-{% include "includes/todo.md" %}
+{% include "/includes/todo.md" %}
 
 
 
 {% set video_id = "RHB_HaGfNjM" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 
@@ -405,11 +405,11 @@ This way the state machine will be in the `BLOCKED` state when a wrong password 
 
 
 {% set video_id = "h4u9k-P3W0U" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 {% set video_id = "O1_oC-7I5E4" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 ### Testing state-machines
@@ -532,7 +532,7 @@ Using the transition tree, each loop that is in the state machine is executed on
 Now the amount of tests are manageable, while testing most of the important paths in the state machine.
 
 {% set video_id = "pvFPzvp5Dk0" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 #### Sneak paths and Transition tables
@@ -687,7 +687,7 @@ These techniques combined give a good testing suite from a state machine.
 So far, we looked at rather simple and small state machines.
 
 {% set video_id = "EMZB2IZT8WA" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 
@@ -766,7 +766,7 @@ You can see that we assumed the battery to start in the normal level state.
 Therefore, when the system transitions to the `ON` state it will be in both `LOCKED` and `NORMAL BATTERY` states at once.
 
 {% set video_id = "D0IQxdjI0M0" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 
@@ -911,11 +911,11 @@ Each scenario will be able to cover only one transition.
 To get an overview of the system as a whole we will still have to draw the entire state machine.
 
 {% set video_id = "NMGX7TEMXdE" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 {% set video_id = "gijO3mlcMCg" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 

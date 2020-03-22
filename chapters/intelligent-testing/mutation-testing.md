@@ -125,7 +125,7 @@ In this case, the input values and test oracle of the `testGetValuesDifferent()`
 
 
 {% set video_id = "QYbqz-gFWAk" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 ## Hypotheses for Mutation Testing
@@ -429,7 +429,7 @@ Of course, there exist many more mutant operators that are used by mutant genera
 For now, you should at least have an idea what mutation operators are, how they work and what we can use them for.
 
 {% set video_id = "KXQTWLyR5CA" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 ## Mutation Analysis and Testing
 
@@ -608,7 +608,7 @@ In these reports, you can see the line coverage and mutation score per class.
 Finally, you can also see more detailed results in the source code and check which individual mutants were kept alive. Try it out!
 
 {% set video_id = "BEBhTtSZAlw" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 
@@ -627,7 +627,7 @@ In the analogy above, we can replace crimes by bugs, city by software, and polic
 
 
 {% set todo = "We need to develop more exercises for this chapter" %}
-{% include "includes/todo.md" %}
+{% include "/includes/todo.md" %}
 
 
 

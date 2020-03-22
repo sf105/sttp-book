@@ -141,7 +141,7 @@ Now we have derived the six test cases that we can use to test the boundaries.
 
 
 {% set video_id = "rPcMJg62wM4" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 
@@ -228,7 +228,7 @@ A partition might make boundaries with other partitions. See:
 Your lesson is: explore the boundaries in between your partitions!
 
 {% set video_id = "uP_SpXtHxoQ" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 
@@ -286,7 +286,7 @@ From the values you can see that each of the six test cases corresponds to one o
 
 
 {% set video_id = "fFksNXJJfiE" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 
@@ -337,11 +337,11 @@ Authors call it the **CORRECT** way, as each letter represents one boundary cond
 
 
 {% set video_id = "oxNEUYqEvzM" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 {% set video_id = "PRVqsJ5fT2I" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 

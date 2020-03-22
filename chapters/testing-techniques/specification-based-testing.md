@@ -59,11 +59,11 @@ following classes/partitions:
 Note how each class above exercises the program in different ways.
 
 {% set todo = "Add a picture here showing the input domain and its classes." %}
-{% include "includes/todo.md" %}
+{% include "/includes/todo.md" %}
 
 
 {% set video_id = "kSLbxmXcPPI" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 
@@ -180,7 +180,7 @@ In each test we first determine the result of the method.
 After the method returns a value we assert that this is the expected value.
 
 {% set video_id = "mXmFiiifwaE" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 ## Category-Partition Method
@@ -237,7 +237,7 @@ Now we can implement these test cases.
 Each of the test cases corresponds to one of the partitions that we want to test.
 
 {% set video_id = "frzRmafsPBk" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 ## One more example of specification-based testing
 
@@ -278,7 +278,7 @@ This example shows why deriving good test cases is challenging. Specifications c
 fully understand the problem!
 
 {% set video_id = "T8caAUwgquQ" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 

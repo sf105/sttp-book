@@ -53,7 +53,7 @@ In line 4, we *assert* that the result is false.
 
 
 {% set video_id = "tH_-iIwbDmc" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 ## The FIRST principles
@@ -102,7 +102,7 @@ We should become "test infected"! Testing the software should become a habit.
 (We also discuss the idea of Test-Driven Development, or development guided by the tests in a specific chapter.)
 
 {% set video_id = "5wLrj-cr9Cs" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 ## Test Desiderata
@@ -236,10 +236,10 @@ Again, all these test smells are covered more in-depth in XUnit Test Patterns by
 We highly recommend you to read that book!
 
 {% set video_id = "QE-L818PDjA" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 {% set video_id = "DLfeGM84bzg" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 
@@ -293,7 +293,7 @@ Link: [https://testing.googleblog.com/2016/05/flaky-tests-at-google-and-how-we.h
 - Fowler, M. Eradicating Non-Determinism in Tests. Link: [https://martinfowler.com/articles/nonDeterminism.html](https://martinfowler.com/articles/nonDeterminism.html), 2011.
 
 {% set video_id = "-OQgBMSBL5c" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 
@@ -362,11 +362,11 @@ If the assertion in your test is complex, you might want to express it in a diff
 Frameworks like [AssertJ](https://joel-costigliola.github.io/assertj/) have become really popular among developers, due to its expresiveness in assertions.
 
 {% set todo = "Example here of assertj" %}
-{% include "includes/todo.md" %}
+{% include "/includes/todo.md" %}
 
 
 {% set video_id = "RlqLCUl2b0g" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 

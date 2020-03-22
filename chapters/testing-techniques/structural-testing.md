@@ -23,7 +23,7 @@ We will cover the following coverage criteria:
 Watch a summary of one of our lectures in structural testing!
 
 {% set video_id = "busfqNkpgKI" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 ## Line (and statement) coverage
 
@@ -88,7 +88,7 @@ Note: Defining what constitutes a line is up to the tester. One might count, for
 We prefer not to count the method declaration line.
 
 {% set video_id = "rkLsvlPlOHc" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 ## Why is line coverage a bit problematic?
@@ -128,7 +128,7 @@ JVM, for example, executes. This is a bit better, as splitting one line code in 
 but still not good enough.
 
 {% set video_id = "iQECMbKLez0" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 
@@ -185,7 +185,7 @@ Note how agnostic this CFG representation is. You can even build CFGs of program
 languages. They might even look the same!
 
 {% set todo = "record a video explaining how to build CFGs" %}
-{% include "includes/todo.md" %}
+{% include "/includes/todo.md" %}
 
 
 
@@ -258,7 +258,7 @@ This branch is executed when the last word does not end with an `r` or an `s`.
 The second test executes this branch (by giving the word `cats|dog`) so the two tests together have a branch/decision coverage of $$100\%$$.
 
 {% set video_id = "XiWtG8PKH-A" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 
@@ -322,12 +322,12 @@ From now on, whenever we mention **condition coverage**, we mean **condition + b
 
 
 {% set video_id = "oWPprB9GBdE" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 
 {% set todo = "record a video showing, in a explicit way, the difference between basic condition coverage and full condition coverage" %}
-{% include "includes/todo.md" %}
+{% include "/includes/todo.md" %}
 
 
 ## Path coverage
@@ -377,7 +377,7 @@ might be too big!
 The amount of tests needed for full path coverage will grow exponentially with the amount of conditions in a decision.
 
 {% set video_id = "hpE-aZYulmk" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 ## MC/DC (Modified Condition/Decision Coverage)
@@ -474,7 +474,7 @@ This is a lot better than the 8 tests we needed for the path coverage.
 Indeed, in the example above, we saw that we need fewer tests when using MC/DC instead of path coverage.
 
 {% set video_id = "HzmnCVaICQ4" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 ## Loop boundary adequacy
@@ -502,7 +502,7 @@ specification-based techniques here. If you understand the specs, you might be a
 
 
 {% set todo = "record a video about the loop boundary adequacy" %}
-{% include "includes/todo.md" %}
+{% include "/includes/todo.md" %}
 
 ## Criteria subsumption
 
@@ -521,7 +521,7 @@ You can see that, for example, branch coverage subsumes line coverage. This mean
 ![Criteria subsumption](/assets/img/structural-testing/subsumption.png)
 
 {% set todo = "record a video about the criteria subsumption" %}
-{% include "includes/todo.md" %}
+{% include "/includes/todo.md" %}
 
 
 ## More examples of Control-Flow Graphs

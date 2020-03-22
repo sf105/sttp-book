@@ -87,7 +87,7 @@ we want the tests to fail.
 After all, if a test fail, we just found another fault in the system that we can then fix before deploying it to final users.
 
 {% set video_id = "Tnm0qwsEiyU" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 Note how assertions play the role of test oracles here, but in a slightly
@@ -110,7 +110,7 @@ both is what we desire.
 
 
 {% set video_id = "OD0BY8GQs9M" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 ## Pre- and Postconditions
@@ -336,7 +336,7 @@ by conditions over the inputs or the program state.
 
 
 {% set video_id = "LCJ91VSS3Z8" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 
@@ -454,7 +454,7 @@ We also assert the result of the `invariant` method at the end of the constructo
 
 
 {% set video_id = "T5kwU91W07s" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 ## Design by Contracts
@@ -506,7 +506,7 @@ In short, using the notation of the UML diagram:
 The subcontract (the implementation) requires no more and ensures no less than the actual contract (the interface).
 
 {% set video_id = "aA29jZYdJos" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 ### Liskov Substitution Principle
@@ -610,7 +610,7 @@ Now, the `ArrayListTest` inherits all the `ListTest`'s tests, so these will be e
 Because the `createList()` method returns an `ArrayList`, the common test classes will use an `ArrayList`.
 
 {% set video_id = "GQ5NTiigkb0" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 ## Property-Based Testing
@@ -693,7 +693,7 @@ The properties always have to be true, so we can use them in all the randomly ge
 We will discuss more about AI techniques in a future chapter.
 
 {% set video_id = "7kB6JaSH9p8" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 

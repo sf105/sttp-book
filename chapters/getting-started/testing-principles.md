@@ -29,7 +29,7 @@ For example someone can forget to think about a certain corner case that the cod
 This then creates a fault in the code, which can result in a failure.
 
 {% set video_id = "zAty8Rpg92I" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 
@@ -54,7 +54,7 @@ In this course, we mostly focus on verification.
 However, validation is also very important when it comes to building successful software systems.
 
 {% set video_id = "LZ3Fb2Jq7yw" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 ## Tests, tests and more tests
@@ -100,7 +100,7 @@ This is called the **absence-of-errors fallacy**.
 We cannot forget about the validation part, where we check if the software meets the users' needs.
 
 {% set video_id = "dkbvb_wTN-M" %}
-{% include "includes/youtube.md" %}
+{% include "/includes/youtube.md" %}
 
 
 ## Exercises
