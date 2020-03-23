@@ -45,17 +45,16 @@ different, i.e. it is unique, where
 no two partitions represent/exercise the same behavior,
 2) can easily verify whether that behavior is correct or not.
 
-> **Classes for the leap year problem**
->
->By looking at the requirements, we can derive the
->following classes/partitions:
->
->* Year is divisible by 4, but not divisible by 100 = leap year, TRUE
->* Year is divisible by 4, divisible by 100, divisible by 400 = leap year, TRUE
->* Not divisible by 4 = not a leap year, FALSE
->* Divisible by 4, divisible by 100, but not divisible by 400 = not leap year, FALSE
->
->Note how each class above exercises the program in different ways.
+
+By looking at the requirements above, we can derive the
+following classes/partitions:
+
+* Year is divisible by 4, but not divisible by 100 = leap year, TRUE
+* Year is divisible by 4, divisible by 100, divisible by 400 = leap year, TRUE
+* Not divisible by 4 = not a leap year, FALSE
+* Divisible by 4, divisible by 100, but not divisible by 400 = not leap year, FALSE
+
+Note how each class above exercises the program in different ways.
 
 
 {% set video_id = "kSLbxmXcPPI" %}
@@ -94,7 +93,7 @@ We discuss more about test code quality and best practices in writing test code 
 a future chapter.
 {% endhint %}
 
-The Leap Year specification has been implemented by a developer in the following way:
+The _Leap Year_ specification has been implemented by a developer in the following way:
 
 ```java
 public class LeapYear {
@@ -238,7 +237,7 @@ Each of the test cases corresponds to one of the partitions that we want to test
 
 Let's explore another example:
 
-> **Chocolate bars**
+> **Requirement: Chocolate bars**
 > 
 > A package should store a total number of kilos. 
 > There are small bars (1 kilo each) and big bars (5 kilos each). 

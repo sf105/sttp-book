@@ -20,10 +20,12 @@ and checking whether the system responded in the way we expected.
 Although this phase can also be done by humans, this is an activity that we can easily automate.
 As we discussed before, we can (and should) write a program that runs our software and executes the test cases. 
 
-> As a side note, in industry, the term _automated software testing_ is 
-> often related to the execution of test cases; in other words, JUnit code. 
-> In academia, whenever a research paper says _automated software testing_, 
-> it means automatically designing test cases (and not only the JUnit code).
+{% hint style='tip' %}
+As a side note, in industry, the term _automated software testing_ is 
+often related to the execution of test cases; in other words, JUnit code. 
+In academia, whenever a research paper says _automated software testing_, 
+it means automatically designing test cases (and not only the JUnit code).
+{% endhint %}
 
 
 {% set video_id = "pPv37kPqvAE" %}
