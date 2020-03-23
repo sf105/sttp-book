@@ -2,7 +2,7 @@
 # Why software testing?
 
 
-Why should we actually care about software testing?*
+Why should we actually care about software testing?
 **Because bugs are everywhere**. 
 
 You, as a person who is probably highly dependent on software technlogies, have definitely encountered a few software bugs in your life. Some of them probably did not affect you that much. For example, when your Alarm app in your mobile phone crashed and you did not wake up early enough for a meeting with your boss. However, some other bugs might have (negatively) affected your life. Societies all over the world have faced critical issues due to software bugs, from medical devices that do not work properly and harm patients to electric power plants who completely shut down.

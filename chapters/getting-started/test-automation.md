@@ -262,13 +262,7 @@ See this new version of the `RomanNumeral` class, where we deeply refactored the
 ```java
 public class RomanNumeral {
   private final static Map<Character, Integer> CHAR_TO_DIGIT = 
-  Map.of('I', 1, 
-    'V', 5, 
-    'X', 10, 
-    'L', 50, 
-    'C', 100, 
-    'D', 500, 
-    'M', 1000);
+    Map.of('I', 1, 'V', 5, 'X', 10, 'L', 50, 'C', 100, 'D', 500, 'M', 1000);
 
   public int asArabic(String roman) {
     final var digits = roman
@@ -280,8 +274,8 @@ public class RomanNumeral {
       final var currentNumber = digits[i];
 
       result += isSubtractive(digits, i, currentNumber) ? 
-      -currentNumber : 
-      currentNumber;
+                  -currentNumber : 
+                  currentNumber;
     }
 
     return result;
@@ -347,6 +341,43 @@ Lessons to be learned:
 * Never stop refactoring your production code.
 * Never stop refactoring your test code.
 
+## Advantages of test automation
+
+Having an automated test suite brings several advantages to software
+development teams. Automated test suites:
+
+* **Are less prone to obvious mistakes.** Developers who perform manual testing several
+times a day might make mistakes, e.g., by forgetting to execute a test case,
+by mistakenly mark a test as passed when the software actually presented a faulty behavior, etc.
+
+* **Execute tests faster than developers.** The machine can run test cases way faster than developers can.
+Just imagine more complicated scenarios where the developers would have to type long sequences
+of inputs, verify the output at several different parts of the system. An automated test
+runs and gives feedback orders of magnitude faster than developers.
+
+* **Brings confidence during refactoring.** As we just saw in the example,
+automated test suites enables developers to refactor their code more constantly. After all,
+developers know that they have a safety net; if something goes wrong, the test will fail.
+
+Clearly, at first, one might argue that writing test code might feel 
+like a loss in productivity. After all,
+developers now have to not only write production code, but also test code. Developers now have
+to not only maintain test code, but also maintain test code. _This could not be more far from 
+the truth_. Once you master the tools and techniques, formalizing test cases as JUnit methods
+will actually save you time; imagine how many times you have executed the same 
+manual test over and over. How much time have you lost by doing 
+the same task repeteadly? 
+
+Studies have shown that developers that write tests spend less time debugging their systems when compared to developers that do not (Janzen), that the
+impact in productivity is not as significant as one would think (Maximilien and Williams), 
+and that bugs
+are fixed faster (Lui and Chen). Truth being told: 
+these experiments compared teams using Test-Driven Development (TDD) vs teams not
+using TDD, and not the existence of a test suite per se. Still, the presence of test code
+is the remarking characteristic that emerge from the TDD. Nevertheless, as a society,
+we might not need more evidence on the benefits of test automation. If we look around,
+from small and big companies to big open source projects, they all rely on extensive
+test suites to ensure quality. **Test (and test automation) pays off.**
 
 ## Exercises
 
@@ -373,3 +404,10 @@ your intuition.
 * JUnit's manual: https://junit.org/junit5/docs/current/user-guide/.
 
 * JUnit's manual, Annotations: https://junit.org/junit5/docs/current/user-guide/#writing-tests-annotations.
+
+
+* Janzen, D. S. (2005, October). Software architecture improvement through test-driven development. In Companion to the 20th annual ACM SIGPLAN conference on Object-oriented programming, systems, languages, and applications (pp. 240-241).
+
+* Maximilien, E. M., & Williams, L. (2003, May). Assessing test-driven development at IBM. In 25th International Conference on Software Engineering, 2003. Proceedings. (pp. 564-569). IEEE.
+
+* Lui, K. M., & Chan, K. C. (2004, June). Test driven development and software process improvement in china. In International Conference on Extreme Programming and Agile Processes in Software Engineering (pp. 219-222). Springer, Berlin, Heidelberg.
