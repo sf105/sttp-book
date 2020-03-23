@@ -12,6 +12,10 @@
 
 ----
 
+* [Structure of the book](chapters/preface/structure.md)
+
+----
+
 * [Getting started with software testing](chapters/getting-started/README.md)
 	* [Why software testing?](chapters/getting-started/why-software-testing.md)
 	* [Principles of software testing](chapters/getting-started/testing-principles.md)
@@ -33,7 +37,7 @@
 	* [Mock objects](chapters/pragmatic-testing/mocking.md)
 	* [Design for testability](chapters/pragmatic-testing/design-for-testability.md)
 	* [Test-driven development](chapters/pragmatic-testing/tdd.md)
-	* [Test code quality](chapters/pragmatic-testing/test-code-quality.md)
+	* [Test code quality and engineering](chapters/pragmatic-testing/test-code-quality.md)
 
 ----
 
