@@ -381,6 +381,9 @@ test suites to ensure quality. **Test (and test automation) pays off.**
 
 ## Exercises
 
+The code implemented in this chapter can be found at the `roman` package in
+the [code examples](https://github.com/sttp-book/code-examples/) repository.
+
 **Exercise 1.**
 Implement the `RomanNumeral` class. Then, write as many tests as you
 can for it, using JUnit.
