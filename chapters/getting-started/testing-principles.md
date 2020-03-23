@@ -1,32 +1,50 @@
 # Principles of software testing
 
-Now that we have some basic tools to design and automate our tests, we can think more about some testing concepts.
-We start with some precise definitions for certain terms.
+In this chapter, we first provide some terminology to the reader. Using the right
+terms help us in understanding each other better. We then discuss the differences
+between verification and validation. Finally, we discuss a few testing principles
+that will guide us (or, more specifically, force us to perform trade-offs whenever
+we choose a testing technique) throughout the book.
 
 ## Failure, Fault and Error
 
-We can use a lot of different words for a system that is not behaving correctly.
-Just to name a few we have error, mistake, defect, bug, fault and failure.
-As we like to be able to describe the problem in software precisely, we need to agree on a certain vocabulary.
-For now this comes down to three terms: **failure**, **fault**, and **error**.
+It is common to hear different terms to indicate that a software system
+is not behaving as expected.
+Just to name a few: _error_, _mistake_, _defect_, _bug_, _fault_, and _failure_.
+As we should be able to describe the events that led to a software crash more precisely, 
+we need to agree on a certain vocabulary.
+For now, this comes down to three terms: **failure**, **fault**, and **error**.
 
 A **failure** is a component of the (software) system that is not behaving as expected.
-An example of a failure is the well-known blue screen of death.
-We generally expect our pc to keep running, but it just crashes.
+Failures are often visible to the end user.
+An example of a failure can be a mobile app that suddenly stopped working. 
+Or a news website that suddenly started to provide yesterday news in the front page. 
+The software system did something it was not supposed to do.
 
-Failures are generally caused by faults.
-**Faults** are also called defects or bugs.
-A fault is a flaw, or mistake, in a component of the system that can cause the system to behave incorrectly.
-We have a fault when we have, for example, a `>` instead of `>=` in a condition.
+Failures are generally caused by _faults_.
+**Faults** are also called _defects_ or _bugs_.
+A fault is the flaw in the component of the system that caused the 
+system to behave incorrectly. A fault is usually highly technical and in many cases
+can be linked to the source code.
+For example, the fault was a `>` that was in place, instead of `>=` in an `if` condition.
 
-A fault in the code does not have to cause a failure.
-If the code containing the fault is not being run, it can also not cause a failure.
-Failures only occur when the end user is using the system, when they notice it not behaving as expected.
+> Note that the existence of a fault in the source code does not necessarily lead to a failure.
+> If the code containing the fault is never executed, it will never cause a failure.
+> Failures only occur when the end user is using the system, when they 
+> notice it not behaving as expected.
 
-Finally we have the **error**, also called a **mistake**.
-An error is a human action that cause the system to run not as expected.
-For example someone can forget to think about a certain corner case that the code might run into.
-This then creates a fault in the code, which can result in a failure.
+Finally, we have the **error**, also called **mistake**.
+An error is the human action that caused the system to run not as expected.
+For example, a developer that has forgotten to implement a certain corner case because
+that was not clear enough in the requirement.
+
+In short: A mistake done by a developer often leads to fault in the source code that will
+eventually result in a failure.
+
+> In the code example of the previous chapter, the failure was the program returning
+> a large number. The fault was due to a bad `if/else if` condition. The mistake was 
+> caused by me not dealing properly with that corner case.
+
 
 {% set video_id = "zAty8Rpg92I" %}
 {% include "/includes/youtube.md" %}
@@ -35,69 +53,105 @@ This then creates a fault in the code, which can result in a failure.
 
 ## Verification and Validation
 
-We keep extending our vocabulary a bit with two more concepts.
-Here we introduce **verification** and **validation**.
-Both concepts are about assessing the quality of a system and can be described by a single question.
+**Verification** and **validation** are both about 
+assessing the quality of a system. However, they do have a subtle difference,
+which can be quickly described by a single question:
 
-**Validation: Are we building the right software?**
-Validation concerns the features that our system offers and the customer, for who the system is made.
-Is the system that we are building actually the system that the users want?
-Is the system actually useful?
+* **Validation: Are we building the right software?**
+Validation concerns the features that our software system offers, and the customer (i.e., for whom the system is made).
+Is the system under development, the system that users really want and/or need?
+Is the system actually useful? Validation techniques, thus, focus on understanding
+whether the software system is delivering the business values it should deliver. In this book,
+we only briefly cover validation techniques (see chapters on Continuous Experimentation and on Behavior-Driven Development).
 
-**Verification** on the other hand is about the system behaving as it is supposed to according to the specification. 
-This mostly means that the systems behaves without any bugs, like it is said it should behave.
-This does not guarantee that the system is useful.
-That is a matter of validation.
-We can summarize verification with the question: **Are we building the system right?**
+* **Verification: Are we building the system right?** 
+Verification, on the other hand, 
+is about the system behaving as it is supposed to, according to the specification. 
+In simple words, this mostly means that the system behaves without any bugs.
+Note that this does not guarantee that the system is useful: a system might work beautifully, bug-free, but does not deliver the features that customers really need.
 
-In this course, we mostly focus on verification.
-However, validation is also very important when it comes to building successful software systems.
+Note how both _validation_ and _verification_ are fundamental for ensuring
+the delivery of high-quality software systems.
 
 {% set video_id = "LZ3Fb2Jq7yw" %}
 {% include "/includes/youtube.md" %}
 
 
-## Tests, tests and more tests
+## Principles of software testing (or why software testing is so hard)
 
-If we want to test our systems well, we just keep adding more tests until it is enough, right?
-Actually a very important part of software testing is knowing when to stop testing.
-Creating too few tests will leave us with a system that might not behave as intended.
-On the other hand, creating test after test without stopping will probably cost too much time to create and at some point will make the whole test suite too slow.
-A couple of tests are executed in a very short amount of time, but if the amount of tests becomes very high the time needed to execute them will naturally increase as well.
-We discuss a couple of important concepts surrounding this subject.
+A simplistic view on software testing is that,
+if we want our systems to be well-tested, all we need to do is to keep adding more tests until it is enough. We wish it were that simple.
 
-First, **exhaustive testing** is impossible.
-We simply cannot test every single case a method might be executing.
-This means that we have to prioritize the tests that we do run.
+Indeed, a very important part of any software testing process is 
+to know _when to stop testing_.
+After all, resources (e.g., money, developers, infrastructure) are limited. Therefore,
+the goal should always be to maximize the number of bugs found while minimizing the 
+amount of resources we had to spend in finding those bugs.
+Creating too few tests might leave us with a software system that does not behave as intended (i.e., _full of bugs_).
+On the other hand, creating tests after tests, without proper consideration might lead to ineffective tests (besides costing too much time and money).
 
-When prioritizing the test cases that we make, it is important to notice that **bugs are not uniformly distributed**.
-If we have some components in our system, then they will not all have the same amount of bugs.
-Some components probably have more bugs than others.
-We should think about which components we want to test most when prioritizing the tests.
 
-A crucial notion for software testing is that **testing shows the presence of defects;
+Given resource constraints, we highlight an important principle in 
+software testing: **exhaustive testing is impossible**. They might be impossible
+even if we had unlimited resources. Imagine a software system that has "just" 128 different
+flags (or configurations). Those flags can be set as either true or false (booleans) and
+they can configured in all the possible ways. The software system behaves differently,
+according to the combination that is set. This implies in testing all the possible
+configurations. A simple math shows us that 2 configurations for each of the 128
+different flags gives $$2^128$$ combinations that need to be tested. As a matter
+of comparison, this number is higher than the estimated number of atoms in the universe.
+In other words, this software system has more possible combinations to be tested than
+we the universe has atoms.
+
+Given that exhaustive testing is impossible,
+software testers have to then prioritize the tests they will perform.
+
+When prioritizing the test cases, we note that **bugs are not uniformly distributed**.
+Empirically, we observe that some components in some software systems present more
+bugs than other components.
+
+Another crucial consequence of the fact that exhaustive testing is impossible, 
+as Dijkstra used to say, is that
+**testing shows the presence of defects;
 however, testing does not show the absence of defects**.
-So while we might find more bugs by testing more, we will never be able to say that our software is 100% bug-free, because of the tests.
+In other words, while we might find more bugs by simply testing more, our test suites,
+however large it might be,
+will never ensure us that the software system is 100% bug-free. It will only ensure us
+that these cases we test for do behave as expected.
 
 To test our software we need a lot of variation in our tests.
-When testing a method we want variety in the inputs, for example, like we saw in the examples above.
-To test the software well, however, we also need variation in the testing strategies that we apply.
-This is described by the **pesticide paradox**: "Every method you use to prevent or find bugs leaves a residue of subtler bugs against which those methods are ineffectual."
-There is no testing strategy that guarantees that the tested software is bug-free.
-So, when using the same strategy all the time, we will miss some of the defects that are in the software.
-This is the residue that is talked about in the pesticide paradox.
-From the pesticide paradox we learn that we have to use different testing strategies on the same software to minimize the bugs left in the software.
-When learning the various testing strategies in this reader, keep in mind that you want to combine them when you are testing your software.
+When testing a method we want variety in the inputs, for example, 
+like we saw in the examples above.
+To test the software well, however, we also need variation in 
+the testing strategies that we apply.
 
-Combining these testing strategies is a great idea, but it can be quite challenging.
-For example, testing a mobile app is very different from testing a web application or a rocket.
+Moreover, calling a software fault a bug might indeed be a good analogy. Another 
+interesting empirical finding is that, if testers apply the same testing techniques over and over,
+at some point they will lose their efficacy. 
+This is described by what is known as the **pesticide paradox**: 
+_"Every method you use to prevent or find bugs leaves a residue of 
+subtler bugs against which those methods are ineffectual."_
+In practice, this means that there is no single testing strategy 
+can guarantee that the software under test is bug-free.
+A concrete example might be a team that solely relies on unit testing techniques.
+At some point, maybe all the bugs that can be captured at unit test level will be found
+by the team; however, the team might miss bugs that only occur at integration level.
+From the pesticide paradox, we thus conclude that testers have to use 
+different testing strategies to minimize the bugs left in the software.
+When studying the various testing strategies that we present in this book, 
+keep in mind that combining them all might be a wise decision.
+
+The context also plays an important role in how one devises test cases.
+For example, devising test cases for a mobile app is very different 
+from devising test cases for a web application. Or for a rocket.
 In other words: **testing is context-dependent**.
-The way that we test depends on the context of the software that we test.
 
-Finally, while we are mostly focusing on verification when we create tests, we should not forget that just having a low amount of bugs is not enough.
-If we have a program that works like it is specified, but is of no use for its users, we still do not have good software.
-This is called the **absence-of-errors fallacy**.
-We cannot forget about the validation part, where we check if the software meets the users' needs.
+Again, while this book mostly focuses on verification techniques, 
+let us not forget that having a low amount of bugs is not enough for a good software.
+As we have said before, a program that works flawlessly, but is of no use for its users, 
+is still not a good software.
+That is a common fallacy (also known as the **absence-of-errors fallacy**) that software testers face when they decide to focus solely
+on verification and not so much on validation.
 
 {% set video_id = "dkbvb_wTN-M" %}
 {% include "/includes/youtube.md" %}
@@ -154,6 +208,5 @@ Which of the following **is the least related** related to help John in moving a
 
 ## References
 
-* Chapters 1-3 of the Foundations of software testing: ISTQB certification. Graham, Dorothy, Erik Van Veenendaal, and Isabel Evans, Cengage Learning EMEA, 2008.
-
+* * Graham, D., Van Veenendaal, E., & Evans, I. (2008). Foundations of software testing: ISTQB certification. Cengage Learning EMEA. Chapters 1, 2, 3.
 
