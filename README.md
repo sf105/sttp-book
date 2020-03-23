@@ -21,7 +21,7 @@ as well as able to reflect about their limitations, when and when not to apply t
 
 * Write maintainable test code by avoiding well-known test code smells (e.g., Assertion Roulette, Slow or Obscure Tests).
 
-*Target audience:* 1st year Computer Science students. Knowledge in programming is required. Code examples are in Java, although easy transferrable to other languages.
+*Target audience:* 1st year Computer Science students. Knowledge in programming is required. Code examples are in Java, although easily transferrable to other languages.
 
 
 
