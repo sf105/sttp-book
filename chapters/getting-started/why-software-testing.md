@@ -109,6 +109,12 @@ What is the solution? To rigorously and systematically test the software systems
 {% set video_id = "xtLgp8LXWp8" %}
 {% include "/includes/youtube.md" %}
 
+## Exercises
+
+**Exercise 1.**
+Google for "famous software bugs". Learn what caused them as well as the impact they
+had.
+
 ## References
 
 * Wikipedia. List of software bugs. https://en.wikipedia.org/wiki/List_of_software_bugs
