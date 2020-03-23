@@ -1,39 +1,42 @@
 
 # Software testing automation (with JUnit)
 
-Before we explore different testing techniques, let's first get used
-to software testing automatin frameworks, like JUnit.
-For now, let's just use our experience as software developers to devise
-test cases.
+Before we dive into the different testing techniques, let us first get used
+to software testing automation frameworks. In this book, we will use JUnit, as
+all the code we use as examples are written in Java. 
 
-**The Roman Numeral problem**
+If you are using a different programming language in your daily work, note
+that testing frameworks in other languages offer similar functionalities.
 
-It is our goal to implement a program that receives a string as a parameter
-containing a roman number and then converts it to an integer.
 
-In roman numeral, letters represent values:
+> **Requirement: Roman numerals**
+>
+> Implement a program that receives a string as a parameter
+> containing a roman number and then converts it to an integer.
+>
+>In roman numeral, letters represent values:
+>
+> * I = 1
+> * V = 5
+> * X = 10
+> * L = 50
+> * C = 100
+> * D = 500
+> * M = 1000
+>
+> Letters can be combined to form numbers.
+> The letters should be ordered from the highest to the lowest value.
+> For example `CCXVI` would be 216.
+> 
+> Some numbers need to make use of a subtractive notation to be represented.
+> Example: 9 is IX, 40 is XL, 14 is XIV.
 
-* I = 1
-* V = 5
-* X = 10
-* L = 50
-* C = 100
-* D = 500
-* M = 1000
-
-We can combine these letters to form numbers.
-The letters should be ordered from the highest to the lowest value.
-For example `CCXVI` would be 216.
-
-When we put a lower value in front of a higher one, we substract that value from the higher value.
-For example we make 40 not by XXXX, but instead we use $$50 - 10 = 40$$ and have the roman number `XL`.
-Combining both these principles we could give our method `MDCCCXLII` and it should return 1842.
 
 {% set video_id = "srJ91NRpT_w" %}
 {% include "/includes/youtube.md" %}
 
 
-A possible implementation for this Roman Numeral is as follows:
+A possible implementation for the _Roman Numeral_ is as follows:
 
 ```java
 public class RomanNumeral {
@@ -69,47 +72,61 @@ public class RomanNumeral {
 }
 ```
 
-Now we have to think about tests for this method.
-Use your experience as a developer to get as many test cases as you can.
+With the implementation in hands, the next step is to devise
+test cases for the program.
+Use your experience as a developer to devise as many test cases as you can.
 To get you started, a few examples: 
 
-* Just one letter  (C = 100)
-* Different letters combined (CLV = 155)
-* Subtractive notation (CM = 900)
+* T1=Just one letter, e.g., C should be equals to 100
+* T2=Different letters combined, e.g., CLV = 155
+* T3=Subtractive notation, e.g., CM = 900
 
-Let's now automate these manually devised test cases.
+In future chapters, we will explore how to devise those test cases. The output
+of that stage will often be similar to the one above: a test case number,
+an explanation of what the test is about (we will later call it _class_ or _partition_),
+and a concrete instance of an input that exercises the program in that way, together
+with the expected output.
+Once the "manual task of devising test cases" is done, we will then write them
+as automated test cases using JUnit. Let us now do it.
 
 ## The JUnit Framework
 
-Testing frameworks enables us to write our test cases in a way that
+Testing frameworks enable us to write test cases in a way that
 they can be easily executed by the machine. 
-For Java, the standard framework to write automated tests is JUnit (the frameworks for the languages work similarly), and its most recent version is 5.x.
+In Java, the standard framework to write automated tests is JUnit, 
+and its most recent version is 5.x.
 
-To automate the tests we need a Java class.
-This is usually named the name of the class under test, followed by "Test".
-To create an automated test, we make a method with the return type `void`.
-For the execution the name of the method does not matter, but we always use it to describe the test.
-To make sure that JUnit considers the method to be a test, we use the `@Test` annotation.
-To use this annotation you have to import `org.junit.jupiter.api.Test`.
+The steps to create a JUnit class/test is often the following:
 
-In the method itself we execute the code that we want to test.
-After we have done that, we check is the result is what we would expect.
-To check this result, we use assertions.
+* Create a Java class under `/src/test/java` directory (or whatever test directory your project structure uses). As a convention, the name of the test class is similar to the name of the
+class under test. For example, a class that tests the `RomanNumeral` class is often called
+`RomanNumeralTest`. In terms of package structure, the test class also inherits the same
+package as the class under test. In our case, `tudelft.roman`.
 
+* For each test case we devise for the program/class, we write a test method.
+A JUnit test method returns `void` and it is annotated with `@Test` (an annotation that
+comes from JUnit 5's `org.junit.jupiter.api.Test`).
+The name of the test method does not matter for JUnit, but it does matter to us. A best
+practice is to name the test after the case it tests. 
+
+* The test method instantiates the class under test and invokes the method under test. 
+The test method passes the previously defined input in the
+test case definition to the method/class. 
+The test method then stores the result of the method call (e.g., in a variable). 
+
+* The test method asserts that the output matches with that was expected. The expected
+output was defined during the test case definition phase. 
+To check the outcome with the expected value, we use assertions.
 A couple of useful assertions are:
 
-* `assertEquals(expected, actual)`: Passes if the expected and actual values are equal, fails otherwise.
-  Be sure to pass the expected value as the first argument and the actual value (the value that, for example, the method returns) as second argument.
-  Otherwise the fail message of the test will not make sense.
-* `assertTrue(condition)`: Passes if the condition evaluates to true, fails otherwise.
-* `assertFalse(condition)`: Passes if the condition evaluates to false, fails otherwise.
-
-More assertions and additional arguments can be found in [JUnit's documentation](https://junit.org/junit5/docs/5.3.0/api/org/junit/jupiter/api/Assertions.html).
-To make easy use of the assertions and to import them all in one go, you can use `import static org.junit.jupiter.api.Assertions.*;`.
+  * `Assertions.assertEquals(expected, actual)`: Compares whether the expected and actual values are equal. The test fails otherwise. Be sure to pass the expected value as the first argument, and the actual value (the value that comes from the program under test) as second argument.
+    Otherwise the fail message of the test will not make sense.
+  * `Assertions.assertTrue(condition)`: Passes if the condition evaluates to true, fails otherwise.
+  * `Assertions.assertFalse(condition)`: Passes if the condition evaluates to false, fails otherwise.
+  * More assertions and additional arguments can be found in [JUnit's documentation](https://junit.org/junit5/docs/5.3.0/api/org/junit/jupiter/api/Assertions.html). To make easy use of the assertions and to import them all in one go, you can use `import static org.junit.jupiter.api.Assertions.*;`.
 
 
-We need a class and methods annotated with `@Test` to automate our test cases.
-The three cases we had, can be automated as follows.
+The three tests cases we have devised can be automated as follows:
 
 ```java
 import org.junit.jupiter.api.Test;
@@ -144,61 +161,36 @@ public class RomanNumeralTest {
 }
 ```
 
-Notice that we first create an instance of `RomanNumeral`.
-Then we execute or run the `convert` method, which is the method we want to test.
-Finally we assert that the result is what we would expect.
-
-Do you see more test cases? Go ahead and implement them!
-
+At this point, if you see other test cases (there are!), go ahead and implement them.
 
 
 {% set video_id = "XS4-93Q4Zy8" %}
 {% include "/includes/youtube.md" %}
 
-
-## The need for systematic software testing
-
-We devised three test cases in our exemple above. How did we do it? We used our experience as software developers.
-
-However, although our experience indeed helps us deeply in finding bugs, this might
-not be enough: 
-
-* It is highly prone to mistakes. Maybe you might forget one test case.
-* It varies from person to person. We want any developer in the world to be able to test software.
-* It is hard to know when to stop, based only on our gut feelings.
-
-This is why, throughout the course, we will study more systematic techniques 
-to test software.
-
-
-{% set video_id = "xyV5fZsUH9s" %}
-{% include "/includes/youtube.md" %}
-
-
-
-
-## An introduction to test code quality
+## Test code engineering matters
 
 In practice, developers write (and maintain!) thousands of test code lines. 
 Taking care of the quality of test code is therefore of utmost importance.
-Whenever possible, we'll introduce you to some best practices in test
+Whenever possible, we will introduce you to some best practices in test
 code engineering.
 
-For example, in the example above, we create the `roman` object four times.
-This is good, because we want to start fresh with each test.
-If the method would in some way change the object, we do not want this to carry over to another test.
-However, now we have the same line of code in each test method.
-The risk of this code duplication is that we might do it wrong in one of the cases, or if we want to change the code somewhere, we forget to change it everywhere.
+In the test code above, we create the `roman` object four times.
+Having a fresh clean instance of an object for each test method is a good idea, as 
+we do not want "objects that might be already dirty" (and thus, being the cause for the test to fail, and not because there was a bug in the code) in our test. 
 
-We can write everything we want to do at the start of each test in just one method.
-In order to do so, we will use the `@BeforeEach` annotation.
-Like the tests, we annotate a method with this annotation.
-Then JUnit knows that before it runs the code in a test method is has to run the code in the `BeforeEach` method.
+However, duplicated code is something not desirable. The problem with duplicated test code
+is the same as in production code: if there is a change to be made, the change has to be made
+in all the points where the duplicated code exists.
 
-In the test code we just wrote, we can instantiate the `roman` object inside a method annotated with `BeforeEach`.
-In this case it is just one line that we move out of the test methods, but as your tests become more complicated this approach becomes more important.
+In this example, we should try to isolate the line of code responsible for creating
+the class under test.
+In order to do so, we can use the `@BeforeEach` feature that JUnit provides.
+JUnit runs methods that are annotated with `@BeforeEach` before every test method.
+We therefore can instantiate the `roman` object inside a method annotated with `BeforeEach`.
 
-The new test code would look as follows.
+Although you might be asking yourself: "But it is just a single line of code... Does it really matter?", remember that as test code becomes more complicated, the more important test code quality becomes.
+
+The new test code would look as follows:
 
 ```java
 import org.junit.jupiter.api.BeforeEach;
@@ -241,34 +233,119 @@ class RomanNumeralTest {
 }
 ```
 
-We will discuss test code quality in a more systematic way in a future 
+Feel free to read more about [JUnit's annotations](https://junit.org/junit5/docs/current/user-guide/#writing-tests-annotations) in its documentation.
+
+We discuss test code quality in a more systematic way in a future 
 chapter.
 
-## Test design vs test execution
+## Tests and refactoring
 
-In practice, we usually have two distinct 
-tasks when performing software testing. 
+A more experience Java developer might be looking at our implementation of the
+Roman Numeral problem and thinking that there are more elegant ways of implementing it.
+That is indeed true. _Software refactoring_ is a constant activity in software
+development. 
 
-The first one is about analysing and designing test cases, where the goal is for us to 
-think about everything we wanna test so that we are sure that our software works as expected.
-Usually, this phase is done by humans, although we will explore the state-of-the-art in software testing research, where machines also try to 
-devise test cases for us. 
-We are going to explore different strategies that a person can do to design good test cases, such as functional testing, boundary testing, and structural testing.
+However, how can one refactor the code and still make sure it presents the same behavior?
+Without automated tests, that might be a costly activity. Developers would have to perform
+manual tests after every single refactoring operation. Software refactoring activities benefit
+from extensive automated test suites, as developers can refactor their code and, in a matter
+of seconds or minutes, get a clear feedback from the tests.
 
-The second part is about executing the tests we created. 
-And we often do it by actually running the real software or by exercising its classes, and making sure that the software does what it is supposed to do.
-Although this phase can also be done by humans, this is an activity that we can easily automate. Meaning, we can write a program that run our software and executes the test cases. 
-Writing these test programs or, as we call, writing automated tests, is also a fundamental part of this course. 
+See this new version of the `RomanNumeral` class, where we deeply refactored the code:
 
-To sum up, you should do two activities when testing your software. The first one, the more human part, which is to think and design test cases in the best way possible. And the second phase, which is to execute the tests against the software under test, and make sure that it behaves correctly. And that, we will always try to automate it as much as possible.
+* We gave a better name to the method: we call it `asArabic()` now.
+* We inlined the declaration of the Map , and used the `Map.of` utility method.
+* We make use of an auxiliary array (`digits`) to get the current number inside the loop.
+* We extracted a private method that decides whether it is a subtractive operation.
+* We made use of the `var` keyword, as introduced in Java 10.
 
-Side note 1: If you're very interested on understanding why it is so hard to teach machines to design test cases for us, and therefore, remove the human out of the loop, you can read this amazing paper called "[The Oracle Problem in Software Testing: A Survey](https://ieeexplore.ieee.org/abstract/document/6963470)". 
+```java
+public class RomanNumeral {
+  private final static Map<Character, Integer> CHAR_TO_DIGIT = 
+  Map.of('I', 1, 
+    'V', 5, 
+    'X', 10, 
+    'L', 50, 
+    'C', 100, 
+    'D', 500, 
+    'M', 1000);
 
-Side note 2: In industry, the term _automated software testing_ is related to the execution of test cases; in other words, JUnit code. In academia, whenever a research paper says _automated software testing_, it means automatically designing test cases (and not only the JUnit code).
+  public int asArabic(String roman) {
+    final var digits = roman
+      .chars()
+      .map(c -> CHAR_TO_DIGIT.get((char)c)).toArray();
 
+    var result = 0;
+    for(int i = 0; i < digits.length; i++) {
+      final var currentNumber = digits[i];
 
-{% set video_id = "pPv37kPqvAE" %}
-{% include "/includes/youtube.md" %}
+      result += isSubtractive(digits, i, currentNumber) ? 
+      -currentNumber : 
+      currentNumber;
+    }
+
+    return result;
+  }
+
+  private static boolean isSubtractive(int[] digits, int i, int currentNumber) {
+    return i + 1 < digits.length
+        && currentNumber < digits[i + 1];
+  }
+}
+```
+
+The number of refactoring operations is not small. And experience shows us that a lot
+of things can go wrong. Luckily, we now have an automated test suite that we can run and
+get some feedback.
+
+Let us also take the opportunity and improve our test code:
+
+* Given that our goal was to isolate the single
+line of code that instantiated the class under test, instead of using the `@BeforeEach`, 
+we now instantiate it directly in the class. JUnit creates a new instance of the
+test class before each test (again, as a way to help developers in avoiding test cases that fail due to previous test executions). This allows us to mark the field as `final`.
+* We inlined the method call and the assertion. Now tests are written in a single line.
+* We give test methods better names. It is common to rename test methods; the more 
+we understand the problem, the more we can give good names to the test cases.
+* We devised one more test case and added it to the test suite.
+
+```java
+public class RomanNumeralTest {
+  /*
+  JUnit creates a new instance of the class before each test,
+  so test setup can be assigned as instance fields.
+  This has the advantage that references can be made final
+  */
+  final private RomanNumeral roman = new RomanNumeral();
+
+  @Test
+  public void singleNumber() {
+      Assertions.assertEquals(1, roman.asArabic("I"));
+  }
+
+  @Test
+  public void numberWithManyDigits() {
+      Assertions.assertEquals(8, roman.asArabic("VIII"));
+  }
+
+  @Test
+  public void numberWithSubtractiveNotation() {
+      Assertions.assertEquals(4, roman.asArabic("IV"));
+  }
+
+  @Test
+  public void numberWithAndWithoutSubtractiveNotation() {
+      Assertions.assertEquals(44, roman.asArabic("XLIV"));
+  }
+}
+
+```
+
+Lessons to be learned: 
+
+* Get to know your testing framework. 
+* Never stop refactoring your production code.
+* Never stop refactoring your test code.
 
 
 ## Exercises
@@ -293,5 +370,6 @@ your intuition.
 
 * Pragmatic Unit Testing in Java 8 with Junit. Langr, Hunt, and Thomas. Pragmatic Programmers, 2015.
 
-* Barr, Earl T., Mark Harman, Phil McMinn, Muzammil Shahbaz, and Shin Yoo. "The oracle problem in software testing: A survey." IEEE transactions on software engineering 41, no. 5 (2014): 507-525.
-Harvard 
+* JUnit's manual: https://junit.org/junit5/docs/current/user-guide/.
+
+* JUnit's manual, Annotations: https://junit.org/junit5/docs/current/user-guide/#writing-tests-annotations.
