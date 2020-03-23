@@ -1,23 +1,24 @@
 
 # Why software testing?
 
-**Welcome to the first chapter of Software Testing: From Theory to Practice!** In this book, we are going to teach you how to effectively test a 
-software and make sure it works, and how to, as much as possible, 
-automate every step that we can. 
 
-By testing software, we mean that we are gonna explore different techniques to design test cases. For example, based on the requirements, based on the source code, analyze boundaries, and etc. And by automation, we mean making sure that a machine can do the tasks that humans would just take too much time to do, or would not be as good as a machine.
+Why should we actually care about software testing?*
+**Because bugs are everywhere**. 
 
-You are gonna see throughout the course that software testing is a very creative activity, and while creativity's fundamental, we are going to study systematic and rigorous ways to derive test cases. In addition, this course will be very practical. Meaning, whenever we discuss some technique, we are going to apply this technique in several examples.
- You should expect to see a lot of Java code throughout this course. And we hope that you can then generalize everything you learn here to test the software that you work in your real life. 
+You, as a person who is probably highly dependent on software technlogies, have definitely encountered a few software bugs in your life. Some of them probably did not affect you that much. For example, when your Alarm app in your mobile phone crashed and you did not wake up early enough for a meeting with your boss. However, some other bugs might have (negatively) affected your life. Societies all over the world have faced critical issues due to software bugs, from medical devices that do not work properly and harm patients to electric power plants who completely shut down.
 
-And so why should we think about software testing? **Why should we actually care about software testing?** 
-Because bugs are everywhere. And you, as a human being, probably faced a few bugs in your life. Some of them probably did not affect you that much, but definitely some other bugs really affected your life.
+And, while those software systems we gave as examples might seem far out from most developers daily job, it is impressively easy to make mistakes even in less critical/complex software systems.
 
-So just to give an impression of how easy doing mistakes is, let's start with a requirement.
+To illustrate how hard it is to spot bugs, let's start with a requirement:
 
-Let's suppose we have this customer and this person wants a software that given a list of numbers, should return the smallest and the largest number in this list. 
+> **Requirement**: The min-max
+>
+> Implement a program that, given a list of numbers (integers), the program returns 
+> the smallest and the largest numbers in this list.
 
-This looks like a very simple program to do. Let's get our hands dirty and implement it in Java:
+This looks like a very simple program to do; maybe even an exercise of an Introduction to Programming course. 
+
+A first implementation in Java could be as follows:
 
 ```java
 public class NumFinder {
@@ -36,16 +37,15 @@ public class NumFinder {
 ```
 
 
-The idea behind the code is as follows: we go through all the elements of this list and store the smallest number in a variable and the largest number in another variable.
-If n is smaller than the smallest number we have seen, we replace it. 
-We do the same for the largest: if n is bigger than largest, we just replace largest to n. 
+The idea behind the code is as follows: we go through all the elements of the `nums` list, and store the smallest and the largest numbers in two different variables.
+If `n` is smaller than the smallest number we have seen, we replace `n` by the new smallest number. The same idea applies to the largest number: 
+if `n` is bigger than largest, we just replace `n` by the new largest number. 
 
-And, as developers, that is what we often do: we implement the requirements, and then do small checks to make sure it works.
-One way to do a small check would be to come up with a main method that tries the program a bit. 
+A common flow for developers (which we will try as much as possible to convince you to _not do_) is: they implement the program based on the requirements, and then perform "small checks" to make sure the program works as expected. (Note that these "small checks" is what we will fight against; developers should perform rigourous and systematic testing to make sure their program works!)
 
-As an example, let's see what happens if we execute our program with some random numbers as inputs, like, 4, 25, 7, and 9. 
+For the sake of the argument, let us do a "small check" in the program we just wrote. A simple way of doing it would be to come up with a "main" method that exercises the program a few times. 
+Suppose that the developer then tried their implementation with 4, 25, 7, and 9 as inputs. 
 
-To see if the program behaves correctly, let's just print the largest and smallest fields. Printing debug information is quite common:
 
 ```java
 public class NumFinderMain {
@@ -60,16 +60,22 @@ public class NumFinderMain {
 }
 ```
 
-The output we get is: `25, 4`. This means our software works! We can ship it to our customers! **Can we...?**
+The output of the program is: `25, 4`. This means the implementation works as expected. In a larger context, this would mean that the developer can ship this new implementation to the final user, and let them use this new feature. **Can we really...?**
 
-We will certainly have problems with this code... Because this implementation does not work for all the possible cases. **There's a bug in there!** (Can you find the bug? Come back to the code above and look for it!)
+No, we can not. The current implementation does not work for all the possible cases. **There's a bug in there!** (Can you find the bug? Look at the implementation above and try to find it!)
 
+The program does not work properly for the following input: 4, 3, 2, and 1. For this input, the program returns the following output: `-2147483648, 1`.
+In a more generalized way, the implementation does not handle "numbers in decreased order" well enough. 
 
-If we pass an input like 4, 3, 2, and 1; or, in other words, numbers in decreased order, we would get an output like this: `-2147483648, 1`.
+We just found a bug. That is maybe the right time for a reflection: if bugs can occur
+even in simple programs like the ones above, imagine what happens in the large complex
+software systems we develop, and that our society relies upon so much.
 
-We indeed have a bug. Before anything else, let's just fix it.
-If we go back to the source code, we can see that this bug is 
-actually caused by the `else if`. 
+Before anything else, let us just fix the bug.
+Back to the source code, we see that the bug is 
+actually caused by the `else if` instruction.  
+The `else if` should actually just be an `if`. 
+Take a moment to understand why.
 
 ```java
 public class NumFinder {
@@ -89,16 +95,20 @@ public class NumFinder {
 }
 ```
 
-Take a moment here to understand why. This else if should actually just be an if. 
+Again, this is indeed a very simple bug. Once you found it, it might indeed
+look stupid. But those mistakes 
+can and do happen all the time. Why? The answer is simple: developers deal 
+with highly complex software systems. Software systems that are composed of millions (if not billions) of lines of code. Software that generates tons of data per second. Software that communicates with hundreds (if not thousands) of external systems in an assynchronous and distributed manner. Software that has millions of user requests for hour. 
+It is simply impossible to predict, during development time, everything that can happen. 
 
-Yes, this is indeed a very simple bug. But the point is that those mistakes 
-can and do happen all the time. As developers, we usually deal with very complex software and it is challenging for us to have everything in our minds. 
+**This is why we need to test software. Because the world is complex, bugs do happen.**
+ And they can really have a huge impact in our lifes.
 
-**This is why we need to test software. Because bugs do happen.**
-** And they can really have a huge impact in our lifes.**
-
-And that is what we are going to focus throughout this course. Hopefully, with everything we are going to teach you, you will have enough knowledge to rigorously test your software, and make sure that bugs like thise one do not happen.
+What is the solution? To rigorously and systematically test the software systems we develop.
 
 {% set video_id = "xtLgp8LXWp8" %}
 {% include "/includes/youtube.md" %}
 
+## References
+
+* Wikipedia. List of software bugs. https://en.wikipedia.org/wiki/List_of_software_bugs
