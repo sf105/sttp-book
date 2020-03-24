@@ -828,8 +828,16 @@ Option 1 is the false one. We can definitely get to 100% branch coverage there w
 
 Only approach 2.
 
+**Exercise 5**
 
+Given that the condition we have in `InvoiceFilter` is `x < 100`, we have:
 
+* On-point: 100. 100 should be out of the returned list of invoices.
+* Off-point: 101. 101 should be in the returned list of invoices.
+* (Random) In-point: 500.
+* (Random off-point): 50.
+
+A single test with these four invoices is a good test for the boundaries of the problem.
 
 
 ## Design for Testability

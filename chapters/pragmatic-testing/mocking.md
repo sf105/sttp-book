@@ -1,167 +1,250 @@
 
 # Mock Objects
 
+One of the main advantages of doing unit test is how much control we have over the class under test.
+However, some classes might depend on other classes. Or they might depend on external infrastructure,
+such as databases or webservices.
 
-When unit testing a piece of code, we want to test it in isolation.
-However, if the code requires some external dependency to run, e.g.,
-a connection to a database or a webservice, this can be a problem.
-We do not want to use this external component when we are just testing the piece of code that uses it. How can we do it? We can **simulate the external component**!
-For that, we will use **mock objects**.
+We might do our best to model our classes in such a way that infrastructure code is far away
+from our entities and business code. 
+However, at some point, some of your classes will depend on on some other classes.
+For example, all SQL-related code might be encapsulated in a `InvoiceDAO` class. But parts of your system will
+depend on this `InvoiceDAO` class, which depends on a database. As a consequence, testing anything that depends
+(directly or indirectly) of an `InvoiceDAO` will require a database, even though our focus might not even be
+the database part of the system. As we saw before, this might incur in higher testing costs.
 
-When we mock an object, we create a simulation of this object.
-To handle external dependencies, we mock (simulate) the class in the system that interacts with the dependency.
-Instead of doing the actual work of the external components, mock objects just return fake, hard-coded results.
-These return values can be configured inside of the test itself. We will see how it works in practice soon.
+Generically speaking: **we want to unit test a component A, that depends on another component B. 
+The dependency on component B increases the costs of unit testing A.**
 
-The use of mock objects has some advantages.
-Returning these pre-configured values is way faster than accessing an external component.
-Simulating objects also gives us a lot more control.
-If we, for example, want to make sure the system keeps going even if one of its dependencies crashes, we can just tell the simulation to crash; think of how hard would it be to crash a database just to test if your system reacts to that well (although techniques such as *chaos monkey* have become really popular!).
+This is where a **mock object** becomes handy. The idea is that we will create an 
+object that will mimic the behavior of component B
+("it looks like B, but it is not B").
+Given that we have full control over what this "fake B component" does, we can make it in such a way that
+unit testing A becomes less costly. In our example above, suppose that A is a plain-old Java class, B is a Data Access Object (and
+thus, it communicates with the database). If we simulate B by, say, returning a hard-coded list of two 
+elements whenever the `findAllInvoices()`
+method is called, instead of going to the database, we remove the need for a database when testing A. 
+If this seems all too abstract, the source code we will show soon will clarify everything.
 
-Mock objects are therefore widely used in software testing, mainly to increase testability.
-As we have discussed, external systems that the system under test relies on are often mocked to increase controllability and observability. We often mock:
+The use of objects that simulate the behavior of other objects has advantages:
 
-* External components that might be hard to control, or to slow to be used in a unit test, such as databases and webservices.
-* To simulate exceptions that are hard to trigger in the actual system.
-* To control the behavior of complex third party libraries.
-* To test how the different components interact (i.e., exchange messages) among each other.
+* The first one is that we have way **more control**. We can easily tell these objects what to do, without the need
+for complicated setups. 
+If we want a method to throw an exception, we just tell the fake method to throw it; 
+there is no need for complicated setups to "force" the 
+dependency to throw the exception. If we want a method that returns a Calendar object dating of 2009, we just tell the fake
+method to do it; there is no need for complicated magic in your OS to make it go back in time.
 
+(As an addition, note that how hard it usually is to "force" a class to throw an exception, or to "force" a class to return
+a fake date. This effort is close to zero when we simulate the dependencies). 
 
-Implementation-wise, we follow some steps:
+* Simulations are also **faster**. Suppose a dependency that communicates with a webservice or a database.
+A method in one of these classes might take a few seconds to process. On the other hand, if we simulate the dependency,
+it will not need to go to a database or to a webservice anymore; the simulation will simply return what it was configured
+to return, and it will cost nothing in terms of time.  
 
-* We create a mock object.
-* Once it has been created, we give it to the class that normally uses the concrete implementation of the mocked object.
-This class is now using the mocked object while the tests are executed.
-* At first, the mock does not know how to do anything.
-So, before running the tests, we have to tell it exactly what to do when a certain method is called.
-* We trigger the action on the class/method under test. During its execution, note that the mock replaces the external component.
-* We make assertions on the mock object, often related to its execution.
+**Simulating dependencies is therefore a widely used technique in software testing, mainly to increase testability.**
+
+You might have noted that, although the title of this chapter is "mock objects", we have been using the
+word "simulation". As you will see in the remaining of this chapter, you may need different types of "simulation objects", 
+according to your problem.
+
+Meszaros, in his book, defines five different types: dummy objects, fake objects, stubs, spies, and mocks:
+
+* **Dummy objects**: Objects that are passed to the class under test, but they are never really used. This is a common case
+in business applications, where in many cases you need to fill a long list of parameters, but the test actually exercises
+just a few of them. Think of a unit test for a `Customer` class. Maybe this class depends on several other classes (`Address`, `Last Order`, etc). But a specific test case A wants to exercise the "last order business rule", and does not care much about which Address this
+Customer has. In this case, a tester would then set up a dummy Address object and pass it to the Customer class.
+
+* **Fake objects**: Fake objects have real working implementations of the class they simulate. However, they usually do the same task
+in a much simpler way. Imagine a fake database object that uses some sort of arraylist instead of a real database.
+
+* **Stubs**: Stubs provide hard-coded answers to the calls that are called during the test. In the examples above, where we used the word "simulation", we were actually talking about stub objects. Stubs do not know what to do if the test calls a method in which it was not programmed/setup for. 
+
+* **Spies**: As the name suggests, spies "spy" a dependency. Imagine you need to know how many times a method X is called in a dependency; a spy thus observe all the interactions with the dependency, and records this information.
+
+* **Mocks**: Mock objects know what is expected of them, in terms of method calls they will (or will not) receive. For example, a mock object knows that method A should be called twice (and, say, for the first call it should return "1", and for the second call, it should throw an exception), or that method B should never be called. 
+
+In the rest of this chapter, we introduce the reader to Mockito, a popular mocking framework in Java. Although Mockito has "mocks"
+in the name, Mockito can be used for stubbing and spying as well. We also show, by means
+of a few examples, how simulations can help developers in writing unit tests more effectively.
+
+{% hint style='tip'%}
+You can read more about the history of Mock Objects at http://www.mockobjects.com.
+{% endhint %}
 
 ## Mockito
 
-In Java the most used framework for mocking is Mockito ([mockito.org](https://site.mockito.org)).
-To perform the steps we mentioned above, we use a couple of methods provided by Mockito:
+One of the most popular Java mocking/stubbing frameworks is Mockito ([mockito.org](https://site.mockito.org)).
+Mockito has a very simple API. Developers can setup stubs and/or define expectations in mock objects with just a few lines of code.
 
-- `mock(<class>)`: creates a mock object of the given class. The class can be retrieved from any class by `<ClassName>.class`.
+The most important methods one needs to know from Mockito are:
+
+- `mock(<class>)`: creates a mock object/stub of a given class. The class can be retrieved from any class by `<ClassName>.class`.
 - `when(<mock>.<method>).thenReturn(<value>)`: defines the behavior when the given method is called on the mock. In this case `<value>` will be returned.
 - `verify(<mock>).<method>`: asserts that the mock object was exercised in the expected way.
 
-Much more functionalities are described in [Mockito's documentation](https://javadoc.io/page/org.mockito/mockito-core/latest/org/mockito/Mockito.html).
+Mockito is an extensive framework, and we point to reader to its [documentation](https://javadoc.io/page/org.mockito/mockito-core/latest/org/mockito/Mockito.html).
 
+## Stubbing
 
-Suppose we have a method that filters invoices.
-These invoices are saved in a database and retrieved from the database by this function.
-The invoices are filtered on their price.
-All those above 100 are filtered.
+Let us learn how to use Mockito and setup stubs with a practical example.
+
+> **Requirement: Low value invoices**
+>
+> The program must return all the issues invoices with value smaller
+> than 100. The collection of invoices can be found in our database.
+
+The following is a possible implementation of the requirement above. Note that the
+`IssuedInvoices` is a class responsible for retrieving all the invoices from the database.
 
 ```java
+import java.util.List;
+import static java.util.stream.Collectors.toList;
+
 public class InvoiceFilter {
 
-    public List<Invoice> filter() {
-
-        InvoiceDao invoiceDao = new InvoiceDao();
-        List<Invoice> allInvoices = invoiceDao.all();
-
-        List<Invoice> filtered = new ArrayList<>();
-
-        for(Invoice inv : allInvoices) {
-            if(inv.getValue() < 100.0)
-                filtered.add(inv);
-        }
-
-        return filtered;
-
+  public List<Invoice> lowValueInvoices() {
+    final var issuedInvoices = new IssuedInvoices();
+    try {
+      return issuedInvoices.all().stream()
+              .filter(invoice -> invoice.value < 100)
+              .collect(toList());
+    } finally {
+      issuedInvoices.close();
     }
+  }
+
 }
 ```
 
 
-Without mocks, the test would need to insert some testing invoices in the database first:
+Without stubbing the `IssueInvoices` class, the `InvoiceFilter` test would need to also handle the database (making the
+unit testing more expensive). Note how the tests needs to open and close the connection (see the `open()` and `closeDao()` methods)
+and persist invoices in the database (see the many calls to `invoices.save()` in the `filterInvoices` test).
 
 ```java
-@Test
-public void filterInvoicesTest() {
-  InvoiceDao dao = new InvoiceDao();
-  Invoice i1 = new Invoice("M", 20.0);
-  Invoice i2 = new Invoice("A", 300.0);
-  dao.save(i1);
-  dao.save(i2);
+public class InvoiceFilterTest {
+  private IssuedInvoices invoices;
 
-  InvoiceFilter f = new InvoiceFilter(dao);
-  List<Invoice> result = f.filter();
+  @BeforeEach public void open() {
+    invoices = new IssuedInvoices();
+  }
 
-  assertEquals(1, result.size());
-  assertEquals(i1, results.get(0));
-  dao.close();
+  @AfterEach public void closeDao() {
+    if (invoices != null) invoices.close();
+  }
+
+  @Test
+  void filterInvoices() {
+    final var mauricio = new Invoice("Mauricio", 20);
+    final var steve = new Invoice("Steve", 99);
+    final var arie = new Invoice("Arie", 300);
+
+    invoices.save(mauricio);
+    invoices.save(steve);
+    invoices.save(arie);
+
+    final InvoiceFilter filter = new InvoiceFilter();
+
+    assertThat(filter.lowValueInvoices()).containsExactlyInAnyOrder(mauricio, steve);
+  }
+
 }
 ```
 
-And of course, clear the database afterwards. Otherwise the test will break in the second run, as there will be two invoices stored in the database! (The database stores data permanenty; so far, we never had to 'clean' the objects; after all, they were always stored in-memory only.)
+This test is not even complete... We also need to reset the database after every test. Otherwise, 
+the test will break in its second run, as there will be now four invoices with an amount smaller than 100 stored in the database! 
+Remember that the database stores data permanenty. So far, we never had to "clean our messes" in a test code, as all the objects we have created were always stored in-memory only.
+
+{% hint style='tip'%}
+Did you notice the `assertThat...containsExactlyInAnyOrder`
+assertion we used? The assertion says it all: it makes sure that the list contains 
+exactly the objects we pass, and in any order.
+
+Such assertions do not come with JUnit 5. These assertions are part of the [AssertJ](https://joel-costigliola.github.io/assertj/)
+project. AssertJ is a fluent assertions API for Java, giving us several interesting assertions that can come in handy, especially
+when dealing with lists or complex objects. We recommend the reader to get familiar with it!
+{% endhint %}
 
 {% set video_id = "0WY7IWbANd8" %}
 {% include "/includes/youtube.md" %}
 
+Let us now re-write the test. This time we will stub the `IssuedInvoices` class.
 
-Now instead of using the database, we want to replace it with a mock object.
-This way our test will be faster and we can more easily control what the Database-Access-Object returns.
+For that to happen, we first need to make sure the stub can be "injected" into the `InvoiceFilter` class.
+If you look at the previous implementation of the `InvoiceFilter` class, you will notice that the class instantiates
+the `IssuedInvoices` class on its own. If we are to use a stub, the class should allow the stub to be injected.
 
-For that to happen, we first need to make sure we can inject the `InvoiceDao`
-to the `InvoiceFilter` class. Instead of instantiating it, we'll change the `InvoiceFilter` class to actually receive `InvoiceDao` via constructor. 
+A simple refactor operator that receives the dependency via constructor, instead of instantiating it directly
+suffices:
+
 
 ```java
+import java.util.List;
+import static java.util.stream.Collectors.toList;
+
 public class InvoiceFilter {
 
-    private InvoiceDao dao;
+  final IssuedInvoices issuedInvoices;
 
-    public InvoiceFilter (InvoiceDao dao) {
-        this.dao = dao;
-    }
+  public InvoiceFilter(IssuedInvoices issuedInvoices) {
+    this.issuedInvoices = issuedInvoices;
+  }
+  public List<Invoice> lowValueInvoices() {
+      return issuedInvoices.all().stream()
+              .filter(invoice -> invoice.value < 100)
+              .collect(toList());
+  }
 
-    public List<Invoice> filter() {
-
-        List<Invoice> allInvoices = dao.all();
-
-        List<Invoice> filtered = new ArrayList<>();
-
-        for(Invoice inv : allInvoices) {
-            if(inv.getValue() < 100.0)
-                filtered.add(inv);
-        }
-
-        return filtered;
-
-    }
 }
 ```
 
-Now, we can mock the `InvoiceDao` class and pass the mocked instance
-to the `InvoiceFilter`:
+Let us now stub `IssuedInvoices`. Note that now our test does not need to do anything that is related to databases.
+The full control of the stub enables us to try different cases (even exceptional ones) very quickly:
 
 ```java
-@Test
-public void filterInvoicesTest() {
-  InvoiceDao dao = mock(InvoiceDao.class);
-  Invoice i1 = new Invoice("M", 20.0);
-  Invoice i2 = new Invoice("A", 300.0);
+import static java.util.Arrays.asList;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
-  List<Invoice> list = Arrays.asList(i1, i2);
-  when(dao.all()).thenReturn(list);
+public class InvoiceFilterTest {
+    private final IssuedInvoices invoices = Mockito.mock(IssuedInvoices.class);
+    private final InvoiceFilter filter = new InvoiceFilter(issuedInvoices);
 
-  InvoiceFilter f = new InvoiceFilter(dao);
-  List<Invoice> result = f.filter();
+    @Test
+    void filterInvoices() {
+      final var mauricio = new Invoice("Mauricio", 20);
+      final var steve = new Invoice("Steve", 99);
+      final var arie = new Invoice("Arie", 300);
 
-  assertEquals(1, result.size());
-  assertEquals(i1, results.get(0));
+      when(issuedInvoices.all()).thenReturn(asList(mauricio, arie, steve));
+
+      assertThat(filter.lowValueInvoices()).containsExactlyInAnyOrder(mauricio, steve);
+    }
+
 }
 ```
 
-Note how we now have full control over the `InvoiceDao` class.
-The `InvoiceFilter` uses the `all()` method of the `InvoiceDao` to get the invoices.
-With the mock, we can easily give the two invoices that we want to test on (note how
-we are passing `i1` and `i2`.
-Note also how we do not have to keep a database running while executing the tests!
+Note how we setup the stub, using Mockito's `when` method. In this example, we tell the stub
+to return a list containing `mauricio`, `arie`, and `steve` (the three invoices we instantiate as part
+of the test case).
+The test then invokes the method under test, `filter.lowValueInvoices()`. As a consequence, the method under test 
+invokes `issuedInvoices.all()`. However, at this point, `issuedInvoices` is actually a stub that solely returns
+the list with the three invoices. The method under test continues its execution, returns a new list with only
+the two invoices that are below 100, making the assertion to pass.
 
+Note that, besides making the test easier to write, the use of stubs also made the test class more cohesive. 
+The `InvoiceFilterTest` only tests the `InvoiceFilter` class. It does not test the behavior of the `IssueInvoices`
+class. Clearly, `IssueInvoices` deserves to be tested, but some place else, and by means of an integration test.
 
+Note that a cohesive test has less chances of failing because of something else. In the old version, the
+`filterInvoices` test could fail because of a bug in the `InvoiceFilter` class or because of a bug in the
+`IssuedInvoices` class. The new tests can now only fail because of a bug in the `InvoiceFilter` class, and never
+because of `IssuedInvoices`. That is certainly handy, as a developer will spend less time debugging in case this test
+starts to fail.
+
+Our new approach for testing `InvoiceFilter` is faster, easier to be written, and more cohesive.
 
 {% set video_id = "kptTWbeLZ3E" %}
 {% include "/includes/youtube.md" %}
@@ -169,36 +252,306 @@ Note also how we do not have to keep a database running while executing the test
 {% set video_id = "baunKy04deM" %}
 {% include "/includes/youtube.md" %}
 
+From a developers perspective, the use of stubs enables them to develop their software, "without caring too much 
+about external details". Imagine a developer working on this "Low value invoices" requirement. The developer knows that
+the invoices will come from the database. However, while developing the main logic of the requirement (i.e., the filtering logic),
+the developer "does not care about the database"; s/he only cares about the list of invoices that will come from it.
+
+In other words, the developer only cares about the existence of a method that returns all the existing invoices. 
+In object-oriented languages, that can be represented by means of an interface:
+
+```
+public interface IssuedInvoices {
+  List<Invoice> all();
+  void save(Invoice inv);
+}
+```
+
+Having such an interface, the developer can then proceed to the `InvoiceFilter` and develop it completely. After all,
+its implementation never really depended on a database, but solely on the issued invoices. Look at it again:
+
+```
+public class InvoiceFilter {
+
+  final IssuedInvoices issuedInvoices;
+
+  public InvoiceFilter(IssuedInvoices issuedInvoices) {
+    this.issuedInvoices = issuedInvoices;
+  }
+  public List<Invoice> lowValueInvoices() {
+      return issuedInvoices.all().stream()
+              .filter(invoice -> invoice.value < 100)
+              .collect(toList());
+  }
+}
+```
+
+Once the `InvoiceFilter` and all its tests are done, the developer can then focus on finally implementing the 
+`IssuedInvoices` class and its integration tests.
+
+Once you get used to this way of developing, you will notice how your code will become easier to test. We will talk
+more about design for testability in future chapters.
 
 
-## More about Mockito
+## Mocks and expectations
 
-{% hint style='working' %}
-Add one more example with Mockito here, using the verify(), and spy()
-{% endhint %}
+Suppose our system has a new requirement:
 
-## Dealing with static methods
+> **Requirement: Send low valued invoices to SAP**
+>
+> All low valued invoices should be sent to our SAP system.
+> SAP offers a /sendInvoice webservice that receives invoices.
 
-{% hint style='working' %}
-Discuss how to add an abstraction on top of a static method, so that testing becomes easier.
-{% endhint %}
+Let us follow the idea of using test doubles to facilitate the development of our production and test code.
+To that aim, let us create a `SAP` interface that represents the communication with SAP:
 
-## Dealing with APIs you don't control
+```java
+public interface SAP {
+  void send(Invoice invoice);
+}
+```
 
-{% hint style='working' %}
-Discuss how to add an abstraction on top of things you don't control, e.g., Clock.
-{% endhint %}
+Let us `InvoiceFilter` can now receive and use this interface:
 
-## Mocking in practice: when to mock?
+```java
+public class InvoiceFilter {
 
-{% hint style='working' %}
-Discuss here when to mock
-{% endhint %}
+  private final IssuedInvoices issuedInvoices;
+  private final SAP sap;
 
-Mocks are a useful tool when it comes to write real isolated unit tests.
+  public InvoiceFilter (IssuedInvoices issuedInvoices, SAP sap) {
+    this.issuedInvoices = issuedInvoices;
+    this.sap = sap;
+  }
 
+  public List<Invoice> lowValueInvoices() {
+    return issuedInvoices.all().stream()
+      .filter(invoice -> invoice.value < 100)
+      .peek(invoice -> sap.send(invoice))
+      .collect(toList());
+  }
+}
+```
+
+Our test suite already contains the `filterInvoices` test. We now need to add a test for this new
+SAP behavior. After the execution of the method under test, we 
+should expect that the `sap` mock received both the `mauricio`'s and the `steve`'s invoices, and
+that it did not receive `arie`'s invoice.
+
+For that, we use Mockito's `verify()` method:
+
+```java
+@Test
+void sendToSap() {
+  final var mauricio = new Invoice("Mauricio", 20);
+  final var steve = new Invoice("Fred", 99);
+  final var arie = new Invoice("Arie", 300);
+
+  when(issuedInvoices.all()).thenReturn(asList(mauricio, arie, steve));
+
+  filter.lowValueInvoices();
+
+  verify(sap).send(mauricio);
+  verify(sap).send(steve);
+  verify(sap, never()).send(arie);
+}
+```
+
+Note how we defined the expectations of the mock object. We "knew" exactly how the `InvoiceFilter` class
+had to interact with the mock. When the test is executed, Mockito will check whether these expectations were met, and fail
+the test if they were not. (If you want to test it, simply comment out the `map...` line in the `lowValueInvoices` and see
+the test failing).
+
+This example illustrates the main difference between simply stubbing and mocking. Stubbing means simply returning hard-coded
+values for a given method call; mocking means not only defining what methods do, but also explicitly define how the interactions
+with the mock should be.
+
+Mockito actually enables us to define even more specific expectations. For example, see the code below:
+
+```java
+verify(sap, atMost(2)).send(any(Invoice.class));
+verify(sap, atMostOnce()).send(mauricio);
+verify(sap, atMostOnce()).send(steve);
+verify(sap, never()).send(arie);
+```
+
+We expect the SAP mock to have its `send` method invoked only two times for any given `Invoice`. We then expect
+the `send` method to called once for the `mauricio` invoice, and once for the `steve` invoice. The fourth `verify` might
+be redundant, but explicitly shows that the method should never be called for `arie`.
+
+
+## How to stub static methods (or with APIs you do not control)
+
+Imagine the following requirement:
+
+> **Requirement: Christmas Discount**
+>
+> The program must give a 15% discount to the raw amount of an order
+> if current date is Christmas day. No discounts otherwise.
+
+A possible implementation for this requirement is as follows:
+
+```java
+public class ChristmasDiscount {
+
+public double applyDiscount(double rawAmount) {
+    Calendar today = Calendar.getInstance();
+
+    double discountPercentage = 0;
+    boolean isChristmas = today.get(Calendar.DAY_OF_MONTH) == 25 &&
+          today.get(Calendar.MONTH) == Calendar.DECEMBER;
+
+    if(isChristmas)
+      discountPercentage = 0.15;
+
+    return rawAmount - (rawAmount * discountPercentage);
+  }
+
+}
+```
+
+The implementation is quite straightforward. And given the characteristics of the class, unit testing seems to be a perfect
+fit for testing it. The question is: _how can we write unit tests for it?_ To test both cases (i.e., is Christmas, is not Christmas),
+we need to be able to control/stub the `Calendar` class, so that it returns the dates we want.
+
+We can then ask a more specific question: _how can we stub the Calendar API?_
+You might have noted that the call to `Calendar.getInstance()` is a static call. Mockito does not allow us to stub static methods 
+(although some other more magical mock frameworks do).
+Static calls are indeed _enemies of testability_, as they do not allow for easy stubbing.
+
+In such cases, a pragmatic solution is to create an abstraction on top of the static call. The abstraction encapsulates
+the "not-so-easy-to-be-stubbed" method, and offers an "easy-to-be-stubbed" method to the rest of the program. For this particular
+case, a `Clock` abstraction can do the job:
+
+```java
+import java.util.Calendar;
+
+public interface Clock {
+    Calendar now();
+}
+```
+
+With this interface in hands, we can follow the same approach as before. Let us inject `Clock` to the `ChristmasDiscount` class:
+
+```java
+import java.util.Calendar;
+
+public class ChristmasDiscount {
+
+  private final Clock clock;
+
+  public ChristmasDiscount(Clock clock) {
+    this.clock = clock;
+  }
+
+  public double applyDiscount(double rawAmount) {
+    Calendar today = clock.now();
+
+    double discountPercentage = 0;
+    boolean isChristmas = today.get(Calendar.DAY_OF_MONTH) == 25 &&
+          today.get(Calendar.MONTH) == Calendar.DECEMBER;
+
+    if(isChristmas)
+      discountPercentage = 0.15;
+
+    return rawAmount - (rawAmount * discountPercentage);
+  }
+}
+```
+
+With `Clock` being an interface, we can stub it the way we want and/or need:
+
+```java
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
+public class ChristmasDiscountTest {
+
+    private final Clock clock = Mockito.mock(Clock.class);
+    private final ChristmasDiscount cd = new ChristmasDiscount(clock);
+
+    @Test
+    public void christmas() {
+      Calendar christmas = new GregorianCalendar(2015, Calendar.DECEMBER, 25);
+      when(clock.now()).thenReturn(christmas);
+
+      double finalValue = cd.applyDiscount(100.0);
+      assertEquals(85.0, finalValue, 0.0001);
+    }
+
+    @Test
+    public void notChristmas() {
+      Calendar christmas = new GregorianCalendar(2015, Calendar.JANUARY, 25);
+      when(clock.now()).thenReturn(christmas);
+
+      double finalValue = cd.applyDiscount(100.0);
+      assertEquals(100.0, finalValue, 0.0001);
+    }
+}
+```
+
+Note again that we were able to develop the main logic of the requirement without depending 
+on the concrete implementation of `Clock`. For completeness, let us implement `Clock`:
+
+```
+public class DefaultClock implements Clock {
+    @Override
+    public Calendar now() {
+      return Calendar.getInstance();
+    }
+}
+```
+
+Creating abstractions on top of dependencies that you do not own, as a way to gain more control, 
+is a common technique among developers.
+
+One might argue: _But won't that increase the overall complexity of my system? After all, it is one more
+abstraction to be maintained?_ Yes. Indeed, complexity grows up whenever we add new abstractions in our software. And
+that is what we are doing here. However, the point is: does the easeness in testing the system that we get from adding this abstraction
+pays the off the cost of the increased complexity? Often, the answer is _yes, it does pay off_.
+
+
+## When to mock/stub?
+
+Mocks and stubs are a useful tool when it comes to ease the process of writing unit tests. However, as expected
+*mocking too much* might also be problem. We do not want to mock a dependency that should not be mocked.
+Suppose you are testing class A, which depends on a class B. Should we mock/stub B?
+
+Pragmatically, developers often mock/stub the following types of dependencies:
+
+
+* **Dependencies that are too slow**: If the dependency is too slow, for any reason, it might be a good idea to simulate
+that dependency.
+
+* **Dependencies that communicate with external infrastructure**: If the dependency talks to (external) infrastructure, it might
+be too complex to be set up. Consider stubbing it.
+
+* **Hard to simulate cases**: If we want to force the dependency to behave in a hard-to-simulate way, mocks/stubs can help.
+A common example is when we would like the dependency to throw an exception. Forcing an exception in the real dependency might be tricky, 
+but easy to do in a stub/mock.
+
+On the other hand, developers tend not to mock/stub:
+
+* **Entities**. In business systems, it is quite common that entities depend on other entities, e.g., a `Order` depends on `OrderItem`.
+When testing `Order`, developers tend not no stub `OrderItem`. The reason is that `OrderItem` is also probably a well-contained class
+that is easy to be set up. Mocking it would take more time than actually using the real implementation. Exceptions can be
+made for heavy entities.
+
+* **Native libraries and utility methods**. It is not common to mock/stub libraries that come with our programming language 
+and utilities methods. For example, why would one mock `ArrayList` or a call to `String.format`? 
+As exemplified with the `Calendar` example above, any library or utility methods that harm testability can be abstracted way.
+
+Ultimately, remember that whenever you mock, you reduce the reality of the test. It is up to you to understand this
+trade-off.
 
 ## Exercises
+
+The code implemented in this chapter can be found at the `invoice`, `invoicestubbed`, and `invoicesap` packages in
+the [code examples](https://github.com/sttp-book/code-examples/) repository.
 
 
 **Exercise 1.**
@@ -306,11 +659,21 @@ Suppose you want to test class A, which approach(es) can you take to be able to 
 3. Only approach 2.
 1. Both.
 
+**Exercise 5.**
+We should not forget what we saw in the previous chapter. Apply boundary testing techniques for the
+`InvoiceFilter` example discussed in this chapter.
 
 ## References
 
+
 * Fowler, Martin. Mocks aren't stubs. https://martinfowler.com/articles/mocksArentStubs.html
+
+* Meszaros, G. (2007). xUnit test patterns: Refactoring test code. Pearson Education.
 
 * Mockito's website: https://site.mockito.org
 
+* Lee Houghton: TestDouble: Don't mock types you don't own: https://github.com/testdouble/contributing-tests/wiki/Don%27t-mock-what-you-don%27t-own. Last access on March, 2020.
 
+* Spadini, Davide, Maurício Aniche, Magiel Bruntink, and Alberto Bacchelli. "Mock objects for testing java systems." Empirical Software Engineering 24, no. 3 (2019): 1461-1498.
+
+* Freeman, S., & Pryce, N. (2009). Growing object-oriented software, guided by tests. Pearson Education.
