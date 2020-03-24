@@ -303,7 +303,7 @@ The message here is that, although the testing pyramid makes sense in lots of sy
 that are developed in industry, for some others, it might not be the best way of
 making trade-offs. You, as a tester, should understand the advantages and the disadvantages
 of each test level, what each test level can give back, as well as their costs,
-and then, decide which test levels to use, how much, and when.
+and then, decide which test levels to use, how much, and when. There is no silver bullet.
 
 
 ## Exercises
