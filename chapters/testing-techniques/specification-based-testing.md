@@ -459,4 +459,5 @@ However, the number of combinations is now too high. What actions could we take 
 
 * Ostrand, T. J., & Balcer, M. J. (1988). The category-partition method for specifying and generating functional tests. Communications of the ACM, 31(6), 676-686.
 
+* Pacheco, C., & Ernst, M. D. (2007, October). Randoop: feedback-directed random testing for Java. In Companion to the 22nd ACM SIGPLAN conference on Object-oriented programming systems and applications companion (pp. 815-816).
 
