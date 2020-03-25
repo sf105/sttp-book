@@ -463,6 +463,7 @@ void boundary(int x, int y, String expectedResult) {
   assertEquals(expectedResult, pp.pizzaOrPasta(x, y));
 }
 ```
+
 The behavior
 of this single test method is the same as the six test methods we declared before. However, now
 with a much smaller amount of code.
