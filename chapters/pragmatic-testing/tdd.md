@@ -1,83 +1,82 @@
 # Test-Driven Development
 
+Interestingly, so far in this book, we have been
+first writing the production code and, once we were finished, we then moved to writing the tests.
+One disadvantage of this approach is that we might create the tests only much later. Or that
+the miss the "design feedback that our tests can give us".
 
-We are used to write some production code and, once we are finished, we move to writing the tests.
-One disadvantage of this approach is that we might create the tests only much later.
-Test-Driven Development (TDD) suggests the opposite: why don't we start by writing the tests and only then production code?
+Test-Driven Development (TDD) suggests the opposite: Why don't we start by writing the tests and only then the production code?
 
-The TDD cycle is illustrated in the diagram below.
+## The TDD cycle
+
+The TDD cycle is illustrated in the diagram below:
 
 ![Test Driven Development Cycle](img/tdd/tdd_cycle.svg)
 
-The first think of the test. 
-Then we write the test.
-This test will fail, because we have not written the code yet.
-Now that we have a failing test, we write code that makes the test pass.
+Given a requirement, we start by thinking of test cases. Often, the simplest test case we can think of, that will
+take us one step further in implementing this requirement.
+We then write the test. The test represents that small step we want to give in our implementation. In practice,
+what is the next input and output we want our code to be able to handle?
+Once you run the test, it will probably fail, as we have not written the production code yet.
+Now that we have a failing test, we write the production code that makes the test pass.
+And we aim at writing the simplest production code we can to make it pass.
+Once the test is green, it is time to refactor the code we just made. After all, when focusing on making the test
+pass, we might have ignored quality of our code implementation.
+We then repeat the process from the beginning. We stop once we are satisfied with our implementation and
+the requirement is met.
 
-And we do all of this in the simplest way we can.
-This simplicity means that we create the simplest implementation that solves the problem and we start with the simplest possible test case.
-After we wrote the code that makes the test pass, it is time to refactor the code we just made.
-
-{% hint style='working' %}
-Missing a video about how TDD works here
-{% endhint %}
-
+## Advantages of TDD
 
 TDD has some advantages:
 
-* By creating the test first, we also look at the requirements first.
+* **By creating the test first, we also look at the requirements first.**
 This makes us write the code for the specific problem that it is supposed to solve.
 In its turn, this prevents us from writing useless, unnecessary code.
 
-* We can control our pace of writing the production code.
+* **We can control our pace of writing the production code.**
 Once we have a failing test, our goal is clear: To make the test pass.
 With the test that we create, we can control the pace in which we write the production code.
 If we are confident in how to solve the problem, we can make a big step by creating a complicated test.
 However, if we are not sure how to tackle the problem, we can break it into small parts and start with the simpler pieces first by creating tests for those pieces.
 
-* The tests are derived from the requirements.
+* **The tests are derived from the requirements.**
 Therefore, we know that, when the tests pass, the code does what it is supposed to do.
 When writing tests from the source code instead, the tests might pass while the code is not doing the right thing.
 The tests also show us how easy it is to use the class we just made.
 We are using the class directly in the tests so we know immediately when we can improve something.
 
-* Related to the previous point is the way we design the code when using TDD.
+* **Testable code from the beginning.**
+Related to the previous point is the way we design the code when using TDD.
 Creating the tests first makes us think about the way to test the classes before implementing them.
-It changes the way we design the code.
-This is why Test Driven Development is sometimes also called Test Driven Design.
-Thinking about this design earlier is also better, because it is easier to change the design of a class early on.
-You probably have to change less if you just start with a class than when the class is utilized by other parts of the system. We discuss more about Test-Driven Design later.
+After all, we need testable classes from the very beginning, if we starting from the test code.
+TDD changes/forces developers to change how they design their code.
 
-* Writing tests first gives faster feedback on the code that we are writing.
+* **Writing tests first gives faster feedback on the code that we are writing.**
 Instead of writing a lot of code and then a lot of tests, i.e. getting a lot of feedback at once after a long period of time, we create a test and then write a small piece of code for that test.
 Now we get feedback after each test that we write, which is usually after a piece of code that is much smaller than the pieces of code we test at once in the traditional approach.
 Whenever we have a problem it will be easier to identify it, as the added code is smaller.
 Moreover if we do not like anything it is easier to improve the code.
 
 * We already talked about the importance of controllability when creating automated tests.
-By thinking about the tests before implementing the code we automatically make sure that the code is easy to control.
+**By thinking about the tests before implementing the code we automatically make sure that the code is easy to control.**
 This improves the code quality as it will be easier to test the controllable code.
 
-* Finally, the tests that we write can indicate some problems in the code.
-Too many tests for just one class can indicate that the class has too many functionalities and that it should be split up into more classes.
+* Finally, the **tests that we write can indicate some problems in the code**.
+This is why Test-Driven Development is sometimes also called *Test-Driven Design*. We discussed design for testability in
+a previous chapter. Listening to tests while writing them might give you hints on how your design is looking like.
+For example, too many tests for just one class can indicate that the class has too many functionalities and that it should be split up into more classes.
 If we need too many mocks inside of the tests the class might be too coupled, i.e. it needs too many other classes to function.
 If it is very complex to set everything up for the test, we may have to think about the pre-conditions that the class uses.
 Maybe there are too many or maybe some are not necessary.
+All of this can be observed in the tests, while doing TDD.
 
-Given all these advantages, should we use TDD 100% of time?
-There is, of course, no universal answer. While some research shows the advantages of TDD, others are more in doubt about it.
+Thinking about design early on is also a good idea. It is easier to change the design of a class at the beginning of the development,
+rather than a few months later.
 
-{% hint style='working' %}
-Missing a video about the advantages of TDD here
-{% endhint %}
+## TDD from the trenches
 
-## Test-Driven Design
-
-Will I create a better class design if I use Test-Driven Development? Well, yes and no; TDD doesn't do magic. In the following, we discuss the effects of the practice, and how the practice can help developers during class design.
-
-Developers commonly argue that TDD helps software design, improving internal code quality. For example, Kent Beck [1], Robert Martin [2], Steve Freeman [3], and Dave Astels [4], state in their books (without scientific evidence) that the writing of unit tests in a TDD fashion promotes significant improvement in class design, helping developers to create simpler, more cohesive, and less coupled classes. They even consider TDD as a class design technique [5], [6]. Nevertheless, the way in which TDD actually guides developers during class design is not yet clear.
-
-After interviewing some developers, we observed the following.
+In the following, 
+we discuss some insights of TDD, directly from developers we have talked to.
 
 ### TDD does not drive to a better design by itself
 
@@ -154,6 +153,27 @@ We also agree with the confidence when refactoring. As TDD forces developers to 
 Therefore, we believe that is is not the practice by itself that helps developers to improve their class design; but it is the consequences of the constant act of writing a unit test, make that class testable, and refactor the code, that drives developers through a better design.
 
 Conclusion: Developers believe that the practice of test-driven development helps them to improve their class design, as the constant need of writing a unit test for each piece of the software forces them to create testable classes. These small feedbacks — is your test easy to be tested or not? — makes them think and rethink about the class and improve it. Also, as the number of tests grow, they act as a safety net, allowing developers to refactor freely, and also try and experiment different approaches to that code. Based on that, we suggest developers to experiment the practice of test-driven development, as its effects look positive to software developers.
+
+## Should I do TDD 100% of the time?
+
+Given all these advantages, should we use TDD 100% of time?
+There is, of course, no universal answer. While some research shows the advantages of TDD, others are more in doubt about it.
+
+Our pragmatic suggestion is:
+
+* You should use TDD when you do not know how to design and/or architect a part of the system. TDD might help you in exploring
+different design decisions.
+
+* You should use TDD when you are dealing with a complex problem, a problem in which you lack experience. If you are facing a
+new challenging implementation, TDD might help you in taking a step down and learn on the way. The use of baby steps might
+help you in starting slow, learn more about the requirement, and get up to speed once you are more familiar with the problem.
+
+* You should not use TDD when you are familiar with the problem in hands, or the design decisions are clear in your mind.
+If there is "nothing to be learned or explored", TDD might not really bring all the benefits. However, we note that, even if you
+are not doing TDD, you should write tests in a timely manner. Do not leave it for the end of the day or the end of sprint.
+Write them together with the production code, so that the growing automated test suite will give you more and more confidence 
+about the code.
+
 
 ## Exercises
 
@@ -232,17 +252,15 @@ TDD has become a really popular practice among developers. According to them, TD
 
 * Beck, K. (2003). Test-driven development: by example. Addison-Wesley Professional.
 
-* [1] Beck K (2002) Test-driven development by example. 1° edn. Addison-Wesley Professional, Boston, USA.
+* Martin R (2006) Agile principles, patterns, and practices in C#. 1st edition. Prentice Hall, Upper Saddle River.
 
-* [2] Martin R (2006) Agile principles, patterns, and practices in C#. 1st edition. Prentice Hall, Upper Saddle River.
+* Steve Freeman, Nat Pryce (2009) Growing object-oriented software, Guided by Tests. 1° edn. Addison-Wesley Professional, Boston, USA.
 
-* [3] Steve Freeman, Nat Pryce (2009) Growing object-oriented software, Guided by Tests. 1° edn. Addison-Wesley Professional, Boston, USA.
+* Astels D (2003) Test-driven development: a practical guide. 2nd edition. Prentice Hall.
 
-* [4] Astels D (2003) Test-driven development: a practical guide. 2nd edition. Prentice Hall.
+* Janzen D, Saiedian H (2005) Test-driven development concepts, taxonomy, and future direction. Computer 38(9): 43–50. doi:10.1109/MC.2005.314.
 
-* [5] Janzen D, Saiedian H (2005) Test-driven development concepts, taxonomy, and future direction. Computer 38(9): 43–50. doi:10.1109/MC.2005.314.
+* Beck K (2001) Aim, fire. IEEE Softw 18: 87–89. doi:10.1109/52.951502.
 
-* [6] Beck K (2001) Aim, fire. IEEE Softw 18: 87–89. doi:10.1109/52.951502.
-
-* [7] Feathers M (2007) The deep synergy between testability and good design. https://web.archive.org/web/20071012000838/http://michaelfeathers.typepad.com/michael_feathers_blog/2007/09/the-deep-synerg.html.
+* Feathers M (2007) The deep synergy between testability and good design. https://web.archive.org/web/20071012000838/http://michaelfeathers.typepad.com/michael_feathers_blog/2007/09/the-deep-synerg.html.
 
