@@ -311,73 +311,98 @@ public interface SAP {
 }
 ```
 
-Let us `InvoiceFilter` can now receive and use this interface:
+We now need a class that will coordinate the process: retrieve the low valued invoices from the `InvoiceFilter`
+and pass them to the `SAP` service. Let us create a new `SAPInvoiceSender` class:
 
 ```java
-public class InvoiceFilter {
+public class SAPInvoiceSender {
 
-  private final IssuedInvoices issuedInvoices;
+  private final InvoiceFilter filter;
   private final SAP sap;
 
-  public InvoiceFilter (IssuedInvoices issuedInvoices, SAP sap) {
-    this.issuedInvoices = issuedInvoices;
+  public SAPInvoiceSender(InvoiceFilter filter, SAP sap) {
+    this.filter = filter;
     this.sap = sap;
   }
 
-  public List<Invoice> lowValueInvoices() {
-    return issuedInvoices.all().stream()
-      .filter(invoice -> invoice.value < 100)
-      .peek(invoice -> sap.send(invoice))
-      .collect(toList());
+  public void sendLowValuedInvoices() {
+    filter
+      .lowValueInvoices()
+      .forEach(invoice -> sap.send(invoice));
   }
 }
 ```
 
-Our test suite already contains the `filterInvoices` test. We now need to add a test for this new
-SAP behavior. After the execution of the method under test, we 
-should expect that the `sap` mock received both the `mauricio`'s and the `steve`'s invoices, and
-that it did not receive `arie`'s invoice.
+Let us know test the `SAPInvoiceSender` class.
 
+
+Note that, for this test, we now mock the `InvoiceFilter` class. After all, for the `SAPInvoiceSender`, 
+`InvoiceFilter` class is "just a class that returns a list of invoices". As it is not the goal of the current test
+to test the filter itself, we should mock this class, as to facilitate the testing of the method under test
+
+After the execution of the method under test (`sendLowValuedInvoices()`), we 
+should expect that the `sap` mock received `mauricio`'s, `steve`'s, and `arie`s invoices.
 For that, we use Mockito's `verify()` method:
 
 ```java
-@Test
-void sendToSap() {
-  final var mauricio = new Invoice("Mauricio", 20);
-  final var steve = new Invoice("Fred", 99);
-  final var arie = new Invoice("Arie", 300);
+public class SAPInvoiceSenderTest {
 
-  when(issuedInvoices.all()).thenReturn(asList(mauricio, arie, steve));
+  private static final InvoiceFilter filter = mock(InvoiceFilter.class);
+  private static final SAP sap = mock(SAP.class);
+  private static final SAPInvoiceSender sender = new SAPInvoiceSender(filter, sap);
 
-  filter.lowValueInvoices();
+  @Test
+  void sendToSap() {
+    final var mauricio = new Invoice("Mauricio", 20);
+    final var steve = new Invoice("Steve", 99);
+    final var arie = new Invoice("Arie", 300);
 
-  verify(sap).send(mauricio);
-  verify(sap).send(steve);
-  verify(sap, never()).send(arie);
+    when(filter.lowValueInvoices()).thenReturn(asList(mauricio, steve));
+
+    sender.sendLowValuedInvoices();
+
+    verify(sap).send(mauricio);
+    verify(sap).send(steve);
+    verify(sap).send(arie);
+  }
 }
 ```
 
 Note how we defined the expectations of the mock object. We "knew" exactly how the `InvoiceFilter` class
 had to interact with the mock. When the test is executed, Mockito will check whether these expectations were met, and fail
-the test if they were not. (If you want to test it, simply comment out the `map...` line in the `lowValueInvoices` and see
+the test if they were not. (If you want to test it, simply comment out the `forEach...` line in the `sendLowValuedInvoices` and see
 the test failing).
 
 This example illustrates the main difference between simply stubbing and mocking. Stubbing means simply returning hard-coded
 values for a given method call; mocking means not only defining what methods do, but also explicitly define how the interactions
 with the mock should be.
 
-Mockito actually enables us to define even more specific expectations. For example, see the code below:
+Mockito actually enables us to define even more specific expectations. For example, see the expectations below:
 
 ```java
-verify(sap, atMost(2)).send(any(Invoice.class));
-verify(sap, atMostOnce()).send(mauricio);
-verify(sap, atMostOnce()).send(steve);
-verify(sap, never()).send(arie);
+verify(sap, times(3)).send(any(Invoice.class));
+verify(sap, times(1)).send(mauricio);
+verify(sap, times(1)).send(steve);
+verify(sap, times(1)).send(arie);
 ```
 
-We expect the SAP mock to have its `send` method invoked only two times for any given `Invoice`. We then expect
-the `send` method to called once for the `mauricio` invoice, and once for the `steve` invoice. The fourth `verify` might
-be redundant, but explicitly shows that the method should never be called for `arie`.
+These ones are more restrictive than the ones we had before.
+We now expect the SAP mock to have its `send` method invoked precisely three times (for any given `Invoice`). We then expect
+the `send` method to called once for the `mauricio` invoice, once for the `steve` invoice, 
+and once for the `arie` invoice. We point the reader to Mockito's manual for more details on how to configure
+expectations.
+
+> You might be asking yourself now: _Why did you not put this new SAP behavior inside of the
+> existing `InvoiceFilter` class_?
+> 
+> If we were do it, the `lowValueInvoices` method would then be both a "command" and a "query".
+> By "query", we mean that the method returns data to the caller; but "command", we mean that the method
+> also perform an action in the system. Mixing both concepts in a single method is not a good idea, as it
+> may confuse developers who will eventually call this method. How would they know this method had some
+> extra side-effect, besides just returning the list of invoices?
+> 
+> If you want to read more about it, search for _Command-Query Separation_, or CQS, a concept 
+> devised by Bertrand Meyer.
 
 
 ## How to stub static methods (or with APIs you do not control)
