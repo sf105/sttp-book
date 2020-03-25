@@ -245,8 +245,27 @@ Let's explore another example:
 > The input of the program is thus the number of small bars, the number of big bars,
 > and the total amount of kilos to store.
 
+A possible implementation for this program is:
 
-In this example, the partitions are less clear and it is essential to understand the problem fully
+```java
+public class ChocolateBars {
+
+    public static final int CANNOT_PACK_BAG = -1;
+
+    public int calculate(int small, int big, int total) {
+        int maxBigBoxes = total / 5;
+        int bigBoxesWeCanUse = Math.min(maxBigBoxes, big);
+        total -= (bigBoxesWeCanUse * 5);
+
+        if(small < total)
+            return CANNOT_PACK_BAG;
+        return total;
+
+    }
+}
+```
+
+In this requirement, the partitions are less clear and it is essential to understand the problem fully
 in order to derive the partitions.
 
 The classes/partitions are:
@@ -263,7 +282,39 @@ For each of these classes, we can devise concrete test cases:
 * **Need only big bars**. small = 5, big = 3, total = 10
 * **Need Small + big bars**. small = 5, big = 3, total = 17
 * **Not enough bars**. small = 1, big = 1, total = 10
-* **Not from the specs**: small = 4, big = 2, total = -1
+* **Not from the specs**: small = -1, big = -1, total = -1
+
+In JUnit code:
+
+```java
+public class ChocolateBarsTest {
+  private final ChocolateBars bars = new ChocolateBars();
+    @Test
+    void notEnoughBars() {
+        assertEquals(-1, bars.calculate(1, 1, 10));
+    }
+
+    @Test
+    void onlyBigBars() {
+        assertEquals(0, bars.calculate(5, 3, 10));
+    }
+
+    @Test
+    void bigAndSmallBars() {
+        assertEquals(2, bars.calculate(5, 3, 17));
+    }
+
+    @Test
+    void onlySmallBars() {
+        assertEquals(3, bars.calculate(4, 2, 3));
+    }
+
+    @Test
+  void invalidValues() {
+      assertEquals(-1, bars.calculate(-1, -1, -1));
+    }
+}
+```
 
 This example shows why deriving good test cases becomes more challenging, 
 when the specifications are complex.

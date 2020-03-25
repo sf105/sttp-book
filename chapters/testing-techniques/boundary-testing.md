@@ -352,7 +352,6 @@ public class ChocolateBars {
         if(small < total)
             return CANNOT_PACK_BAG;
         return total;
-
     }
 }
 ```
