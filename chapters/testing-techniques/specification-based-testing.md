@@ -141,28 +141,24 @@ public class LeapYearTests {
   @Test
   public void leapYearsNotCenturialTest() {
     boolean leap = leapYear.isLeapYear(2016);
-
     assertTrue(leap);
   }
 
   @Test
   public void leapYearsCenturialTest() {
     boolean leap = leapYear.isLeapYear(2000);
-
     assertTrue(leap);
   }
 
   @Test
   public void nonLeapYearsTest() {
     boolean leap = leapYear.isLeapYear(39);
-
     assertFalse(leap);
   }
 
   @Test
   public void nonLeapYearsCenturialTest() {
     boolean leap = leapYear.isLeapYear(1900);
-
     assertFalse(leap);
   }
 }
