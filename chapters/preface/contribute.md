@@ -1,5 +1,3 @@
-
-
 # Contribute
 
 We accept any kind of contribution, from typo fixes, rephrasing,
@@ -8,5 +6,5 @@ code examples to full chapters. Just open a [Pull Request](https://github.com/st
 Or, if you feel you are not ready to contribute, but want to see some content
 here, just [open an issue](https://github.com/sttp-book/sttp-book/issues).
 
-Note that everything you create will be licensed under the license below. We will
-add your name in acknowledgements.
+Note that everything you create will be published under the same [license](license.md) as the other contents. We will
+add your name in the [acknowledgements](acknowledgements.md).
