@@ -5,18 +5,18 @@
 Why should we actually care about software testing?
 **Because bugs are everywhere**. 
 
-You, as a person who is probably highly dependent on software technlogies, have definitely encountered a few software bugs in your life. Some of them probably did not affect you that much. For example, when your Alarm app in your mobile phone crashed and you did not wake up early enough for a meeting with your boss. However, some other bugs might have (negatively) affected your life. Societies all over the world have faced critical issues due to software bugs, from medical devices that do not work properly and harm patients to electric power plants who completely shut down.
+You, as a person who is probably highly dependent on software technlogies, have definitely encountered a few software bugs in your life. Some of them probably did not affect you that much. For example, when your Alarm app in your mobile phone crashed and you did not wake up early enough for a meeting with your boss. However, some other bugs might have (negatively) affected your life. Societies all over the world have faced critical issues due to software bugs, from medical devices that do not work properly and harm patients, to electric power plants that completely shut down.
 
-And, while those software systems we gave as examples might seem far out from most developers daily job, it is impressively easy to make mistakes even in less critical/complex software systems.
+And, while those software systems we gave as examples might seem far out from most developers' daily job, it is impressively easy to make mistakes even in less critical/complex software systems.
 
 To illustrate how hard it is to spot bugs, let's start with a requirement:
 
-> **Requirement**: The min-max
+> **Requirement**: The min-max program.
 >
-> Implement a program that, given a list of numbers (integers), the program returns 
+> Implement a program that, given a list of numbers (integers), returns 
 > the smallest and the largest numbers in this list.
 
-This looks like a very simple program to do; maybe even an exercise of an Introduction to Programming course. 
+This looks like a very simple program to implement; maybe even an exercise of an Introduction to Programming course. 
 
 A first implementation in Java could be as follows:
 
@@ -64,8 +64,8 @@ The output of the program is: `25, 4`. This means the implementation works as ex
 
 No, we can not. The current implementation does not work for all the possible cases. **There's a bug in there!** (Can you find the bug? Look at the implementation above and try to find it!)
 
-The program does not work properly for the following input: 4, 3, 2, and 1. For this input, the program returns the following output: `-2147483648, 1`.
-In a more generalized way, the implementation does not handle "numbers in decreased order" well enough. 
+The program does not work properly for the following input: an array with values 4, 3, 2, and 1. For this input, the program returns the following output: `-2147483648, 1`.
+In a more generalized way, the implementation does not handle "numbers in decreasing order" well enough. 
 
 We just found a bug. That is maybe the right time for a reflection: if bugs can occur
 even in simple programs like the ones above, imagine what happens in the large complex
@@ -95,7 +95,7 @@ public class NumFinder {
 }
 ```
 
-Again, this is indeed a very simple bug. Once you found it, it might indeed
+Again, this is indeed a very simple bug. Once you have found it, it might indeed
 look stupid. But those mistakes 
 can and do happen all the time. Why? The answer is simple: developers deal 
 with highly complex software systems. Software systems that are composed of millions (if not billions) of lines of code. Software that generates tons of data per second. Software that communicates with hundreds (if not thousands) of external systems in an assynchronous and distributed manner. Software that has millions of user requests for hour. 

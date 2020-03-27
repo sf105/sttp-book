@@ -18,7 +18,7 @@ For now, this comes down to three terms: **failure**, **fault**, and **error**.
 A **failure** is a component of the (software) system that is not behaving as expected.
 Failures are often visible to the end user.
 An example of a failure can be a mobile app that suddenly stopped working. 
-Or a news website that suddenly started to provide yesterday news in the front page. 
+Or a news website that suddenly started to provide yesterday's news on the front page. 
 The software system did something it was not supposed to do.
 
 Failures are generally caused by _faults_.
