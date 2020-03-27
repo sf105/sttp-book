@@ -218,51 +218,333 @@ making sure that tests are being run in the correct environment.
 
 
 
+* **Test Run War**:
+The war is an analogy for when two tests are "fighting" for the same resources.
+One can observe a test run war when tests start to fail as soon as more than one developer
+runs their test suites.
+Imagine a test suite that uses to a centralized database. When developer A runs the test, the test changes the state of the database. At the same time, 
+developer 2 runs the same test, which also goes to the same database. 
+Thus, both tests are touching the same database at the same time. 
+This unexpected situation might make the test to fail.
+
+_Isolation_ is key to avoid this test smell. In the example of a centralized database,
+one solution would be make sure each developer has its own instance of a database. That would
+avoid the fight for the same resource. (Related to this example, we discuss more about 
+database testing in a specific chapter).
 
 
+* **General Fixture**:
+A fixture is the set of input values that will be used to exercise the component under test.
+We have called _fixture_ as the _arrange_ part of the test before.
+As you might have noticed, fixtures are the "stars" of the test method, as they derive
+naturally from the test cases we devised using any of the techniques we have discussed. 
+
+When testing more complex components, developers might need to make use of several
+different fixtures; one for each partition they want to exercise. These fixtures might
+then become complex. And worst: while tests are different from each other, their fixtures
+might have some intersection. 
+
+Given this possible intersection among the different fixtures, a less attentive developer
+might decide to declare a "large" fixture that works for many different tests. Each test
+would then use a small part of this large fixture. 
+
+While this approach might work and tests might correctly implement the test cases,
+they have be hard to be maintained. Once a test fails, developers with the mission
+of understanding the cause of the failure, will face a large fixture that is not totally
+relevant/of interest for them. In practice, the developer would have to manually
+"filter out" part of the fixture that are not really exercised by the failing test.
+That is an unnecessary cost.
+Making sure that the fixture of a test is as specific and cohesive as possible helps
+developers in comprehending the essence of a test (which is often highly relevant when
+the test starts fail).
+
+Build patterns, with the focus of building test data, 
+might help developers in avoiding such a smell. More especifically, 
+the **[Test Data Builder](http://www.natpryce.com/articles/000714.html)** is
+a often used design pattern in test code of enterprise applications. Such applications
+often have to deal with the creation of complex sets of interelated 
+business entities, which can easily
+lead developers to write general fixtures.
+
+* **Indirect tests** and **eager tests**:
+Tests should be as cohesive and as focused as possible. A test that aims at testing
+some class `A` should solely focus on testing class `ATest`. Even if it depends on a class
+`B`, requiring `ATest` to instantiate `B`, `ATest` should focus on exercise `A` and `A` only.
+The smell, however, emerges when a test class focuses its efforts on testing many classes
+at once. 
+
+Less cohesive tests harm productivity. How do developers where tests for a given `B` class
+are? If test classes focus on more than a single class, tests for `B` might be every anywhere.
+Developers would have to look for them. 
+It is also expected that, without proper care, tests for a single class would live in
+many other test classes, e.g., tests for `B` might exist in `ATest`, `BTest`, `CTest`, etc.
+
+Tests, and more specifically, unit test classes and methods, should have a clear focus.
+They should test a single unit. If they have to depend on other classes, the use of
+mocks and stubs might help the developer in isolating that test and avoid _indirect
+testing_. If the use of mocks and stubs is not possible, make sure that assertions
+focus on the real class under test, and that failures caused by dependencies (and not 
+by the class under test) are clearly indicated in the outcome of the test method.
+
+Similar to what we have discussed when talking about the excessive number of assertions
+in a single test, avoiding _eager tests_, or tests that exercise more than a unique
+behavior of the component is also a best practice. Test methods that exercise multiple
+behaviors at once tend to be overly long and complex, making it harder for developers
+to comprehend them in a quick glance.
+
+* **Sensitive Equality**:
+Good assertions are fundamental in test cases. A bad assertion might lead a test
+to not fail in it should fail. However, a bad assertion might also lead a test _to fail
+when it should not_.
+Engineering a good assertion statement is challenging. Even more so when components
+produce fragile outputs, i.e., outputs that tend to change often. 
+Test code should be as resilient as possible to the implementation details
+of the component under test. Assertions should also be not too sensitive to internal
+changes. 
+
+Imagine a class `Item` that represents an item of a cart shop. 
+An item is composed of a name, a quantity, and an individual price. The final price
+of the item is the multiplication of its quantity per its individual price.
+The class has the following implementation:
+
+```java
+import java.math.BigDecimal;
+
+public class Item {
+
+	private final String name;
+	private final int qty;
+	private final BigDecimal individualPrice;
+
+	public Item(String name, int qty, BigDecimal individualPrice) {
+		this.name = name;
+		this.qty = qty;
+		this.individualPrice = individualPrice;
+	}
+
+	// getters ...
+
+	public BigDecimal finalAmount() {
+		return individualPrice.multiply(new BigDecimal(qty));
+	}
+
+	@Override
+	public String toString() {
+		return "Product " + name + " times" + qty + " = " + finalAmount();
+	}
+}
+```
+
+Suppose now that a less attentive developer writes the following test as to exercise
+the `finalAmount` behavior:
+
+```java
+public class ItemTest {
+
+	@Test
+	void qtyTimesIndividualPrice() {
+		var item = new Item("Playstation IV with 64 GB and super wi-fi",
+				3,
+				new BigDecimal("599.99"));
+
+		// this is too sensitive!
+		Assertions.assertEquals("Product Playstation IV with 64 GB " +
+				"and super wi-fi times " + 3 + " = 1799.97", item.toString());
+	}
+}
+```
+
+The test above indeed exercises the calculation of the final amount. However,
+one can see that the developer took a shortcut. S/he decided to assert the overall
+behavior by making use of the `toString()` method of the class. Maybe because
+the developer felt that this assertion was more strict, as it asserts not only
+the final price, but also the name of the product and its quantity. 
+
+While this seems to work at first,
+this assertion is sensitive to changes in the implementation of the `toString`. 
+
+Clearly,
+the tester does not want its test to break if the `toString` changes, but if the
+`finalAmount()` method changes. That is not what happens. Suppose that another developer
+decided to shorten the length of the outcome of the `toString`:
+
+```java
+@Override
+public String toString() {
+	return "Product " + name.substring(0, Math.min(11, name.length())) + 
+	  " times " + qty + " = " + finalAmount();
+}
+```
+
+Suddenly, our `qtyTimesIndividualPrice` test fails:
+
+```
+org.opentest4j.AssertionFailedError: 
+Expected :Product Playstation IV with 64 GB and super wi-fi times 3 = 1799.97
+Actual   :Product Playstatio times 3 = 1799.97
+```
+
+A better assertion for this would be to assert precisely what is wanted from that behavior.
+In this case, assert that the final amount of the item is correctly calculated. A better
+implementation for the test would be:
+
+```java
+@Test
+void qtyTimesIndividualPrice_lessSensitiveAssertion() {
+	var item = new Item("Playstation IV with 64 GB and super wi-fi",
+			3,
+			new BigDecimal("599.99"));
+
+	Assertions.assertEquals(new BigDecimal("1799.97"), item.finalAmount());
+}
+
+```
+
+Remember our discussion regarding design for testability. It might be better to 
+create a method with a sole purpose of facilitating the test (or, in this case, the assertion)
+rather than having to rely on sensitive assertions that will possibly break the test
+for the wrong reason in the future.
+
+* **Innapropriate assertions**: Somewhat related to the
+previous smell, having the proper assertions makes a huge
+difference between a good and a bad test case. While we have discussed how to derive
+good test cases (and thus, good assertions), choosing the right implementation strategy
+for writing the assertion can impact the maintenance of the test on the long run.
+The wrong choice of an assertion instruction might give developers less information
+about the failure, difficulting the debugging process.
+
+Imagine a very simplistic implementation of a `Cart` that receives products
+to be inserted into it. Products can not be repeated. A simple implementation might be:
+
+```java
+public class Cart {
+	private final Set<String> items = new HashSet<>();
+
+	public void add(String product) {
+		items.add(product);
+	}
+
+	public int numberOfItems() {
+		return items.size();
+	}
+}
+```
+
+Now, a developer decided to test the `numberOfItems` behavior. S/he then wrote the following
+test cases:
+
+```java
+public class CartTest {
+	private final Cart cart = new Cart();
+
+	@Test
+	void numberOfItems() {
+		cart.add("Playstation");
+		cart.add("Big TV");
+
+		assertTrue(cart.numberOfItems() == 2);
+	}
+
+	@Test
+	void ignoreDuplicatedEntries() {
+		cart.add("Playstation");
+		cart.add("Big TV");
+		cart.add("Playstation");
+
+		assertTrue(cart.numberOfItems() == 2);
+	}
+}
+```
+
+Note that the less attentive developer opt for an `assertTrue`. While the test
+works as expected, if it ever fails (which we can easily force by replacing the Set for a List
+in the `Cart` implementation), the assertion error message will be like
+as follows:
+
+```
+org.opentest4j.AssertionFailedError: 
+Expected :<true> 
+Actual   :<false>
+```
+
+The error message does not explicitly show the difference in the values. In this
+simple example, it might seem that it is not too important, but take this to more 
+complicated test cases. In the real world, a developer would have to add some debugging
+code (System.out.printlns) to print the actual value that was produced by the method.
+
+The test could help the developer by giving as much information as possible. To that aim,
+choosing the right assertions is important, as they tend to give more information. 
+In this case, the use of an `assertEquals` is a better fit:
+
+```java
+@Test
+void numberOfItems() {
+	cart.add("Playstation");
+	cart.add("Big TV");
+
+	// assertTrue(cart.numberOfItems() == 2);
+	assertEquals(2, cart.numberOfItems());
+}
+```
+
+Libraries such as AssertJ, besides making the assertions more legible, also
+help us in providing better error messages. Suppose our `Cart` class now has a 
+`allItems()` method that returns all items that were previously stored in this cart:
+
+```java
+public Set<String> allItems() {
+	return Collections.unmodifiableSet(items);
+}
+```
+
+Asserting the outcome of this method using plain old JUnit assertions would look
+like the following:
+
+```java
+@Test
+void allItems() {
+	cart.add("Playstation");
+	cart.add("Big TV");
+
+	var items = cart.allItems();
+
+	assertTrue(items.contains("Playstation"));
+	assertTrue(items.contains("Big TV"));
+}
+```
+
+AssertJ enables us to assert not only the items, but also the structure of the set itself.
+For example, by making sure it _only_ contains these two items, in a single assertion (note
+the `containsExactlyInAnyOrder()` that does exactly what its name says):
+
+```java
+@Test
+void allItems() {
+	cart.add("Playstation");
+	cart.add("Big TV");
+
+	var items = cart.allItems();
+
+	assertThat(items).containsExactlyInAnyOrder("Playstation", "Big TV");
+}
+```
+
+Thus, we recommend developers to choose wisely how to write the assertion statements.
+A good assertion clearly reveals its reason for failing, is legible, and is as specific
+and less sensitive as possible.
 
 
+* **Mystery Guest**: (Integration) tests often rely on external 
+dependencies. They might be databases, files in the disk, or webservices (the "guest"). 
+While such dependency is unavoidable in these types of tests, making them clearly explicit
+in the test code might help developers in cases where these tests suddenly start to fail.
+A test that makes use of a guest, but hides it from the developer (making it 
+a "mystery guest") is simply harder to comprehend.
 
-
-
-
-The next test smell is **Test Run War**.
-This happens when the tests pass if you execute them alone, but fail as soon as someone else runs the test at the same time.
-This often happen when the tests consume the same resource, e.g., the same database.
-Imagine a test suite that communicates to a global database. When developer 1 runs the test, the test changes the state of the database; at the same time, developer 2 runs the same test that also goes to the same database. Now, both tests are touching the same database at the same time. This unexpected situation which might make the test to fail.
-If you feel like we talked about this before, you are correct; this smell is highly related to the *Isolation* of the FIRST princinples.
-When you encounter a Test Run War, make sure to isolate them well.
-
-Another test smell that we often encounter is the **General Fixture**.
-A fixture basically means the arrange part of the test, where we create all the objects and inputs needed by the test.
-We often see developers creating one large method (using, for example, the `@BeforeEach` annotation of JUnit) that creates *all* the objects needed by the *all* tests.
-Having such a fixture is not necessarily a problem. However, when test A uses just part of this fixture, and part B uses just another part, this means that this fixture is too generic.
-The problem with a generic fixture is that it becomes very hard to understand what a single test really needs and uses.
-To resolve this issue, you have to make sure that the tests contain clear and concise fixures, nothing more than what it really needs.
-Explore the design pattern called **[Test Data Builder](http://www.natpryce.com/articles/000714.html)**, that helps us in avoiding this test smell.
-
-The **Indirect tests** smell concerns the class that is tested by a test class.
-When the test goes beyond testing the class under test, but also tests other classes, we call it an *indirect test*.
-This might problematic due to the change propagation that might happen in this test. Imagine a test class `ATest` that tests not only class `A`, but also class `B`. If a bug exists in class `B`, we expect tests in `BTest` to fail; however, the tests for class `A` in `ATest` will also break, due to 
-this indirect testing.
-
-These extra failing tests are cumbersome and might cost a good amount of time from the developer.
-We should try as much as possible to keep our tests focused, making sure that they do not indirectly test other classes.
-
-Finally, we have the test smell called **Sensitive Equality**.
-We use assertions to verify that the production code behaves as expected.
-This test smell is when we have assertions that are too strict. Or, in other
-words, too sensitive. We want our tests to be as resilient as possible, and only break if there is indeed a bug in the system. We do not want small changes that do not affect the behavior of the class to break our tests.
-
-A clear example of such a smell is when the developer decides to use
-the results of a `toString()` method to assert the expected behavior.
-Imagine an assertion like `Assertion.assertTrue(invoice.toString().contains("Playstation"))`.
-`toString()`s change quite often; but a change in `toString()` should not
-break all the tests... If the developer had made the assertion to focus
-on the specific property, e.g., `Assertion.assertEquals("Playstation", invoice.getProduct().getName())`, this would not had happened.
-
-Again, all these test smells are covered more in-depth in XUnit Test Patterns by Gerard Meszaros.
-We highly recommend you to read that book!
+Make sure your test gives proper error messages, differentiating between a fail in the
+expected behavior, or a fail due to a problem in the guest. Having assertions dedicated
+to ensure that the guest is in the right state before running the tests is often
+the remedy that is applied to this smell.
 
 {% set video_id = "QE-L818PDjA" %}
 {% include "/includes/youtube.md" %}
