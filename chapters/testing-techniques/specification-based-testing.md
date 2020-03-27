@@ -257,7 +257,7 @@ public class ChocolateBars {
         int bigBoxesWeCanUse = Math.min(maxBigBoxes, big);
         total -= (bigBoxesWeCanUse * 5);
 
-        if(small < total)
+        if(small <= total)
             return CANNOT_PACK_BAG;
         return total;
 

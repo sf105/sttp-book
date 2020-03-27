@@ -349,7 +349,7 @@ public class ChocolateBars {
         int bigBoxesWeCanUse = Math.min(maxBigBoxes, big);
         total -= (bigBoxesWeCanUse * 5);
 
-        if(small < total)
+        if(small <= total)
             return CANNOT_PACK_BAG;
         return total;
     }
@@ -359,6 +359,23 @@ public class ChocolateBars {
 However, another developer tried `(2,3,17)` as an input and the program crashed. After some debugging,
 they noticed that the if statement should had been `if(small < total)` instead of
 `if(small <= total)`. This smells like a bug that could had been found via boundary testing.
+
+```java
+public class ChocolateBars {
+    public static final int CANNOT_PACK_BAG = -1;
+
+    public int calculate(int small, int big, int total) {
+        int maxBigBoxes = total / 5;
+        int bigBoxesWeCanUse = Math.min(maxBigBoxes, big);
+        total -= (bigBoxesWeCanUse * 5);
+
+        // we fixed the bug here!
+        if(small < total)
+            return CANNOT_PACK_BAG;
+        return total;
+    }
+}
+```
 
 Note that the test `(2,3,17)` belongs to the **need small + big bars** partition. In this case,
 the program will make use of all the big bars (there are 3 available) and then *all* the small bars available (there are 
