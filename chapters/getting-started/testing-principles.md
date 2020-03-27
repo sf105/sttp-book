@@ -41,7 +41,7 @@ that was not clear enough in the requirement.
 In short: A mistake done by a developer often leads to fault in the source code that will
 eventually result in a failure.
 
-In the _Roman Numeral_ code example of the previous chapter, the failure was the program returning
+In the _Min-Max_ code example of the previous chapter, the failure was the program returning
 a large number. The fault was due to a bad `if/else if` condition. The mistake was 
 caused by me not dealing properly with that corner case.
 
