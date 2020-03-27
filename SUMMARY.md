@@ -2,7 +2,7 @@
 
 * [Authors](chapters/preface/authors.md)
 
-* [Acknowledgments](chapters/preface/acknowledgments.md)
+* [Acknowledgements](chapters/preface/acknowledgements.md)
 
 * [Adopt this book](chapters/preface/adopt.md)
 

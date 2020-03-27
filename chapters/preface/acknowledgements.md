@@ -1,5 +1,5 @@
 
-# Acknowledgments
+# Acknowledgements
 
 * Annibale Panichella: chapter on mutation testing
 * Wouter Polet: initial transcripts of the lectures.
