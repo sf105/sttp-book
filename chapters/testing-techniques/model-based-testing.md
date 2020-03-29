@@ -1,10 +1,5 @@
 # Model-Based Testing
 
-In model based testing, we use models of the system to derive tests.
-In this chapter we briefly show what a model is (or can be), and go over some of the models used in software testing.
-The two models covered in this chapter are decision tables and state machines.
-
-## Models
 
 In software testing, a model is a simpler way of describing the program under test.
 A model holds some of the attributes of the program that the model was made of.
@@ -12,6 +7,10 @@ Given that the model preserves some of the original attributes of the system und
 
 Why should we use models at all? A model gives us a structured way to understand
 how the program operates (or should operate).
+Model-based testing makes use of models of the system to derive tests.
+
+In this chapter, we show what a model is (or can be), and go over some of the models used in software testing.
+The two models covered in this chapter are decision tables and state machines.
 
 
 {% set video_id = "5yuFf4-4JnE" %}
@@ -26,12 +25,10 @@ Developers can use the decision tables to derive tests that verify the correct i
 
 ### Creating decision tables
 
-A decision table is a table containing the conditions and the actions performed by the system based on these conditions. In this section, we'll discuss how to build them in first place.
+A decision table is a table containing the conditions and the actions performed by the system based on these conditions. In this section, we discuss how to build them.
 
-For now the table contains all the combinations of conditions explicitly.
-Later we will look at ways to bring the amount of combinations present in the table down a bit.
+In general, a decision table looks like the following:
 
-In general a decision table looks like the following:
 <table>
   <tr><th></th><th></th><th colspan="4">Variants</th></tr>
   <tr><td rowspan="2"><br><i>Conditions</i></td>
@@ -40,23 +37,31 @@ In general a decision table looks like the following:
   <tr><td><i>Action</i></td><td>&lt;Action&gt;</td><td>value1<br></td><td>value2</td><td>value3</td><td>value4</td></tr>
 </table>
 
+For now, the table contains all the combinations of conditions explicitly.
+Later we will look at ways to reduce the amount of combinations present in the table 
+(and, thus, reducing the test of costing all the combinations).
+
 The chosen conditions should always be independent from one another.
 In this type of decision tables, the order of the conditions also do not matter, 
 e.g., making `<Condition2>` true and `<Condition1>` false or making `<Condition1>` false and after that `<Condition2>` true, should result on the same outcome.
-(If the order does matter in some way, a state machine might be a better model.
+(If the order *does* matter in some way, a state machine might be a better model.
 We cover state machines later in this chapter.)
 
-When choosing a phone subscription, there are a couple of options you could choose.
-Depending on these options a price per month is given.
-We consider the two options:
+Let us devise a first concrete decision table by means of an example.
 
-- International services
-- Auto-renewal
+> **Requirement: Phone Subscription**
+>
+> When choosing a phone subscription, there are a couple of options you could choose.
+> Depending on these options a price per month is given.
+> We consider the two options: international services, and auto-renewal.
+> Taking international should increase the price per month.
+> Auto-renewal decreases the price per month.
 
-In the decision table these will be turned into conditions.
-True then corresponds to a chosen option and false corresponds to a option that is not chosen.
-Taking international should increase the price per month.
-Auto-renewal decreases the price per month.
+In the decision table, international services and 
+auto-renewal will be turned into conditions.
+True then corresponds to a chosen option and false 
+corresponds to a option that is not chosen.
+
 
 The decision tables is the following:
 
@@ -72,12 +77,14 @@ You can see the different prices for the combinations of international and auto-
 
 
 
-*Don't Care values:* In some cases the value of a condition might not influence the action.
-This is represented as a don't care value, often abbreviated to "dc".
+**Don't care values:** In some cases the value of a condition might not influence the action.
+This is represented as a "don't care" value, often abbreviated to "dc".
 
 Essentially, "dc" is an combination of two columns.
 These two columns have the same values for the other conditions and the same result.
 Only the condition that had the dc value has different values in the expanded form.
+
+Suppose the following decision table:
 
 <table>
   <tr><th></th><th></th><th colspan="3">Variants</th></tr>
@@ -86,7 +93,9 @@ Only the condition that had the dc value has different values in the expanded fo
   <tr><td>&lt;Condition2&gt;</td><td>dc</td><td>T</td><td>F</td></tr>
   <tr><td><i>Action</i></td><td>&lt;Action&gt;</td><td>value1<br></td><td>value1</td><td>value2</td></tr>
 </table>
-can be expanded to:
+
+It can be expanded to:
+
 <table>
   <tr><th></th><th></th><th colspan="5">Variants</th></tr>
   <tr><td rowspan="2"><br><i>Conditions</i></td>
@@ -94,8 +103,10 @@ can be expanded to:
   <tr><td>&lt;Condition2&gt;</td><td>T<br></td><td>F</td><td>T</td><td>T</td><td>F</td></tr>
   <tr><td><i>Action</i></td><td>&lt;Action&gt;</td><td>value1<br></td><td>value1</td><td>value1</td><td>value1</td><td>value2</td></tr>
 </table>
+
 After expanding we can remove the duplicate columns.
 We end up with the decision table below:
+
 <table>
   <tr><th></th><th></th><th colspan="4">Variants</th></tr>
   <tr><td rowspan="2"><br><i>Conditions</i></td>
@@ -104,10 +115,15 @@ We end up with the decision table below:
   <tr><td><i>Action</i></td><td>&lt;Action&gt;</td><td>value1<br></td><td>value1</td><td>value1</td><td>value2</td></tr>
 </table>
 
-We add another condition to the example above.
-A loyal costumer receives the same discount as a costumer who chooses the auto-renewal option. 
-However, a costumer only gets the discount from one of the two.
+Let us know go back to the *Phone Subscription* example, and add another 
+condition to it:
+
+> A loyal costumer receives the same discount as a 
+> costumer who chooses the auto-renewal option. 
+> However, a costumer only gets the discount from one of the two.
+
 The new decision table is below:
+
 <table>
   <tr><th></th><th></th><th colspan="6">Variants</th></tr>
   <tr><td rowspan="3"><br><i>Conditions</i></td>
@@ -116,12 +132,12 @@ The new decision table is below:
   <tr><td>Loyal</td><td>dc</td><td>T</td><td>F</td><td>dc</td><td>T</td><td>F</td></tr>
   <tr><td><i>Action</i></td><td>price/month</td><td>10</td><td>10</td><td>15</td><td>30</td><td>30</td><td>32</td></tr>
 </table>
+
 Note that when auto-renewal is true, the loyal condition does not change the outcome anymore and vice versa.
 
 
-
-*Default behavior*: Usually, $$N$$ conditions lead to $$2^N$$ combinations or columns.
-Often, however, the number of columns that are specified in the decision table can be smaller.
+**Default behavior**: Usually, $$N$$ conditions lead to $$2^N$$ combinations or columns.
+However, the number of columns that are specified in the decision table can be smaller.
 Even if we expand all the dc values.
 
 This is done by using a default action.
@@ -144,17 +160,15 @@ If we set the default charge rate to 10 per month the new decision table can be 
 
 ### Testing decision tables
 
-Using the decision tables we can derive tests, such that we test whether the expected logic is implemented correctly.
+We can derive tests based on the decision tables, such that we test whether the expected logic is implemented correctly.
 There are multiple ways to derive tests for a decision table:
 
 - **All explicit variants:** Derive one test case for each column. The amount of tests is the amount of columns in the decision table.
 - **All possible variants:** Derive a test case for each possible combination of condition values. For $$N$$ conditions this leads to $$2^N$$ test cases. Often, this approach is unrealistic because of the exponential relation between the number of conditions and the number of test cases.
 - **Every unique outcome / All decisions:** One test case for each unique outcome or action. The amount of tests depends on the actions in the decision table.
-- **Each condition T/F:** Make sure that each conditions is true and false at least once in the test suite. This often results in two tests: All conditions true and all conditions false.
+- **Each condition T/F:** Make sure that each condition is true and false at least once in the test suite. This often results in two tests: All conditions true and all conditions false.
 
-#### MC/DC
-
-One more way to derive test cases from a decision table is by using Modified Condition / Decision Coverage (MC/DC). 
+One more way to derive test cases from a decision table is by using the **Modified Condition / Decision Coverage (MC/DC)**. 
 This is a combination of the last two ways of deriving tests shown above.
 
 We have already discussed MC/DC in the Structural-Based Testing chapter.
@@ -168,11 +182,11 @@ The third point is realized by making two test cases for each condition.
 In these two test cases, the condition under test should have a different value, the outcome should be different, and the other conditions should have the same value in both test cases.
 This way the condition that is under test individually influences the outcome, as the other conditions stay the same and therefore do not influence the outcome.
 
-By choosing the test cases efficiently MC/DC needs less tests than all variants, while still exercising the important parts of the system.
-Less tests of course means less time taken to write the tests and a faster execution of the test suite.
+By choosing the test cases efficiently, MC/DC needs less tests than all variants, while still exercising the important parts of the system.
+Less tests means less time taken to write the tests and a faster execution of the test suite.
 
 
-To derive the tests we expand and rearrange the decision table of the previous example:
+To derive the tests we expand and rearrange the decision table of the *Phone Subscription* example:
 
 <table>
   <tr><th></th><th></th><th>v1</th><th>v2</th><th>v3</th><th>v4</th><th>v5</th><th>v6</th><th>v7</th><th>v8</th></tr>
@@ -183,9 +197,8 @@ To derive the tests we expand and rearrange the decision table of the previous e
   <tr><td><i>Action</i></td><td>price/month</td><td>30</td><td>30</td><td>30</td><td>32</td><td>10</td><td>10</td><td>10</td><td>15</td></tr>
 </table>
 
-First, we look at the first condition and we try to find pairs of combinations that would cover this condition according to MC/DC.
+First, we look at the first condition (v1) and we try to find pairs of combinations that would cover this condition according to MC/DC.
 We look for combinations where only International and the price/month changes.
-
 The possible pairs are: {v1, v5}, {v2, v6}, {v3, v7} and {v4, v8}.
 Testing both combinations of any of these pairs would give MC/DC for the first condition.
 
@@ -196,9 +209,9 @@ The last condition, Loyal, gives the following pairs: {v3, v4}, {v7, v8}.
 
 By choosing the test cases efficiently we should be able to achieve full MC/DC by choosing four of the combinations.
 We want to cover all the actions in the test suite.
-Therefore we need at least v4 and v8.
-With these decisions we have covered the International condition as well.
-Now we need one of v1, v2, v3 and one of v5, v6, v7.
+Therefore, we need at least v4 and v8.
+With these decisions we also have covered the International condition.
+Now, we need one of v1, v2, v3 and one of v5, v6, v7.
 To cover Loyal we add v7 and to cover Auto-renewal we add v2.
 Now we also cover all the possible actions.
 
@@ -215,10 +228,9 @@ Now that we know how to derive the test cases from the decision tables, it is ti
 
 The most obvious way to test the combinations is to create a single test for each of the conditions.
  
-
-We continue with the example we created the decision table for earlier.
-To start we write the tests for combinations v2 and v3.
-Assuming that we can use some implemented methods in a PhonePlan class the tests look like this:
+Let us continue with the example we created the decision table for earlier.
+We write the tests for combinations v2 and v3.
+Assuming that we can use some implemented methods in a `PhonePlan` class, the tests look like this:
 
 ```java
 @Test
@@ -244,47 +256,21 @@ public void internationalLoyalTest() {
 }
 ```
 
+{% hint style='tip' %}
+Note that, for readability purposes, we make use of setters to define
+if a plan is international, auto renewable, or loyal. A best way of designing
+the `PhonePlan` class would be to receive such parameters in the constructor.
+That would enforce all clients of the class to always provide these
+configurations at the moment of instantiation, preventing instances of
+`PhonePlan` to be in an inconsistent state.
+
+We discuss more about such contracts in the design-by-contracts chapter.
+{% endhint %}
 
 
 As you can see in the example above, the different tests for the different combinations are very similar.
 The tests do the exact same thing, but just with different values.
-To avoid the code duplication that comes with this approach to implementing decision table tests, we can use parameterized tests.
-
-#### Parameterized Testing
-
-Instead of implementing a single test for each of the combinations, we want to implement a single test for all the combinations.
-Then for each combination we execute this test with the correct values.
-This is done with a parameterized test.
-
-In JUnit 5 this is done using the `ParameterizedTest` annotation.
-Additionally, a `Source` is needed, which is given by another annotation.
-In general this will look like the following:
-
-```java
-@ParameterizedTest
-@CsvSource({
-  "true, 5, 8.0, ...",  // test 1
-  "false, 2, 0.6, ...", // test 2
-  "true, 1, 5.3, ...",  // test 3
-  "true, 3, 4.7, ..."   // test 4
-})
-public void someTest(boolean param1, int param2, double param3, ...) {
-  // Arrange
-  SomeObject some = new SomeObject();
-
-  // Act
-  double result = some.method(param1, param2);
-
-  // Assert
-  assertEquals(param3, result);
-}
-```
-
-For testing the combinations out of decision tables, usually the `CsvSource` is most convienient. Other sources can be found in the [JUnit 5 docs](https://junit.org/junit5/docs/current/user-guide/#writing-tests-parameterized-tests-sources). Each string in the `CsvSource` gives one test. Such a string consists of the arguments for the test function separated by commas. The first value is the first argument, the second value the second argument etc.
-
-
-
-With the parameterized test we can easily create all tests we need for MC/DC of the decision table in the previous examples.
+To avoid the code duplication that comes with this approach to implementing decision table tests, we can use parameterized tests (as we have done before):
 
 ```java
 @ParameterizedTest
@@ -307,9 +293,6 @@ public void pricePerMonthTest(boolean international, boolean autoRenewal,
 }
 ```
 
-You can see that the test is very similar as the tests in the previous example.
-Instead of directly using the values for one combination we use the parameters with the `CsvSource` to execute multiple tests.
-
 {% set video_id = "tzcjDhdQfvM" %}
 {% include "/includes/youtube.md" %}
 
@@ -329,7 +312,7 @@ Write the video's accompanying text
 
 ## State Machines
 
-The state machine is a model that describes the software system by describing its states.
+A state machine is a model that describes the software system by describing its states.
 A system often has multiple states and various transitions between these states.
 The state machine model uses these states and transitions to illustrate the system's behavior.
 
@@ -347,7 +330,7 @@ From that state the system can transition to other states.
 Each transition is paired with an event.
 This event is usually one or two words that describe what has to happen to make the transition.
 
-Of course there are some agreements on how to make the models.
+There are some agreements on how to make the models.
 The notation we use is the Unified Modeling Language, UML.
 For the state diagrams that means we use the following symbols:
 
@@ -357,7 +340,7 @@ For the state diagrams that means we use the following symbols:
 - Initial state: ![](img/model-based-testing/uml/initial_state_symbol.svg)
 
 For the coming examples we model a (part of a) phone.
-We start very simple with a state machines that models the phone's ability to be locked or unlocked.
+We start simple with a state machines that models the phone's ability to be locked or unlocked.
 
 A phone that can be either locked or unlocked has two states: locked and unlocked.
 Before all the face recognition and fingerprint sensors, you had to enter a password to unlock the phone.
@@ -374,7 +357,7 @@ Therefore the initial state of the state machine should also be `LOCKED`.
 
 
 Sometimes an event can lead to multiple states, depending on a certain condition.
-To model this in the state machines, we use conditional transitions.
+To model this in the state machines, we use *conditional transitions*.
 These transitions are only performed if the event happens and if the condition is true.
 The conditions often depend on a certain value used in the state machine.
 To modify these values when a transition is taken in the state machine we use actions.
@@ -387,7 +370,7 @@ The notation for conditions and actions is as follows:
 
 When a user types the wrong password for four times in a row, the phone gets blocked.
 We use `n` in the model to represent the amount of failed attempts.
-Let's look at the conditional transitions that we need to model this behavior first.
+Let us look at the conditional transitions that we need to model this behavior first.
 
 ![](img/model-based-testing/examples/blocked_condition_machine.svg)
 
@@ -415,26 +398,26 @@ This way the state machine will be in the `BLOCKED` state when a wrong password 
 
 ### Testing state-machines
 
-Like with the decision tables, we want to use the state machine model to derive tests for our software system.
-First, we will have a look at what might be implemented incorrectly.
+Like with the decision tables, we want to use the state machine model to derive tests for the software system.
 
+First, we will have a look at what might be implemented incorrectly.
 An obvious error that can be made is a transition going to the wrong state.
-This will cause the system to act incorrectly so we want the tests to catch such errors.
+This will cause the system to act incorrectly, so we want the tests to catch such errors.
 Additionally, the conditions in conditional transitions and the actions in transition can be wrong.
 Finally, the behavior of a state should stay the same at all times.
 This means that moving from and to a state should not change the behavior of that state.
 
-For state machines we have a couple of test coverages.
+For state machines, we have a couple of test coverages.
 In this chapter we go over three mainly used ways of defining test coverage:
 
 - **State coverage:** each state has to be reached at least once
 - **Transition coverage:** each transition has to be exercised at least once
 - **Paths:** not exactly a way of describing test coverage, but we use paths to derive test cases
 
-To achieve the state coverage we generally bring the system in a state through transitions and then assert that the system is in that state.
-To test a single transition (for transition coverage) a bit more steps are needed:
+To achieve the state coverage, we generally bring the system in a state through transitions and then assert that the system is in that state.
+To test a single transition (for transition coverage), more steps are needed:
 
-1. Bring system in state that the transition goes out of
+1. Bring the system in state that the transition under test goes out of
 2. Assert that the system is indeed in that state
 3. Trigger the transition's event.
 4. If there is an action: check if this action has happened
@@ -456,9 +439,7 @@ To test this transition, we bring the system in `UNLOCKED` by giving the correct
 Then we trigger the `lock button` and assert that the system is in `LOCKED`.
 
 
-
-
-#### Paths and Transition trees
+### Paths and Transition trees
 
 Besides the individual transitions, we can also test the combinations of transitions.
 These combinations of transitions are called paths.
@@ -483,9 +464,9 @@ Such a transition tree is created as follows:
   - If any nodes were added: 
      Repeat from step 2.
 
-This is also demonstrated in the example below.
+This is demonstrated in the example below.
 
-To make the transition table a bit more interesting we modify the phone's state machine to have an `OFF` state instead of a `BLOCKED` state.
+To make the transition table a bit more interesting, we modify the phone's state machine to have an `OFF` state instead of a `BLOCKED` state.
 See the state machine below:
 
 ![Phone state machine with off](img/model-based-testing/examples/phone_off_machine.svg)
@@ -500,10 +481,12 @@ Now we for each outgoing transition from the `OFF` state we add a child node to 
 ![Two level transition tree](img/model-based-testing/examples/transition_tree/transition_tree_1.svg)
 
 One node was added, so we continue by adding children to that node.
+
 ![Three level transition tree](img/model-based-testing/examples/transition_tree/transition_tree_2.svg)
 
 Now, the only state we have not seen yet is `UNLOCKED` in the `UNLOCKED_0` node.
 Therefore this is the only node we should add children to.
+
 ![Final phone transition tree](img/model-based-testing/examples/transition_tree/transition_tree_3.svg)
 
 Now all the states of the nodes in the lowest layer have been visited before so the transition tree is done.
@@ -536,47 +519,23 @@ Now the amount of tests are manageable, while testing most of the important path
 {% include "/includes/youtube.md" %}
 
 
-#### Sneak paths and Transition tables
+### Sneak paths and transition tables
 
 In the previous section, we discussed transition trees and how to use them to derive tests.
 These tests check if the system behaves correctly when following different paths in the state machine.
 With this way of testing, we check if the existing transitions in a state machine behave correctly.
-We do not check if there exists any more transitions, transitions that should not be there.
+However, we do not check if there exists any more transitions, transitions that should not be there.
 We call these paths, "sneak paths".
 
 A **sneak path** is a path in the state machine that should not exist.
 So, for example, we have state X and Y and the system should not be able to transition directly from X to Y.
 If the system can in some way transition directly from X to Y, we have a sneak path.
-Of course, we want to test if such sneak paths exist in the system.
-To this end we make use of transition tables.
+Clearly, we want to test if such sneak paths exist in the system.
+To this end, we make use of transition tables.
 
 A transition table is a table containing each transition that is in the state machine.
-The transition is given by the state it's going out of, the event that triggers the transition, and the state the transition goes to.
-A transition table typically looks somewhat like the following:
-<table>
-  <tr>
-    <td>STATES</td>
-    <td colspan="3">Events</td>
-  </tr>
-  <tr>
-    <td></td>
-    <td>event1</td>
-    <td>event2</td>
-    <td>event3</td>
-  </tr>
-  <tr>
-    <td>STATE1</td>
-    <td>STATE1</td>
-    <td></td>
-    <td>STATE2</td>
-  </tr>
-  <tr>
-    <td>STATE2</td>
-    <td></td>
-    <td>STATE1</td>
-    <td></td>
-  </tr>
-</table>
+The transition is given by the state it is going out of, the event that triggers the transition, and the state the transition goes to.
+
 
 We construct a transition table as follows:
 
@@ -628,7 +587,9 @@ To make the transition table we list all the states and events in the table:
     <td></td>
   </tr>
 </table>
+
 Then we fill the table with the states that the transitions in the state machine point to:
+
 <table>
   <tr>
     <td>STATES</td>
@@ -670,8 +631,6 @@ Then we fill the table with the states that the transitions in the state machine
 
 We can see that there is, for example, a transition from `UNLOCKED` to `LOCKED` when the event `lock button` is triggered.
 
-
-
 Now that we have the transition table, we have to decide the intended behavior for the cells that are empty.
 The default is to just ignore the event and stay in the same state.
 In some cases one might want the system to throw an exception.
@@ -680,12 +639,11 @@ These decisions depend on the project and the customer's needs.
 As discussed earlier, we can use the transition table to derive tests for sneak paths.
 Usually, we want the system to remain in its current state when we trigger an event that has an empty cell in the transition table.
 To test for all possible sneak paths, we create a test case for each empty cell in the transition table.
-This test will first bring the system to the state corresponding to the empty cell's row (you can use the transition table to find a suitable path), then triggers the event that corresponds to the empty cell's column, and finally the test asserts that the system is in the same state as before triggering the event.
+The test will first bring the system to the state corresponding to the empty cell's row (you can use the transition table to find a suitable path), then triggers the event that corresponds to the empty cell's column, and finally the test asserts that the system is in the same state as before triggering the event.
 The amount of 'sneak path tests' is the amount of empty cells in the transition table.
 
 With these tests we can verify both existing and non-existing paths.
 These techniques combined give a good testing suite from a state machine.
-So far, we looked at rather simple and small state machines.
 
 {% set video_id = "EMZB2IZT8WA" %}
 {% include "/includes/youtube.md" %}
@@ -694,13 +652,12 @@ So far, we looked at rather simple and small state machines.
 
 ### Super states and regions
 
+So far, we looked at rather simple and small state machines.
 When the modeled system becomes large and complex, typically so does the state machine.
 At some point the state machine will consist of a lot of states and transitions, which makes it unclear and impractical to work with.
-To resolve this issue and make a state machine more scalable we can use super states and regions.
+To resolve this issue and make a state machine more scalable we can use **super states** and **regions**.
 
-#### Super states
-
-A super state is a state that consists of a state machine.
+**Super state**: A super state is a state that consists of a state machine.
 Basically, we wrap a state machine in a super-state which we can then use as a state in another state machine.
 
 The notation of the super-state is as follows: 
@@ -712,7 +669,7 @@ The super state generally consists of multiple states and transitions, and it al
 Any transition going into the super state essentially goes to the initial state of the super state.
 A transition going out of the super state means that if the event on this transition is triggered in any of the super state's states, the system transitions into the state this transition points to.
 
-With the super state we can choose to show it fully or we can collapse it.
+We can choose to show the super state fully or we can collapse it.
 A collapsed super state is just a normal state in the state machine.
 This state has the super state's name and the same incoming and outgoing transitions as the super state.
 
@@ -732,8 +689,7 @@ Now we can also simplify the state machine by collapsing the super state:
 
 
 
-#### Regions
-
+**Regions**:
 So far we have had super states that contain one state machine.
 Here, the system is in only one state of the super state at once.
 In some cases it may be useful to allow the system to be in multiple states at once.
@@ -791,12 +747,10 @@ In a test, we want to bring the class to different states and assert that after 
 In other words, a **test scenario** is basically a series of calls on the class's trigger methods.
 Between these calls, we can call the inspection methods to check the state.
 
-#### Abstraction layer
-
 When a state machine corresponds to a single class, we can easily use the methods described above to test the state machine.
 However, sometimes the state machine spans over multiple classes.
 In that case, you might not be able to easily identify the inspection and trigger methods.
-In this scenario, the state machines can even correspond to *end-to-end testing*.
+In this scenario, the state machines can even correspond to *end-to-end / system testing*.
 Here, the flow of the entire system is under test, from input to output.
 
 The system under test does not always provide a nice programing interface (API) to inspect the state or trigger the event for the transitions.
@@ -810,114 +764,6 @@ Hence, the abstraction layer will contain the inspection method to check the sta
 
 With this small abstraction layer, we can formulate the tests very clearly.
 Triggering a transition is just one method call and checking the state also requires only one method call.
-
-#### Page Objects
-
-Creating these abstraction layers is very common when testing web applications.
-In this context, the abstractions are called **Page Objects**.
-
-
-
-An example of a page object is shown in the diagram, made by Martin Fowler, below:
-
-![Page Objects diagram by Martin Fowler](img/model-based-testing/page_objects.png)
-
-At the bottom, you can see a certain web page that we want to test.
-The tool for communicating through the browser (webdriver for example), gives an API to access the HTML elements.
-Additionally, the tool supports clicking on elements. For example, on a certain button.
-
-If we use this API directly in the tests, the tests become unreadable very quickly.
-So, we create a page object with just the methods that we need in the tests.
-These methods correspond to the application, rather than the HTML elements.
-The page objects implement these methods by using the API provided by the tool.
-
-Then, the tests use these methods instead of the ones about the HTML elements.
-Because we are using methods that correspond to the application itself, they will be more readable than tests without the page objects.
-
-
-
-#### State Objects
-
-Page objects give us an abstraction for single pages or even fragments of pages.
-This is already better than using the API for the HTML elements in the test, but we can take it a bit further.
-We can make the page objects correspond to the states in the navigational state machine.
-A navigational state machine is a state machine that describes the flow through a web application.
-Each page will be a represented as a state.
-The events of the transitions between these states show how the user can go from one to another page.
-
-With this approach, the page objects each correspond to one of the states of the state machine.
-Now we do not call them page objects anymore, but **state objects**.
-In these state objects we have the inspection and trigger methods.
-Additionally, we have methods that can help with state **self-checking**.
-These methods verify whether the state itself is working correctly, for example by checking if certain buttons can be clicked on the web page.
-Now the tests can be expressed in the application's context, using these three types of methods.
-
-#### Behavior-Driven Design
-
-The state objects are mostly used for end-to-end testing in web development.
-Another technique useful in end-to-end testing is behavior driven design.
-
-In **behavior driven design** the system is designed with scenario's in mind.
-These scenario's are written in natural language and describe the system's behavior in a certain situation.
-
-For these scenarios to be used by tools, an example of a tool for scenario's is [cucumber](https://cucumber.io), we need to follow a certain format.
-This is a standard format for scenario's, as it provides a very clear structure.
-A scenario consists of the following:
-
-- Title of the scenario
-- Given ...: Certain conditions that need to hold at the start of the scenario.
-- When ...: The action taken.
-- Then ...: The result at the end of the scenario.
-
-
-
-Let's look at a scenario for an ATM.
-If we have a balance of $100, a valid card and enough money in the machine, we can give a certain amount of money requested by the user.
-Together with the money, the card should be given back, and the balance of the account should be decreased.
-This can be turned into the scenario 1 below:
-
-```text
-Story: Account Holder withdraws cash
-
-As an Account Holder
-I want to withdraw cash from an ATM
-So that I can get money when the bank is closed
-
-Scenario 1: Account has sufficient funds
-Given the account balance is $100
- And the card is valid
- And the machine contains enough money
-When the Account Holder requests $20
-Then the ATM should dispense $20
- And the account balance should be $80
- And the card should be returned
-```
-
-The small introduction above the scenario itself is part of the user story.
-A user story usually consists of multiple scenario's with respect to the user introduced.
-This user is the account holder in this example.
-
-
-With the general `Given`, `When`, `Then` structure we can describe a state transition as a scenario.
-In general the scenario for a state transition looks like this:
-
-```text
-Given I have arrived in some state
-When  I trigger a particular event
-Then  the application conducts an action
- And  the application moves to some other state.
-```
-
-Each scenario will be able to cover only one transition.
-To get an overview of the system as a whole we will still have to draw the entire state machine.
-
-{% set video_id = "NMGX7TEMXdE" %}
-{% include "/includes/youtube.md" %}
-
-
-{% set video_id = "gijO3mlcMCg" %}
-{% include "/includes/youtube.md" %}
-
 
 
 ## Other examples of real-world models
@@ -1096,5 +942,4 @@ One way is to focus on the positive cases only, i.e., specify only the variants 
 
 * Chapter 4 of the Foundations of software testing: ISTQB certification. Graham, Dorothy, Erik Van Veenendaal, and Isabel Evans, Cengage Learning EMEA, 2008.
 
-* van Deursen, A. (2015). Beyond Page Objects: Testing Web Applications with State Objects. ACM Queue, 13(6), 20.
 
