@@ -4,7 +4,7 @@
 
 * [Acknowledgements](chapters/preface/acknowledgements.md)
 
-* [Adopt this book](chapters/preface/adopt.md)
+* [Using this book](chapters/preface/use.md)
 
 * [Contribute to this book](chapters/preface/contribute.md)
 
