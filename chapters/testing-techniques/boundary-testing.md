@@ -228,7 +228,7 @@ Let us walk through another example:
 > **Requirement: Pizza or pasta**
 >
 > The program decides whether a person should eat pizza or pasta.
-> Given two random numbers, x and y, if x is in between $$[5,20[$$
+> Given two random numbers, x and y, if x is in between $$[5,20]$$
 > and y is smaller than or equal to 89, the program returns "pizza".
 > Otherwise it returns "pasta". 
 
