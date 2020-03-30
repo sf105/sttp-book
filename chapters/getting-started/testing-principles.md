@@ -25,23 +25,24 @@ Failures are generally caused by _faults_.
 **Faults** are also called _defects_ or _bugs_.
 A fault is the flaw in the component of the system that caused the 
 system to behave incorrectly. A fault is technical and, in our world, usually refers to 
-source code. For example, a programmer typed a `<` instead of a `>` in an `if` statement.
+source code, such as a comparison in an `if` statement that uses a `<` instead of a `>`. 
+A broken connection is an example of a hardware fault.
 
 > Note that the existence of a fault in the source code does not necessarily lead to a failure.
 > If the code containing the fault is never executed, it will never cause a failure.
 > Failures only occur when the system is being used, when someone notices it not behaving as expected.
 
-Finally, we have the **error**, also called **mistake**.
+Finally, we have an **error**, also called *mistake*.
 An error is the human action that caused the system to run not as expected.
-For example, a developer that has forgotten to implement a certain corner case because
-that was not clear enough in the requirement.
+For example, a developer didn't cover an obscure condition because they misunderstood
+the requirement. Plugging a cable into the wrong socket is an example of a hardware mistake. 
 
-In short: A mistake done by a developer often leads to fault in the source code that will
-eventually result in a failure.
+In other words: a *mistake* by a developer can lead to a *fault* in the source code that will
+eventually result in a *failure*.
 
 In the _Min-Max_ code example of the previous chapter, the failure was the program returning
 a large number. The fault was due to a bad `if/else if` condition. The mistake was 
-caused by me not dealing properly with that corner case.
+caused by me not dealing properly with that case.
 
 
 {% set video_id = "zAty8Rpg92I" %}
