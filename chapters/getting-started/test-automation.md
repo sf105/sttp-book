@@ -233,7 +233,7 @@ Roman Numeral problem and thinking that there are more elegant ways of implement
 That is indeed true. _Software refactoring_ is a constant activity in software
 development. 
 
-However, how can one refactor the code and still make sure it presents the same behavior?
+However, how can one refactor the code and still make sure it presents the same behaviour?
 Without automated tests, that might be a costly activity. Developers would have to perform
 manual tests after every single refactoring operation. Software refactoring activities benefit
 from extensive automated test suites, as developers can refactor their code and, in a matter
@@ -242,7 +242,7 @@ of seconds or minutes, get a clear feedback from the tests.
 See this new version of the `RomanNumeral` class, where we deeply refactored the code:
 
 * We gave a better name to the method: we call it `asArabic()` now.
-* We inlined the declaration of the Map , and used the `Map.of` utility method.
+* We inlined the declaration of the Map, and used the `Map.of` utility method.
 * We make use of an auxiliary array (`digits`) to get the current number inside the loop.
 * We extracted a private method that decides whether it is a subtractive operation.
 * We made use of the `var` keyword, as introduced in Java 10.
@@ -330,7 +330,7 @@ Lessons to be learned:
 Having an automated test suite brings several advantages to software
 development teams. Automated test suites:
 
-* **Are less prone to obvious mistakes.** Developers who perform manual testing several times a day might make mistakes, e.g., by forgetting to execute a test case, by mistakenly marking a test as passed when the software actually exhibited faulty behavior, etc.
+* **Are less prone to obvious mistakes.** Developers who perform manual testing several times a day might make mistakes, e.g., by forgetting to execute a test case, by mistakenly marking a test as passed when the software actually exhibited faulty behaviour, etc.
 
 * **Execute tests faster than developers.** The machine can run test cases way faster than developers can. Just imagine more complicated scenarios where the developers would have to type long sequences of inputs, verify the output at several different parts of the system. An automated test runs and gives feedback orders of magnitude faster than developers.
 
@@ -343,7 +343,7 @@ Developers now have to not only maintain production code, but also maintain test
  Once you master the tools and techniques, formalizing test cases as JUnit methods
 will actually save you time; imagine how many times you have executed the same 
 manual test over and over. How much time have you lost by doing 
-the same task repeteadly? 
+the same task repeatedly? 
 
 Studies have shown that developers who write tests spend less time debugging their systems when compared to developers who do not (Janzen), that the
 impact in productivity is not as significant as one would think (Maximilien and Williams), 
@@ -369,7 +369,7 @@ For now, do not worry about how to derive test cases. Just follow
 your intuition. 
 
 **Exercise 2.**
-Choose a problem from [Codebat](https://codingbat.com/java/Logic-2). Solve it.
+Choose a problem from [CodingBat](https://codingbat.com/java/Logic-2). Solve it.
 Then, write as many tests as you
 can for it, using JUnit.
 

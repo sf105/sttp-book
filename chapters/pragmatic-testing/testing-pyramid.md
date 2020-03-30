@@ -5,7 +5,7 @@ However, most of requirements we tested via specification-based techniques had a
 we tested via structural-based techniques could fit in a single unit/class.
 
 A large software system, however, is composed of many of those units/responsibilities. Together, they compose
-the complex behavior of our software system. 
+the complex behaviour of our software system. 
 
 In this chapter, we are going to discuss 
 the different **test levels** (i.e., unit, integration, and system), their advantages and disadvantages, and the trade-offs that a tester has to do in real-world testing.
@@ -87,7 +87,7 @@ test case.
 This takes additional code that is needed just for automating the tests.
 
 Lastly, **system tests tend to become flaky**.
-A flaky test is a test that presents an erratic behavior: if you run it, it might pass,
+A flaky test is a test that presents an erratic behaviour: if you run it, it might pass,
 or it might fail. Flaky tests are an important problem for software development teams. 
 After all, having a test that might pass when there is a bug, or might fail when there is 
 no bug, harms the productivity of the development team. It is easy to imagine how
@@ -98,7 +98,7 @@ real-life scenarios; Tomcat decided to do a full garbage collection at
 that very second, for example). The test was not expecting it to happen, and thus,
 it failed. If the test is executed again, the web app might now take its usual time to respond,
 and now the test will pass. There are just too many uncertanties in a system test that
-can lead to unexpected behavior.
+can lead to unexpected behaviour.
 
 {% hint style='tip' %}
 We discuss _flaky tests_ more formally later in the book.
@@ -138,7 +138,7 @@ The goal of integration testing is to test
 multiple components of a system together, but not the whole system.
 These integration tests focus on the interaction between these few components of the system.
 Are they communicating correctly? What happens if component A sends message X to component B? 
-Do they still present correct behavior?
+Do they still present correct behaviour?
 
 The advantage of integration tests is that, while not fully isolated, devising tests 
 just for a specific integration is easier than devising tests for all the components together. 
@@ -215,7 +215,7 @@ If we think of enterprise/business systems, most of the business are about "tran
 some data into another". These business logics are often expressed by means of entity classes 
 (e.g., an _Invoice_ class and a _Order_ class) exchanging messages. Business logic often do
 not depend on external services. And thus, such business logics can be easily tested and fully exercised by means of unit tests. Unit tests will give testers a full control in terms of 
-the input data, as well as full observability in terms of asserting that the behavior was
+the input data, as well as full observability in terms of asserting that the behaviour was
 as expected.
 
 In here, a pragmatic comment would be that if you have a piece of code that deals

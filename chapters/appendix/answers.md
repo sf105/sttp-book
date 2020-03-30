@@ -88,12 +88,11 @@ We have the following valid partitions: 1, 2, 5, 7, 8.
 
 **Exercise 5**
 
-
 * P1: Element not present in the set
 * P2: Element already present in the set
 * P3: NULL element.
 
-The specification clearly explicits the three different cases of the correct answer.
+The specification clearly makes the three different cases of the correct answer explicit.
 
 
 **Exercise 6**
@@ -107,8 +106,8 @@ This is a functional based technique. No need for source code.
 Possible actions:
 
 1. We should treat pattern size 'empty' as exceptional, and thus, test it just once.
-1. We should constraint the options in the 'occurences in a single line' category to happen only if 'occurences in the file' are either exactly one or more than one. % It does not make sense to have none occurences in a file and one pattern in a line.
-1. We should treat 'pattern is improperly quoted' as exceptional, and thus, test it just once.
+2. We should constrain the options in the 'occurrences in a single line' category to happen only if 'occurrences in the file' are either exactly one or more than one. % It does not make sense to have none occurrences in a file and one pattern in a line.
+3. We should treat 'pattern is improperly quoted' as exceptional, and thus, test it just once.
 
 
 
@@ -187,7 +186,7 @@ The on point is the number precisely in the boundary = 1024. off point is the cl
 
 **Exercise 7**
 
-We should always test the behavior of our program when any expected data actually does not exist (EXISTENCE).
+We should always test the behaviour of our program when any expected data actually does not exist (EXISTENCE).
 
 
 
@@ -302,11 +301,11 @@ For the decision in line 1, we need to remove `null` and something else than `nu
 
 Then for the decision in line 2 the node that `remove` is looking at should not be null and null at least once in the tests.
 The node is `null` when the end of the list had been reached.
-That only happens when the element that shouls be removed is not in the list.
+That only happens when the element that should be removed is not in the list.
 Note that the decision in line 2 only gets executed when the element to remove is `null`.
 In the tests, this means that the element should be found and not found at least once. 
 
-The decision in line 3 checks if the node thet the method is at now has the element that should be deleted.
+The decision in line 3 checks if the node that the method is at now has the element that should be deleted.
 The tests should cover a case where the element is not the item that has to be removed and a case where the element is the item that should be removed.
 
 The decisions in lines 7 and 8 are the same as in lines 2 and 3 respectively.
@@ -403,7 +402,7 @@ Finally another test to cover lines 14 and 15. This test will also automatically
 Answer: 4.
 
 From the CFG we can see that there are 6 branches.
-We need at least one test to cover the true branch from teh decision in line 1.
+We need at least one test to cover the true branch from the decision in line 1.
 Then with another test we can cover false from L1 and false from L8.
 We add another test to cover false from the decision in line 10.
 Finally an additional test is needed to cover the true branch out of the decision in line 10.
@@ -628,7 +627,7 @@ In this case we need to test each explicit decision in the decision table.
 **Exercise 13**
 
 
-There will be one extra super state (ACTIVE), which will be a superstate of the existing WARMING and DEFROSTING states. The edges from ON to WARMING and DEFROSTING will remain.
+There will be one extra super state (ACTIVE), which will be a super-state of the existing WARMING and DEFROSTING states. The edges from ON to WARMING and DEFROSTING will remain.
 The two (cancel and time out) outgoing edges from WARMING and DEFROSTING (four edges in total) will be replaced by two edges going out of the super ACTIVE state.
 So there will be two fewer transitions.
 
@@ -696,7 +695,7 @@ The second colleague is correct.
 There is a problem in the `Square`'s preconditions.
 For the `resetSize` method these are stronger than the `Rectangle`'s preconditions.
 We do not just assert that the `width` and `height` should be larger than 0, but they should also be equal.
-This violates the Liskov's Substitution Principle.
+This violates Liskov's Substitution Principle.
 We cannot substitute a `Square` for a `Rectangle`, because we would not be able to have unequal width and height anymore.
 
 
@@ -743,14 +742,12 @@ To make debugging easier.
 
 **Exercise 1**
 
-
-
 1. Manual
 2. System
 3. Integration
 4. Unit
 5. More reality (interchangeable with 6)
-6. More complexity (interchangeable ith 5)
+6. More complexity (interchangeable with 5)
 
 See the diagram in the Testing Pyramid section.
 
@@ -812,13 +809,13 @@ The correct answer is 4.
 
 1. This line is required to create a mock for the `OrderDao` class.
 2. With this line we check that the methods calls start with `order` on a `delivery` mock we defined. The method is supposed to start each order that is paid but not delivered.
-3. With this line we define the behavior of the `paidButNotDelivered` method by telling the mock that it should return an earlier defined `list`.
+3. With this line we define the behaviour of the `paidButNotDelivered` method by telling the mock that it should return an earlier defined `list`.
 4. We would never see this happen in a test that is testing the `OrderDeliveryBatch` class. By mocking the class we do not use any of its implementation. But the implementation is the exact thing we want to test. In general we never mock the class under test.
 
 
 **Exercise 2**
 
-You need mocks to both control and observe the behavior of the (external) conditions you mocked.
+You need mocks to both control and observe the behaviour of the (external) conditions you mocked.
 
 
 **Exercise 3**
@@ -911,7 +908,7 @@ The method and class lack controllability.
 We cannot change the values that `Calender` gives in the method because the `getInstance` method is static.
 Mockito cannot really mock static methods, which is why we tend to avoid using static methods.
 
-We can use depencency injection to make sure we can control the `today` object by using a mock.
+We can use dependency injection to make sure we can control the `today` object by using a mock.
 
 
 **Exercise 3**
@@ -1004,7 +1001,7 @@ Flaky test.
 
 **Exercise 5**
 
-To avoid the flakiness, a developer could have mocked the random function. It does not make sense, the test is about testing the generator and its homogeinity; if we mock, the test looses its purposes.
+To avoid the flakiness, a developer could have mocked the random function. It does not make sense, the test is about testing the generator and its homogeneity; if we mock, the test looses its purposes.
 
 
 

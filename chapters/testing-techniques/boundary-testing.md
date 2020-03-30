@@ -482,7 +482,7 @@ void boundary(int x, int y, String expectedResult) {
 }
 ```
 
-The behavior
+The behaviour
 of this single test method is the same as the six test methods we declared before. However, now
 with a much smaller amount of code.
 
@@ -636,7 +636,7 @@ Which one of the following statements about the **CORRECT** principles is **true
 1. We assume that external dependencies are already on the right state for the test (REFERENCE).
 1. We test different methods from the same class in an isolated way in order to avoid order issues (TIME).
 1. Whenever we encounter a loop, we always test whether the program works for 0, 1, and 10 iterations (CARDINALITY).
-1. We always test the behavior of our program when any expected data does not exist (EXISTENCE).
+1. We always test the behaviour of our program when any expected data does not exist (EXISTENCE).
 
 
 

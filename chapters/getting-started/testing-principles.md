@@ -62,7 +62,7 @@ Validation concerns the features that our software system offers, and the custom
 Is the system under development, the system that users really want and/or need?
 Is the system actually useful? Validation techniques, thus, focus on understanding
 whether the software system is delivering the business values it should deliver. In this book,
-we only briefly cover validation techniques (see chapters on Continuous Experimentation and on Behavior-Driven Development).
+we only briefly cover validation techniques (see chapters on Continuous Experimentation and on Behaviour-Driven Development).
 
 * **Verification: Are we building the system right?** 
 Verification, on the other hand, 
@@ -85,7 +85,7 @@ if we want our systems to be well-tested, all we need to do is to keep adding mo
 Indeed, a very important part of any software testing process is 
 to know _when to stop testing_.
 After all, resources (e.g., money, developers, infrastructure) are limited. Therefore,
-the goal should always be to maximize the number of bugs found while minimizing the 
+the goal should always be to maximize the number of bugs found while minimising the 
 amount of resources we had to spend in finding those bugs.
 Creating too few tests might leave us with a software system that does not behave as intended (i.e., _full of bugs_).
 On the other hand, creating tests after tests, without proper consideration might lead to ineffective tests (besides costing too much time and money).
@@ -94,7 +94,7 @@ On the other hand, creating tests after tests, without proper consideration migh
 Given resource constraints, we highlight an important principle in 
 software testing: **exhaustive testing is impossible**. It might be impossible
 even if we had unlimited resources. Imagine a software system that has "just" 128 different
-flags (or configuration settings). Those flags can be set to either true or false (booleans) and
+flags (or configuration settings). Those flags can be set to either true or false (Booleans) and
 they can be set independently from the others. The software system behaves differently
 according to the configured combination of flags. This implies that we need to test all the possible combinations. A simple calculation shows us that 2 possible values for each of the 128 different flags gives $$2^{128}$$ combinations that need to be tested. As a matter
 of comparison, this number is higher than the estimated number of atoms in the universe.
@@ -172,7 +172,7 @@ However, users do say that the software is not really delivering what it promise
 What testing principle applies to this problem?
 
 **Exercise 3.**
-Suzanne, a junior software testing, just joined a very large online payment company in the Netherlands. As a first task, Suzanne analyzed their past two years of bug reports.
+Suzanne, a junior software testing, just joined a very large online payment company in the Netherlands. As a first task, Suzanne analysed their past two years of bug reports.
 Suzanne observes that more than 50% of bugs have been happening in the *International payments* module. 
 
 Suzanne then promises her manager that she will design test cases that will completely cover the *International payments* module, and thus, find 

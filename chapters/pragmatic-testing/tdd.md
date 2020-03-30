@@ -108,11 +108,11 @@ Participants affirmed that, during the process of class design, changing minds i
 
 "It gives me the opportunity to learn along the way and make things differently. (…). The test gives you confidence."
 
-A participant even mentioned a real experience, in which TDD made the difference. According to him, he changed his mind about the class design many times and trusted the test suite to guarantee the expected behavior.
+A participant even mentioned a real experience, in which TDD made the difference. According to him, he changed his mind about the class design many times and trusted the test suite to guarantee the expected behaviour.
 
 ### A safe space to think
 
-In an analogy done by one of the participants, tests are like draft paper, in which they can try different approaches and change their minds about it frequently. According to them, when starting by the test, developers are, for the first time, using their own class. It makes developers look for a better and clearer way to invoke the class’ behaviors, and facilitate its use:
+In an analogy done by one of the participants, tests are like draft paper, in which they can try different approaches and change their minds about it frequently. According to them, when starting by the test, developers are, for the first time, using their own class. It makes developers look for a better and clearer way to invoke the class’ behaviours, and facilitate its use:
 
 "Tests help you on that. They are a draft for you to try to model it the best way you can. If you had to model the class only once, it is like if you have only one chance. Or if you make it wrong, fixing it would give you a lot of work. The idea of you having tests and thinking about them, it is like if you have an empty draft sheet, in which you can put and remove stuff because that stuff doesn’t even exist."
 
@@ -254,7 +254,7 @@ TDD has become a really popular practice among developers. According to them, TD
 
 * Martin R (2006) Agile principles, patterns, and practices in C#. 1st edition. Prentice Hall, Upper Saddle River.
 
-* Steve Freeman, Nat Pryce (2009) Growing object-oriented software, Guided by Tests. 1° edn. Addison-Wesley Professional, Boston, USA.
+* Steve Freeman, Nat Pryce (2009) Growing object-oriented software, Guided by Tests. 1st edition. Addison-Wesley Professional, Boston, USA.
 
 * Astels D (2003) Test-driven development: a practical guide. 2nd edition. Prentice Hall.
 
@@ -263,4 +263,3 @@ TDD has become a really popular practice among developers. According to them, TD
 * Beck K (2001) Aim, fire. IEEE Softw 18: 87–89. doi:10.1109/52.951502.
 
 * Feathers M (2007) The deep synergy between testability and good design. https://web.archive.org/web/20071012000838/http://michaelfeathers.typepad.com/michael_feathers_blog/2007/09/the-deep-synerg.html.
-

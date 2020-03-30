@@ -17,7 +17,7 @@ Generically speaking: **we want to unit test a component A, that depends on anot
 The dependency on component B increases the costs of unit testing A.**
 
 This is where a **mock object** becomes handy. The idea is that we will create an 
-object that will mimic the behavior of component B
+object that will mimic the behaviour of component B
 ("it looks like B, but it is not B").
 Given that we have full control over what this "fake B component" does, we can make it in such a way that
 unit testing A becomes less costly. In our example above, suppose that A is a plain-old Java class, B is a Data Access Object (and
@@ -26,7 +26,7 @@ elements whenever the `findAllInvoices()`
 method is called, instead of going to the database, we remove the need for a database when testing A. 
 If this seems all too abstract, the source code we will show soon will clarify everything.
 
-The use of objects that simulate the behavior of other objects has advantages:
+The use of objects that simulate the behaviour of other objects has advantages:
 
 * The first one is that we have way **more control**. We can easily tell these objects what to do, without the need
 for complicated setups. 
@@ -56,8 +56,7 @@ in business applications, where in many cases you need to fill a long list of pa
 just a few of them. Think of a unit test for a `Customer` class. Maybe this class depends on several other classes (`Address`, `Last Order`, etc). But a specific test case A wants to exercise the "last order business rule", and does not care much about which Address this
 Customer has. In this case, a tester would then set up a dummy Address object and pass it to the Customer class.
 
-* **Fake objects**: Fake objects have real working implementations of the class they simulate. However, they usually do the same task
-in a much simpler way. Imagine a fake database object that uses some sort of arraylist instead of a real database.
+* **Fake objects**: Fake objects have real working implementations of the class they simulate. However, they usually do the same task in a much simpler way. Imagine a fake database object that uses some sort of array list instead of a real database.
 
 * **Stubs**: Stubs provide hard-coded answers to the calls that are called during the test. In the examples above, where we used the word "simulation", we were actually talking about stub objects. Stubs do not know what to do if the test calls a method in which it was not programmed/setup for. 
 
@@ -81,7 +80,7 @@ Mockito has a very simple API. Developers can setup stubs and/or define expectat
 The most important methods one needs to know from Mockito are:
 
 - `mock(<class>)`: creates a mock object/stub of a given class. The class can be retrieved from any class by `<ClassName>.class`.
-- `when(<mock>.<method>).thenReturn(<value>)`: defines the behavior when the given method is called on the mock. In this case `<value>` will be returned.
+- `when(<mock>.<method>).thenReturn(<value>)`: defines the behaviour when the given method is called on the mock. In this case `<value>` will be returned.
 - `verify(<mock>).<method>`: asserts that the mock object was exercised in the expected way.
 
 Mockito is an extensive framework, and we point to reader to its [documentation](https://javadoc.io/page/org.mockito/mockito-core/latest/org/mockito/Mockito.html).
@@ -155,7 +154,7 @@ public class InvoiceFilterTest {
 
 This test is not even complete... We also need to reset the database after every test. Otherwise, 
 the test will break in its second run, as there will be now four invoices with an amount smaller than 100 stored in the database! 
-Remember that the database stores data permanenty. So far, we never had to "clean our messes" in a test code, as all the objects we have created were always stored in-memory only.
+Remember that the database stores data permanently. So far, we never had to "clean our messes" in a test code, as all the objects we have created were always stored in-memory only.
 
 {% hint style='tip'%}
 Did you notice the `assertThat...containsExactlyInAnyOrder`
@@ -235,7 +234,7 @@ the list with the three invoices. The method under test continues its execution,
 the two invoices that are below 100, making the assertion to pass.
 
 Note that, besides making the test easier to write, the use of stubs also made the test class more cohesive. 
-The `InvoiceFilterTest` only tests the `InvoiceFilter` class. It does not test the behavior of the `IssueInvoices`
+The `InvoiceFilterTest` only tests the `InvoiceFilter` class. It does not test the u of the `IssueInvoices`
 class. Clearly, `IssueInvoices` deserves to be tested, but some place else, and by means of an integration test.
 
 Note that a cohesive test has less chances of failing because of something else. In the old version, the
@@ -392,7 +391,7 @@ the `send` method to called once for the `mauricio` invoice, once for the `steve
 and once for the `arie` invoice. We point the reader to Mockito's manual for more details on how to configure
 expectations.
 
-> You might be asking yourself now: _Why did you not put this new SAP behavior inside of the
+> You might be asking yourself now: _Why did you not put this new SAP u inside of the
 > existing `InvoiceFilter` class_?
 > 
 > If we were do it, the `lowValueInvoices` method would then be both a "command" and a "query".
@@ -536,8 +535,7 @@ is a common technique among developers.
 
 One might argue: _But won't that increase the overall complexity of my system? After all, it is one more
 abstraction to be maintained?_ Yes. Indeed, complexity grows up whenever we add new abstractions in our software. And
-that is what we are doing here. However, the point is: does the easeness in testing the system that we get from adding this abstraction
-pays the off the cost of the increased complexity? Often, the answer is _yes, it does pay off_.
+that is what we are doing here. However, the point is: does the ease in testing the system that we get from adding this abstraction pay off the cost of the increased complexity? Often, the answer is _yes, it does pay off_.
 
 
 ## When to mock/stub?
@@ -676,7 +674,7 @@ Which of the following statements is **false** about this class?
 Class A depends on a static method in another class B.
 Suppose you want to test class A, which approach(es) can you take to be able to test properly?
 
-1. Mock class B to control the behavior of the methods in class B.
+1. Mock class B to control the u of the methods in class B.
 2. Refactor class A, so the outcome of the method of class B is now used as an parameter.
 
 1. Only approach 1.

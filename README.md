@@ -6,7 +6,7 @@
 
 Welcome to **Software Testing: From Theory to Practice**!
 
-This book covers the most important testing techniques needed to build high quality software systems. Specific topics covered are quality attributes, maintainability and testability, manual and exploratory testing, automated testing, devops, test adequacy, model-based testing, state-based testing, decision tables, reviews and inspections, design-by-contract, test-driven design, unit versus integration testing, mocks and stubs.
+This book covers the most important testing techniques needed to build high quality software systems. Specific topics covered are quality attributes, maintainability and testability, manual and exploratory testing, automated testing, DevOps, test adequacy, model-based testing, state-based testing, decision tables, reviews and inspections, design-by-contract, test-driven design, unit versus integration testing, mocks and stubs.
 
 We expect readers to be able to:
 
