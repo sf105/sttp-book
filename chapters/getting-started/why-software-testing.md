@@ -11,7 +11,7 @@ And, while those software systems we gave as examples might seem far out from mo
 
 To illustrate how hard it is to spot bugs, let's start with a requirement:
 
-> **Requirement**: The min-max program.
+> **Requirement: Min-max**
 >
 > Implement a program that, given a list of numbers (integers), returns 
 > the smallest and the largest numbers in this list.

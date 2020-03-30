@@ -225,7 +225,7 @@ we exerise each boundary both for the on- and off-point independent of the other
 
 Let us walk through another example:
 
-> **Requirement**: Pizza or pasta
+> **Requirement: Pizza or pasta**
 >
 > The program decides whether a person should eat pizza or pasta.
 > Given two random numbers, x and y, if x is in between $$[5,20[$$
