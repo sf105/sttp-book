@@ -39,6 +39,11 @@ that testing frameworks in other languages offer similar functionalities.
 A possible implementation for the _Roman Numeral_ is as follows:
 
 ```java
+package tudelft.roman;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class RomanNumeral {
   private static Map<Character, Integer> map;
 
@@ -129,9 +134,11 @@ A couple of useful assertions are:
 The three tests cases we have devised can be automated as follows:
 
 ```java
-import org.junit.jupiter.api.Test;
+package tudelft.roman;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
 
 public class RomanNumeralTest {
 
