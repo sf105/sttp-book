@@ -10,8 +10,8 @@
 
 **Exercise 2**
 
-The absence-or-error fallacy.
-While the software does not have a lot of bugs, it is not giving the user what they want.
+The absence-of-errors fallacy.
+While the software does not have a lot of bugs, it is not giving the users what they want.
 In this case the verification was good, but they need work on the validation.
 
 **Exercise 3**

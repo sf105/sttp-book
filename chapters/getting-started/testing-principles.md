@@ -92,16 +92,13 @@ On the other hand, creating tests after tests, without proper consideration migh
 
 
 Given resource constraints, we highlight an important principle in 
-software testing: **exhaustive testing is impossible**. They might be impossible
+software testing: **exhaustive testing is impossible**. It might be impossible
 even if we had unlimited resources. Imagine a software system that has "just" 128 different
-flags (or configurations). Those flags can be set as either true or false (booleans) and
-they can configured in all the possible ways. The software system behaves differently,
-according to the combination that is set. This implies in testing all the possible
-configurations. A simple math shows us that 2 configurations for each of the 128
-different flags gives $$2^{128}$$ combinations that need to be tested. As a matter
+flags (or configuration settings). Those flags can be set to either true or false (booleans) and
+they can be set independently from the others. The software system behaves differently
+according to the configured combination of flags. This implies that we need to test all the possible combinations. A simple calculation shows us that 2 possible values for each of the 128 different flags gives $$2^{128}$$ combinations that need to be tested. As a matter
 of comparison, this number is higher than the estimated number of atoms in the universe.
-In other words, this software system has more possible combinations to be tested than
-we the universe has atoms.
+In other words, this software system has more possible combinations to be tested than the universe has atoms.
 
 Given that exhaustive testing is impossible,
 software testers have to then prioritize the tests they will perform.
@@ -110,46 +107,42 @@ When prioritizing the test cases, we note that **bugs are not uniformly distribu
 Empirically, we observe that some components in some software systems present more
 bugs than other components.
 
-Another crucial consequence of the fact that exhaustive testing is impossible, 
-as Dijkstra used to say, is that
-**testing shows the presence of defects;
-however, testing does not show the absence of defects**.
+Another crucial consequence of the fact that exhaustive testing is impossible is that, 
+as Dijkstra used to say, **program testing can be used to show the presence of bugs, but never to show their absence**.
 In other words, while we might find more bugs by simply testing more, our test suites,
-however large it might be,
-will never ensure us that the software system is 100% bug-free. It will only ensure us
-that these cases we test for do behave as expected.
+however large they might be,
+will never ensure that the software system is 100% bug-free. They will only ensure
+that the cases we test for behave as expected.
 
 To test our software we need a lot of variation in our tests.
-When testing a method we want variety in the inputs, for example, 
+For example, we want variety in the inputs when testing a method, 
 like we saw in the examples above.
 To test the software well, however, we also need variation in 
 the testing strategies that we apply.
 
-Moreover, calling a software fault a bug might indeed be a good analogy. Another 
-interesting empirical finding is that, if testers apply the same testing techniques over and over,
-at some point they will lose their efficacy. 
-This is described by what is known as the **pesticide paradox**: 
+Indeed, an interesting empirical finding is that if testers apply the same testing techniques over and over, they will at some point lose their efficacy. 
+This is described by what is known as the **pesticide paradox** (which nicely refers to "bugs" as an equivalent term for software faults):
 _"Every method you use to prevent or find bugs leaves a residue of 
 subtler bugs against which those methods are ineffectual."_
-In practice, this means that there is no single testing strategy 
+In practice, this means that no single testing strategy 
 can guarantee that the software under test is bug-free.
 A concrete example might be a team that solely relies on unit testing techniques.
 At some point, maybe all the bugs that can be captured at unit test level will be found
 by the team; however, the team might miss bugs that only occur at integration level.
 From the pesticide paradox, we thus conclude that testers have to use 
-different testing strategies to minimize the bugs left in the software.
+different testing strategies to minimize the number of bugs left in the software.
 When studying the various testing strategies that we present in this book, 
 keep in mind that combining them all might be a wise decision.
 
 The context also plays an important role in how one devises test cases.
 For example, devising test cases for a mobile app is very different 
-from devising test cases for a web application. Or for a rocket.
+from devising test cases for a web application, or for software used in a rocket.
 In other words: **testing is context-dependent**.
 
 Again, while this book mostly focuses on verification techniques, 
-let us not forget that having a low amount of bugs is not enough for a good software.
-As we have said before, a program that works flawlessly, but is of no use for its users, 
-is still not a good software.
+let us not forget that having a low amount of bugs is not enough for good software.
+As we have said before, a program that works flawlessly but is of no use for its users, 
+is still not a good program.
 That is a common fallacy (also known as the **absence-of-errors fallacy**) that software testers face when they decide to focus solely
 on verification and not so much on validation.
 
@@ -160,30 +153,29 @@ on verification and not so much on validation.
 ## Exercises
 
 **Exercise 1.**
-Having a certain terminology helps testers to explain the problems they have with a program or in their software.
+Having certain terminology helps testers to explain the problems they have with a program or in their software.
 
 Below is a small conversation.
-Fill each of the caps with: failure, fault, or error.
+Fill in the blanks with one of the following terms: failure, fault, or error.
 
 * **Mark**: Hey, Jane, I just observed a (1) _ _ _ _ _ _ in our software: if the user has multiple surnames, our software doesn't allow them to sign in. 
 * **Jane**: Oh, that's awful. Let me debug the code so that I can find the (2) _ _ _ _ _ _.
-*(a few minutes later)*
-* **Jane**: Mark, I found it! It was my (3) _ _ _ _ _ _. I programmed that part, but never thought of this case.
+* **Jane** *(a few minutes later):* Mark, I found it! It was my (3) _ _ _ _ _ _. I programmed that part, but never thought of this case.
 * **Mark**: No worries, Jane! Thanks for fixing it!
 
 
 **Exercise 2.**
-Kelly, a very experienced software tester, visits Books!, a social network focused on matching people based on books they read.
-Users do not report bugs so often; Books! developers have strong testing practices in place.
+Kelly, a very experienced software tester, visits *Books!*, a social network focused on matching people based on books they read.
+Users do not report bugs so often; *Books!* developers have strong testing practices in place.
 However, users do say that the software is not really delivering what it promises.
 
 What testing principle applies to this problem?
 
 **Exercise 3.**
 Suzanne, a junior software testing, just joined a very large online payment company in the Netherlands. As a first task, Suzanne analyzed their past two years of bug reports.
-Suzanne observes that more than 50% of bugs have been happening in the 'International payments module. 
+Suzanne observes that more than 50% of bugs have been happening in the *International payments* module. 
 
-Suzanne then promises her manager that she will design test cases that will completely cover the 'International payments' module, and thus, find 
+Suzanne then promises her manager that she will design test cases that will completely cover the *International payments* module, and thus, find 
 all the bugs.
 
 Which of the following testing principles might explain why this is **not** possible?
@@ -197,7 +189,7 @@ Which of the following testing principles might explain why this is **not** poss
 John strongly believes in unit testing. In fact, this is the only type of testing he actually
 does at any project he's in. All the testing principles below, but one, might help in convincing John that he should also focus on different types of testing. 
 
-Which of the following **is the least related** related to help John in moving away from his 'only unit testing' approach?
+Which of the following **is the least related** when we want to convince John to move away from his 'only unit testing' approach?
 
 1. Pesticide paradox. 
 2. Tests are context-dependent.
@@ -208,5 +200,5 @@ Which of the following **is the least related** related to help John in moving a
 
 ## References
 
-* * Graham, D., Van Veenendaal, E., & Evans, I. (2008). Foundations of software testing: ISTQB certification. Cengage Learning EMEA. Chapters 1, 2, 3.
+* Graham, D., Van Veenendaal, E., & Evans, I. (2008). Foundations of software testing: ISTQB certification. Cengage Learning EMEA. Chapters 1, 2, 3.
 
