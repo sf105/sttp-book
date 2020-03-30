@@ -391,7 +391,7 @@ The idea of MC/DC is to simply exercise each condition in a way that it can, ind
 affect the outcome of the entire decision. This might sound a bit complicated, but the example will clarify it.
 And interestingly, if our conditions have only a binary outcome, which is our case here, as conditions
 either return true or false, the number of tests we will need for that is always "only" $$N+1$$, where $$N$$ is the number of conditions in the program. 
-$$N+1$$ is definitely smaller than $$N^2$$! 
+$$N+1$$ is definitely smaller than $$N^2$$ (assuming we test more than 1 condition)!
 
 Again, to devise a test suite that achieves 100% MC/DC coverage, we should select $$N+1$$ combinations of inputs where all the conditions
 can independently affect the outcome.
