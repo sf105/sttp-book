@@ -1,8 +1,8 @@
 # Principles of software testing
 
-In this chapter, we first provide some terminology to the reader. Using the right
-terms help us in understanding each other better. We then discuss the differences
-between verification and validation. Finally, we discuss a few testing principles
+In this chapter, we first define some terminology; using the right
+terms help us understand each other better. We then discuss the differences
+between *verification* and *validation*. Finally, we discuss some testing principles
 that will guide us (or, more specifically, force us to perform trade-offs whenever
 we choose a testing technique) throughout the book.
 
@@ -11,27 +11,25 @@ we choose a testing technique) throughout the book.
 It is common to hear different terms to indicate that a software system
 is not behaving as expected.
 Just to name a few: _error_, _mistake_, _defect_, _bug_, _fault_, and _failure_.
-As we should be able to describe the events that led to a software crash more precisely, 
+To describe the events that led to a software crash more precisely, 
 we need to agree on a certain vocabulary.
 For now, this comes down to three terms: **failure**, **fault**, and **error**.
 
 A **failure** is a component of the (software) system that is not behaving as expected.
 Failures are often visible to the end user.
-An example of a failure can be a mobile app that suddenly stopped working. 
-Or a news website that suddenly started to provide yesterday's news on the front page. 
+An example of a failure is a mobile app that stops working, or a 
+news website that starts to show yesterday's news on its front page. 
 The software system did something it was not supposed to do.
 
 Failures are generally caused by _faults_.
 **Faults** are also called _defects_ or _bugs_.
 A fault is the flaw in the component of the system that caused the 
-system to behave incorrectly. A fault is usually highly technical and in many cases
-can be linked to the source code.
-For example, the fault was a `>` that was in place, instead of `>=` in an `if` condition.
+system to behave incorrectly. A fault is technical and, in our world, usually refers to 
+source code. For example, a programmer typed a `<` instead of a `>` in an `if` statement.
 
 > Note that the existence of a fault in the source code does not necessarily lead to a failure.
 > If the code containing the fault is never executed, it will never cause a failure.
-> Failures only occur when the end user is using the system, when they 
-> notice it not behaving as expected.
+> Failures only occur when the system is being used, when someone notices it not behaving as expected.
 
 Finally, we have the **error**, also called **mistake**.
 An error is the human action that caused the system to run not as expected.
