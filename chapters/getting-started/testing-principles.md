@@ -40,10 +40,9 @@ the requirement. Plugging a cable into the wrong socket is an example of a hardw
 In other words: a *mistake* by a developer can lead to a *fault* in the source code that will
 eventually result in a *failure*.
 
-In the _Min-Max_ code example of the previous chapter, the failure was the program returning
-a large number. The fault was due to a bad `if/else if` condition. The mistake was 
-caused by me not dealing properly with that case.
-
+In the _Min-Max_ code example of the previous chapter: the Failure was the program returning
+a large number, the fault was a bad `if/else if` condition, and the Mistake was me not dealing 
+properly with that case.
 
 {% set video_id = "zAty8Rpg92I" %}
 {% include "/includes/youtube.md" %}
@@ -57,17 +56,20 @@ assessing the quality of a system. However, they do have a subtle difference,
 which can be quickly described by a single question:
 
 * **Validation: Are we building the right software?**
-Validation concerns the features that our software system offers, and the customer (i.e., for whom the system is made).
-Is the system under development, the system that users really want and/or need?
-Is the system actually useful? Validation techniques, thus, focus on understanding
-whether the software system is delivering the business values it should deliver. In this book,
-we only briefly cover validation techniques (see chapters on Continuous Experimentation and on Behavior-Driven Development).
+Validation concerns the features that our software system offers, and the customer (i.e., for whom the system is made): 
+  * is the system under development what the users really want and/or need?
+  * is the system actually useful? 
+
+  Validation techniques, thus, focus on understanding
+whether the software system is delivering the business values it should deliver. In this book, we only briefly cover validation techniques (see chapters on Continuous Experimentation and on Behavior-Driven Development).
 
 * **Verification: Are we building the system right?** 
-Verification, on the other hand, 
-is about the system behaving as it is supposed to, according to the specification. 
-In simple words, this mostly means that the system behaves without any bugs.
-Note that this does not guarantee that the system is useful: a system might work beautifully, bug-free, but does not deliver the features that customers really need.
+Verification, on the other hand, is about the system behaving as it 
+is supposed to, according to the specification. 
+
+  In simple words, this mostly means that the system behaves without any bugs.
+  Note that this does not guarantee that the system is useful: a system might work 
+  beautifully, bug-free, but  not deliver the features that customers really need.
 
 Note how both _validation_ and _verification_ are fundamental for ensuring
 the delivery of high-quality software systems.
