@@ -282,13 +282,9 @@ get some feedback.
 
 Let us also take the opportunity and improve our test code:
 
-* Given that our goal was to isolate the single
-line of code that instantiated the class under test, instead of using the `@BeforeEach`, 
-we now instantiate it directly in the class. JUnit creates a new instance of the
-test class before each test (again, as a way to help developers in avoiding test cases that fail due to previous test executions). This allows us to mark the field as `final`.
+* Given that our goal was to isolate the single line of code that instantiated the class under test, instead of using the `@BeforeEach`, we now instantiate it directly in the class. JUnit creates a new instance of the test class before each test (again, as a way to help developers in avoiding test cases that fail due to previous test executions). This allows us to mark the field as `final`.
 * We inlined the method call and the assertion. Now tests are written in a single line.
-* We give test methods better names. It is common to rename test methods; the more 
-we understand the problem, the more we can give good names to the test cases.
+* We give test methods better names. It is common to rename test methods; the more we understand the problem, the more we can give good names to the test cases.
 * We devised one more test case and added it to the test suite.
 
 ```java
