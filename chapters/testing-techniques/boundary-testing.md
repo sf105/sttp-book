@@ -190,7 +190,7 @@ is up to the tester to identify how these different conditions interact with eac
 In such cases, the number of boundary tests might explode. Imagine a program composed
 of 5 different conditions. If we decide to write 4 test cases (on, off, in, out points) for 
 each of the conditions, and make sure we test all the possible combinations among them,
-we end up with $$5^4=625$$ tests. This is simply too much.
+we end up with $$4^5=1024$$ tests. This is simply too much.
 
 To effectively test the boundaries in these more complicated decisions, while
 minimizing the amount of required tests,
