@@ -98,7 +98,7 @@ flags (or configurations). Those flags can be set as either true or false (boole
 they can configured in all the possible ways. The software system behaves differently,
 according to the combination that is set. This implies in testing all the possible
 configurations. A simple math shows us that 2 configurations for each of the 128
-different flags gives $$2^128$$ combinations that need to be tested. As a matter
+different flags gives $$2^{128}$$ combinations that need to be tested. As a matter
 of comparison, this number is higher than the estimated number of atoms in the universe.
 In other words, this software system has more possible combinations to be tested than
 we the universe has atoms.

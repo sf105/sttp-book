@@ -448,14 +448,13 @@ This process is illustrated in the diagram below:
 ![Mutation Testing Process](img/mutation-testing/mutation_analysis_process.png)
 
 When performing mutation testing, we count the number of mutants our test suite killed and the number of mutants that were still alive.
-By counting the amount of each of these mutant groups, we can give a value to the quality of our test suite.\\
+By counting the amount of each of these mutant groups, we can give a value to the quality of our test suite.
+
 We define the **Mutation Score** as:
 
 $$\text{Mutation score } = \frac{\text{killed mutants}}{\text{mutants}}$$
 
-Computing this mutation score is what we call **mutation analysis**.
-More formally:\\
-**Mutation analysis** means assessing the quality of a test suite, by computing its mutation score.
+Computing this mutation score is what we call **mutation analysis**. More formally: **Mutation analysis** means assessing the quality of a test suite, by computing its mutation score.
 
 When the mutation score is low, we might want to change or add new test cases in our test suite.
 This is called **mutation testing**.
@@ -560,7 +559,7 @@ We have:
 - A code base with 300 Java classes
 - 10 test cases for each class
 - Each test case takes 0.2 seconds on average
-- The total test execution time is then: $$300 \cdot 10 \cdot 0.2 = 600 s (10 \text{ min})$$
+- The total test execution time is then: $$300 \cdot 10 \cdot 0.2 = 600$$ seconds (10 minutes)
 
 This execution time is for just the normal code.
 For the mutation testing, we decide to generate on average 20 mutants per class.

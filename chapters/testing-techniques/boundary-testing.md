@@ -93,6 +93,7 @@ remaining life is smaller than 3, it belongs to partition 2; otherwise, it belon
 to partition 3. Thus, we just identified another boundary there (let us call this test B2).
 
 We can visualize these partitions with their boundaries in a diagram.
+
 ![Partitions with their boundaries](img/boundary-testing/examples/partition_boundaries.svg)
 
 In our example, the tester would then 
@@ -268,7 +269,7 @@ public class PizzaPastaTest {
 ```
 
 Let us now apply boundary testing. Note how easy it is for a developer to
-make a mistake, e.g., confusing $$x >= 5$$ with a $$x > 5$$.
+make a mistake, e.g., confusing $$x >= 5$$ with $$x > 5$$.
 
 We start by making the domain matrix, having space for each of the conditions and both parameters.
 

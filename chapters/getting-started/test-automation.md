@@ -14,7 +14,7 @@ that testing frameworks in other languages offer similar functionalities.
 > Implement a program that receives a string as a parameter
 > containing a roman number and then converts it to an integer.
 >
->In roman numeral, letters represent values:
+>In roman numerals, letters represent values:
 >
 > * I = 1
 > * V = 5
@@ -29,7 +29,7 @@ that testing frameworks in other languages offer similar functionalities.
 > For example `CCXVI` would be 216.
 > 
 > Some numbers need to make use of a subtractive notation to be represented.
-> Example: 9 is IX, 40 is XL, 14 is XIV.
+> Example: 9 is `IX`, 40 is `XL`, 14 is `XIV`.
 
 
 {% set video_id = "srJ91NRpT_w" %}

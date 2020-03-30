@@ -79,8 +79,7 @@ So when we execute both of our tests, the line coverage is $$100\%$$.
 
 
 
-More formally, we can compute line coverage 
-as: 
+More formally, we can compute line coverage as: 
 
 $$\text{line coverage} = \frac{\text{lines covered}}{\text{lines total}} \cdot 100\%$$
 
@@ -391,7 +390,7 @@ of test cases that one needs to devise when aiming at 100% path coverage.
 The idea of MC/DC is to simply exercise each condition in a way that it can, independently of the other conditions,
 affect the outcome of the entire decision. This might sound a bit complicated, but the example will clarify it.
 And interestingly, if our conditions have only a binary outcome, which is our case here, as conditions
-either return true or false, the number of tests we will need for that is always "only" `N+1`, where `N` is the number of conditions in the program. 
+either return true or false, the number of tests we will need for that is always "only" $$N+1$$, where $$N$$ is the number of conditions in the program. 
 $$N+1$$ is definitely smaller than $$N^2$$! 
 
 Again, to devise a test suite that achieves 100% MC/DC coverage, we should select $$N+1$$ combinations of inputs where all the conditions

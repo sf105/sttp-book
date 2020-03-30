@@ -160,10 +160,12 @@ Note that we require 7 test cases in total: `numberOfPoints <= 570` and `numberO
 `energyLevel == 5` is an equality, so we have two off-points and one on-point.
 This gives a total of 7 test cases.
 
-For one of the first two conditions we need two typical rows. \\
+For one of the first two conditions we need two typical rows.
+
 Let's rewrite the whole condition to: `(c1 && c2) || c3`.
 
-To test `c1` we have to make `c2` true, otherwise the result will always be false. \\
+To test `c1` we have to make `c2` true, otherwise the result will always be false.
+
 The same goes for testing `c2` and then making `c1` true.
 
 However, when testing `c3`, we need to make `(c1 && c2)` false, otherwise the result will always be true.
@@ -709,8 +711,10 @@ As this is outside your project, you typically cannot fix this problem.
 
 **Exercise 5**
 
-Just like the contracts we have a client and a server. \\
-A 4xx code means that the client invoked the server in a wrong way, which corresponds to failing to adhere to a precondition. \\
+Just like the contracts we have a client and a server.
+
+A 4xx code means that the client invoked the server in a wrong way, which corresponds to failing to adhere to a precondition.
+
 A 5xx code means that the server was not able to handle the request of the client, which was correct.
 This corresponds to failing to meet a postcondition.
 

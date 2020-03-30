@@ -128,7 +128,7 @@ If there are no preconditions, i.e., no assumptions needed for the execution of 
 In a Hoare Triple, the $$A$$ can be a single statement or a whole program.
 We look at $$A$$ as a method.
 Then $$P$$ and $$Q$$ are the pre- and postcondition of the method $$A$$ respectively.
-Now we can write the Hoare Triple as: $$\{ preconditions \}\ method\ \{ postconditions \}$$.
+Now we can write the Hoare Triple as: $$\{ \mathit{preconditions} \}\ \mathit{method}\ \{ \mathit{postconditions} \}$$.
 
 ### Preconditions
 
