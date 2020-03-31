@@ -43,7 +43,7 @@ making them less productive. Therefore, good tests are fast.
 		It is not uncommon to see developers having sets of unit tests that run fast, and these they run all day long, and sets of slower integration and system tests that run once or twice a day in the Continuous Integration server. 
 
 - **Isolated**: Tests should be as cohesive, as independent, and as isolated as possible. 
-Ideally, a single test method should test just a single functionality or behavior of the system.
+Ideally, a single test method should test just a single functionality or behaviour of the system.
 Having fat tests (or, as the test smells community calls it, an eager test) that tests
 multiple functionalities are often complex in terms of implementation. Complex test code reduces
 the ability of developers to understand what it tests in a glance, and makes future maintenance
@@ -64,9 +64,9 @@ code is always better.
 
 
 - **Repeatable**: A repeatable test is a test that gives the same result, no matter how many times it is executed.
-Developers tend to lose their trust in tests that present a flaky behavior (i.e., it sometimes passes, and sometimes fails without any changes in the system and/or in the test code).
+Developers tend to lose their trust in tests that present a flaky behaviour (i.e., it sometimes passes, and sometimes fails without any changes in the system and/or in the test code).
 Flaky tests might happen for different reasons, and some of the causes can be tricky
-to be identified (companies have reported extreme examples where a test presented a flaky behavior
+to be identified (companies have reported extreme examples where a test presented a flaky behaviour
 only once in a month). Common causes are dependencies on external resources, not waiting
 enough for an external resource to finish its task, and concurrency.
 
@@ -75,8 +75,8 @@ enough for an external resource to finish its task, and concurrency.
 The tests should validate/assert the result themselves. This might seem an unnecessary
 principle to mention. However, it is not uncommon for developers to make mistakes and not writing
 assertions in the test, making the test to always pass. In other more complex cases,
-writing the assertions or, in other words, verifying the expected behavior, might not be possible.
-In cases where observing the outcome of a behavior is not easily achievable, we suggest
+writing the assertions or, in other words, verifying the expected behaviour, might not be possible.
+In cases where observing the outcome of a behaviour is not easily achievable, we suggest
 the developer to refactor the class or method under test to increase its observability (revisit
 our chapter on design for testability).
 
@@ -84,7 +84,7 @@ our chapter on design for testability).
 - **Timely**: 
 Developers should be _test infected_. They should write and run tests as often
 as possible. While less technical than the other principles in this list, changing
-the behavior of development teams towards writing automated test code can still be challenging.
+the behaviour of development teams towards writing automated test code can still be challenging.
 
 	Leaving the test phase to the very end of the development process, as commonly done
 	in the past, might incur in
@@ -111,7 +111,7 @@ are also part of the FIRST principles.
 * [Inspiring](https://www.youtube.com/watch?v=2Q1O8XBVbZQ): passing the tests should inspire confidence
 * [Writable](https://www.youtube.com/watch?v=CAttTEUE9HM): tests should be cheap to write relative to the cost of the code being tested.
 * [Readable](https://www.youtube.com/watch?v=bDaFPACTjj8): tests should be comprehensible for reader, invoking the motivation for writing this particular test.
-* [Behavioral](https://www.youtube.com/watch?v=5LOdKDqdWYU): tests should be sensitive to changes in the behavior of the code under test. If the behavior changes, the test result should change.
+* [Behavioral](https://www.youtube.com/watch?v=5LOdKDqdWYU): tests should be sensitive to changes in the behaviour of the code under test. If the behaviour changes, the test result should change.
 * [Structure-insensitive](https://www.youtube.com/watch?v=bvRRbWbQwDU): tests should not change their result if the structure of the code changes.
 * [Automated](https://www.youtube.com/watch?v=YQlmP08dj6g): tests should run without human intervention.
 * [Specific](https://www.youtube.com/watch?v=8lTfrCtPPNE): if a test fails, the cause of the failure should be obvious.
@@ -168,7 +168,7 @@ The test smell emerges when developers have a hard time in figuring out the
 assertions themselves, or why they are failing.
 
 There are several reasons for the smell to happen. Some features or business rules
-are simply too complex and require a complex set of assertions to ensure their behavior.
+are simply too complex and require a complex set of assertions to ensure their behaviour.
 Suddenly, developers end up writing complex assert instructions that are not easy to
 understand. In such cases, we recommend developers to 1) write their own customized
 assert instructions that abstract away part of the complexity of the assertion code itself,
@@ -292,8 +292,8 @@ by the class under test) are clearly indicated in the outcome of the test method
 
 Similar to what we have discussed when talking about the excessive number of assertions
 in a single test, avoiding _eager tests_, or tests that exercise more than a unique
-behavior of the component is also a best practice. Test methods that exercise multiple
-behaviors at once tend to be overly long and complex, making it harder for developers
+behaviour of the component is also a best practice. Test methods that exercise multiple
+behaviours at once tend to be overly long and complex, making it harder for developers
 to comprehend them in a quick glance.
 
 **Sensitive Equality**:
@@ -340,7 +340,7 @@ public class Item {
 ```
 
 Suppose now that a less attentive developer writes the following test as to exercise
-the `finalAmount` behavior:
+the `finalAmount` behaviour:
 
 ```java
 public class ItemTest {
@@ -360,7 +360,7 @@ public class ItemTest {
 
 The test above indeed exercises the calculation of the final amount. However,
 one can see that the developer took a shortcut. S/he decided to assert the overall
-behavior by making use of the `toString()` method of the class. Maybe because
+behaviour by making use of the `toString()` method of the class. Maybe because
 the developer felt that this assertion was more strict, as it asserts not only
 the final price, but also the name of the product and its quantity. 
 
@@ -388,7 +388,7 @@ Expected :Product Playstation IV with 64 GB and super wi-fi times 3 = 1799.97
 Actual   :Product Playstatio times 3 = 1799.97
 ```
 
-A better assertion for this would be to assert precisely what is wanted from that behavior.
+A better assertion for this would be to assert precisely what is wanted from that behaviour.
 In this case, assert that the final amount of the item is correctly calculated. A better
 implementation for the test would be:
 
@@ -434,7 +434,7 @@ public class Cart {
 }
 ```
 
-Now, a developer decided to test the `numberOfItems` behavior. S/he then wrote the following
+Now, a developer decided to test the `numberOfItems` behaviour. S/he then wrote the following
 test cases:
 
 ```java
@@ -546,7 +546,7 @@ A test that makes use of a guest, but hides it from the developer (making it
 a "mystery guest") is simply harder to comprehend.
 
 Make sure your test gives proper error messages, differentiating between a fail in the
-expected behavior, or a fail due to a problem in the guest. Having assertions dedicated
+expected behaviour, or a fail due to a problem in the guest. Having assertions dedicated
 to ensure that the guest is in the right state before running the tests is often
 the remedy that is applied to this smell.
 
@@ -574,13 +574,13 @@ As you have seen earlier, tests all follow the same structure: the Arrange, Act 
 structure.
 When **these three parts are clearly separated, it is easier for a developer to see what is happening in the test**.
 Your tests should make sure that a developer can quickly glance and identify these 
-three different parts. Where is the fixture? Where is the behavior/method under test? 
+three different parts. Where is the fixture? Where is the behaviour/method under test? 
 Where are the assertions?
 
 A second tip concerns the **comprehensibility of the information** in a test code.
 Test code is full of information, i.e., the input values that will be provided
 to the class under test, how the information flows up to the method under test, 
-how the output comes back from the exercise behavior, and what are the expected outcomes.
+how the output comes back from the exercise behaviour, and what are the expected outcomes.
 
 However, we often have to deal with complex data structures and information, making 
 the test code naturally complex.
@@ -655,7 +655,7 @@ void taxesForCompanies() {
 Note how our `InvoiceBuilder` (which we show the code soon) clearly expresses what
 this invoice is about: it is an invoice for a company (as clearly stated by the `asCompany()` 
 method), "NL" is the country of that invoice, and the invoice has a value of 2500. The
-result of the behavior now goes to a variable whose name says it all (`calculatedValue`). 
+result of the behaviour now goes to a variable whose name says it all (`calculatedValue`). 
 The assertion now explicitly mentions that, given this is a float number, the best we can do
 is to compare whether they are close enough.
 
@@ -738,12 +738,12 @@ comprehending test code.
 ## Flaky tests
 
 Flaky tests (or _erratic tests_, as Mezsaros calls in his book)
-are tests that present a "flaky" behavior: 
+are tests that present a "flaky" behaviour: 
 they sometimes passes and sometimes fails, even though
 developers have not performed any changes in their software systems.
 
 Such tests negatively impact the productivity of software development teams.
-First, it is hard to know whether a flaky test is failing because the behavior
+First, it is hard to know whether a flaky test is failing because the behaviour
 is buggy, or because it is simply flaky. From the social side, the excessive
 presence of flaky tests make developers to lose their confidence in their test
 suites, little by little. The lack of confidence might lead them to deploy their

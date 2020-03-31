@@ -2,7 +2,7 @@
 
 # Structural-Based Testing
 
-In a previous chapter, we discussed how to test software using requirements as the main artifact for guidance.
+In a previous chapter, we discussed how to test software using requirements as the main artefact for guidance.
 In this chapter, we will use a different source of information to create tests: the source code itself.
 We can call the set of techniques that use the structure of the source code as a way to guide the testing, 
 **structural-based testing** techniques.
@@ -79,8 +79,7 @@ So when we execute both of our tests, the line coverage is $$100\%$$.
 
 
 
-More formally, we can compute line coverage 
-as: 
+More formally, we can compute line coverage as: 
 
 $$\text{line coverage} = \frac{\text{lines covered}}{\text{lines total}} \cdot 100\%$$
 
@@ -373,7 +372,7 @@ This means that, for full path coverage, we would need 8 tests just to cover thi
 That is quite a lot for just a single statement!
 
 By thinking about the path coverage of our test suite, we can come up of quite some good tests.
-The main issue is that achiving 100% path coverage might not always be feasible. The number of combinations
+The main issue is that achieving 100% path coverage might not always be feasible. The number of combinations
 might be too big!
 The amount of tests needed for full path coverage will grow exponentially with the amount of conditions in a decision.
 
@@ -391,8 +390,8 @@ of test cases that one needs to devise when aiming at 100% path coverage.
 The idea of MC/DC is to simply exercise each condition in a way that it can, independently of the other conditions,
 affect the outcome of the entire decision. This might sound a bit complicated, but the example will clarify it.
 And interestingly, if our conditions have only a binary outcome, which is our case here, as conditions
-either return true or false, the number of tests we will need for that is always "only" `N+1`, where `N` is the number of conditions in the program. 
-$$N+1$$ is definitely smaller than $$N^2$$! 
+either return true or false, the number of tests we will need for that is always "only" $$N+1$$, where $$N$$ is the number of conditions in the program. 
+$$N+1$$ is definitely smaller than $$2^N$$!
 
 Again, to devise a test suite that achieves 100% MC/DC coverage, we should select $$N+1$$ combinations of inputs where all the conditions
 can independently affect the outcome.
@@ -445,7 +444,7 @@ A and C the same.
 * For T1 (A=true, B=true, C=true), we search for a test where (A=true, B=false, C=true). We find test 3. However, the outcome is the same,
 so the pair {T1, T3} is not a good one to show the independence of B.
 
-* You will only find the pair {T2, T4} for combition B.
+* You will only find the pair {T2, T4} for condition B.
 
 * The final condition is C. Here also only one pair of combinations will work, which is {T3, T4}. (To practice, you should do the entire process!)
 
@@ -488,7 +487,7 @@ where the loop block is executed one time, two times, three times, ... Imagine a
 of the body. We would have to test what happens if the loop body executes one time, two times, three times, ..., up to ten times.
 It might be impossible to exhaustively test all the combinations!
 
-What trade-off can we make? And, more especifically, for unbounded loops, where we do not really know how many times it will
+What trade-off can we make? And, more specifically, for unbounded loops, where we do not really know how many times it will
 be executed. We can define a **loop boundary adequacy criteria**:
 
 A test suite satisfies this criterion if and only if for every loop:
@@ -509,7 +508,7 @@ record a video about the loop boundary adequacy
 
 You might have noticed that, the more criteria we studied, the more "rigorous" they became. We started our discussion
 with line coverage. Then we discussed branch coverage, and we noticed that we could generate more tests if we focused
-on branchs. Then, we discussed branch + condition coverage, and we noticed that we could generate even more tests
+on branches. Then, we discussed branch + condition coverage, and we noticed that we could generate even more tests
 if we also focused on the conditions. And we kept doing that up to here.
 
 There is indeed a relationship between all these criteria. Some strategies **subsume** other strategies.
@@ -716,10 +715,10 @@ Given the source code of the `sameEnds` method. Which of the following statement
 
 
 Now consider this piece of code for the FizzBuzz problem.
-Given an `int n`, it returns the string form of the number followed by "!".
-So the int 6 would yield "6!".
-Except if the number is divisable by 3 it returns "Fizz!" and if it is divisable by 5 it returns "Buzz!".
-If the number is divisable by both 3 and 5 it returns "FuzzBuzz!"
+Given an integer `n`, it returns the string form of the number followed by `"!"`.
+So the integer 6 would yield `"6!"`.
+Except if the number is divisible by 3 it returns "Fizz!" and if it is divisible by 5 it returns "Buzz!".
+If the number is divisible by both 3 and 5 it returns "FizzBuzz!"
 Based on a [CodingBat problem](https://codingbat.com/prob/p115243)
 
 ```java
@@ -810,7 +809,7 @@ criterion if for every loop L:
 
 **Exercise 15.**
 Consider the expression `((A and B) or C)`.
-If we aim to achieve 100\% \emph{Modified Condition / Decision Coverage} (MC/DC), the **minimum** set of tests we should select is:
+If we aim to achieve 100\% *Modified Condition / Decision Coverage* (MC/DC), the **minimum** set of tests we should select is:
 
 1. {2, 3, 4, 6}
 2. {1, 3, 4, 6}

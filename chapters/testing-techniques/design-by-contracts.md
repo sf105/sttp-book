@@ -15,18 +15,18 @@ The production code and test code were completely separated.
 The test suite (consisting of the test classes) exercises and then observes the system under test to check whether it is acting correctly.
 If the system does something that is not expected by the test suite, the test suite fails.
 The code in the test suite is completely redundant.
-It does not add any behavior to the system.
+It does not add any behaviour to the system.
 
 With self-testing, we "move" a bit of the test suite into the system itself.
 These assertions we insert into production code allows the system to check if it is running correctly by itself.
-We do not have to run the test suite, but instead the system can check (part of) its behavior during the normal execution of the system.
+We do not have to run the test suite, but instead the system can check (part of) its behaviour during the normal execution of the system.
 Like with the test suite, if anything is not acting as expected, an error will be thrown.
 In software testing the self-tests are used as an additional check in the system additional to the test suite.
 
 ### Assertions
 
 The simplest form of this self-testing is the *assertion*.
-An assertion is a boolean expression at a specific point in a program
+An assertion is a Boolean expression at a specific point in a program
 which will be true unless there is a bug in the program.
 In other words,
 an assertion basically says that a certain condition has to be true 
@@ -128,7 +128,7 @@ If there are no preconditions, i.e., no assumptions needed for the execution of 
 In a Hoare Triple, the $$A$$ can be a single statement or a whole program.
 We look at $$A$$ as a method.
 Then $$P$$ and $$Q$$ are the pre- and postcondition of the method $$A$$ respectively.
-Now we can write the Hoare Triple as: $$\{ preconditions \}\ method\ \{ postconditions \}$$.
+Now we can write the Hoare Triple as: $$\{ \mathit{preconditions} \}\ \mathit{method}\ \{ \mathit{postconditions} \}$$.
 
 ### Preconditions
 
@@ -136,10 +136,10 @@ When writing a method, each condition that needs to hold for the method to succe
 These pre-conditions can be turned into assertions.
 
 
-Suppose a class that keeps track of our favorite books.
+Suppose a class that keeps track of our favourite books.
 Let's define some pre-conditions for the merge method.
 
-The method adds the given books to the list of favorite books and then sends some notification to, e.g., a phone.
+The method adds the given books to the list of favourite books and then sends some notification to, e.g., a phone.
 
 ```java
 public class FavoriteBooks {
@@ -161,7 +161,7 @@ It should also not be empty, because then we cannot add any books.
 Finally, adding books that we already have does not make sense, so the `books` should not all be present in the `favorites` already.
 
 Now we can take a look at the `favorites`.
-This also cannot be `null` because then we cannot call `addAll` on favorites.
+This also cannot be `null` because then we cannot call `addAll` on favourites.
 
 This gives us 4 pre-conditions and, thus, 4 assertions in the method:
 
@@ -249,7 +249,7 @@ In other words, the post-conditions formalize the effects that a method guarante
 
 The `merge` method of the previous examples does two things.
 It adds the new books to the `favorites` list.
-Let's turn this into a boolean expression, so we can formulate this as a post-condition.
+Let's turn this into a Boolean expression, so we can formulate this as a post-condition.
 
 ```java
 public class FavoriteBooks {
@@ -281,7 +281,7 @@ It is important to realise that these post-conditions only have to hold if the p
 You also saw in the example that we could not really write assertions for
 some of post-conditions of the method. 
 Post-conditions (and pre-conditions for that matter) might not cover all the possible effects; however,
-hopefully they do cover a relevant subset of the possible behavior.
+hopefully they do cover a relevant subset of the possible behaviour.
 
 #### Post-conditions of complex methods
 
@@ -350,10 +350,10 @@ An invariant is thus a condition that holds throughout the entire lifetime of a 
 In terms of implementation, a simple way of using invariants is by creating a "checker" method.
 This method will go through the data structure/object/system and will assert whether the invariants hold.
 If an invariant does not hold, it will then throw an `AssertionError`.
-For simpler invariants, it is common to see a boolean method that checks the invariants of the structure/object/system.
+For simpler invariants, it is common to see a Boolean method that checks the invariants of the structure/object/system.
 
 
-Suppose we have a binary tree datastructure.
+Suppose we have a binary tree data structure.
 An invariant for this data structure would be that when a parent points to a child, then the child should point to this parent.
 
 We can make a method that checks if this representation is correct in the given binary tree.
@@ -395,7 +395,7 @@ However, the public method that invoked the private method should then fix this 
 This is all formalized by Bertrand Meyer as: _"The class variant indicates that a proposition P can be a class invariant if it holds after construction, and before and after any call to a public method assuming that the public methods are called with their preconditions being true."_
 
 Of course, we want to know how to implement these class invariants.
-To implement simple class invariant in Java, we can use the boolean method that checks if the representation is okay.
+To implement simple class invariant in Java, we can use the Boolean method that checks if the representation is okay.
 We usually call this method `invariant`.
 We then assert the return value of this method after the constructor, and before and after each public method.
 In these public methods, the only pre-conditions and post-conditions that have to hold additionally are the ones that are not in the invariant.
@@ -494,7 +494,7 @@ The implementation must do at least the same work as the interface, but it is al
 Therefore, $$Q'$$ should be **stronger** than (or as strong as) $$Q$$.
 
 Finally, the interface guarantees that the invariant always holds.
-Then, the implementation should also guarentee that at least the interface's invariant holds.
+Then, the implementation should also guarantee that at least the interface's invariant holds.
 So, $$I'$$ should be **stronger** than (or as strong as) $$I$$.
 
 In short, using the notation of the UML diagram:
@@ -511,16 +511,16 @@ The subcontract (the implementation) requires no more and ensures no less than t
 
 ### Liskov Substitution Principle
 
-The subcontracting follows the general notion of behavioral subtyping, proposed by Barbara Liskov.
-The behavioral subtyping states that if we have a class `T` and this class has some sub-classes,
+The subcontracting follows the general notion of behavioural subtyping, proposed by Barbara Liskov.
+The behavioural subtyping states that if we have a class `T` and this class has some sub-classes,
 the clients or users of class `T` should be able to choose any of `T`'s sub-classes.
-This notion of behavioral subtyping is now known as the Liskov Substitution Principle (LSP).
+This notion of behavioural subtyping is now known as the Liskov Substitution Principle (LSP).
 
 
 In other words, the LSP states that if you use a class, you should be able to replace this class by one of its subclasses.
 The sub-contracting we discussed earlier is just a formalization of this principle.
 Proper class hierarchies follow the Liskov Substitution Principle.
-Leep the LSP in mind when designing and implementating a software system.
+Keep the LSP in mind when designing and implementing a software system.
 
 How can we test that our classes follow the LSP?
 To test the LSP, we have to make some test cases for the public methods of the super class and execute these tests with all its subclasses.
@@ -563,11 +563,11 @@ How do we make sure that the "super test class" executes its tests in the correc
 This depends on the test class that is executed and the subclass it is testing.
 If we have class `T`, with subclasses `A` and `B`, then when executing tests for `A` we need the test class of `T` to use an instance of `A`; when executing tests for `B`, we need the test class of `T` to use an instance of `B`.
 
-One way to achieve this behavior is by using the *Factory Method* design pattern,
+One way to achieve this behaviour is by using the *Factory Method* design pattern,
 which works as follows:
 In the test class for the interface level (the "super test class"), we define an abstract method that returns an instance with the interface type.
 By making the method abstract, we force the test classes of the concrete implementations to override it.
-We return the instance of the specific subclass in the overriden method.
+We return the instance of the specific subclass in the overridden method.
 This instance is then used to execute the tests.
 
 
@@ -629,7 +629,7 @@ For each of the generated input values, this assertion is checked. If we find an
 
 The first implementation of this idea was called QuickCheck and was originally developed for Haskell.
 Nowadays, most languages have an implementation of QuickCheck, including Java.
-The Java implementation we are going to use is made by Paul Holser and is available on his [github](https://github.com/pholser/junit-quickcheck).
+The Java implementation we are going to use is made by Paul Holser and is available on his [GitHub](https://github.com/pholser/junit-quickcheck).
 All implementations of QuickCheck follow the same idea, but we will focus on the Java implementation.
 
 How does it work?
@@ -643,14 +643,14 @@ The arguments for these parameters will then be automatically generated by Quick
 Note that the existing generators are often not enough when we want to test one
 of our own classes; in these cases, we can create a custom generator which generates random values for this class.
 
-* Quickcheck handles the amount of generated inputs. After all, generating random values for the test input is tricky:
+* QuickCheck handles the amount of generated inputs. After all, generating random values for the test input is tricky:
 the generator might create too much data to efficiently handle while testing.
 
 * Finally, as soon as QuickCheck finds a value that breaks the property, it
 starts the shrinking process.
 Using random input values can result in very large inputs.
 For example lists that are very long or strings with a lot of characters.
-These inputs can be very hard to debug. Smaller inputs are preferrable when it comes to testing.
+These inputs can be very hard to debug. Smaller inputs are preferable when it comes to testing.
 When an input makes the property fail, QuickCheck tries to find shrink this input while it still makes the property fail.
 That way it gets the small part of the larger input that actually causes the problem.
 
@@ -669,7 +669,7 @@ public class PropertyTest {
 }
 ```
 
-`concatenationLength` had the `Property` anotation, so QuickCheck will generate random values for `s1` and `s2` and execute the test with those values.
+`concatenationLength` had the `Property` annotation, so QuickCheck will generate random values for `s1` and `s2` and execute the test with those values.
 
 
 
@@ -730,7 +730,7 @@ Consider the piece of code in the previous example.
 Suppose we remove the last assertion (line 10), which states that the result can never be null.
 
 Are the existing preconditions of the `squareAt` method enough to ensure the property in the original line 10?
-What can we add to the class (other than the just removed postcondition) to guarentee this property?
+What can we add to the class (other than the just removed postcondition) to guarantee this property?
 
 
 
@@ -803,7 +803,7 @@ Explain with the assertions shown in the code.
 
 **Exercise 4.**
 You run your application with assertion checking enabled. 
-Unfortunately, it reports an assertion failure signaling a class invariant violation in one of the libraries your application makes use of.
+Unfortunately, it reports an assertion failure signalling a class invariant violation in one of the libraries your application makes use of.
 
 Assume that the contract of the library in question is correct, and that all relevant preconditions are encoded in assertions as well.
 
@@ -859,7 +859,7 @@ Which of the following is a valid reason to use assertions in your code?
 
 * Meyer, B. (2002). Design by contract. Prentice Hall.
 
-* Liskov, B. H., & Wing, J. M. (1994). A behavioral notion of subtyping. ACM Transactions on Programming Languages and Systems (TOPLAS), 16(6), 1811-1841.
+* Liskov, B. H., & Wing, J. M. (1994). A behavioural notion of subtyping. ACM Transactions on Programming Languages and Systems (TOPLAS), 16(6), 1811-1841.
 
 * "Polymorphic Server Test" in Binder, R. V. (1994). Object-oriented software testing. Communications of the ACM, 37(9), 28-30.
 

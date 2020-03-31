@@ -93,6 +93,7 @@ remaining life is smaller than 3, it belongs to partition 2; otherwise, it belon
 to partition 3. Thus, we just identified another boundary there (let us call this test B2).
 
 We can visualize these partitions with their boundaries in a diagram.
+
 ![Partitions with their boundaries](img/boundary-testing/examples/partition_boundaries.svg)
 
 In our example, the tester would then 
@@ -189,7 +190,7 @@ is up to the tester to identify how these different conditions interact with eac
 In such cases, the number of boundary tests might explode. Imagine a program composed
 of 5 different conditions. If we decide to write 4 test cases (on, off, in, out points) for 
 each of the conditions, and make sure we test all the possible combinations among them,
-we end up with $$5^4=625$$ tests. This is simply too much.
+we end up with $$4^5=1024$$ tests. This is simply too much.
 
 To effectively test the boundaries in these more complicated decisions, while
 minimizing the amount of required tests,
@@ -225,10 +226,10 @@ we exerise each boundary both for the on- and off-point independent of the other
 
 Let us walk through another example:
 
-> **Requirement**: Pizza or pasta
+> **Requirement: Pizza or pasta**
 >
 > The program decides whether a person should eat pizza or pasta.
-> Given two random numbers, x and y, if x is in between $$[5,20[$$
+> Given two random numbers, x and y, if x is in between $$[5,20]$$
 > and y is smaller than or equal to 89, the program returns "pizza".
 > Otherwise it returns "pasta". 
 
@@ -268,7 +269,7 @@ public class PizzaPastaTest {
 ```
 
 Let us now apply boundary testing. Note how easy it is for a developer to
-make a mistake, e.g., confusing $$x >= 5$$ with a $$x > 5$$.
+make a mistake, e.g., confusing $$x >= 5$$ with $$x > 5$$.
 
 We start by making the domain matrix, having space for each of the conditions and both parameters.
 
@@ -481,7 +482,7 @@ void boundary(int x, int y, String expectedResult) {
 }
 ```
 
-The behavior
+The behaviour
 of this single test method is the same as the six test methods we declared before. However, now
 with a much smaller amount of code.
 
@@ -635,7 +636,7 @@ Which one of the following statements about the **CORRECT** principles is **true
 1. We assume that external dependencies are already on the right state for the test (REFERENCE).
 1. We test different methods from the same class in an isolated way in order to avoid order issues (TIME).
 1. Whenever we encounter a loop, we always test whether the program works for 0, 1, and 10 iterations (CARDINALITY).
-1. We always test the behavior of our program when any expected data does not exist (EXISTENCE).
+1. We always test the behaviour of our program when any expected data does not exist (EXISTENCE).
 
 
 

@@ -12,7 +12,7 @@ Note, however, that this was not the case at the beginning of the chapter. We ha
 Software systems are often not ready/prepared to be easily tested, as the classes in our previous chapter.
 And this is what this chapter is about: **how to design and architect a software system in a way that it eases its testability.**
 
-Testability is related to the easeness of writing automated tests to the system, class, or method under test.
+Testability is related to the ease of writing automated tests to the system, class, or method under test.
 We already know that automated tests are crucial for high-quality software; it is, therefore, essential that our code is testable.
 
 In this chapter, we'll discuss some design practices that increases
@@ -197,7 +197,7 @@ Ports and Adapters helps us a lot with the testability of our code.
 After all, if our core domain depends only on ports, we can easily stub/mock them.
 
 * In the **Domain-Driven Design** work, by Eric Evans. Evans proposes that domain (the core of the system) to be
-isolated from the infrastructure layer. Besides all the design benefits that Erics cites in his book, testers benefit
+isolated from the infrastructure layer. Besides all the design benefits that Eric cites in his book, testers benefit
 from this separation, as it enables them to exercises parts of code without having to depend on heavy infrastructure.
 
 In practice, we observe that separating the infrastructure from domain is often challenging. The database example,
@@ -241,15 +241,15 @@ often imply in less dependencies (as you need less to compose the required funct
 A non-cohesive class, on the other hand, tends to consume a great amount of testing effort from developers. You might notice
 that a non-cohesive class requires a great amount of test cases, and you often feel "you are never done in testing it".
 Refactoring non-cohesive classes is therefore an important task when it comes to testability. 
-Common refactorings are splitting the non-cohesive class into several smaller-but-cohesive classes. Each small class would
-then be tested separately, and the class that combines them both might either rely on mock object to assert the correctness
+A common way to do this is by splitting the non-cohesive class into several smaller-but-cohesive classes. Each small class can
+then be tested separately, and the class that combines them both might either rely on mock objects to assert the correctness
 of the interactions among the dependencies and/or by means of an integration test.
 
 - **Coupling and testability**: Coupling is about the amount of classes that a class depends on. A highly coupled class requires several other 
 classes to do its work. As one could expect, coupling hurts testability. A tester trying to test a highly dependent class ends up
 having to test all its dependencies together. If the tester then decides to use stubs/mocks, the costs of setting them up will
 also be higher than it needed to be (just imagine yourself setting up 10 or 15 stubs/mocks to test a single class). Moreover, the
-number of test cases that would be required to achieve a mininum amount of coverage is too high, as each dependency probably
+number of test cases that would be required to achieve a minimum amount of coverage is too high, as each dependency probably
 brings together a whole set of requirements and conditions.
 
 Reducing coupling, however, is often tricky, and maybe one of the biggest challenges in software design. 
@@ -260,7 +260,7 @@ between D and E (let us call it DE), already reduces A's coupling. After all, it
 pushing responsibilities and dependencies to smaller classes and later connecting them via larger abstractions is the way to go.
 
 - **Complex conditions and testability**: We have seen in previous chapters that conditions that are very complex 
-(e.g., an `if` statement composed of multiple boolean operations) require great effort from testers. For example,  
+(e.g., an `if` statement composed of multiple Boolean operations) require great effort from testers. For example,  
 the number of tests one might devise after applying some boundary testing or condition+branch coverage criteria might be
 too high. 
 
@@ -393,7 +393,7 @@ To increase the testability, the team has budget to work on two out of the four 
 Which items should Sarah recommend them to tackle first?
 
 Note: All of the four issues should obviously be fixed.
-However, try to prioritize the two most important onces: Which influence the testability the most?
+However, try to prioritize the two most important ones: Which influence the testability the most?
 
 
 **Exercise 4.**
@@ -401,7 +401,7 @@ Observability and controllability are two important concepts when it comes to so
 The three developers below could benefit from improving either the observability or the controllability of the system/class under test.
 
 1. "I can't really assert that the method under test worked well."
-2. "I need to make sure this class starts with that boolean set to false, but I simply can't do it."
+2. "I need to make sure this class starts with that Boolean set to false, but I simply can't do it."
 3. "I just instantiated the mock object, but there's simply no way to inject it in the class."
 
 For each of the problems above: is it related to observability or controllability?

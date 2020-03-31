@@ -136,7 +136,7 @@ The new decision table is below:
 Note that when auto-renewal is true, the loyal condition does not change the outcome anymore and vice versa.
 
 
-**Default behavior**: Usually, $$N$$ conditions lead to $$2^N$$ combinations or columns.
+**Default behaviour**: Usually, $$N$$ conditions lead to $$2^N$$ combinations or columns.
 However, the number of columns that are specified in the decision table can be smaller.
 Even if we expand all the dc values.
 
@@ -172,7 +172,7 @@ One more way to derive test cases from a decision table is by using the **Modifi
 This is a combination of the last two ways of deriving tests shown above.
 
 We have already discussed MC/DC in the Structural-Based Testing chapter.
-MC/DC has the two characteristics of All devisions and Each condition T/F with an additional characteristic that makes MC/DC special:
+MC/DC has the two characteristics of All divisions and Each condition T/F with an additional characteristic that makes MC/DC special:
 
 1. Each condition is at least once true and once false in the test suite
 2. Each unique action should be tested at least once
@@ -314,7 +314,7 @@ Write the video's accompanying text
 
 A state machine is a model that describes the software system by describing its states.
 A system often has multiple states and various transitions between these states.
-The state machine model uses these states and transitions to illustrate the system's behavior.
+The state machine model uses these states and transitions to illustrate the system's behaviour.
 
 The main focus of a state machine is, as the name suggests, the states of a system.
 So it is useful to think about what a state actually is.
@@ -322,7 +322,7 @@ The states in a state machine model describe where a program is in its execution
 If we need X to happen before we can do Y, we can use a state.
 X would then cause the transition to this state.
 From the state we can do Y, as we know that in this state X has already happened.
-We can use as many states as we need to describe the system's behavior well.
+We can use as many states as we need to describe the system's behaviour well.
 
 Besides states and transitions, a state machine has an initial state and events.
 The initial state is the state that the system starts in.
@@ -331,7 +331,7 @@ Each transition is paired with an event.
 This event is usually one or two words that describe what has to happen to make the transition.
 
 There are some agreements on how to make the models.
-The notation we use is the Unified Modeling Language, UML.
+The notation we use is the Unified Modelling Language, UML.
 For the state diagrams that means we use the following symbols:
 
 - State: ![](img/model-based-testing/uml/state_symbol.svg)
@@ -370,7 +370,7 @@ The notation for conditions and actions is as follows:
 
 When a user types the wrong password for four times in a row, the phone gets blocked.
 We use `n` in the model to represent the amount of failed attempts.
-Let us look at the conditional transitions that we need to model this behavior first.
+Let us look at the conditional transitions that we need to model this behaviour first.
 
 ![](img/model-based-testing/examples/blocked_condition_machine.svg)
 
@@ -404,8 +404,8 @@ First, we will have a look at what might be implemented incorrectly.
 An obvious error that can be made is a transition going to the wrong state.
 This will cause the system to act incorrectly, so we want the tests to catch such errors.
 Additionally, the conditions in conditional transitions and the actions in transition can be wrong.
-Finally, the behavior of a state should stay the same at all times.
-This means that moving from and to a state should not change the behavior of that state.
+Finally, the behaviour of a state should stay the same at all times.
+This means that moving from and to a state should not change the behaviour of that state.
 
 For state machines, we have a couple of test coverages.
 In this chapter we go over three mainly used ways of defining test coverage:
@@ -631,7 +631,7 @@ Then we fill the table with the states that the transitions in the state machine
 
 We can see that there is, for example, a transition from `UNLOCKED` to `LOCKED` when the event `lock button` is triggered.
 
-Now that we have the transition table, we have to decide the intended behavior for the cells that are empty.
+Now that we have the transition table, we have to decide the intended behaviour for the cells that are empty.
 The default is to just ignore the event and stay in the same state.
 In some cases one might want the system to throw an exception.
 These decisions depend on the project and the customer's needs.
@@ -653,7 +653,7 @@ These techniques combined give a good testing suite from a state machine.
 ### Super states and regions
 
 So far, we looked at rather simple and small state machines.
-When the modeled system becomes large and complex, typically so does the state machine.
+When the modelled system becomes large and complex, typically so does the state machine.
 At some point the state machine will consist of a lot of states and transitions, which makes it unclear and impractical to work with.
 To resolve this issue and make a state machine more scalable we can use **super states** and **regions**.
 
@@ -674,7 +674,7 @@ A collapsed super state is just a normal state in the state machine.
 This state has the super state's name and the same incoming and outgoing transitions as the super state.
 
 With the super states and the collapsing of super states we can modularize and combine state machines.
-This allows us to shift the state machine's focus to different parts of the system's behavior.
+This allows us to shift the state machine's focus to different parts of the system's behaviour.
 
 
 We can use a super state even in the small example of a phone's state machine.
@@ -709,12 +709,12 @@ We will not cover how to expand the regions because of this reason.
 
 In general it is best to use small state machine and link these together using super states and regions.
 
-So far when the phone was `ON` we modeled the `LOCKED` and `UNLOCKED` state.
+So far when the phone was `ON` we modelled the `LOCKED` and `UNLOCKED` state.
 When the phone is on, it drains the battery.
 The system keeps track of the level of the battery.
 Let's assume that our phone has two battery levels: low battery and normal battery.
 The draining of the battery and the transitions between the states of this battery runs in parallel to the phone being locked or unlocked.
-With parallel behavior like this, we can use the regions in our state machine model.
+With parallel behaviour like this, we can use the regions in our state machine model.
 the state machine looks like the following, with the new battery states and the regions:
 
 ![Region state machine example](img/model-based-testing/examples/phone_region.svg)
@@ -753,10 +753,10 @@ In that case, you might not be able to easily identify the inspection and trigge
 In this scenario, the state machines can even correspond to *end-to-end / system testing*.
 Here, the flow of the entire system is under test, from input to output.
 
-The system under test does not always provide a nice programing interface (API) to inspect the state or trigger the event for the transitions.
+The system under test does not always provide a nice programming interface (API) to inspect the state or trigger the event for the transitions.
 A common example of such a system is a web application.
 In the end, the web application works through a browser.
-To access the state or to trigger the transitions you would then need to use a dedicated tool, like [webdriver](https://webdriver.io/).
+To access the state or to trigger the transitions you would then need to use a dedicated tool, like [WebDriver](https://webdriver.io/).
 Using such a dedicated tool directly is not ideal, as you would have to specify each individual click on the web page to trigger events.
 What we actually need is an abstraction layer on top of the system under test.
 This abstraction can just be a Java class, with the methods that we need to be able to test the system as its state machine.
@@ -808,7 +808,7 @@ Use sensible naming for the states in your transition tree.
 
 **Exercise 5.**
 With the transition tree you devised in the previous exercise and the state machine in that exercise.
-What is the transition coverage of a test that the following events: [order placed, order received, order fullfiled, order delivered]?
+What is the transition coverage of a test that the following events: [order placed, order received, order fulfilled, order delivered]?
 
 
 **Exercise 6.**
@@ -860,7 +860,7 @@ Our product team defined the following rules:
 * An administrator checks the content of the ad. If it follows all the rules, the ad then waits for payment. If the ad contains anything illegal, it then goes back to the very beginning.
 * As soon as the company makes the payment, the ad becomes available to users.
 * When the number of visualizations is reached, the ad is then considered done. At this moment, the company might consider running the campaign again, which moves the ad to wait for payment again. The company might also decide to simply end the campaign at that moment, which puts the ad in a finalized state.  
-* While appearing for the users, if more than 10\% of the users complain about the ad, the ad is then marked as blocked. Cute Babies then gets in contact with the company. After understanding the case, the ad either starts to appear again for the users, or gets marked as innapropriate. An innapropriate ad will never be shown again to the users.
+* While appearing for the users, if more than 10\% of the users complain about the ad, the ad is then marked as blocked. Cute Babies then gets in contact with the company. After understanding the case, the ad either starts to appear again for the users, or gets marked as inappropriate. An inappropriate ad will never be shown again to the users.
 
 Devise a state diagram that describes the life cycle of an ad.
 
@@ -909,7 +909,7 @@ The software then either says *"Congratulations! Your picture was uploaded succe
 
 Create a decision table that takes the three conditions and their respective outcomes into account. 
 
-*Note: conditions should be modeled as boolean decisions.*
+*Note: conditions should be modelled as Boolean decisions.*
 
 
 
@@ -928,7 +928,7 @@ To that end, assume that the system employs the following rules to decide whethe
 
 * If the user *U* has not been active during the past two weeks, she will not get to see add *A*;
 * If the user *U* has already been served an ad during her last hour of activity, she will not get to see ad *A*;
-* Furthermore, if the user *U* has over 1000 followers (an influencer), she will only get to see ad *A* if *A* is labeled as *highly-relevant* for *U*. Otherwise, user *U* will see *A* even if it is not *highly-relevant*.
+* Furthermore, if the user *U* has over 1000 followers (an influencer), she will only get to see ad *A* if *A* is labelled as *highly-relevant* for *U*. Otherwise, user *U* will see *A* even if it is not *highly-relevant*.
 
 We can model this procedure in a decision table, in various ways.
 The complete table would have four conditions and 16 variants. We will try to create a more compact decision table. Note: We will use Boolean conditions only.
